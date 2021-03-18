@@ -3,6 +3,7 @@ Website work for hasthakatha
 
 # Current Address
 hasthakatha.store
+https://www.etsy.com/in-en/shop/HasthaKatha
 
 ## Reference sites
 https://www.bunosilo.com/
