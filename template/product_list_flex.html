@@ -1,20 +1,24 @@
 <html>
 <head>
     <style>
-
+            .hs-container{
+                display:flex;
+                justify-content: center;
+            }
             .side_category{
                 border: 1px solid black;
                 width:20%;
                 display: inline-block;
                 min-width:100px;
-                vertical-align: top
+                vertical-align: top;
                 
             }
             .product_list{
                 border: 1px solid black;
-                width:70%;
-                display:inline-block;
-                min-width:400px;
+                display: flex;
+                min-width: 150px;
+                flex-wrap: wrap;
+                justify-content: space-evenly;
             }
             .side_category div{
                 border:1px solid black;
@@ -22,11 +26,11 @@
                 padding:5px;
             }
             .card{
-                border:1px solid black;
-                margin:5px;
-                padding:5px;
-                width:45%;
-                display:inline-block;
+                border: 1px solid black;
+                margin: 5px;
+                padding: 5px;
+                width: 22%;
+                display: inline-block;
             }
             .img{
                 border:1px solid black;
@@ -37,7 +41,7 @@
 </head>
 <body>
     <!--product main_list-->
-    <div>
+    <div class="hs-container">
         <!--product side list category-->
         <div class="side_category">
             <div>product category 1</div>
@@ -51,7 +55,6 @@
         <!-- product List-->
         <div class="product_list">
             <!-- Prodcuct list first row-->
-            <div>
                 <!--product details-->
                 <div class="card">
                     <div class="img">
@@ -119,9 +122,6 @@
                         product price
                     </div>
                 </div>
-            </div>
-            <!-- Prodcuct list second row-->
-            <div>
                 <!--product details-->
                 <div class="card">
                     <div class="img">
@@ -145,7 +145,6 @@
                         product price
                     </div>
                 </div>
-            </div>
         </div>
     </div>
 </body>
