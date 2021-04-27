@@ -1,0 +1,47 @@
+{
+  "kind": "collectionType",
+  "collectionName": "product_details",
+  "info": {
+    "name": "product_details",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "PID": {
+      "type": "uid"
+    },
+    "product_name": {
+      "type": "string"
+    },
+    "product_image": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false,
+      "pluginOptions": {}
+    },
+    "product_category": {
+      "type": "enumeration",
+      "enum": [
+        "Dresses",
+        "Tops",
+        "Pants",
+        "Skirts",
+        "Scarf"
+      ]
+    },
+    "product_description": {
+      "type": "string"
+    }
+  }
+}
