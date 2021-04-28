@@ -1,0 +1,44 @@
+{
+  "kind": "collectionType",
+  "collectionName": "categories",
+  "info": {
+    "name": "category",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "category": {
+      "type": "enumeration",
+      "enum": [
+        "Dresses",
+        "Tops",
+        "Pants",
+        "Skirts",
+        "Scarf"
+      ]
+    },
+    "all_products": {
+      "type": "integer"
+    },
+    "Dresses": {
+      "type": "integer"
+    },
+    "Tops": {
+      "type": "integer"
+    },
+    "Pants": {
+      "type": "integer"
+    },
+    "Skirts": {
+      "type": "integer"
+    },
+    "Scarf": {
+      "type": "integer"
+    }
+  }
+}
