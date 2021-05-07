@@ -1,13 +1,13 @@
 import React from 'react';
+import logo from './assets/logo.png';
 import "./Header.css";
-
 
 const Header =()=>{
     return(
     <>
         <div className="has-header">
             <div className="has-logo">
-                <img src="assets/logo.png" alt="Logo"/>
+                <img src={logo} alt="Logo"/>
             </div>
             <div className="has-menu">
                 <ul>
@@ -22,7 +22,6 @@ const Header =()=>{
 
                     </div>
                     <div className="">
-
                     </div>
             </div>
         </div>
