@@ -1,0 +1,17 @@
+
+
+.has-header{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+                                                                                                                                                                                                           
+.has-menu{
+    width: 50%;
+}
+.has-menu ul{
+    display: flex;
+    list-style: none;
+    width: 100%;
+    justify-content: space-evenly;
+}
