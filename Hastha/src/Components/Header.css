@@ -1,17 +1,7 @@
-
-
-.has-header{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
+.hk-header{
+    background-color: var(--theme_color);
 }
-                                                                                                                                                                                                           
-.has-menu{
-    width: 50%;
-}
-.has-menu ul{
-    display: flex;
-    list-style: none;
-    width: 100%;
-    justify-content: space-evenly;
+
+.hk-main-menu li a{
+    text-transform: uppercase;
 }

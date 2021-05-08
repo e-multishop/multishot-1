@@ -1,0 +1,8 @@
+@import '~materialize-css/dist/css/materialize.min.css';
+
+
+:root{
+    --theme_color:#4f2624;
+    --primary_color: #4f2624;
+    --text-color:rgb(72, 79, 86);
+}
