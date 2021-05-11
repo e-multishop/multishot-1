@@ -6,3 +6,7 @@
     --primary_color: #4f2624;
     --text-color:rgb(72, 79, 86);
 }
+
+.no-padding{
+    padding:0px;
+}
