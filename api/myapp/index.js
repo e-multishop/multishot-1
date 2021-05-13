@@ -41,7 +41,9 @@ app.get('/product', (req, res) => {
     var sql = "SELECT title,pid,price,total_available FROM product ";
     con.query(sql, function (err, result) {
         if (err) throw err;
+        res.header("Content-Type","application/json");
         res.send(JSON.stringify(result));
+        
     });
 });
 app.get('/', (req, res) => {
