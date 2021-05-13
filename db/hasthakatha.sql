@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 07, 2021 at 07:21 PM
+-- Generation Time: May 13, 2021 at 04:18 PM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.5
 
@@ -46,6 +46,17 @@ CREATE TABLE `category` (
   `description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`cid`, `name`, `description`) VALUES
+(11, 'Dresses', ''),
+(12, 'Scarf', ''),
+(13, 'Tops', ''),
+(14, 'Pants', ''),
+(15, 'Skirts', '');
+
 -- --------------------------------------------------------
 
 --
@@ -56,6 +67,24 @@ CREATE TABLE `colour` (
   `clid` int(3) NOT NULL,
   `name` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `colour`
+--
+
+INSERT INTO `colour` (`clid`, `name`) VALUES
+(101, 'White'),
+(102, 'black'),
+(103, 'Maroon'),
+(104, 'Cream'),
+(105, 'Mastard'),
+(106, 'Grey'),
+(107, 'Olive'),
+(108, 'Peach'),
+(109, 'Brick Red'),
+(110, 'Aubergine'),
+(111, 'Wine'),
+(112, 'Navy Blue ');
 
 -- --------------------------------------------------------
 
@@ -81,12 +110,19 @@ CREATE TABLE `product` (
   `price` int(5) NOT NULL,
   `price_without_embroidary` int(5) NOT NULL,
   `description` text NOT NULL,
-  `size` int(4) NOT NULL,
   `note` text NOT NULL,
   `material` varchar(250) NOT NULL,
   `total_available` int(5) NOT NULL,
   `total_quantity` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `product`
+--
+
+INSERT INTO `product` (`pid`, `category`, `title`, `price`, `price_without_embroidary`, `description`, `note`, `material`, `total_available`, `total_quantity`) VALUES
+('HKD01', 11, 'Black Maxi Dress with\r\nHand Embroidery', 2400, 1900, 'Sleeveless maxi pleated dress with hand embroidery in front.\r\n\r\n- Model height: 5\'3\" wearing size S\r\n- Length: 45\"\r\n- Fit: Comfortable\r\n- Side slit', '', 'Linen, Rayon', 50, 50),
+('HKD02', 11, 'Green Maxi Dress with\r\nHand Embroidery', 2400, 1900, 'Sleeveless maxi pleated dress with hand embroidery in front.\r\n\r\n- Model height: 5\'3\" wearing size S\r\n- Length: 45\"\r\n- Fit: Comfortable\r\n- Side slit', '', 'Linen, Rayon', 50, 50);
 
 -- --------------------------------------------------------
 
@@ -98,6 +134,18 @@ CREATE TABLE `product_images` (
   `imageid` varchar(10) NOT NULL,
   `pid` varchar(10) NOT NULL,
   `type` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_size`
+--
+
+CREATE TABLE `product_size` (
+  `id` int(10) NOT NULL,
+  `pid` varchar(6) NOT NULL,
+  `size` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -132,13 +180,37 @@ CREATE TABLE `reviews` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `shipping_address`
+--
+
+CREATE TABLE `shipping_address` (
+  `user_id` varchar(50) NOT NULL,
+  `address` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `size`
 --
 
 CREATE TABLE `size` (
   `sid` int(3) NOT NULL,
-  `name` int(30) NOT NULL
+  `name` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `size`
+--
+
+INSERT INTO `size` (`sid`, `name`) VALUES
+(1, 'XS US women\'s letter'),
+(2, 'S US women\'s letter'),
+(3, 'M US women\'s letter'),
+(4, 'L US women\'s letter'),
+(5, 'XL US women\'s letter'),
+(6, 'XXL US women\'s letter'),
+(7, 'OX US women\'s letter');
 
 -- --------------------------------------------------------
 
@@ -149,6 +221,19 @@ CREATE TABLE `size` (
 CREATE TABLE `status` (
   `stid` int(1) NOT NULL,
   `value` int(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tracking_order`
+--
+
+CREATE TABLE `tracking_order` (
+  `id` varchar(10) NOT NULL,
+  `tracking_number` varchar(14) NOT NULL,
+  `order_id` varchar(10) NOT NULL,
+  `tracking_endpoint` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -232,6 +317,7 @@ ALTER TABLE `category`
 -- Indexes for table `product`
 --
 ALTER TABLE `product`
+  ADD PRIMARY KEY (`pid`),
   ADD KEY `c1` (`category`);
 
 --
@@ -239,6 +325,12 @@ ALTER TABLE `product`
 --
 ALTER TABLE `product_images`
   ADD PRIMARY KEY (`imageid`);
+
+--
+-- Indexes for table `product_size`
+--
+ALTER TABLE `product_size`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `reviews`
@@ -257,6 +349,12 @@ ALTER TABLE `size`
 --
 ALTER TABLE `status`
   ADD PRIMARY KEY (`stid`);
+
+--
+-- Indexes for table `tracking_order`
+--
+ALTER TABLE `tracking_order`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `transaction`
@@ -278,6 +376,12 @@ ALTER TABLE `wish_list`
 -- AUTO_INCREMENT for table `add_to_cart`
 --
 ALTER TABLE `add_to_cart`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `product_size`
+--
+ALTER TABLE `product_size`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 --
