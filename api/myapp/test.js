@@ -62,7 +62,7 @@ app.get('/product', (req, res) => {
                         }
 
                     }
-                    resolve();
+                    resolve(result);
                 })
 
 
@@ -72,9 +72,7 @@ app.get('/product', (req, res) => {
         Promise.all(asyncoperations).then(function(ops)
             {
                     console.log(ops);
-                    res.send(JSON.stringify(result));
-
-    
+                    res.send(JSON.stringify(ops));
             });
 
     });
