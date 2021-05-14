@@ -13,7 +13,7 @@ con.connect(function (err) {
     if (err) throw err;
     console.log("Connected!");
 });
-const port = 3000;
+const port = 3001;
 var path = require('path');
 app.get('/search', (req, res) => {
     res.header("Content-Type", 'application/json');

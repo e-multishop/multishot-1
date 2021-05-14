@@ -8,7 +8,7 @@ import {Route,BrowserRouter,Switch} from 'react-router-dom';
 import About from './Components/Pages/About/About';
 import Contact from './Components/Pages/Contact/Contact';
 import Product from './Components/Pages/Product/Productdetails';
-import Shop from './Components/Pages/Shop/Shop';
+import ProductList from './Components/Pages/productlist/ProductList';
 
 class App extends Component{
   render(){
@@ -18,7 +18,7 @@ class App extends Component{
         <Switch>
             <Route exact component={Home} path="/"/>
             <Route component={About} path="/about"/>
-            <Route component={Shop} path="/shop"/>
+            <Route component={ProductList} path="/shop"/>
             <Route component={Product} path="/productdetails"/>
             <Route component={Contact} path="/contact"/>
         </Switch>

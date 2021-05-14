@@ -7,7 +7,7 @@ import { NavLink } from 'react-router-dom';
 const Header =()=>{
     return(
         <div className="row hk-header">
-            <div className="col s12 ">
+            <div className="col s12">
                 <nav className="hk-header">
                     <div className="nav-wrapper  ">
                         <a href="#" className="brand-logo left">Logo</a>
