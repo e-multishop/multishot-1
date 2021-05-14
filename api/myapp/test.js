@@ -13,7 +13,7 @@ con.connect(function (err) {
     if (err) throw err;
     console.log("Connected!");
 });
-const port = 3001;
+const port = 3000;
 var path = require('path');
 app.get('/search', (req, res) => {
     res.header("Content-Type", 'application/json');
@@ -62,7 +62,7 @@ app.get('/product', (req, res) => {
                         }
 
                     }
-                    resolve();
+                    resolve(result);
                 })
 
 
@@ -72,9 +72,7 @@ app.get('/product', (req, res) => {
         Promise.all(asyncoperations).then(function(ops)
             {
                     console.log(ops);
-                    res.send(JSON.stringify(result));
-
-    
+                    res.send(JSON.stringify(ops));
             });
 
     });
