@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 13, 2021 at 04:18 PM
+-- Generation Time: May 14, 2021 at 08:07 PM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.5
 
@@ -133,8 +133,17 @@ INSERT INTO `product` (`pid`, `category`, `title`, `price`, `price_without_embro
 CREATE TABLE `product_images` (
   `imageid` varchar(10) NOT NULL,
   `pid` varchar(10) NOT NULL,
-  `type` varchar(10) NOT NULL
+  `type` varchar(10) NOT NULL,
+  `url` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `product_images`
+--
+
+INSERT INTO `product_images` (`imageid`, `pid`, `type`, `url`) VALUES
+('1', 'HKD01', 'main', 'https://i.etsystatic.com/13404419/c/2350/1867/0/130/il/c8ffdc/2626521663/il_340x270.2626521663_eo16.jpg'),
+('2', 'HKD02', 'main', 'https://i.etsystatic.com/13404419/c/2350/1867/0/130/il/c8ffdc/2626521663/il_340x270.2626521663_eo17.jpg');
 
 -- --------------------------------------------------------
 
