@@ -9,7 +9,6 @@ class ProductList extends Component{
     componentDidMount(){
         fetch('http://localhost:3000/categories').then((result)=>{
             return(result.json())
-
         }).then((categories)=>{this.setState({categories:categories})
         })
         fetch('http://localhost:3000/product').then((result)=>{
@@ -37,7 +36,7 @@ class ProductList extends Component{
                     return(
                     <div class="card">
                         <div class="img-wraper">
-                            <img src=""/>
+                            <img src={value.url}/>
                         </div>
                         <div class="description">
                             {value.title}
