@@ -1,0 +1,43 @@
+.hk-card{
+    width: 100% !important;
+    border: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    .card-image
+    {
+        height: 372px;
+        width: 100%;
+        overflow: hidden;
+    }
+    .card-content{
+         h2{
+                font-size: 1.64rem;
+                margin: 0;
+            };
+    }
+    .hk-addcard{
+        background-color: var(--primary_color);
+        border: 1px solid var(--primary_color);
+        font-size: 16px;
+        border-radius: 0 20px;
+        padding: 9px 12px;
+        text-align:center;
+        cursor: pointer;
+        a{
+            
+            color: #ffffff;
+            
+        }
+        &:hover{
+            background-color: white;
+            border: 1px solid var(--primary_color);
+            a{
+                color:var(--primary_color);
+            }
+
+        }
+       
+
+    }
+}
+

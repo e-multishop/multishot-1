@@ -1,5 +1,5 @@
 import React from 'react';
-import Featur from './Feature';
+import BestSelling from './BestSelling';
 import banner from "../../../Images/banner.jpg"
 import './home.css'
  const Home =()=>{
@@ -10,7 +10,9 @@ import './home.css'
                     <img src={banner} alt=""/>
                 </div>
             </div>
-            <Featur/>
+            <div className="hk-homecontent">
+             <BestSelling/>
+            </div>
         </>
     );
 }

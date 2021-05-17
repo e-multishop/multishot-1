@@ -17,13 +17,20 @@ module.exports = {
         use: ["style-loader", "css-loader"]
       },
       {
-        test: /\.png$/,
-        use: ["file-loader"]
+        test: /\.scss$/,
+        use: ["style-loader","css-loader", 
+        {
+          loader: "sass-loader",
+          options: {
+            // Prefer `dart-sass`
+            implementation: require("sass"),
+          }}]
       },
+
       {
-        test: /\.jpg$/,
+        test: /\.(png|jpg)$/,
         use: ["url-loader"]
-      }
+      },
     ]
   },
   resolve: { 

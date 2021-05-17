@@ -5,19 +5,19 @@ import skirts from '../../../Images/skirts.jpg';
 import dresses from '../../../Images/dresses.jpg';
 import top from '../../../Images/top.jpg';
 
-const Feature =()=>{
+const BestSelling =()=>{
     const temp=[1,2,3,4];
     const img=[pant,skirts,dresses,top];
     const title=["Pant","Skirts","Dresses","Top"];
     return(
         <>
             <div>
-                <h3 className="hk-featured">Featured Categories</h3>
+                <h2 className="hk-featured">Bestselling Products</h2>
             </div>
             <div className="row">
                     {img.map((value)=> {
                        return(
-                        <div className="col s4">
+                        <div className="col s3">
                             <Card images={value}/>
                        </div>
                        );   
@@ -27,4 +27,4 @@ const Feature =()=>{
     );
 }
 
-export default Feature;
+export default BestSelling;

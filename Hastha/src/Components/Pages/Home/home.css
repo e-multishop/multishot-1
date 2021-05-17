@@ -1,3 +1,8 @@
 .hk-featured{
-    text-align: center;
+    padding-left:12px;
+}
+
+.hk-homecontent{
+    max-width: 1440px;
+    margin:auto;
 }
