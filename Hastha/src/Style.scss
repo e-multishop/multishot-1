@@ -1,12 +1,18 @@
 @import '~materialize-css/dist/css/materialize.min.css';
-
+$roboto-font-path: '~roboto-fontface/fonts';
+@import '~roboto-fontface/css/roboto/sass/roboto-fontface.scss';
 
 :root{
     --theme_color:#FAF4F8;
     --primary_color: #4f2624;
     --text-color:rgb(72, 79, 86);
+    --bg_color_secondary:#2B3947;
 }
 
 .no-padding{
     padding:0px;
+}
+
+.font-bold{
+    font-weight: bold;
 }

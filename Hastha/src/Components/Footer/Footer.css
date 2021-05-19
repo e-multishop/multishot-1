@@ -1,7 +1,7 @@
 .hk-footer{
     background-color: var(--theme_color);
 }
-.hk-footer li a{
-    color: var(--primary_color);
 
+.text-color{
+    color:var(--primary_color) !important;
 }

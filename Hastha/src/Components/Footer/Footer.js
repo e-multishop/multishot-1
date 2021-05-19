@@ -7,16 +7,16 @@ const Footer =()=>{
           <div className="container">
             <div className="row">
               <div className="col l6 s12">
-                <h5 className="white-text">Hasthakatha</h5>
-                <p className="grey-text text-lighten-4">Mob: +918756345678 <br/> email-hasthakatha@gmail.com</p>
+                <h5 className="text-color">Hasthakatha</h5>
+                <p className=" text-lighten-4 text-color">email-hasthakatha@gmail.com</p>
               </div>
               <div className="col l4 offset-l2 s12">
-                <h5 className="white-text">Quick Links</h5>
+                <h5 className="text-color">Quick Links</h5>
                 <ul>
-                  <li><a className="grey-text text-lighten-3" href="#!">Home</a></li>
-                  <li><a className="grey-text text-lighten-3" href="#!">About Us</a></li>
-                  <li><a className="grey-text text-lighten-3" href="#!">Terms & Conditions</a></li>
-                  <li><a className="grey-text text-lighten-3" href="#!">FAQ</a></li>
+                  <li><a className=" text-lighten-3 text-color" href="#!">Home</a></li>
+                  <li><a className=" text-lighten-3 text-color" href="#!">About Us</a></li>
+                  <li><a className=" text-lighten-3 text-color" href="#!">Terms & Conditions</a></li>
+                  <li><a className=" text-lighten-3 text-color" href="#!">FAQ</a></li>
                 </ul>
               </div>
               <div className="col l6 s12">
@@ -28,9 +28,9 @@ const Footer =()=>{
             </div>
           </div>
           <div className="footer-copyright">
-            <div className="container">
+            <div className="container text-color">
             © 2021 Copyright @ Hasthakatha
-            <a className="grey-text text-lighten-4 right" href="#!">More Links</a>
+            <a className=" text-lighten-4 right text-color" href="#!">More Links</a>
             </div>
           </div>
         </footer>

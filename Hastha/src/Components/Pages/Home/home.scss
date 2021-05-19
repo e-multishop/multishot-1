@@ -1,0 +1,24 @@
+.hk-featured{
+    padding-left:12px;
+}
+
+.hk-homecontent{
+    max-width: 1440px;
+    margin:auto;
+    h1{
+        text-align: center;
+        font-size: 32px;
+        color:#fff;
+    }
+}
+
+.hk-review{
+    background-color: var(--bg_color_secondary);
+    border: 1px solid transparent;
+
+}
+.hk-review-content{
+    padding:36px;
+    max-width: 1200px;
+    margin: auto;
+}

@@ -31,6 +31,10 @@ module.exports = {
         test: /\.(png|jpg)$/,
         use: ["url-loader"]
       },
+      {
+        test: /\.(woff2?)$/,
+        use: ["file-loader"]
+      },
     ]
   },
   resolve: { 

@@ -1,21 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import "./card.scss";
 const Card =(props)=>{
+
     return(
         <div className="card hk-card">
+            {
+                props.banner?
                 <div className="card-image">
                     <img src={props.images}/>
-                </div> 
+                </div> :''
+            }
                 <div className="card-content">
-                    <h2>Black Maxi Dress </h2>
-                    <h6>₹ 999</h6>
-                    <div className="hk-addcard">
-                        <a href="#">ADD TO CART</a>
-                    </div>  
+                    {
+                        props.title?
+                        <h2>{props.title}</h2>:''
+                    }
+                    {     
+                        props.description?                  
+                     <h6>{props.description}</h6>:''
+
+                    }
+                    {
+                        props.action?
+                        <div className="hk-addcard">
+                             <a href="#">ADD TO CART</a>
+                        </div>:''
+                    }
+                    {
+                        props.footer?props.footer:''
+                    }
+                     
                 </div>             
-                <div classname="card-action">
-                                      
-                </div>
         </div>
     );
 }

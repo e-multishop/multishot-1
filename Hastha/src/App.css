@@ -3,7 +3,7 @@
     font-family: Arial, Helvetica, sans-serif;
   }
   /* reset CSS of UL */
-  ul{
+ul{
     margin:0px;
     padding:0px;
     list-style: none;

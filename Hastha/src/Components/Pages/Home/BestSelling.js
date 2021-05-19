@@ -18,7 +18,7 @@ const BestSelling =()=>{
                     {img.map((value)=> {
                        return(
                         <div className="col s3">
-                            <Card images={value}/>
+                            <Card images={value} banner={true} title="Black Maxi Dress" action={true} description="₹ 9967"/>
                        </div>
                        );   
                     })}
