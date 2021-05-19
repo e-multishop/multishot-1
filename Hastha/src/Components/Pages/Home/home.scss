@@ -1,13 +1,15 @@
-.hk-featured{
-    padding-left:12px;
+@import "~react-responsive-carousel/lib/styles/carousel.min.css";
+@import "../../../mixin.scss";
+
+.hk-feature{
+    @include hk-subtitle;
 }
 
 .hk-homecontent{
     max-width: 1440px;
     margin:auto;
     h1{
-        text-align: center;
-        font-size: 32px;
+        @include hk-subtitle;
         color:#fff;
     }
 }
@@ -21,4 +23,38 @@
     padding:36px;
     max-width: 1200px;
     margin: auto;
+}
+.hk-about{
+    color: #561931;
+    font-size: 40px;
+    font-weight: 200;
+    text-transform: uppercase;
+    line-height: 1.3em;
+    letter-spacing: 2.6px;
+}
+.hk-about-content{
+    color: #000000;
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 1.4em;
+}
+
+
+
+.hk-about-body
+{
+    display:flex;
+    justify-content: space-evenly;
+}
+.hk-about-para{
+    width: 80%;
+    padding:10px;
+}
+.hk-logo_about
+{
+    width: 20%;
+}
+.hk-logo_about img{
+    width: 100%;
+    margin-top:-40px;
 }

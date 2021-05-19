@@ -6,7 +6,7 @@ import {faUser } from '@fortawesome/free-solid-svg-icons'
 import { NavLink } from 'react-router-dom';
 const Header =()=>{
     return(
-        <div className="row">
+        <div className="row no-margin">
             <div className="col s12 no-padding">
                 <nav className="hk-header">
                     <div className="nav-wrapper  ">

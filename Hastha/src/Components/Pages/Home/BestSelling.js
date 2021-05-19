@@ -12,7 +12,7 @@ const BestSelling =()=>{
     return(
         <>
             <div>
-                <h2 className="hk-featured">Bestselling Products</h2>
+                <h2 className="hk-feature">Bestselling Products</h2>
             </div>
             <div className="row">
                     {img.map((value)=> {
