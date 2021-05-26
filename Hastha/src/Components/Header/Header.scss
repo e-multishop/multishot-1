@@ -1,0 +1,35 @@
+.hk-header{
+    background-color: var(--theme_color);
+    padding: 0 16px;
+}
+
+.hk-main-menu li a{
+    text-transform: uppercase;
+    color:var(--primary_color);
+}
+
+.hk-logo{
+    height: 84px;
+    margin-top: -12px;
+}
+.hk-logoname{
+    color:var(--primary_color);
+    margin: 0px;
+    text-align:center;
+    padding:0;
+    font-size: 42px;
+}
+.user-icon{
+    color:var(--primary_color);
+    &:hover{
+        cursor: pointer;
+    }
+}
+
+.search-icon{
+    color:var(--primary_color);
+    margin: 0 10px;
+    &:hover{
+        cursor: pointer;
+    }
+}
