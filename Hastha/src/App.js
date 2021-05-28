@@ -15,13 +15,13 @@ class App extends Component{
     return(
       <HashRouter>
         <Header/>
+        <div id="search"></div>
         <Switch>
             <Route exact component={Home} path="/"/>
             <Route component={About} path="/about"/>
             <Route component={ProductList} path="/shop"/>
             <Route component={Product} path="/productdetails"/>
             <Route component={Contact} path="/contact"/>
-            <Route component={Search} path="/search"/>
         </Switch>
         <Footer/>
     </HashRouter>

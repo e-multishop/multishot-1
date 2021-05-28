@@ -6,11 +6,11 @@ const Footer =()=>{
         <footer className="page-footer hk-footer">
           <div className="container">
             <div className="row">
-              <div className="col l6 s12">
+              <div className="col l4 s12">
                 <h5 className="text-color">Hasthakatha</h5>
                 <p className=" text-lighten-4 text-color">email-hasthakatha@gmail.com</p>
               </div>
-              <div className="col l4 offset-l2 s12">
+              <div className="col l3 offset-l2 s12">
                 <h5 className="text-color">Quick Links</h5>
                 <ul>
                   <li><a className=" text-lighten-3 text-color" href="#!">Home</a></li>
@@ -19,8 +19,11 @@ const Footer =()=>{
                   <li><a className=" text-lighten-3 text-color" href="#!">FAQ</a></li>
                 </ul>
               </div>
-              <div className="col l6 s12">
-
+              <div className="col l3 s12">
+                  <h5 className="text-color">Follow Us</h5>
+                  <ul>
+                    
+                </ul>
               </div>
               <div className="col l6 s12">
 
