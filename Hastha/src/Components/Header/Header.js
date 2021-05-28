@@ -1,10 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom'
-import logo from '../../Images/logo.png';
+import logo from '../../Images/logo2.jpg';
 import  "./Header.scss";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faUser } from '@fortawesome/free-solid-svg-icons'
-import {faSearch } from '@fortawesome/free-solid-svg-icons'
+import {faUser,faSearch } from '@fortawesome/free-solid-svg-icons'
 import { NavLink } from 'react-router-dom';
 import Search from './Search';
 const Header =()=>{

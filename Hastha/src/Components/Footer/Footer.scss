@@ -1,0 +1,22 @@
+.hk-footer{
+    background-color: var(--theme_color);
+}
+
+.text-color{
+    color:var(--primary_color) !important;
+}
+
+.hk-social-icon{
+    display: flex;
+    flex-wrap: wrap;
+    a{
+        padding:0 10px;
+        color: var(--primary_color);
+    }
+    .hk-facebook-icon:hover{
+        color: #4267B2;
+    }
+    .hk-twitter-icon:hover{
+        color:#1DA1F2;
+    }
+}

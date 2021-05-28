@@ -1,6 +1,11 @@
 import React from 'react';
-import "./Footer.css";
-
+import "./Footer.scss";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  faFacebook,
+  faTwitter,
+  faInstagram,
+} from "@fortawesome/free-brands-svg-icons";
 const Footer =()=>{
     return(
         <footer className="page-footer hk-footer">
@@ -21,9 +26,17 @@ const Footer =()=>{
               </div>
               <div className="col l3 s12">
                   <h5 className="text-color">Follow Us</h5>
-                  <ul>
-                    
-                </ul>
+                  <div className="hk-social-icon">
+                      <a href="https://www.facebook.com/Hastha-Katha-1102781866557529/" target="_blank">
+                        <FontAwesomeIcon icon={faFacebook} size="2x" className="hk-facebook-icon"/>
+                      </a>
+                      <a href="https://twitter.com/hastha_katha" target="_blank">
+                        <FontAwesomeIcon icon={faTwitter} size="2x" className="hk-twitter-icon"/>
+                      </a>
+                      <a>
+                        <FontAwesomeIcon icon={faInstagram} size="2x" />
+                      </a>
+                  </div>
               </div>
               <div className="col l6 s12">
 
