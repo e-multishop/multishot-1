@@ -55,8 +55,11 @@ module.exports = {
       '/categories': 'http://localhost:3001',
       '/product': 'http://localhost:3001',
       '/rest': 'http://localhost:3001'
+    },
+    watchOptions: {
+      poll: true,
+      aggregateTimeout: 2000
     }
-
   },
-  plugins: [new webpack.HotModuleReplacementPlugin()]
+ 
 };

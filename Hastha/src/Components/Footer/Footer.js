@@ -33,8 +33,8 @@ const Footer =()=>{
                       <a href="https://twitter.com/hastha_katha" target="_blank">
                         <FontAwesomeIcon icon={faTwitter} size="2x" className="hk-twitter-icon"/>
                       </a>
-                      <a>
-                        <FontAwesomeIcon icon={faInstagram} size="2x" />
+                      <a href="https://www.instagram.com/hastha_katha/?hl=en" target="_blank">
+                        <FontAwesomeIcon icon={faInstagram} size="2x" className="hk-instagram-icon" />
                       </a>
                   </div>
               </div>
