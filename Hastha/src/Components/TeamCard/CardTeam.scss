@@ -1,0 +1,43 @@
+.hk-teamcard{
+    width:100% !important;
+    border: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    -webkit-transition: none;
+    box-shadow: none;
+    .card-image
+    {
+        height: 100% !important;
+        width: 40%;
+        overflow: hidden;
+    }
+    .card-content{
+        padding-bottom: 0 !important;
+
+        h2{
+            font-size: 24px;
+            font-weight: 500;
+            margin: 0px;
+        }
+        .card-desc{
+            padding:24px 0 0 0;
+        }
+    }
+    .card-action{
+        border:0px;
+            a{
+                color:#000 !important;
+            }
+            .hk-facebook-icon:hover{
+                color: #4267B2;
+            }
+            .hk-twitter-icon:hover{
+                color:#1DA1F2;
+            }
+            .hk-instagram-icon:hover{
+                color: #8a3ab9;
+            }
+        
+    }
+    
+}

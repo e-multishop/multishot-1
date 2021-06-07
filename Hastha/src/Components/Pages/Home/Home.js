@@ -6,6 +6,8 @@ import Banner from "./Banner";
 import Reviews from "./Reviews";
 import Aboutmain from "./About_main"
 import About from '../About/About';
+import Collabaration from "./Collaboration";
+import Team from './Team';
 const Home =()=>{
     
     return(
@@ -20,6 +22,8 @@ const Home =()=>{
              <BestSelling/>
              <Aboutmain/>
              <Reviews/>
+             <Collabaration/>
+             <Team/>
             </div>
 
         </>
