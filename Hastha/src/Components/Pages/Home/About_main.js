@@ -1,5 +1,5 @@
 import React, { useDebugValue } from 'react';
-import logo from '../../../Images/logo.png';
+import logo from '../../../Images/logo2.jpg';
 const Aboutmain =()=>{
    return(
         <>            

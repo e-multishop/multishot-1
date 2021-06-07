@@ -1,19 +1,24 @@
 import React from 'react';
 import "./Footer.scss";
+import logo from "../../Images/logo.png"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faFacebook,
   faTwitter,
   faInstagram,
 } from "@fortawesome/free-brands-svg-icons";
+import {faEnvelope} from '@fortawesome/free-solid-svg-icons'
 const Footer =()=>{
     return(
         <footer className="page-footer hk-footer">
           <div className="container">
             <div className="row">
               <div className="col l4 s12">
-                <h5 className="text-color">Hasthakatha</h5>
-                <p className=" text-lighten-4 text-color">email-hasthakatha@gmail.com</p>
+                <img src={logo} alt="logo" className="logo"/>
+                {/* <h5 className="text-color">Hasthakatha</h5> */}
+                {/* <p className=" text-lighten-4 text-color">email-hasthakatha@gmail.com</p> */}
+                <p><a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=hastha@email.com" target="_blank" className="text-lighten-4 text-color"><FontAwesomeIcon icon={faEnvelope} size="large" className=""/> hastha@gmail.com </a></p>
+
               </div>
               <div className="col l3 offset-l2 s12">
                 <h5 className="text-color">Quick Links</h5>

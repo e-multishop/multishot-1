@@ -66,7 +66,8 @@ class Contact extends React.Component {
                         <div className="col s6  hk-bgcolor">
                                 <h2 className="hk-subtitle">CONTACT US</h2>
                                 <p className="hk-content no-margin">Feel free to contact us for any <br/><b>queries, feedback</b> or just to say <br/><b>hello!</b></p>
-                                <p className="hk-email"><FontAwesomeIcon icon={faEnvelope} size="large" className=""/> hastha@gmail.com </p>
+                                <p><a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=hastha@email.com" target="_blank" className="hk-email"><FontAwesomeIcon icon={faEnvelope} size="large"/> hastha@gmail.com </a></p>
+
                         </div>
                 </div>
 

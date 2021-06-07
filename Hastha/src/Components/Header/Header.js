@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom'
-import logo from '../../Images/logo2.jpg';
+import logo from '../../Images/logopng.png';
 import  "./Header.scss";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faUser,faSearch } from '@fortawesome/free-solid-svg-icons'
