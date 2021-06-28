@@ -1,0 +1,85 @@
+.hk-product-review{
+    .review-header{
+        display: grid;
+        grid-template-columns: auto auto auto;
+        justify-content:flex-start;
+        .custmer-image{
+            width: 50px;
+            margin: auto;
+
+            img{
+                width: 100%;
+                border-radius: 50%;
+
+            }
+        }
+        .custmer-name{
+            vertical-align: center;
+            margin: auto;
+            a{
+                color:#595959;
+                padding: 0 10px;
+                &:hover{
+                    opacity: 0.5;
+                }
+            }
+        }
+        .review-date{
+            margin: auto;   
+        }
+    }
+    .review-body{
+        margin-left: 60px;
+        .review-content{
+            margin:0;
+            p{
+                padding: 0;
+                margin: 0 0 10px 0;
+                font-size: 16px;
+            }
+        }
+        .product-image{
+            width: 120px;
+            display: flex;
+            img{
+                width: 100%;
+                margin-right:10px ;
+                cursor: pointer;
+                        
+            }
+        }
+    }
+    .review-footer{
+        margin-left: 60px;
+        p{
+            color:#595959
+        }
+        .purchase-item{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            .purchase-img{
+                height: 40px;
+                overflow: hidden;
+                img{
+                    height: 100%;
+                    
+                }
+        }
+        .purchase-name{
+                color: #595959 ;
+                margin: auto 0;
+                padding: 0 10px;
+                &:hover{
+                    opacity: 0.5;
+                }
+        }
+    }
+        .helpfull{
+                // color: #000;
+                color: #000;
+                font-weight: 500;
+        }
+        
+    }
+}

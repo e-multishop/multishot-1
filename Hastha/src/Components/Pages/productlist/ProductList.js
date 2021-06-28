@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
-import "./ProductList.css";
+import "./ProductList.scss";
+import { NavLink } from 'react-router-dom';
 
 class ProductList extends Component{
     state={
@@ -18,10 +19,21 @@ class ProductList extends Component{
     render(){
         return(
         <>
-          {/* <!--product main_list--> */}
+        {/* shop badge */}
+        <div className="shop-badge">
+            Shop
+        </div>
+        <div className="hk-filter">
+            <div className=" heading">Items</div>
+            <div className=" button-filter">
+                Short : most recent
+            </div>
+        </div>
+    {/* <!--product main_list--> */}
     <div class="hs-container">
         {/* <!--product side list category--> */}
         <div class="side_category">
+            <div>All</div>
             {
                 this.state.categories.map((value)=>{
                    return( <div>{value.name}</div>)
@@ -29,26 +41,42 @@ class ProductList extends Component{
             }
         </div>
         {/* <!-- product List--> */}
-        <div class="product_list">
-            {/* <!-- Prodcuct list first row--> */}
-                {/* <!--product details--> */}
-                {this.state.product.map((value)=>{
-                    return(
-                    <div class="card">
-                        <div class="img-wraper">
-                            <img src={value.url}/>
-                        </div>
-                        <div class="description">
-                            {value.title}
-                        </div>
-                        <div class="price">
-                           {value.price}
-                        </div>
-                    </div>
-                    );
-                })
-                }                
-        </div>
+        {/* <div> */}
+                <div class="product_list">
+                    {/* <!-- Prodcuct list first row--> */}
+                        {/* <!--product details--> */}
+                        {this.state.product.map((value)=>{
+                            return(
+                                <>
+                            <div className="hk-product_card">
+                                <NavLink to="/productdetails">
+                                <div className="img-wraper">
+                                    <img src={value.url}/>
+                                </div>
+                                <div className="description">
+                                    {value.title}
+                                </div>
+                                <div className="price">
+                                {value.price}
+                                </div>
+                                <div className="hk-addcard">
+                                    <a href="#">ADD TO CART</a>
+                                </div>
+                                </NavLink>
+                            </div>
+                            {/* <div className="row">
+                                <div className="col s3">
+                                    <Card images={value.url} banner={true} title={value.title} description={value.price}/>
+                                </div>
+                            </div> */}
+                            </>
+                            );
+                        })
+                        }                
+                </div>
+        {/* </div> */}
+        {/* <Pagination/> */}
+
     </div> 
         </>
         );

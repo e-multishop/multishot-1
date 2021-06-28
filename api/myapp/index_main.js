@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 // var mysql = require('mysql');
-app.use(express.static(__dirname + '/public')); //Serves resources from public folder
+// app.use(express.static(__dirname + '/public')); //Serves resources from public folder
 // var con = mysql.createConnection({
 //     host: "localhost",
 //     user: "root",
@@ -13,7 +13,7 @@ app.use(express.static(__dirname + '/public')); //Serves resources from public f
 //     if (err) throw err;
 //     console.log("Connected!");
 // });
-const port = 3000;
+const port = 3001;
 var path = require('path');
 app.get('/search', (req, res) => {
     res.header("Content-Type", 'application/json');

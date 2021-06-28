@@ -5,6 +5,9 @@ const Aboutmain =()=>{
         <>            
            
             <div className="hk-about-body ">
+                <div className="hk-logo_about">
+                    <img src={logo} alt="Logo" srcset=""/>
+                </div>
                 <div className="hk-about-para ">
                     <h3 className="hk-about">About Us</h3>
                     <h3 className="hk-about-content">If the cultural diversity and traditional vibrancy of India intrigues you, then you are in the right place. 
@@ -16,9 +19,7 @@ const Aboutmain =()=>{
                       <br/> my garment apart is that I experiment with different kinds of hand embroideries, hand paintings and mirror work.
                     </h3>
                 </div>
-                <div className="hk-logo_about">
-                    <img src={logo} alt="Logo" srcset=""/>
-                </div>
+                
             </div>
         </>
     );

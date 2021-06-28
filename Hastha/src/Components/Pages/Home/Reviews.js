@@ -5,31 +5,32 @@ import Slider from '../../Shared/CardSlider/Slider';
 const Reviews=()=>{
     const reviews=[
         {
-            description:'First Water products are out of this world! The serum is like an elixir. It has changed my skin completely.',
+            description:'Absolutely fantastic quality & price. Quick & efficient communication and delivery. I would highly recommend Divya & Ekta if anyone considering buying.',
             footer:<div>
-                        <p className="font-bold">Mr. Ashish Kumar Kushwaha</p>
-                        <p>CEO-Tattva Sutra, </p>
-                        <p>USA</p>
+                        <p className="font-bold">Tristanleela</p>
+                        {/* <p>CEO-Tattva Sutra, </p>
+                        <p>USA</p> */}
                     </div>
         },
         {
-            description:'First Water products are out of this world! The serum is like an elixir. It has changed my skin completely.',
+            description:"I love these dresses and have ordered several already! They are so simple and beautiful at the same time. Ekta and Divya's work is always excellent! Thank you ladies!!!",
             footer:<div>
-                <p className="font-bold">Mr. Ashish Kumar Kushwaha</p>
-                <p>CEO-Tattva Sutra, </p>
-                <p>USA</p>
+                <p className="font-bold">Nexphaze</p>
+                {/* <p>CEO-Tattva Sutra, </p>
+                <p>USA</p> */}
             </div>
             
         },
         {
-            description:'First Water products are out of this world! The serum is like an elixir. It has changed my skin completely.',
+            description:'I love my pants. They were sewn to my measurements and fit perfectly. Beautifully crafted, comfortable and light weight. I highly recommend this shop! 🌞',
             footer:<div>
-                <p className="font-bold">Mr. Ashish Kumar Kushwaha</p>
-                <p>CEO-Tattva Sutra, </p>
-                <p>USA</p>
+                <p className="font-bold">Rachel</p>
+                {/* <p>CEO-Tattva Sutra, </p>
+                <p>USA</p> */}
             </div>
             
         }
+        
     ]
     return(
         <>
