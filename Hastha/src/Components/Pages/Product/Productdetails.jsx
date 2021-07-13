@@ -61,14 +61,14 @@ class Productdetails extends Component{
                 </div>
                 <div className="hs_product_side">
                     <div className="hs_product_head">
-                        <NavLink to="/"><p>Hastha Katha</p></NavLink>
+                        <NavLink to="/"><p>HasthaKatha</p></NavLink>
                         <div className="hk-rating">
-                            <div>
+                            {/* <div>
                                 <p><FontAwesomeIcon icon={faMapMarkerAlt}/> Seller</p>
-                            </div>
-                            <div className="sales">
+                            </div> */}
+                            {/* <div className="sales">
                                 927 sales
-                            </div>
+                            </div> */}
                             <div > 
                                 <FontAwesomeIcon icon={faStar}/>
                                 <FontAwesomeIcon icon={faStar}/>
@@ -83,8 +83,8 @@ class Productdetails extends Component{
                         </h1>
                         <div className="price-section">
                                 <div className="hk-product-price">
-                                    <h2>US$ 40.00</h2>
-                                    <p>Local taxes included (where applicable)</p>
+                                    <h2>USD $40.00</h2>
+                                    {/* <p>Local taxes included (where applicable)</p> */}
                                 </div>
                                 <p className="stock"><FontAwesomeIcon icon={faCheck}/> In stock </p>
                         </div>

@@ -17,7 +17,7 @@ const Header =()=>{
                     <div className="nav-wrapper">
                         <a href="/" className="brand-logo ">
                             <img src={logo} alt="logo" className="hk-logo left"/>
-                            <span className="hk-logoname">Hastha Katha</span>                
+                            <span className="hk-logoname">HasthaKatha</span>                
                         </a>  
                         <ul id="nav-mobile " className="hide-on-med-and-down right hk-main-menu">
                             <li><NavLink to="/">Home</NavLink></li>
