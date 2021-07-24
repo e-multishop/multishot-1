@@ -1,40 +1,59 @@
-// import React from 'react';
-// import "./login.scss";
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
-// render()
-// {
-//     return (
-//         <div className="col s12 hk-offsetmd">
-//             <div className="hk-card">
-//                 <div class="card-content white-text">
-//                     <h3>login form</h3>
-//                 </div>
-//                 <div class="card-content">
-//                     <div className="input-field">
+import React, { Component } from 'react';
+import "./login.scss";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import Signup from "./Signup";
+import { BrowserRouter as Router, NavLink} from "react-router-dom";
+class Login extends Component {
 
-//                         <label for="username">username</label>
-//                         <input id="username" type="text" />
+    render() {
+        return (
 
-//                     </div>
-//                     <div className="input-field">
+            <form className="col s6 hk-loginform">
+                <div className="leaf">
+                    {/* <img src="https://www.jaypore.com/images/leaf_topLeft.png">
+                    <img src="https://www.jaypore.com/images/leaf_topright.png"> */}
+                </div>
+                <div className="col s6 hk-offsetmd">
+                    <div className="hk-card">
+                        <div class="card-content white-text">
+                            <h3>login form</h3>
+                        </div>
+                        <div class="card-content">
+                            <div className="input-field">
 
-//                         <label for="password">password</label>
-//                         <input id="password" type="password" />
+                                <label for="username">username</label>
+                                <input id="username" type="text" />
 
-//                     </div>
-//                     <div className="input-field">
-//                         <input id="remem" type="checkbox" />
-//                         <label for="remem">Rememebar me</label>
+                            </div>
+                            <div className="input-field">
 
-//                     </div>
-//                     <div className="button">
-//                         <a class="waves-effect waves-light btn">Submit</a>
-//                     </div>
+                                <label for="password">password</label>
+                                <input id="password" type="password" />
+                                <br/>
+                            </div>
+                            <div className="input-field">
+                            <p>
+                                <label>
+                                    <input type="checkbox" />
+                                    <span>Remmeber </span>
+                                    </label>
+                            </p>
+                            </div>
 
-//                 </div>
-//             </div>
-//         </div>
-//     );
-// }
-// export default login;
+                            <div className="button">
+                                <a class="waves-effect waves-light btn">Submit</a>
+                            </div>
+                            <div className="join-now">
+                             <NavLink exact className="active" to="/signup">joinnow</NavLink>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            );
+    }
+}
+export default Login;
