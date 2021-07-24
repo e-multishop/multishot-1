@@ -5,6 +5,8 @@ var nodemailer = require('nodemailer');
 var cors = require('cors');
 const creds = require('./config');
 app.use(express.static(__dirname + '/public')); //Serves resources from public folder
+app.use(express.json());
+const bcrypt = require('bcrypt');
 var con = mysql.createConnection({
     host: "localhost",
     user: "root",
@@ -30,6 +32,65 @@ app.get('/categories', (req, res) => {
         if (err) throw err;
         res.send(JSON.stringify(result));
     });
+});
+
+app.post ('/signup',(req,res)=>
+{
+    var sql = "select email from loginusers where email= '"+req.body.email+"'";
+    con.query(sql,function(err,result){
+        console.log("messaage"+result);
+        if(result.length===0)
+        {
+            const hash = bcrypt.hash(req.body.password,10,function(err,hashpassword){
+                console.log(hashpassword);
+                var sql ="insert into loginusers values(null,'','"+req.body.email+"','"+hashpassword+"')";
+                con.query(sql, function (err, result2) {
+                    if (err) throw err;
+                    res.send(" sucess");
+                });
+      
+            });
+        }else{
+            res.status(500);
+            res.send("email is already registered");
+        }
+        
+        // if(err) throw err;
+        // res.send("found");
+    
+    });
+ //   console.log(req.body);
+   // const {email, password}=req.body;
+    
+    
+});
+
+
+app.post('/login',(req,res)=>
+{
+    var sql = "select * from loginusers where email= '"+req.body.email+"'";
+    con.query(sql,function(err,result){
+        if( result!=null && result.length==1)
+        {
+
+            bcrypt.compare(req.body.password,result[0].password,function(err,result2){
+                if(result2===true)
+                {
+                    res.send("login sucess");
+                }else{
+                    res.status(500);
+                    res.send("error");
+                }
+             
+            });
+        }
+        if(err) throw err;
+            
+        
+    });
+    // bcrypt.compare("12345678","$2b$10$J/RmGbDFCcRWO1aiCWWyLe2mehqwPsiJ.yuFemHK52Rk.93VW4nIa",function(err,result){
+    //     console.log(result);
+    // });
 });
 
 app.get('/colour', (req, res) => {
@@ -106,7 +167,7 @@ app.get('/product', (req, res) => {
             console.log('Server is ready to take messages');
         }
     });
-
+   
     router.post('/send', (req, res, next) => {
         var name = req.body.name
         var email = req.body.email

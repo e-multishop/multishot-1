@@ -24,6 +24,7 @@ const Header =()=>{
                             <li><NavLink to="/about">About us</NavLink></li>
                             <li><NavLink to="/shop">Shop</NavLink></li>
                             <li><NavLink to="/contact">Contact us</NavLink></li>
+                            <li><NavLink to="/admin">Admin</NavLink></li>
                             <li onClick={search}><FontAwesomeIcon icon={faSearch} size="large" className="icon slide-out"/></li>
                             <li><NavLink to ="/"><FontAwesomeIcon icon={faUser} size="large" className="icon "/></NavLink></li>
                             <li><NavLink to ="/"><FontAwesomeIcon icon={faShoppingCart} size="large" className="icon "/></NavLink></li>

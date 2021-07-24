@@ -12,6 +12,7 @@ import Productdetails from './Components/Pages/Product/Productdetails';
 import Search from './Components/Header/Search';
 import login from './Components/Pages/login/Login'
 import * as materialize  from 'materialize-css/dist/js/materialize';
+import Adminapp from './Components/Admin_dashboard/Adminapp'
 class App extends Component{
   render(){
     return(
@@ -24,6 +25,7 @@ class App extends Component{
             <Route component={ProductList} path="/shop"/>
             <Route component={Productdetails} path="/productdetails"/>
             <Route component={Contact} path="/contact"/>
+            <Route component={Adminapp} path="/admin"/>
        </Switch>
         <Footer/>
     </HashRouter>
