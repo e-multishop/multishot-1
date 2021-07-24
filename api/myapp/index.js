@@ -3,6 +3,7 @@ const app = express()
 var mysql = require('mysql');
 var nodemailer = require('nodemailer');
 var cors = require('cors');
+app.use(express.json());
 const creds = require('./config');
 app.use(express.static(__dirname + '/public')); //Serves resources from public folder
 var con = mysql.createConnection({
@@ -18,13 +19,14 @@ con.connect(function (err) {
 });
 const port = 3000;
 var path = require('path');
-app.get('/search', (req, res) => {
+const { query } = require('express');
+app.get('/rest/search', (req, res) => {
     res.header("Content-Type", 'application/json');
     // res.send(JSON.stringify(data)); });
     res.sendFile(path.resolve('search/data.json'));
 });
 
-app.get('/categories', (req, res) => {
+app.get('/rest/categories', (req, res) => {
     var sql = "SELECT name FROM `category`";
     con.query(sql, function (err, result) {
         if (err) throw err;
@@ -32,7 +34,7 @@ app.get('/categories', (req, res) => {
     });
 });
 
-app.get('/colour', (req, res) => {
+app.get('/rest/colour', (req, res) => {
     var sql = "SELECT name FROM `colour` ";
     con.query(sql, function (err, result) {
         if (err) throw err;
@@ -40,7 +42,7 @@ app.get('/colour', (req, res) => {
     });
 });
 
-app.get('/product', (req, res) => {
+app.get('/rest/product', (req, res) => {
     var sql = "SELECT title,pid,price,total_available FROM product ";
     con.query(sql, function (err, result) {
         if (err) throw err;
@@ -142,4 +144,25 @@ app.get('/product', (req, res) => {
 
 
 // });
+app.post("/rest/addproduct",(req,res)=>{
+
+    var pid=req.body.pid;
+    var category=req.body.category;
+    var title=req.body.title;
+    var price=req.body.price;
+    var price_without_embroidary=req.body.price_without_embroidary;
+    var description=req.body.description;
+    var note=req.body.note;
+    var material=req.body.material;
+    var total_available=req.body.total_available;
+    var total_quantity=req.body.total_quantity;
+
+    var sql= "INSERT INTO product(pid,category,title,price,price_without_embroidary,description,note,material,total_available,total_quantity)VALUES('"+pid+"','"+category+"','"+title+"','"+price+"','"+price_without_embroidary+"','"+description+"','"+note+"','"+material+"','"+total_available+"','"+total_quantity+"')";
+    con.query(sql,(err,result)=>{
+        if(err) throw err;
+        res.send('inserted');
+    //    res.end();
+    });
+});
+
 app.listen(port);
