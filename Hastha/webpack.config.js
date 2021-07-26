@@ -49,13 +49,11 @@ module.exports = {
   
   devServer: {
     contentBase: path.join(__dirname, "public/"),
-    port: 3000,
-    publicPath: "http://localhost:3000/dist/",
+    port: 3002,
+    publicPath: "http://localhost:3002/dist/",
     hotOnly: true,
     proxy: {
-      '/categories': 'http://localhost:3001',
-      '/product': 'http://localhost:3001',
-      '/rest': 'http://localhost:3001'
+      '/rest': 'http://localhost:3000'
     },
     watchOptions: {
       poll: true,

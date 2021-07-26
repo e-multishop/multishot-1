@@ -27,7 +27,7 @@ class App extends Component{
             <Route component={Adminapp} path="/admin"/>
        </Switch>
         <Footer/>
-    </HashRouter>
+    </HashRouter> 
     );
   };
 }

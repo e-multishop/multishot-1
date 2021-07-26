@@ -69,8 +69,6 @@ app.get('/rest/product', (req, res) => {
                     }
                     resolve();
                 })
-
-
             });
             asyncoperations.push(p);
         }
