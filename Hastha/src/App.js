@@ -31,7 +31,7 @@ class App extends Component{
             <Route  component={Signup} path="/signup"/>
        </Switch>
         <Footer/>
-    </HashRouter>
+    </HashRouter> 
     );
   };
 }

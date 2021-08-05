@@ -8,6 +8,7 @@ app.use(express.json());
 const creds = require('./config');
 app.use(express.static(__dirname + '/public')); //Serves resources from public folder
 app.use(express.json());
+app.use(cors())
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 var login_data=[];
@@ -292,8 +293,6 @@ app.get('/rest/product', (req, res) => {
                     }
                     resolve();
                 })
-
-
             });
             asyncoperations.push(p);
         }
@@ -358,6 +357,63 @@ app.get('/contact', (req, res) => {
         });
     })
 
+<<<<<<< HEAD
+=======
+    //    const app = express()
+    app.use(cors())
+    app.use(express.json())
+    app.use('/', router)
+    // app.listen(3002)
+
+
+
+
+    var transport = {
+        host: 'ashish.volksdigitallab@gmail.com', // Don’t forget to replace with the SMTP host of your provider
+        //    port: 587,
+        auth: {
+            user: creds.USER,
+            pass: creds.PASS
+        }
+    }
+
+    var transporter = nodemailer.createTransport(transport)
+
+    transporter.verify((error, success) => {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Server is ready to take messages');
+        }
+    });
+
+    router.post('/send', (req, res, next) => {
+        var name = req.body.name
+        var email = req.body.email
+        var message = req.body.message
+        var content = `name: ${name} \n email: ${email} \n message: ${message} `
+
+        var mail = {
+            from: name,
+            to: 'RECEIVING_EMAIL_ADDRESS_GOES_HERE',  // Change to email address that you want to receive messages on
+            subject: 'New Message from Contact Form',
+            text: content
+        }
+
+        transporter.sendMail({
+            from: "<your email address>",
+            to: email,
+            subject: "Submission was successful",
+            text: `Thank you for contacting us!\n\nForm details\nName: ${name}\nEmail: ${email}\nMessage: ${message}`
+        }, function (error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Message sent: ' + info.response);
+            }
+        });
+    })
+>>>>>>> 75ad0a58835ec756298421c9939e701349015edf
 
     //    const app = express()
     app.use(cors())

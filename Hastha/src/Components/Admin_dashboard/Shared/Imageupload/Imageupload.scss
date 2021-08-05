@@ -1,0 +1,22 @@
+.upload__image-wrapper{
+    padding: 20px;
+    .uploadbutton{
+        padding: 10px;
+    }
+   .uploadimage{
+       display: flex;
+       flex-wrap: wrap;
+       justify-content: start;
+       .image-item{
+           padding: 5px;
+           .image-item__btn-wrapper{
+               button{
+                    background-color: #4f2624;
+                    color:#fff;
+               }
+               
+           }
+       }
+      
+    }
+}
