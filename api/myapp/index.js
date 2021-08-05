@@ -1,4 +1,5 @@
 const express = require('express')
+const jwt = require('jsonwebtoken')
 const app = express()
 var mysql = require('mysql');
 var nodemailer = require('nodemailer');
@@ -8,6 +9,11 @@ const creds = require('./config');
 app.use(express.static(__dirname + '/public')); //Serves resources from public folder
 app.use(express.json());
 const bcrypt = require('bcrypt');
+const crypto = require('crypto');
+var login_data=[];
+const xlsxFile = require('read-excel-file/node');
+const fs = require('fs');
+var jwt_key =" secret";
 var con = mysql.createConnection({
     host: "localhost",
     user: "root",
@@ -22,6 +28,9 @@ con.connect(function (err) {
 const port = 3000;
 var path = require('path');
 const { query } = require('express');
+const { restart } = require('nodemon');
+const SMTPConnection = require('nodemailer/lib/smtp-connection');
+const { time } = require('console');
 app.get('/rest/search', (req, res) => {
     res.header("Content-Type", 'application/json');
     // res.send(JSON.stringify(data)); });
@@ -73,7 +82,19 @@ app.post('/rest/login', (req, res) => {
 
             bcrypt.compare(req.body.password, result[0].password, function (err, result2) {
                 if (result2 === true) {
-                    res.send("login sucess");
+                    const token = jwt.sign(
+                        {
+                            email: result[0].email,
+                            userId:result[0].id
+                        },
+                        jwt_key,
+                        {
+                            expiresIn: "1h"   
+                        }
+                    );
+                    login_data.push(token);
+                    res.send({"token":token});
+                
                 } else {
                     res.status(500);
                     res.send("error");
@@ -90,13 +111,158 @@ app.post('/rest/login', (req, res) => {
     // });
 });
 
-
-app.get('/rest/colour', (req, res) => {
-    var sql = "SELECT name FROM `colour` ";
+app.post('/rest/forgot_password',(req,res)=>{
+    
+    var sql = "select email from loginusers where email= '" + req.body.email + "'";
     con.query(sql, function (err, result) {
-        if (err) throw err;
-        res.send(JSON.stringify(result));
+        console.log("messaage" + result);
+        if (result.length === 0) {
+            res.status(500);
+            res.send("email is not vaild");
+        } else 
+            {
+               var token = crypto.randomBytes(32).toString('hex');
+                const hash = bcrypt.hash(token,10, function (err, hashpassword) 
+                {
+                    var timestamp=new Date();
+                    timestamp=Date.now();
+                    var sql="insert into forgot_password values('"+req.body.email+"','"+hashpassword+"','"+timestamp+"','"+0+"')";
+                    con.query(sql, function (err, result2) {
+
+                        var transport=nodemailer.createTransport({
+                            host:'smtp.gmail.com',
+                            port:587,
+                            secure:false,
+                            requireTLS:true,
+                            auth:{
+                                user:creds.USER,
+                                pass: creds.PASS
+                            }
+                        });
+                        var password_reset_link="http://localhost:3000/reset_password?token="+hashpassword;
+                        var fileread=  fs.readFileSync('/home/optimus/Desktop/hk_project/hasthakatha/api/myapp/forgot_password_templet.html', 'utf8');
+                        var mailOptions={
+                            from:creds.USER,
+                            to: req.body.email,
+                            subject:'otp from hasthakatha for change the password',
+                            html: fileread.replace(/{password_rest_link}/g,password_reset_link)
+                        }
+                        transport.sendMail(mailOptions,function(err,result){
+                            if(err){
+                                res.send('err');
+                            }else{
+                                res.send("mail send succesfully");
+                            }
+                        })
+                        if (err) throw err;
+                            res.send(" sucess");
+                    });
+                   
+                });
+
+                
+            }
+    });    
+  
+});
+
+app.post('/rest/validate_token',(req,res)=>{
+    var sql = "select * from forgot_password where pass_token= '" + req.query.token + "'";
+    con.query(sql, function(err,result)
+    {
+        if (result.length === 0) {
+            res.status(500);
+            res.send("Invaild request");
+        }else{
+            var timestamp=new Date();
+            timestamp=Date.now();
+
+            var temp = (result[0].timestamp)+3600000;
+        //    var temp2= timestamp-temp;
+            if((temp-timestamp)<=3600000)
+            {
+                if(req.query.token===result[0].pass_token)
+                {
+                   res.send({"validated":true}); 
+                      
+                }
+                 
+            }
+            else{
+                res.send("token expaired");
+            }
+           
+        }
     });
+});
+app.post('/rest/reset',(req,res)=>{
+    var sql = "select * from forgot_password where pass_token= '" + req.query.token + "'";
+    con.query(sql, function(err,result)
+    {
+        if (result.length === 0) {
+            res.status(500);
+            res.send("Invaild request");
+        }else{
+            var timestamp=new Date();
+            timestamp=Date.now();
+
+            var temp = (result[0].timestamp)+3600000;
+        //    var temp2= timestamp-temp;
+            if((temp-timestamp)<=3600000)
+            {
+                if((req.query.token===result[0].pass_token) && (result[0].visited===0))
+                {
+                    var email=result[0].email;
+                    const hash = bcrypt.hash(req.body.password, 10, function (err, hashpassword) {
+                        var sql = "update loginusers set password='"+hashpassword+"' where email='"+email+"'";
+                        con.query(sql, function (err, result3) {
+                            if (err) throw err;
+                                res.send(" sucess");
+
+                            var sql = "update forgot_password set visited='"+1+"' where email='"+email+"' AND pass_token='"+req.query.token+"'";
+                            con.query(sql, function (err, result4) {
+                                if (err) throw err;
+                                    res.send(" sucess");
+                            });
+                        });
+                    });   
+                }
+                else{
+                        res.response(500);
+                        res.send("link is invalid");
+                }
+                 
+            }
+            else{
+                res.send("token expaired");
+            }
+           
+        }
+    });
+});
+app.get('/rest/insert_data',(req,res)=>{
+    xlsxFile('./Final_File.xlsx', { getSheets: true }).then((sheets) => {
+      sheets.forEach((obj)=>{
+       
+           console.log(obj.name);
+       })
+   })
+});
+app.get('/rest/colour', (req, res) => {
+    var token= req.headers.token;
+    var sql = "SELECT name FROM `colour` ";
+    if(token===login_data)
+    {
+        con.query(sql, function (err, result) {
+            if (err) throw err;
+            res.setHeader("content-type","application/json");
+            res.send(JSON.stringify(result));
+        });
+    }else{
+        res.status(500);
+        res.send("error");
+    }
+   
 });
 
 app.get('/rest/product', (req, res) => {
@@ -192,7 +358,7 @@ app.get('/contact', (req, res) => {
         });
     })
 
-<<<<<<< HEAD
+
     //    const app = express()
     app.use(cors())
     app.use(express.json())
