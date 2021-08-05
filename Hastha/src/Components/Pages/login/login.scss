@@ -1,9 +1,29 @@
+.logo-name{
+    color: var(--primary_color);
+    font-weight: bold;
+    padding:10px 0 0 0;
+}
+.modal{
+    width: 35%;
+    height: 100%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
-
+}
 .hk-loginform{
-    background-color:#fff;
-    .hk-formcontent{
-        padding:25px 70px 25px 70px;
-        // text-align: center;
+    padding: 0 40px;
+    .sign-in-btn{
+        background-color: var(--primary_color);
+        font-size: 16px;
+        font-weight: bold;
+        padding: 0 50px 0 50px;
+        margin-bottom: 20px;
+    }
+    .join-now{
+        color:#797979;
+        button{
+            background-color: none;
+            border:none;
+            border-bottom: 1px solid #797979 !important;
+        }
     }
 }

@@ -7,6 +7,7 @@ app.use(express.json());
 const creds = require('./config');
 app.use(express.static(__dirname + '/public')); //Serves resources from public folder
 app.use(express.json());
+app.use(cors())
 const bcrypt = require('bcrypt');
 var con = mysql.createConnection({
     host: "localhost",
