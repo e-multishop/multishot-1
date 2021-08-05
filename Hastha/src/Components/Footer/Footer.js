@@ -20,7 +20,7 @@ const Footer =()=>{
                 <NavLink to="/"><img src={logo} alt="logo" className="logo"/></NavLink>
                 {/* <h5 className="text-color">Hasthakatha</h5> */}
                 {/* <p className=" text-lighten-4 text-color">email-hasthakatha@gmail.com</p> */}
-                <p><a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=hastha@email.com" target="_blank" className="text-lighten-4 text-color"><FontAwesomeIcon icon={faEnvelope} size="large" className=""/> hastha@gmail.com </a></p>
+                <p><a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=hasthakatha@gmail.com" target="_blank" className="text-lighten-4 text-color"><FontAwesomeIcon icon={faEnvelope} size="large" className=""/> hasthakatha@gmail.com </a></p>
 
               </div>
               <div className="col l3 offset-l2 s12">
