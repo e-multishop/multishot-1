@@ -76,7 +76,6 @@ export default function CustomizedDialogs() {
     image: " ",
     dimension: " ",
     color: " ",
-
   });
   function onSubmit(e) {
     var primarykey = ""
@@ -95,7 +94,9 @@ export default function CustomizedDialogs() {
     }
     ).then(res => {
       console.log(res.formdata)
-      toast.success("Success")
+      toast.success("Success");
+      // setOpen(false);
+    
 
     }).catch(err => {
       console.log(err)
