@@ -20,6 +20,7 @@ class App extends Component{
       <HashRouter>
         <Header/>
         <div id="search"></div>
+        <div id="modal"></div>
         <Switch>
             <Route exact component={Home} path="/"/>
             <Route component={About} path="/about"/>

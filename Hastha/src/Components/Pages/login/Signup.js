@@ -1,4 +1,3 @@
-import { faAmericanSignLanguageInterpreting } from "@fortawesome/free-solid-svg-icons";
 import React,{ Component } from "react";
 import "./signup.scss";
 
@@ -8,15 +7,6 @@ class Signup extends Component{
                 <div className="row no-margin ">
                         <form className="signup-form">
                         <h5>Sign-Up</h5>
-
-                                    {/* <div className="input-field col s6 ">
-                                        <input id="first_name" type="text" className="validate" />
-                                        <label for="first_name">First Name</label>
-                                    </div>
-                                    <div className="input-field col s6">
-                                        <input id="last_name" type="text" className="validate" />
-                                        <label for="last_name">Last Name</label>
-                                    </div> */}
                                     <div className="input-field">
                                         <input id="email" type="email" className="validate" />
                                         <label for="email">Email</label>
@@ -33,8 +23,7 @@ class Signup extends Component{
                                 <div className="button center-align">
                                     <a class="waves-effect waves-light btn signup-btn">Submit</a>
                                 </div>
-                        </form>
-                        
+                        </form>                        
                 </div>
     
         );
