@@ -12,7 +12,8 @@ app.use(cors())
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 var login_data=[];
-const xlsxFile = require('read-excel-file/node');
+//const xlsxFile = require('read-excel-file/node');
+const xlsx = require('xlsx');
 const fs = require('fs');
 var jwt_key =" secret";
 var con = mysql.createConnection({
@@ -242,12 +243,43 @@ app.post('/rest/reset',(req,res)=>{
     });
 });
 app.get('/rest/insert_data',(req,res)=>{
-    xlsxFile('./Final_File.xlsx', { getSheets: true }).then((sheets) => {
-      sheets.forEach((obj)=>{
-       
-           console.log(obj.name);
-       })
-   })
+//     xlsxFile('./Final_File.xlsx', { getSheets: true }).then((sheets) => {
+//       sheets.forEach((obj)=>{
+//             console.log(obj.name);
+//        })
+//    })
+        console.log(__dirname+"/ash.xlsx");
+        const workbook = xlsx.readFile(__dirname+"/ash.xlsx");
+        
+        const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+        console.log(worksheet);
+        var cellAsString;
+        const posts = [];
+        let post ={};
+        for(let cell in worksheet)
+        {
+             cellAsString = cell.toString();
+             console.log(cellAsString);
+        }
+        console.log(cellAsString);
+        if(cellAsString[1] !== 'r' && cellAsString !=='m' && cellAsString[1] > 1)
+        {
+            if(cellAsString[0] === 'A')
+            {
+                post.title = worksheet[cell].v;
+            }
+            if(cellAsString[0] === 'B')
+            {
+                post.author = worksheet[cell].v;
+            }
+            if(cellAsString[0] === 'C')
+            {
+                post.released = worksheet[cell].v;
+                posts.push(post);
+                post = {};
+            }
+        }
+        console.log(posts);
 });
 app.get('/rest/colour', (req, res) => {
     var token= req.headers.token;
@@ -357,8 +389,6 @@ app.get('/contact', (req, res) => {
         });
     })
 
-<<<<<<< HEAD
-=======
     //    const app = express()
     app.use(cors())
     app.use(express.json())
@@ -413,7 +443,6 @@ app.get('/contact', (req, res) => {
             }
         });
     })
->>>>>>> 75ad0a58835ec756298421c9939e701349015edf
 
     //    const app = express()
     app.use(cors())
