@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 14, 2021 at 08:07 PM
--- Server version: 10.4.18-MariaDB
--- PHP Version: 8.0.5
+-- Generation Time: Aug 07, 2021 at 09:49 AM
+-- Server version: 10.4.19-MariaDB
+-- PHP Version: 8.0.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -96,6 +96,55 @@ CREATE TABLE `discount` (
   `pid` varchar(6) NOT NULL,
   `offer` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `forgot_password`
+--
+
+CREATE TABLE `forgot_password` (
+  `email` varchar(50) NOT NULL,
+  `pass_token` varchar(100) NOT NULL,
+  `timestamp` varchar(25) NOT NULL,
+  `visited` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `forgot_password`
+--
+
+INSERT INTO `forgot_password` (`email`, `pass_token`, `timestamp`, `visited`) VALUES
+('ashishmaurya7054@gmail.com', '$2b$10$EnAja1dfl0nqgGaJ4D9ti.c7KW564NIhBGxWSRJIiQaY8H4yk5HN6', '1628142331202', 0),
+('ashishmaurya7054@gmail.com', '$2b$10$GTeCP03G85bL5/TVMV/eKOAxYBVNTDrfy/2MpPQMCTb1uGgRMMphW', '1628095566926', 0),
+('ashishmaurya7054@gmail.com', '$2b$10$iGwc1dGuyikGZqJ59dPb0.JdfF8xjn1H2ZRm9M8Lig2s5sPHer5hi', '1627750755939', 0),
+('ashishmaurya7054@gmail.com', '$2b$10$lhF4hUql5PlmLjycf1rGUOlWk2rXFOGrYYQJr.yf/PK/4hJoLAAUm', '1627748294882', 0),
+('ashishmaurya7054@gmail.com', '$2b$10$meE9Abe4./xdEfU6pFcTEOgDkNAYeeoOLgAF2Ea4dFY163uLHVu4.', '1627751051419', 0),
+('ashishmaurya7054@gmail.com', '$2b$10$MncFDvwIlhC16vwnDDfFbu6JWGcatNseUFkfKPnDbp15Z9sj.5qHW', '1627750659423', 0),
+('ashishmaurya7054@gmail.com', '$2b$10$ms0e9kf/.N43He0A5xOnX.VwiVcyelGDhposls2dqRj3w4QT9LjZ.', '1627749333499', 0),
+('ashishmaurya7054@gmail.com', '$2b$10$Yiaj8lXGaDl1/rTjr/vB9ef.5k8XKmvMBjRHcdzdgYRNLlMSYXQou', '1627747552738', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `loginusers`
+--
+
+CREATE TABLE `loginusers` (
+  `id` int(11) NOT NULL,
+  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `loginusers`
+--
+
+INSERT INTO `loginusers` (`id`, `name`, `email`, `password`) VALUES
+(23, '', 'ashish@gmail.com', '$2b$10$TxJQg0xGkNhiq/8zau9WLuJC87SiI78/k57FuE3cyyMtBx7azXiUm'),
+(24, '', 'ashi@gmail.com', '$2b$10$v66zvxsaSe83d27JEOmZrusOYIV/hOJ2JYnib/PFcIB7ypEBkQBna'),
+(26, '', 'ashishmaurya7054@gmail.com', '$2b$10$815XXZ1abtCSmUxiwqz26.AumfmJryimUrfrebC0Z9LvkU79Ang2C');
 
 -- --------------------------------------------------------
 
@@ -323,6 +372,19 @@ ALTER TABLE `category`
   ADD PRIMARY KEY (`cid`);
 
 --
+-- Indexes for table `forgot_password`
+--
+ALTER TABLE `forgot_password`
+  ADD PRIMARY KEY (`pass_token`);
+
+--
+-- Indexes for table `loginusers`
+--
+ALTER TABLE `loginusers`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
 -- Indexes for table `product`
 --
 ALTER TABLE `product`
@@ -386,6 +448,12 @@ ALTER TABLE `wish_list`
 --
 ALTER TABLE `add_to_cart`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `loginusers`
+--
+ALTER TABLE `loginusers`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `product_size`
