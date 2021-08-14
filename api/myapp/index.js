@@ -66,7 +66,7 @@ app.post('/rest/signup', (req, res) => {
             res.send("email is already registered");
         }
 
-        // if(err) throw err;
+        if(err) throw err;
         // res.send("found");
 
     });
@@ -104,7 +104,11 @@ app.post('/rest/login', (req, res) => {
 
             });
         }
-        if (err) throw err;
+        else{
+            res.status(500);
+            res.send("email id not found")
+        }
+        // if (err) throw err;
 
 
     });
@@ -141,8 +145,8 @@ app.post('/rest/forgot_password',(req,res)=>{
                                 pass: creds.PASS
                             }
                         });
-                        var password_reset_link="http://localhost:3000/reset_password?token="+hashpassword;
-                        var fileread=  fs.readFileSync('/home/optimus/Desktop/hk_project/hasthakatha/api/myapp/forgot_password_templet.html', 'utf8');
+                        var password_reset_link="http://localhost:3000/#/reset_password/"+hashpassword;
+                        var fileread=  fs.readFileSync('./forgot_password_templet.html', 'utf8');
                         var mailOptions={
                             from:creds.USER,
                             to: req.body.email,
@@ -197,6 +201,7 @@ app.post('/rest/validate_token',(req,res)=>{
         }
     });
 });
+
 app.post('/rest/reset',(req,res)=>{
     var sql = "select * from forgot_password where pass_token= '" + req.query.token + "'";
     con.query(sql, function(err,result)

@@ -18,8 +18,15 @@ const Header = () => {
     //     var instances = M.Modal.init(elems, options);
     // });
     function HandleChange(){
-        ReactDOM.render(<Modal />, document.getElementById("modal"),);
+        function destroydata(){
+            ReactDOM.unmountComponentAtNode(
+                 document.getElementById("modal")
+            );
+        }
+        ReactDOM.render(<Modal destroydata={destroydata}/>, document.getElementById("modal"),);
+        
     }
+
     return (
         <div className="row no-margin">
             <div className="col s12 no-padding">
