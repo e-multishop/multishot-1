@@ -1,44 +1,65 @@
-import { faAmericanSignLanguageInterpreting } from "@fortawesome/free-solid-svg-icons";
-import React,{ Component } from "react";
+import React, {useState}  from "react";
 import "./signup.scss";
+import Axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify';
 
-class Signup extends Component{
-    render() {
-        return (
-                <div className="row no-margin ">
-                        <form className="signup-form">
-                        <h5>Sign-Up</h5>
-
-                                    {/* <div className="input-field col s6 ">
-                                        <input id="first_name" type="text" className="validate" />
-                                        <label for="first_name">First Name</label>
-                                    </div>
-                                    <div className="input-field col s6">
-                                        <input id="last_name" type="text" className="validate" />
-                                        <label for="last_name">Last Name</label>
-                                    </div> */}
-                                    <div className="input-field">
-                                        <input id="email" type="email" className="validate" />
-                                        <label for="email">Email</label>
-                                        {/* <span className="helper-text" data-error="wrong" data-success="right"></span> */}
-                                    </div>
-                                    <div class="input-field ">
-                                        <input id="password" type="password" class="validate"/>
-                                        <label for="password">Password</label>
-                                    </div>
-                                    <div class="input-field ">
-                                        <input id="password" type="password" class="validate"/>
-                                        <label for="password">Confirm Password</label>
-                                    </div>
-                                <div className="button center-align">
-                                    <a class="waves-effect waves-light btn signup-btn">Submit</a>
-                                </div>
-                        </form>
-                        
-                </div>
+const Signup = (props) => {
+    const [signup, setSignup] = useState({
+        emailid: '',
+        password: '',
+        confirm_password:''
+    });
     
-        );
+    const [status, setStatus] = useState('');
+    const handleChange = (e) => {
+        setSignup({ ...signup, [e.target.id]: e.target.value });
+        setStatus('');
     }
+
+    const onSubmit = () => {
+        if (signup.password !== signup.confirm_password) {
+            setStatus('password did not match');
+        }
+        else {
+            Axios.post("http://localhost:3000/rest/signup", {
+                email: signup.emailid,
+                password: signup.password
+            }).then(res => {
+                toast.success("Success")
+                setStatus('')
+                props.closeModal();
+            }).catch(err => {
+                // console.warn(err);
+                setStatus('Email is already ragistred')
+            });
+        }
+    }
+    return(
+        <div className="row no-margin ">
+            <form className="signup-form">
+                <h5>Sign-Up</h5>
+                <div className="input-field">
+                    <input id="emailid" type="email" className="validate" value={signup.emailid} onChange={(e) => handleChange(e)} />
+                    <label for="email">Email</label>
+                    {/* <span className="helper-text" data-error="wrong" data-success="right"></span> */}
+                </div>
+                <div class="input-field ">
+                    <input id="password" type="password" className="validate" value={signup.password} onChange={(e) => handleChange(e)} />
+                    <label for="password">Password</label>
+                </div>
+                <div className="input-field ">
+                    <input id="confirm_password" type="password" className="validate" value={signup.confirm_password} onChange={(e) => handleChange(e)} />
+                    <label for="confirm_password">Confirm Password</label>
+                </div>
+                <p className="status">{status}</p>
+                <div className="button center-align">
+                    <a className="waves-effect waves-light btn signup-btn" onClick={()=>onSubmit()}>Submit</a>
+                </div>
+            </form>
+            <ToastContainer/>
+        </div>
+
+    );
 }
 
 export default Signup;

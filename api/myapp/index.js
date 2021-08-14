@@ -68,7 +68,7 @@ app.post('/rest/signup', (req, res) => {
             res.send("email is already registered");
         }
 
-        // if(err) throw err;
+        if(err) throw err;
         // res.send("found");
 
     });

@@ -14,22 +14,27 @@ import Login from './Components/Pages/login/Login';
 import Signup from'./Components/Pages/login/Signup';
 import * as materialize  from 'materialize-css/dist/js/materialize';
 import Adminapp from './Components/Admin_dashboard/Adminapp'
+import Reset from './Components/Pages/login/Reset_password';
+
+
 class App extends Component{
   render(){
     return(
       <HashRouter>
         <Header/>
         <div id="search"></div>
-        <Switch>
-            <Route exact component={Home} path="/"/>
-            <Route component={About} path="/about"/>
-            <Route component={ProductList} path="/shop"/>
-            <Route component={Productdetails} path="/productdetails"/>
-            <Route component={Contact} path="/contact"/>
-            <Route component={Adminapp} path="/admin"/>
-            <Route component={Login} path="/login"/>
-            <Route  component={Signup} path="/signup"/>
-       </Switch>
+        <div id="modal"></div>
+          <Switch>
+              <Route exact component={Home} path="/"/>
+              <Route component={About} path="/about"/>
+              <Route component={ProductList} path="/shop"/>
+              <Route component={Productdetails} path="/productdetails"/>
+              <Route component={Contact} path="/contact"/>
+              <Route component={Adminapp} path="/admin"/>
+              <Route component={Login} path="/login"/>
+              <Route component={Signup} path="/signup"/>
+              <Route exact component={Reset} path="/reset_password/:id"/>
+        </Switch>
         <Footer/>
     </HashRouter> 
     );

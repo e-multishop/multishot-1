@@ -43,9 +43,7 @@ const Insertproduct = () => {
         setFormdata({ ...formdata, [e.target.name]: e.target.value });
         // console.log(formdata)
     }
-    function onSubmit(e) {
-        var primarykey=""
-       
+    function onSubmit(e) {       
         Axios.post("http://localhost:3002/rest/addproduct", {
             pid :"Hkp53"+1,
             category :formdata.category,

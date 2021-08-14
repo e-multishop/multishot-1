@@ -40,6 +40,7 @@
     "react-multiple-image-uploader": "^1.0.3",
     "react-responsive-carousel": "^3.2.18",
     "react-router-dom": "^5.2.0",
+    "react-toastify": "^7.0.4",
     "roboto-fontface": "^0.10.0",
     "sass": "^1.32.13",
     "sass-loader": "^10.2.0"
