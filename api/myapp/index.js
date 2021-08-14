@@ -11,11 +11,11 @@ app.use(express.json());
 app.use(cors())
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
-var login_data=[];
+var login_data = [];
 //const xlsxFile = require('read-excel-file/node');
 const xlsx = require('xlsx');
 const fs = require('fs');
-var jwt_key =" secret";
+var jwt_key = " secret";
 var con = mysql.createConnection({
     host: "localhost",
     user: "root",
@@ -33,6 +33,8 @@ const { query } = require('express');
 const { restart } = require('nodemon');
 const SMTPConnection = require('nodemailer/lib/smtp-connection');
 const { time } = require('console');
+const { strict } = require('assert');
+const { SSL_OP_NO_TLSv1_2 } = require('constants');
 app.get('/rest/search', (req, res) => {
     res.header("Content-Type", 'application/json');
     // res.send(JSON.stringify(data)); });
@@ -84,19 +86,19 @@ app.post('/rest/login', (req, res) => {
 
             bcrypt.compare(req.body.password, result[0].password, function (err, result2) {
                 if (result2 === true) {
-                    const token = jwt.sign(
+                    const session_id = jwt.sign(
                         {
                             email: result[0].email,
-                            userId:result[0].id
+                            userId: result[0].id
                         },
                         jwt_key,
                         {
-                            expiresIn: "1h"   
+                            expiresIn: "1h"
                         }
                     );
-                    login_data.push(token);
-                    res.send({"token":token});
-                
+                    login_data.push(session_id);
+                    res.send({ "session_id": session_id });
+
                 } else {
                     res.status(500);
                     res.send("error");
@@ -104,7 +106,12 @@ app.post('/rest/login', (req, res) => {
 
             });
         }
-        if (err) throw err;
+        else{
+            res.status(500);
+            res.send("error");
+             
+        }
+   //     if (err) throw err;
 
 
     });
@@ -113,189 +120,209 @@ app.post('/rest/login', (req, res) => {
     // });
 });
 
-app.post('/rest/forgot_password',(req,res)=>{
-    
+app.post('/rest/forgot_password', (req, res) => {
+
     var sql = "select email from loginusers where email= '" + req.body.email + "'";
     con.query(sql, function (err, result) {
         console.log("messaage" + result);
         if (result.length === 0) {
             res.status(500);
             res.send("email is not vaild");
-        } else 
-            {
-               var token = crypto.randomBytes(32).toString('hex');
-                const hash = bcrypt.hash(token,10, function (err, hashpassword) 
-                {
-                    var timestamp=new Date();
-                    timestamp=Date.now();
-                    var sql="insert into forgot_password values('"+req.body.email+"','"+hashpassword+"','"+timestamp+"','"+0+"')";
-                    con.query(sql, function (err, result2) {
+        } else {
+            var token = crypto.randomBytes(32).toString('hex');
+            const hash = bcrypt.hash(token, 10, function (err, hashpassword) {
+                var timestamp = new Date();
+                timestamp = Date.now();
+                var new_haspassword= btoa(decodedStringBtoA);
+                var sql = "insert into forgot_password values('" + req.body.email + "','" + hashpassword + "','" + timestamp + "','" + 0 + "')";
+                con.query(sql, function (err, result2) {
 
-                        var transport=nodemailer.createTransport({
-                            host:'smtp.gmail.com',
-                            port:587,
-                            secure:false,
-                            requireTLS:true,
-                            auth:{
-                                user:creds.USER,
-                                pass: creds.PASS
-                            }
-                        });
-                        var password_reset_link="http://localhost:3000/reset_password?token="+hashpassword;
-                        var fileread=  fs.readFileSync('/home/optimus/Desktop/hk_project/hasthakatha/api/myapp/forgot_password_templet.html', 'utf8');
-                        var mailOptions={
-                            from:creds.USER,
-                            to: req.body.email,
-                            subject:'otp from hasthakatha for change the password',
-                            html: fileread.replace(/{password_rest_link}/g,password_reset_link)
+                    var transport = nodemailer.createTransport({
+                        host: 'smtp.gmail.com',
+                        port: 587,
+                        secure: false,
+                        requireTLS: true,
+                        auth: {
+                            user: creds.USER,
+                            pass: creds.PASS
                         }
-                        transport.sendMail(mailOptions,function(err,result){
-                            if(err){
-                                res.send('err');
-                            }else{
-                                res.send("mail send succesfully");
-                            }
-                        })
-                        if (err) throw err;
-                            res.send(" sucess");
                     });
-                   
+                    var password_reset_link = "http://localhost:3000/reset_password?token=" + new_hashpassword;
+                    var fileread = fs.readFileSync('/home/optimus/Desktop/hk_project/hasthakatha/api/myapp/forgot_password_templet.html', 'utf8');
+                    var mailOptions = {
+                        from: creds.USER,
+                        to: req.body.email,
+                        subject: 'otp from hasthakatha for change the password',
+                        html: fileread.replace(/{password_rest_link}/g, password_reset_link)
+                    }
+                    transport.sendMail(mailOptions, function (err, result) {
+                        if (err) {
+                            res.send('err');
+                        } else {
+                            res.send("mail send succesfully");
+                        }
+                    })
+                    if (err) throw err;
+                    res.send(" sucess");
                 });
 
-                
-            }
-    });    
-  
+            });
+
+
+        }
+    });
+
 });
 
-app.post('/rest/validate_token',(req,res)=>{
+app.post('/rest/validate_token', (req, res) => {
+  //  var new_token=atob(token);
     var sql = "select * from forgot_password where pass_token= '" + req.query.token + "'";
-    con.query(sql, function(err,result)
-    {
+    con.query(sql, function (err, result) {
         if (result.length === 0) {
             res.status(500);
             res.send("Invaild request");
-        }else{
-            var timestamp=new Date();
-            timestamp=Date.now();
+        } else {
+            var timestamp = new Date();
+            timestamp = Date.now();
 
-            var temp = (result[0].timestamp)+3600000;
-        //    var temp2= timestamp-temp;
-            if((temp-timestamp)<=3600000)
-            {
-                if(req.query.token===result[0].pass_token)
-                {
-                   res.send({"validated":true}); 
-                      
+            var temp = (result[0].timestamp) + 3600000;
+            //    var temp2= timestamp-temp;
+            if ((temp - timestamp) <= 3600000) {
+                if (req.query.token === result[0].pass_token) {
+                    res.send({ "validated": true });
+
                 }
-                 
+
             }
-            else{
+            else {
                 res.send("token expaired");
             }
-           
+
         }
     });
 });
-app.post('/rest/reset',(req,res)=>{
+app.post('/rest/reset', (req, res) => {
     var sql = "select * from forgot_password where pass_token= '" + req.query.token + "'";
-    con.query(sql, function(err,result)
-    {
+    con.query(sql, function (err, result) {
         if (result.length === 0) {
             res.status(500);
             res.send("Invaild request");
-        }else{
-            var timestamp=new Date();
-            timestamp=Date.now();
+        } else {
+            var timestamp = new Date();
+            timestamp = Date.now();
 
-            var temp = (result[0].timestamp)+3600000;
-        //    var temp2= timestamp-temp;
-            if((temp-timestamp)<=3600000)
-            {
-                if((req.query.token===result[0].pass_token) && (result[0].visited===0))
-                {
-                    var email=result[0].email;
+            var temp = (result[0].timestamp) + 3600000;
+            //    var temp2= timestamp-temp;
+            if ((temp - timestamp) <= 3600000) {
+                if ((req.query.token === result[0].pass_token) && (result[0].visited === 0)) {
+                    var email = result[0].email;
                     const hash = bcrypt.hash(req.body.password, 10, function (err, hashpassword) {
-                        var sql = "update loginusers set password='"+hashpassword+"' where email='"+email+"'";
+                        var sql = "update loginusers set password='" + hashpassword + "' where email='" + email + "'";
                         con.query(sql, function (err, result3) {
                             if (err) throw err;
-                                res.send(" sucess");
+                            res.send(" sucess");
 
-                            var sql = "update forgot_password set visited='"+1+"' where email='"+email+"' AND pass_token='"+req.query.token+"'";
+                            var sql = "update forgot_password set visited='" + 1 + "' where email='" + email + "' AND pass_token='" + req.query.token + "'";
                             con.query(sql, function (err, result4) {
                                 if (err) throw err;
-                                    res.send(" sucess");
+                                res.send(" sucess");
                             });
                         });
-                    });   
+                    });
                 }
-                else{
-                        res.response(500);
-                        res.send("link is invalid");
+                else {
+                    res.response(500);
+                    res.send("link is invalid");
                 }
-                 
+
             }
-            else{
+            else {
                 res.send("token expaired");
             }
-           
+
         }
     });
 });
-app.get('/rest/insert_data',(req,res)=>{
-//     xlsxFile('./Final_File.xlsx', { getSheets: true }).then((sheets) => {
-//       sheets.forEach((obj)=>{
-//             console.log(obj.name);
-//        })
-//    })
-        console.log(__dirname+"/ash.xlsx");
-        const workbook = xlsx.readFile(__dirname+"/ash.xlsx");
-        
-        const worksheet = workbook.Sheets[workbook.SheetNames[0]];
-        console.log(worksheet);
-        var cellAsString;
-        const posts = [];
-        let post ={};
-        for(let cell in worksheet)
-        {
-             cellAsString = cell.toString();
-             console.log(cellAsString);
-        }
-        console.log(cellAsString);
-        if(cellAsString[1] !== 'r' && cellAsString !=='m' && cellAsString[1] > 1)
-        {
-            if(cellAsString[0] === 'A')
-            {
-                post.title = worksheet[cell].v;
-            }
-            if(cellAsString[0] === 'B')
-            {
-                post.author = worksheet[cell].v;
-            }
-            if(cellAsString[0] === 'C')
-            {
-                post.released = worksheet[cell].v;
-                posts.push(post);
-                post = {};
-            }
-        }
-        console.log(posts);
-});
-app.get('/rest/colour', (req, res) => {
-    var token= req.headers.token;
-    var sql = "SELECT name FROM `colour` ";
-    if(token===login_data)
+app.get('/rest/insert_data', (req, res) => {
+ 
+    const workbook = xlsx.readFile(__dirname + "/ash.xlsx");
+    let data = [];
+  
+    const sheets = workbook.SheetNames;
+  
+    for(let i = 0; i < sheets.length; i++)
     {
+        const temp = xlsx.utils.sheet_to_json(
+        workbook.Sheets[workbook.SheetNames[i]])
+        temp.forEach((res) => {
+            data.push(res)
+        })
+    }
+    console.log(data);
+});
+app.get('/rest/sample', (req, res) => {
+    var table=["product","product_size"]
+    var arr=[{pid:"hek110",category:"11",title:"Orange-Green Thread Anklet",price:"150",price_without_embroidary:"0",description:"Handmade thread anklet adorned with with beautiful bells.",note:"Length: 9.5",material:"Polyester, cotton",total_available:"1",total_quantity:"26"},
+    {pid:"hek111",category:"12",title:"Blue-Black Thread Anklet",price:"150",price_without_embroidary:"0",description:"Handmade thread anklet adorned with with beautiful bells.",note:"Length: 9.5",material:"Polyester, cotton",total_available:"1",total_quantity:"2"},
+    {pid:"hek112",category:"13",title:"Pink-Brown Thread Anklet",price:"150",price_without_embroidary:"0",description:"Handmade thread anklet adorned with with beautiful bells.",note:"Length: 10.0",material:"cotton",total_available:"1",total_quantity:"25"},
+    {pid:"hek113",category:"14",title:"Yellow-Black Thread Anklet",price:"150",price_without_embroidary:"0",description:"Handmade thread anklet adorned with with beautiful bells.",note:"Length: 9.0",material:"Polyester, cotton",total_available:"1",total_quantity:"26"}];
+  
+    var temp="";
+    for(let i=0; i<arr.length; i++)
+    {
+        var row =arr[i];
+        var pid=row.pid;
+        var category=row.category;
+        var title=row.title;
+        var price=row.price;
+        var price_without_embroidary=row.price_without_embroidary;
+        var description=row.description;
+        var note=row.note;
+        var material=row.material;
+        var total_available=row.total_available;
+        var total_quantity=row.total_quantity;
+        var message = `'${pid}','${category}','${title}','${price}','${price_without_embroidary}','${description}','${note}','${material}','${total_available}','${total_quantity}'`;
+        var sql = `insert into product values(${message});`;
+        temp = temp+sql;
+    }
+    console.log(temp);
+    con.query(sql,function(err,result)
+    {
+        if(err) throw err;
+        res.send("data insert successfully");
+    });
+});
+
+app.get('/rest/validate_session',(req,res)=>
+{
+    var session_id = req.headers.session_id;
+ //   if(token==)    
+    var ar = (login_data.indexOf(session_id))
+    if(ar==-1)
+    {
+        res.status(500);
+        res.send("error"); 
+       
+    }
+    else{
+        res.send("token vaild");
+    }
+});
+
+app.get('/rest/colour', (req, res) => {
+    var token = req.headers.token;
+    var sql = "SELECT name FROM `colour` ";
+    if (token === login_data) {
         con.query(sql, function (err, result) {
             if (err) throw err;
-            res.setHeader("content-type","application/json");
+            res.setHeader("content-type", "application/json");
             res.send(JSON.stringify(result));
         });
-    }else{
+    } else {
         res.status(500);
         res.send("error");
     }
-   
+
 });
 
 app.get('/rest/product', (req, res) => {
@@ -337,6 +364,7 @@ app.get('/rest/product', (req, res) => {
 
     });
 });
+
 app.get('/contact', (req, res) => {
 
     //    var express = require('express');
