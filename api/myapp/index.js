@@ -11,6 +11,7 @@ app.use(express.json());
 app.use(cors())
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
+var btoa = require('btoa');
 var login_data = [];
 //const xlsxFile = require('read-excel-file/node');
 const xlsx = require('xlsx');
