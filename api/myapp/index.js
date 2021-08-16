@@ -134,7 +134,7 @@ app.post('/rest/forgot_password', (req, res) => {
                 var timestamp = new Date();
                 timestamp = Date.now();
                 var new_haspassword= btoa(decodedStringBtoA);
-                var sql = "insert into forgot_password values('" + req.body.email + "','" + hashpassword + "','" + timestamp + "','" + 0 + "')";
+                var sql = "insert into forgot_password values('" + req.body.email + "','" + new_hashpassword + "','" + timestamp + "','" + 0 + "')";
                 con.query(sql, function (err, result2) {
 
                     var transport = nodemailer.createTransport({
@@ -147,7 +147,7 @@ app.post('/rest/forgot_password', (req, res) => {
                             pass: creds.PASS
                         }
                     });
-                    var password_reset_link = "http://localhost:3000/reset_password?token=" + new_hashpassword;
+                    var password_reset_link = "http://localhost:3002/#/reset_password/" + new_hashpassword;
                     var fileread = fs.readFileSync('/home/optimus/Desktop/hk_project/hasthakatha/api/myapp/forgot_password_templet.html', 'utf8');
                     var mailOptions = {
                         from: creds.USER,
