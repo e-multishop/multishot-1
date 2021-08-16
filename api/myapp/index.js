@@ -11,6 +11,7 @@ app.use(express.json());
 app.use(cors())
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
+var btoa = require('btoa');
 var login_data = [];
 //const xlsxFile = require('read-excel-file/node');
 const xlsx = require('xlsx');
@@ -133,7 +134,7 @@ app.post('/rest/forgot_password', (req, res) => {
             const hash = bcrypt.hash(token, 10, function (err, hashpassword) {
                 var timestamp = new Date();
                 timestamp = Date.now();
-                var new_haspassword= btoa(decodedStringBtoA);
+                var new_hashpassword= btoa(hashpassword);
                 var sql = "insert into forgot_password values('" + req.body.email + "','" + hashpassword + "','" + timestamp + "','" + 0 + "')";
                 con.query(sql, function (err, result2) {
 
