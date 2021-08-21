@@ -22,8 +22,9 @@ function Forgotpassword(props) {
             // props.history.push("/about");
             props.closeModal();
         }).catch(err => {
-            // console.warn(err);
+            console.warn(err);
             setStatus('Email is not registred')
+
         });
     }
     return (

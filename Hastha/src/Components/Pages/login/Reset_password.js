@@ -4,10 +4,8 @@ import { useParams } from 'react-router-dom';
 import "./reset.scss";
 
 function Reset_password() {
-
     const id = useParams();
-
-    return (
+    return(
         <div className="reset-main">
             <div className="no-margin ">
                 <form className="reset-form">

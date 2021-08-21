@@ -1,49 +1,80 @@
-.logo-name{
+.logo-name {
     color: var(--primary_color);
     font-weight: bold;
-    padding:10px 0 0 0;
+    padding: 10px 0 0 0;
 }
-.modal{
+//Modal components code start---
+.modal {
     width: 35%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    color:#000;
-}
-.hk-loginform{
-    padding: 0 40px;
-    p{
-        margin:0px;
+    color: #000;
+    .close-icon {
+        float: right;
+        &:hover {
+            cursor: pointer;
+        }
     }
-    .sign-in-btn{
+}
+//modal components code end
+.hk-loginform {
+    padding: 0 40px;
+    p {
+        margin: 0px;
+    }
+    .sign-in-btn {
         background-color: var(--primary_color);
         font-size: 16px;
         font-weight: bold;
         padding: 0 50px 0 50px;
         // margin-bottom: 20px;
-        color:#fff
+        color: #fff;
     }
-    .forgot{
-        button{
+    .forgot {
+        button {
             background-color: transparent;
-            border:none;
-            color:#797979;
-            &:hover{
+            border: none;
+            color: #797979;
+            &:hover {
                 cursor: pointer;
             }
         }
     }
-    .join-now{
-        color:#797979;
+    .join-now {
+        color: #797979;
         margin: 0;
-        button{
+        button {
             background-color: transparent;
-            border:none;
+            border: none;
             border-bottom: 1px solid #797979 !important;
             cursor: pointer;
-
         }
     }
-    .status{
+    .status {
         color: red;
         text-align: center;
+    }
+}
+// login dropdown section
+#dropdown-share {
+    position: relative;
+    a {
+        background-color: none;
+    }
+    .icon {
+        background-color: none;
+    }
+    .logout-op {
+        width: 200px !important;
+        position:absolute;
+        top:64px !important;
+        li {
+            text-align: center !important;
+        }
+        .icon-block {
+          padding-top:5px ;
+        }
+        .email {
+            font-size: 12px;
+        }
     }
 }

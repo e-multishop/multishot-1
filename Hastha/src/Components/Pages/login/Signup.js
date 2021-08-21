@@ -25,9 +25,9 @@ const Signup = (props) => {
                 email: signup.emailid,
                 password: signup.password
             }).then(res => {
-                toast.success("Success")
                 setStatus('')
-                props.closeModal();
+                toast.success("Success")
+                props.closeModal(true);
             }).catch(err => {
                 // console.warn(err);
                 setStatus('Email is already ragistred')

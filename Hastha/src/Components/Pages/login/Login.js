@@ -21,19 +21,20 @@ const Login = (props) => {
             email: login.emailid,
             password: login.password
         }).then(res => {
-            // console.warn("value is success fill")
-            console.log(res.data.token);
-            myStorage = window.localStorage;
+            // console.warn("value is success fill",res.data)
+            const token= res.data.token;
+            localStorage.setItem('token',token);
             setStatus('')
+            // console.log("email",login.email)
+            props.closeModal(true);
             toast.success("Success")
             // props.history.push("/about");
-            props.closeModal();
         }).catch(err => {
             console.warn(err);
             setStatus('Email id  & password did not match')
         });
     }
-
+    
     return (
         <div>
             <form className=" hk-loginform">

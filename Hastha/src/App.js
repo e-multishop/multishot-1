@@ -24,6 +24,8 @@ class App extends Component{
         <Header/>
         <div id="search"></div>
         <div id="modal"></div>
+        {/* <div id="LoginDropdown"></div> */}
+
           <Switch>
               <Route exact component={Home} path="/"/>
               <Route component={About} path="/about"/>

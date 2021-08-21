@@ -24,6 +24,7 @@ import LibraryBooks from "@material-ui/icons/LibraryBooks";
 import UserProfile from "views/UserProfile/UserProfile.js";
 import TableList from "views/TableList/TableList.js";
 import Typography from "views/Typography/Typography.js";
+import UploadFile from "views/UploadFile/UploadFile"
 import Check from "./practice/Check"
 // core components/views for RTL layout
 
@@ -44,10 +45,10 @@ const dashboardRoutes = [
     layout: "/admin",
   },
   {
-    path: "/typography",
+    path: "/uploadfile",
     name: "Upload Bulk Product",
     icon: LibraryBooks,
-    component: Typography,
+    component: UploadFile,
     layout: "/admin",
   },
   {
@@ -57,13 +58,13 @@ const dashboardRoutes = [
     component: UserProfile,
     layout: "/admin",
   },
-  {
-    path: "/check",
-    name: "Check",
-    icon: Person,
-    component: Check,
-    layout: "/admin",
-  },
+  // {
+  //   path: "/check",
+  //   name: "Check",
+  //   icon: Person,
+  //   component: Check,
+  //   layout: "/admin",
+  // },
 ];
 
 export default dashboardRoutes;

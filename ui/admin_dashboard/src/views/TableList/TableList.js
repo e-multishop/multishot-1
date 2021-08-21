@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 // core components
@@ -42,20 +42,18 @@ const styles = {
 const useStyles = makeStyles(styles);
 
 export default function TableList() {
+  const [updateTable,setUpdateTable]=useState(false);
   const classes = useStyles();
   return (
     <GridContainer>
       <GridItem xs={12} sm={12} md={12}>
-        <Modal />
+        <Modal setUpdateTable={setUpdateTable}/>
         <Card>
           <CardHeader color="primary">
             <h4 className={classes.cardTitleWhite}>Product List</h4>
-            {/* <p className={classes.cardCategoryWhite}>
-              Here is a subtitle for this table
-            </p> */}
           </CardHeader>
           <CardBody>
-            <Table/>
+            <Table updateTable={updateTable}/>
           </CardBody>
         </Card>
       </GridItem>
