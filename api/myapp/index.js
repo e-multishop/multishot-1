@@ -1,6 +1,3 @@
-//const express = require('express')
-//const jwt = require('jsonwebtoken')
-//const app = express()
 var mysql = require('mysql');
 var nodemailer = require('nodemailer');
 const bcrypt = require('bcrypt');
@@ -32,6 +29,10 @@ const { strict } = require('assert');
 const { SSL_OP_NO_TLSv1_2 } = require('constants');
 const hasthakatha_app = require('./app');
 const login_app = require('./common/login');
+const common_app = require('./common/common');
+const product_app = require('./admin/product');
 const hasthakatha_data=hasthakatha_app();
 login_app(hasthakatha_data,con);
+product_app(hasthakatha_data,con);
+common_app(hasthakatha_data,con);
 hasthakatha_data.listen(port);
