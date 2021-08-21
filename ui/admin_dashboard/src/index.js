@@ -41,7 +41,7 @@ ReactDOM.render(
       {/* <Route path="/addproduct" component={InsertProduct} /> */}
       <Route path="/admin" component={Admin} />
       {/* <Route path="/rtl" component={RTL} /> */}
-      <Redirect from="/" to="/admin/dashboard" />
+      <Redirect from="/" to="/admin/table" />
     </Switch>
   </BrowserRouter>,
   // <Provider store={store}>

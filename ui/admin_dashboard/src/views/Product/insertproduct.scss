@@ -1,4 +1,7 @@
 .productinsertform{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     h2{
         font-size: 24px;
         text-align: center;

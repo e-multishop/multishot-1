@@ -53,7 +53,7 @@ const DialogActions = withStyles((theme) => ({
   },
 }))(MuiDialogActions);
 
-export default function CustomizedDialogs() {
+export default function CustomizedDialogs(props) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -61,6 +61,8 @@ export default function CustomizedDialogs() {
   };
   const handleClose = () => {
     setOpen(false);
+    reset();
+
   };
   const [formdata, setFormdata] = useState({
     category: "",
@@ -77,11 +79,11 @@ export default function CustomizedDialogs() {
     dimension: " ",
     color: " ",
   });
-  function onSubmit(e) {
-    var primarykey = ""
+
+  function onSubmit() {
 
     Axios.post("http://localhost:3002/rest/addproduct", {
-      pid: "Hkp53" + 1,
+      pid: "Hk34",
       category: formdata.category,
       title: formdata.title,
       price: formdata.price,
@@ -93,29 +95,49 @@ export default function CustomizedDialogs() {
       total_quantity: formdata.total_quantity,
     }
     ).then(res => {
-      console.log(res.formdata)
+      // console.log(res.formdata)
+      props.setUpdateTable(true);
       toast.success("Success");
-      // setOpen(false);
-    
-
+      // EventEmitter.emit('newProduct',res.formdata)
+      setOpen(false);
+      reset();
     }).catch(err => {
       console.log(err)
       toast.error("Data did not inserted")
     });
+
     // document.getElementById("insertproduct").reset();
     // {html: 'I am a toast!'}
   }
+  function reset(){
+    setFormdata({
+      category: "",
+      title: " ",
+      price: " ",
+      price_without_embroidary: " ",
+      description: " ",
+      note: " ",
+      material: " ",
+      size:[],
+      total_available: " ",
+      total_quantity: " ",
+      image: " ",
+      dimension: " ",
+      color: " ",
+    });
+  }
+
   return (
     <div>
       <div className="addproduct-button">
-        <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+        <Button variant="outlined" color="primary" onClick={handleClickOpen} >
           Add New Product
       </Button>
       </div>
 
       <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}
         fullWidth={true}
-        maxWidth="md"
+        maxWidth="sm"
       >
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
           Add New Product
@@ -126,7 +148,7 @@ export default function CustomizedDialogs() {
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={(e) => {onSubmit(e)}} color="primary">
+          <Button autoFocus onClick={() => {onSubmit()}} color="primary">
             Submit
           </Button>
         </DialogActions>
