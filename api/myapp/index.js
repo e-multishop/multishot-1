@@ -1,14 +1,8 @@
-const express = require('express')
-const jwt = require('jsonwebtoken')
-const app = express()
+//const express = require('express')
+//const jwt = require('jsonwebtoken')
+//const app = express()
 var mysql = require('mysql');
 var nodemailer = require('nodemailer');
-var cors = require('cors');
-app.use(express.json());
-const creds = require('./config');
-app.use(express.static(__dirname + '/public')); //Serves resources from public folder
-app.use(express.json());
-app.use(cors())
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 var btoa = require('btoa');
@@ -36,6 +30,7 @@ const SMTPConnection = require('nodemailer/lib/smtp-connection');
 const { time } = require('console');
 const { strict } = require('assert');
 const { SSL_OP_NO_TLSv1_2 } = require('constants');
+<<<<<<< HEAD
 app.get('/rest/search', (req, res) => {
     res.header("Content-Type", 'application/json');
     // res.send(JSON.stringify(data)); });
@@ -554,3 +549,10 @@ app.post("/rest/addproduct", (req, res) => {
     });
 });
 app.listen(port);
+=======
+const hasthakatha_app = require('./app');
+const login_app = require('./common/login');
+const hasthakatha_data=hasthakatha_app();
+login_app(hasthakatha_data,con);
+hasthakatha_data.listen(port);
+>>>>>>> e0b994853f425da419995104013db144afae907c
