@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/material-dashboard-react/static/css/main.dbe1dfc9.chunk.css",
+    "main.js": "/material-dashboard-react/static/js/main.68f1ed23.chunk.js",
+    "main.js.map": "/material-dashboard-react/static/js/main.68f1ed23.chunk.js.map",
+    "runtime-main.js": "/material-dashboard-react/static/js/runtime-main.2ecab604.js",
+    "runtime-main.js.map": "/material-dashboard-react/static/js/runtime-main.2ecab604.js.map",
+    "static/css/2.d11928e4.chunk.css": "/material-dashboard-react/static/css/2.d11928e4.chunk.css",
+    "static/js/2.5c168419.chunk.js": "/material-dashboard-react/static/js/2.5c168419.chunk.js",
+    "static/js/2.5c168419.chunk.js.map": "/material-dashboard-react/static/js/2.5c168419.chunk.js.map",
+    "index.html": "/material-dashboard-react/index.html",
+    "static/css/2.d11928e4.chunk.css.map": "/material-dashboard-react/static/css/2.d11928e4.chunk.css.map",
+    "static/css/main.dbe1dfc9.chunk.css.map": "/material-dashboard-react/static/css/main.dbe1dfc9.chunk.css.map",
+    "static/js/2.5c168419.chunk.js.LICENSE.txt": "/material-dashboard-react/static/js/2.5c168419.chunk.js.LICENSE.txt",
+    "static/js/main.68f1ed23.chunk.js.LICENSE.txt": "/material-dashboard-react/static/js/main.68f1ed23.chunk.js.LICENSE.txt",
+    "static/media/logo.f290fae5.png": "/material-dashboard-react/static/media/logo.f290fae5.png",
+    "static/media/marc.e8607287.jpg": "/material-dashboard-react/static/media/marc.e8607287.jpg",
+    "static/media/sidebar-2.22f68ba5.jpg": "/material-dashboard-react/static/media/sidebar-2.22f68ba5.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.2ecab604.js",
+    "static/css/2.d11928e4.chunk.css",
+    "static/js/2.5c168419.chunk.js",
+    "static/css/main.dbe1dfc9.chunk.css",
+    "static/js/main.68f1ed23.chunk.js"
+  ]
+}
