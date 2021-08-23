@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import "./login.scss";
-import Modal from "./Modal"
+// import Modal from "./Modal"
 import Axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
+import { useEffect } from 'react/cjs/react.production.min';
+import { useParams } from 'react-router';
 
 const Login = (props) => {
-
+    // const redirect_path=useParams();
     const [login, setLogin] = useState({
         emailid: '',
         password: '',
@@ -26,7 +28,12 @@ const Login = (props) => {
             localStorage.setItem('token',token);
             setStatus('')
             // console.log("email",login.email)
-            props.closeModal(true);
+            if(props && props.closeModal){
+                props.closeModal(true);
+            }
+            else{
+                document.location.href="/admin";
+            }
             toast.success("Success")
             // props.history.push("/about");
         }).catch(err => {
@@ -34,7 +41,11 @@ const Login = (props) => {
             setStatus('Email id  & password did not match')
         });
     }
-    
+    function setViewStatus(value){
+        if(props && props.setVeiwstatus){
+            props.setVeiwstatus(value)
+        }
+    }
     return (
         <div>
             <form className=" hk-loginform">
@@ -60,7 +71,7 @@ const Login = (props) => {
                                         <span>Keep me logged in </span>
                                     </label>
                                     <span className="right forgot">
-                                        <button onClick={() => { props.setVeiwstatus('forgotpassword') }}
+                                        <button onClick={() => {setViewStatus('forgotpassword') }}
                                         >Forgot Password?
                                         </button>
                                     </span>
@@ -72,7 +83,7 @@ const Login = (props) => {
                             </div>
                             <div className="join-now center-align">
                                 Not yet a member?<button
-                                    onClick={() => { props.setVeiwstatus('signup') }}
+                                    onClick={() => {setViewStatus('signup')}}
                                 >JOIN NOW</button>
                             </div>
                         </div>
