@@ -1,4 +1,4 @@
-var cors = require('cors');
+
 var product_app = function (app,con) {
     app.get('/rest/product_list', (req, res) => {
         var sql = "SELECT * FROM product ";
