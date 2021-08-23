@@ -1,16 +1,22 @@
 var mysql = require('mysql');
+// for local setup, enable this
+const settings = require('./src/config/config');
+
+// for production setup, enable this
+// const settings = require('./src/config/config-prod');
+
 var con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "hasthakatha"
+    host: settings.db_host,
+    user: settings.db_user,
+    password: settings.db_password,
+    database: settings.db_database,
 });
 
 con.connect(function (err) {
     if (err) throw err;
     console.log("Connected!");
 });
-const port = 3000;
+const port = settings.port;
 const hasthakatha_app = require('./src/app');
 const login_app = require('./src/common/login');
 const common_app = require('./src/common/common');
