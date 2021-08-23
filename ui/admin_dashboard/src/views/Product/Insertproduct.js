@@ -3,8 +3,7 @@ import './insertproduct.scss';
 // import ImageUpload from '../../Shared/Imageupload/Imageupload'
 import Axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
+import CreatableSelect from 'react-select/creatable';
 
 const Insertproduct = (props) => {
     var modal;
@@ -26,7 +25,14 @@ const Insertproduct = (props) => {
 
         }
         props.setFormData({ ...props.formData, [e.target.name]: e.target.value });
+        console.groupEnd();
+
     }
+    const options = [
+        { value: 'chocolate', label: 'Chocolate' },
+        { value: 'strawberry', label: 'Strawberry' },
+        { value: 'vanilla', label: 'Vanilla' },
+      ];
     return (
         <div className="row productinsertform">
             <form className="col s10" id="insertproduct" >
@@ -110,8 +116,8 @@ const Insertproduct = (props) => {
                                     <label htmlFor="quantity">Quantity<spam className="star_color">*</spam></label>
                                     <span className="helper-text" data-error="Enter Quantity"></span>
                                 </div>
-                                <div className="input-field col s6 ">
-                                    <input
+                                {/* <div className="input-field col s6 "> */}
+                                    {/* <input
                                         id="color"
                                         type="text"
                                         value={props.formData.color}
@@ -121,7 +127,16 @@ const Insertproduct = (props) => {
                                         required
                                     />
                                     <label htmlFor="color">Color<spam className="star_color">*</spam></label>
-                                    <span className="helper-text" data-error="Enter color"></span>
+                                    <span className="helper-text" data-error="Enter color"></span> */}
+
+                                {/* </div> */}
+                                <div className="col s6 " >
+                                <label htmlFor="color">Color<spam className="star_color">*</spam></label>
+                                    <CreatableSelect
+                                        isMulti
+                                        // onChange={(e)=>handleChange(e)}
+                                        options={options}
+                                    />
                                 </div>
                                 <div className="input-field col s6">
                                     <label htmlFor="uploadimage">Upload Image<spam className="star_color">*</spam>
@@ -137,6 +152,9 @@ const Insertproduct = (props) => {
                                     </label>
                                     <span className="helper-text" data-error="Upload image"></span>
                                 </div>
+                                <br/><br/>
+                                <br/><br/>
+
                                 <div className="input-field col s12 ">
                                     <input
                                         id="dimension"
