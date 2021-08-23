@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken')
 const xlsx = require('xlsx');
 const fs = require('fs');
 var cors = require('cors');
-const creds = require('../config');
+const creds = require('../config/config');
 var jwt_key = " secret";
 var login_data = [];
 
