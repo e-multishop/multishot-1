@@ -72,16 +72,3 @@ gulp.task("licenses", async function () {
     .pipe(gulp.dest("./", { overwrite: true }));
   return;
 });
-var appName = 'admin';
-var replace = require('gulp-replace')
-gulp.task("apply-patch", async function() {
-return gulp.src('./build/index.html')
-.pipe(replace('/'+appName, appName))
-.pipe(replace('<head>', '<head><base href="/admin/"'))
-.pipe(gulp.dest('.'));
-});
-
-gulp.task("move-app", async function() {
-return gulp.src('./build/static')
-.pipe(gulp.dest('./build/' + appName + '/static'));
-})

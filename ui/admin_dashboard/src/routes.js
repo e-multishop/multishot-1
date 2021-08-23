@@ -58,6 +58,13 @@ const dashboardRoutes = [
     component: UserProfile,
     layout: "/admin",
   },
+  // {
+  //   path: "/check",
+  //   name: "Check",
+  //   icon: Person,
+  //   component: Check,
+  //   layout: "/admin",
+  // },
 ];
 
 export default dashboardRoutes;
