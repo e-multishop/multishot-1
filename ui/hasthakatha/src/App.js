@@ -33,7 +33,7 @@ class App extends Component{
               <Route component={Productdetails} path="/productdetails"/>
               <Route component={Contact} path="/contact"/>
               <Route component={Adminapp} path="/admin"/>
-              <Route component={Login} path="/login"/>
+              <Route  component={Login} path="/login"/>
               <Route component={Signup} path="/signup"/>
               <Route exact component={Reset} path="/reset_password/:id"/>
         </Switch>
