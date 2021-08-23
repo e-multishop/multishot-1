@@ -1,6 +1,3 @@
-//const express = require('express')
-//const jwt = require('jsonwebtoken')
-//const app = express()
 var mysql = require('mysql');
 var nodemailer = require('nodemailer');
 const bcrypt = require('bcrypt');
@@ -552,7 +549,11 @@ app.listen(port);
 =======
 const hasthakatha_app = require('./app');
 const login_app = require('./common/login');
+const common_app = require('./common/common');
+const product_app = require('./admin/product');
 const hasthakatha_data=hasthakatha_app();
 login_app(hasthakatha_data,con);
+product_app(hasthakatha_data,con);
+common_app(hasthakatha_data,con);
 hasthakatha_data.listen(port);
 >>>>>>> e0b994853f425da419995104013db144afae907c
