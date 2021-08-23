@@ -8,7 +8,7 @@ var cors = require('cors');
 const creds = require('../config/config');
 var jwt_key = " secret";
 var login_data = [];
-
+const nodemailer = require('nodemailer');
 
 
 var login_app=function(app,con)
@@ -112,7 +112,7 @@ var login_app=function(app,con)
                             }
                         });
                         var password_reset_link = "http://localhost:3000/reset_password?token=" + new_hashpassword;
-                        var fileread = fs.readFileSync('/home/optimus/Desktop/hk_project/hasthakatha/api/myapp/forgot_password_templet.html', 'utf8');
+                        var fileread = fs.readFileSync(__dirname+'/../assets/forgot_password_templet.html', 'utf8');
                         var mailOptions = {
                             from: creds.USER,
                             to: req.body.email,
@@ -121,13 +121,15 @@ var login_app=function(app,con)
                         }
                         transport.sendMail(mailOptions, function (err, result) {
                             if (err) {
-                                res.send('err');
+                                res.status(500);
+                                res.send('Internal server error');
                             } else {
-                                res.send("mail send succesfully");
+                               
+                                res.send("Mail sent succesfully");
                             }
                         })
-                        if (err) throw err;
-                        res.send(" sucess");
+                        // if (err) throw err;
+                        // res.send(" sucess");
                     });
     
                 });
