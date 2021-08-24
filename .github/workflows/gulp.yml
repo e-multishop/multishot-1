@@ -30,4 +30,4 @@ jobs:
     - name: Build Hasthakatha Admin dashboard
       run: |
         npm install --prefix ./ui/admin_dashboard
-        npm run build
+        npm run build --prefix ./ui/admin_dashboard
