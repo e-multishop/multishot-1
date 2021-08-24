@@ -1,7 +1,7 @@
 {
-  "name": "material-dashboard-react",
+  "name": "admin",
   "version": "1.10.0",
-  "description": "Material Dashboard React. Coded by Creative Tim",
+  "description": "Hasthakatha admin dashboard",
   "private": false,
   "main": "dist/index.js",
   "dependencies": {
@@ -23,6 +23,7 @@
     "react-dom": "17.0.2",
     "react-redux": "^7.2.4",
     "react-router-dom": "5.2.0",
+    "react-router-guards": "^1.0.2",
     "react-scripts": "4.0.3",
     "react-select": "^4.3.1",
     "react-swipeable-views": "0.13.9",
@@ -32,6 +33,7 @@
   "scripts": {
     "start": " react-scripts start",
     "build": "react-scripts build",
+    "build-admin": "react-scripts build && gulp apply-patch && gulp move-app",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start",
@@ -61,7 +63,8 @@
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-prettier": "3.4.0",
     "gulp": "4.0.2",
-    "gulp-append-prepend": "1.0.9"
+    "gulp-append-prepend": "1.0.9",
+    "gulp-replace": "^1.1.3"
   },
   "browserslist": {
     "production": [

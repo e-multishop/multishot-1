@@ -13,6 +13,11 @@ const nodemailer = require('nodemailer');
 
 var login_app=function(app,con)
 {
+    app.get('/login',(req,res)=>{
+        var redirect_path = req.query.redirect_path;
+        res.redirect('/#/login'+redirect_path?'?redirect_path=admin':'')
+    });
+
     app.post('/rest/signup', (req, res) => {
         var sql = "select email from loginusers where email= '" + req.body.email + "'";
         con.query(sql, function (err, result) {
