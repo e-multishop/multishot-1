@@ -37,3 +37,9 @@ jobs:
     - name: Build Hasthakatha API
       run : |
         npm install --prefix ./api/hasthakatha
+        
+    - uses: actions/checkout@v2
+      with: 
+        repository: 'https://github.com/ak9452/heroku_hasthkatha.git'
+        clean: true
+        path: 'heroku-hasthakatha'
