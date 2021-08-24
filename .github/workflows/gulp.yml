@@ -26,8 +26,14 @@ jobs:
       run: |
         npm install --prefix ./ui/hasthakatha
         npm run build --prefix ./ui/hasthakatha
+        npm run gulp --prefix ./ui/hasthakatha
         
-    - name: Build Hasthakatha Admin dashboard
+    - name: Build Hasthakatha Admin dashboard UI
       run: |
         npm install --prefix ./ui/admin_dashboard
         npm run build --prefix ./ui/admin_dashboard
+        npm run gulp --prefix ./ui/admin_dashboard
+        
+    - name: Build Hasthakatha API
+      run : |
+        npm install --prefix ./api/hasthakatha
