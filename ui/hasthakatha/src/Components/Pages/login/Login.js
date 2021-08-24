@@ -19,7 +19,7 @@ const Login = (props) => {
         setStatus('')
     }
     const onSubmit = () => {
-        Axios.post("http://localhost:3000/rest/login", {
+        Axios.post("/rest/login", {
             email: login.emailid,
             password: login.password
         }).then(res => {

@@ -21,7 +21,7 @@ const Signup = (props) => {
             setStatus('password did not match');
         }
         else {
-            Axios.post("http://localhost:3000/rest/signup", {
+            Axios.post("/rest/signup", {
                 email: signup.emailid,
                 password: signup.password
             }).then(res => {

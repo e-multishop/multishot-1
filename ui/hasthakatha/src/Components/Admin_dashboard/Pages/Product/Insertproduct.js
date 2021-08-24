@@ -44,7 +44,7 @@ const Insertproduct = () => {
         // console.log(formdata)
     }
     function onSubmit(e) {       
-        Axios.post("http://localhost:3002/rest/addproduct", {
+        Axios.post("/rest/addproduct", {
             pid :"Hkp53"+1,
             category :formdata.category,
             title :formdata.title,
