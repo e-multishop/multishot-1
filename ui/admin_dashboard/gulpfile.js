@@ -90,7 +90,7 @@ gulp.task("copyAssets", function() {
 });
 
 gulp.task('copyAssetsToAshishRepo', function() {
-  return gulp.src('./*')
+  return gulp.src('./../../api/*/**')
       .pipe(gulp.dest('./../../heroku-hasthakatha/'))
 });
 
