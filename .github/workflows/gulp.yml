@@ -44,4 +44,4 @@ jobs:
         clean: 'true'
         path: 'heroku-hasthakatha'
         ref: 'main'
-        token: ''
+        token: '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'
