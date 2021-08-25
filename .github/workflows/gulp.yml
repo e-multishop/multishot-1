@@ -34,10 +34,6 @@ jobs:
         npm run build --prefix ./ui/admin_dashboard
         npm run gulp --prefix ./ui/admin_dashboard
         
-    - name: Build Hasthakatha API
-      run : |
-        npm install --prefix ./api/hasthakatha
-        
     - uses: actions/checkout@v2
       with: 
         repository: 'ak9452/heroku_hasthkatha.git'
@@ -45,3 +41,17 @@ jobs:
         path: 'heroku-hasthakatha'
         ref: 'main'
         token: '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'
+        
+    - name: Build Hasthakatha API
+      run : |
+        npm install --prefix ./api/hasthakatha
+        
+    - name: Copy assets from API to Ashish git repo
+      run : |
+        npm run gulp --prefix ./api/hasthakatha
+        
+    - name: Update Ashish git repo
+      run: |
+        git add . --prefix ./heroku-hasthakatha
+        git commit -m "updating assets"
+        git push origin main
