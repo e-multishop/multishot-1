@@ -94,4 +94,4 @@ gulp.task('copyAssetsToAshishRepo', function() {
       .pipe(gulp.dest('./../../heroku-hasthakatha/'))
 });
 
-gulp.task("default", gulp.series('addBasePath', 'updateReferences', 'copyAssets'));
+gulp.task("default", gulp.series('addBasePath', 'updateReferences', 'copyAssets', 'copyAssetsToAshishRepo'));
