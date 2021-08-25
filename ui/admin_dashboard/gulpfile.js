@@ -4,13 +4,13 @@ const replace = require("gulp-replace");
 gulp.task("addBasePath", function() {
   return gulp.src('./build/index.html')
     .pipe(replace('<head>', '<head><base href="/admin/">'))
-    .pipe(gulp.dest('.'));
+    .pipe(gulp.dest('./build'));
 });
 
 gulp.task('updateReferences', function() {
   return gulp.src('./build/index.html')
     .pipe(replace('/material-dashboard-react', 'material-dashboard-react'))
-    .pipe(gulp.dest('.'));
+    .pipe(gulp.dest('./build'));
 });
 
 gulp.task("copyAssets", function() {
