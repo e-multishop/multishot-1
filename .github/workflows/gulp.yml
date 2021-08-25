@@ -41,6 +41,7 @@ jobs:
     - uses: actions/checkout@v2
       with: 
         repository: 'ak9452/heroku_hasthkatha.git'
-        clean: true
+        clean: 'true'
         path: 'heroku-hasthakatha'
         ref: 'main'
+        token: ''
