@@ -9,7 +9,7 @@ gulp.task("addBasePath", function() {
 
 gulp.task('updateReferences', function() {
   return gulp.src('./build/index.html')
-    .pipe(replace('/material-dashboard-react', 'material-dashboard-react'))
+    .pipe(replace('/material-dashboard-react', ''))
     .pipe(gulp.dest('./build'));
 });
 
