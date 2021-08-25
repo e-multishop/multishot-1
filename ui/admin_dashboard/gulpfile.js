@@ -1,6 +1,6 @@
-const gulp = require("gulp");
-const gap = require("gulp-append-prepend");
-const replace = require("gulp-replace");
+var gulp = require("gulp");
+var gap = require("gulp-append-prepend");
+var replace = require("gulp-replace");
 
 gulp.task("licenses", async function () {
   // this is to add Creative Tim licenses in the production mode for the minified js
@@ -76,12 +76,14 @@ gulp.task("licenses", async function () {
 
 gulp.task("addBasePath", function() {
   return gulp.src('./build/index.html')
-    .pipe(replace('<head>', '<head><base href="/admin/">'));
+    .pipe(replace('<head>', '<head><base href="/admin/">'))
+    .pipe(gulp.dest('./build/index.html'));
 });
 
 gulp.task('updateReferences', function() {
   return gulp.src('./build/index.html')
-    .pipe(replace('/material-dashboard-react', 'material-dashboard-react'));
+    .pipe(replace('/material-dashboard-react', 'material-dashboard-react'))
+    .pipe(gulp.dest('./build/index.html'));
 });
 
 gulp.task("copyAssets", function() {
