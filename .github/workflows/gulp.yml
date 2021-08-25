@@ -46,6 +46,7 @@ jobs:
       run: |
         git config --global user.email "manoj.adams@gmail.com"
         git config --global user.name "Manoj"
+        echo newbuild >> ./api/hasthakatha/public/readme.md
         git -C ./heroku-hasthakatha add .
         git -C ./heroku-hasthakatha commit -m "updating assets"
         git -C ./heroku-hasthakatha push origin main
