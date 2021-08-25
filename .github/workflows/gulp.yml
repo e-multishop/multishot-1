@@ -44,6 +44,8 @@ jobs:
         
     - name: Update Ashish git repo
       run: |
+        git config --global user.email "manoj.adams@gmail.com"
+        git config --global user.name "Manoj"
         git -C ./heroku-hasthakatha add .
         git -C ./heroku-hasthakatha commit -m "updating assets"
         git -C ./heroku-hasthakatha push origin main
