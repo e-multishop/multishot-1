@@ -44,6 +44,6 @@ jobs:
         
     - name: Update Ashish git repo
       run: |
-        git add . --prefix ./heroku-hasthakatha
-        git commit -m "updating assets"
-        git push origin main
+        git -C ./heroku-hasthakatha add .
+        git -C ./heroku-hasthakatha commit -m "updating assets"
+        git -C ./heroku-hasthakatha push origin main
