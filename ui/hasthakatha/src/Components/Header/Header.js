@@ -8,6 +8,8 @@ import { NavLink } from 'react-router-dom';
 import search from './Search';
 import Modal from '../Pages/login/Modal'
 import LoginDropdown from '../Pages/login/LoginDropdown'
+import { ToastContainer,toast } from 'react-toastify';
+
 
 const Header = () => {
 
@@ -61,6 +63,9 @@ const Header = () => {
                     </div>
                 </nav>
             </div>
+            <ToastContainer 
+            hideProgressBar={true}
+            />
         </div>
 
     );
