@@ -1,15 +1,15 @@
-import React, {useState}  from "react";
+import React, { useState } from "react";
 import "./signup.scss";
 import Axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
 
 const Signup = (props) => {
     const [signup, setSignup] = useState({
-        emailid: '',
+        hksignup_emailid: '',
         password: '',
-        confirm_password:''
+        confirm_password: ''
     });
-    
+
     const [status, setStatus] = useState('');
     const handleChange = (e) => {
         setSignup({ ...signup, [e.target.id]: e.target.value });
@@ -18,11 +18,11 @@ const Signup = (props) => {
 
     const onSubmit = () => {
         if (signup.password !== signup.confirm_password) {
-            setStatus('password did not match');
+            setStatus('Password did not match');
         }
         else {
             Axios.post("/rest/signup", {
-                email: signup.emailid,
+                email: signup.hksignup_emailid,
                 password: signup.password
             }).then(res => {
                 setStatus('')
@@ -30,22 +30,24 @@ const Signup = (props) => {
                 props.closeModal(true);
             }).catch(err => {
                 // console.warn(err);
-                setStatus('Email is already ragistred')
+                setStatus('Email is already registered')
             });
         }
     }
-    return(
+    return (
         <div className="row no-margin ">
             <form className="signup-form">
                 <h5>Sign-Up</h5>
                 <div className="input-field">
-                    <input id="emailid" type="email" className="validate" value={signup.emailid} onChange={(e) => handleChange(e)} />
-                    <label for="email">Email</label>
+                    <input id="hksignup_emailid" type="email" className="validate" value={signup.hksignup_emailid} onChange={(e) => handleChange(e)} />
+                    <label for="hksignup_emailid">Email</label>
+
                     {/* <span className="helper-text" data-error="wrong" data-success="right"></span> */}
                 </div>
                 <div class="input-field ">
                     <input id="password" type="password" className="validate" value={signup.password} onChange={(e) => handleChange(e)} />
                     <label for="password">Password</label>
+
                 </div>
                 <div className="input-field ">
                     <input id="confirm_password" type="password" className="validate" value={signup.confirm_password} onChange={(e) => handleChange(e)} />
@@ -53,10 +55,10 @@ const Signup = (props) => {
                 </div>
                 <p className="status">{status}</p>
                 <div className="button center-align">
-                    <a className="waves-effect waves-light btn signup-btn" onClick={()=>onSubmit()}>Submit</a>
+                    <a className="waves-effect waves-light btn signup-btn" onClick={() => onSubmit()}>Submit</a>
                 </div>
             </form>
-            <ToastContainer/>
+            <ToastContainer />
         </div>
 
     );

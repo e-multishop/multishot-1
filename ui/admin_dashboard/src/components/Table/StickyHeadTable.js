@@ -92,7 +92,7 @@ export default function StickyHeadTable(props) {
   };
   const [productData, setProductData] = useState([]);
   useEffect(() => {
-    Axios.get("http://localhost:3000/rest/product").then((res) => {
+    Axios.get("rest/product").then((res) => {
       // console.log(res.data);
       const result = res.data;
       setProductData(result);
@@ -101,7 +101,7 @@ export default function StickyHeadTable(props) {
   },[]);
   if(props.updateTable==true)
   {
-    Axios.get("http://localhost:3000/rest/product").then((res) => {
+    Axios.get("rest/product").then((res) => {
       // console.log(res.data);
       const result = res.data;
       setProductData(result);

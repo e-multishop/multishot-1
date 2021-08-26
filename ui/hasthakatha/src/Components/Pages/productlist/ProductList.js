@@ -8,11 +8,11 @@ class ProductList extends Component{
         product:[]
     };
     componentDidMount(){
-        fetch('/categories').then((result)=>{
+        fetch('rest/categories').then((result)=>{
             return(result.json())
         }).then((categories)=>{this.setState({categories:categories})
         })
-        fetch('/product').then((result)=>{
+        fetch('/rest/product_list').then((result)=>{
             return(result.json())
         }).then((product)=>{this.setState({product:product})})
     };

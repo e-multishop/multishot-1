@@ -82,7 +82,7 @@ export default function CustomizedDialogs(props) {
 
   function onSubmit() {
 
-    Axios.post("http://localhost:3002/rest/addproduct", {
+    Axios.post("rest/addproduct", {
       pid: "Hk34",
       category: formdata.category,
       title: formdata.title,
