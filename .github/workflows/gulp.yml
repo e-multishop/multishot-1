@@ -48,6 +48,7 @@ jobs:
         git config --global user.name "Manoj"
         echo newbuild >> ./heroku-hasthakatha/public/readme.md
         git -C ./heroku-hasthakatha add ./public/dist -f
+        git -C ./heroku-hasthakatha add ./public/admin
         git -C ./heroku-hasthakatha add ./public/index.html
         git -C ./heroku-hasthakatha add ./public/readme.md
         git -C ./heroku-hasthakatha add ./public/admin/index.html
