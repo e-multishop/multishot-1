@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import "./login.scss";
 // import Modal from "./Modal"
 import Axios from 'axios'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {  faCheck} from '@fortawesome/free-solid-svg-icons'
 import { ToastContainer, toast } from 'react-toastify';
 // import { useEffect } from 'react/cjs/react.production.min';
 // import { useParams } from 'react-router';
@@ -36,8 +38,8 @@ const Login = (props) => {
             else {
                 document.location.href = "/admin";
             }
-            toast.success("Success")
-            // props.history.push("/about");
+            toast.success(<span ><FontAwesomeIcon icon={ faCheck} size='lg' color="white" className="icon toast-icon" />  Success</span>)
+            // props.history.push("/about"); 
         }).catch(err => {
             console.warn(err);
             setStatus('Email & password did not match')
@@ -90,7 +92,6 @@ const Login = (props) => {
                     </div>
                 </div>
             </form>
-            <ToastContainer />
         </div>
     );
 

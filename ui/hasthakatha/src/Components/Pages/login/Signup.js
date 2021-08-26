@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./signup.scss";
 import Axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {  faCheck} from '@fortawesome/free-solid-svg-icons'
 
 const Signup = (props) => {
     const [signup, setSignup] = useState({
@@ -26,7 +28,7 @@ const Signup = (props) => {
                 password: signup.password
             }).then(res => {
                 setStatus('')
-                toast.success("Success")
+                toast.success(<span ><FontAwesomeIcon icon={ faCheck} size='lg' color="white" className="icon toast-icon" />  Success</span>)
                 props.closeModal(true);
             }).catch(err => {
                 // console.warn(err);
@@ -58,7 +60,6 @@ const Signup = (props) => {
                     <a className="waves-effect waves-light btn signup-btn" onClick={() => onSubmit()}>Submit</a>
                 </div>
             </form>
-            <ToastContainer />
         </div>
 
     );
