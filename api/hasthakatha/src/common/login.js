@@ -116,7 +116,8 @@ var login_app=function(app,con)
                                 pass: creds.PASS
                             }
                         });
-                        var password_reset_link = "http://localhost:3000/reset_password?token=" + new_hashpassword;
+                        //var host=cred
+                        var password_reset_link = creds.Website+"/reset_password?token=" + new_hashpassword;
                         var fileread = fs.readFileSync(__dirname+'/../assets/forgot_password_templet.html', 'utf8');
                         var mailOptions = {
                             from: creds.USER,

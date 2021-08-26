@@ -1,7 +1,8 @@
 module.exports = {
+    Website: 'https://hasthakatha-app.herokuapp.com',
     port: process.env.PORT,
-    USER: 'ashish.volksdigitallab@gmail.com',
-    PASS: '12q12q12s',
+    USER: 'manbatest123@gmail.com',
+    PASS: 'hereiammanoj',
     db_host: "www.db4free.net/",
     db_user: "admin_has_123",
     db_password: "Welcome@123",

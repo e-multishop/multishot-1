@@ -1,7 +1,8 @@
 module.exports = {
+    Website: 'http://localhost:3000',
     port: 3000,
-    USER: 'ashish.volksdigitallab@gmail.com',
-    PASS: '12q12q12s',
+    USER: 'manbatest123@gmail.com',
+    PASS: 'hereiammanoj',
     db_host: "localhost",
     db_user: "root",
     db_password: "",
