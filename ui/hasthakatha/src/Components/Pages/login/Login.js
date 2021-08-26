@@ -18,7 +18,9 @@ const Login = (props) => {
         setLogin({ ...login, [e.target.id]: e.target.value });
         setStatus('')
     }
-    const onSubmit = () => {
+    const onSubmit = (event) => {
+        event.stopPropagation();
+        event.preventDefault();
         Axios.post("/rest/login", {
             email: login.hklogin_emailid,
             password: login.password
@@ -77,7 +79,7 @@ const Login = (props) => {
                             </div>
                             <p className="status">{status}</p>
                             <div className="button center-align">
-                                <button class="waves-effect waves-light btn sign-in-btn" onClick={() => { onSubmit() }}>SIGN IN</button>
+                                <button class="waves-effect waves-light btn sign-in-btn" onClick={(e) => { onSubmit(e) }}>SIGN IN</button>
                             </div>
                             <div className="join-now center-align">
                                 Not yet a member?<button
