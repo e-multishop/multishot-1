@@ -30,10 +30,6 @@ jobs:
         ref: 'main'
         token: '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'
         
-    - name: cleanup for heroku folder
-      run: |
-        rm -r ./heroku-hasthakatha/public
-        
     - name: Build Hasthakatha UI
       run: |
         npm install --prefix ./ui/hasthakatha
