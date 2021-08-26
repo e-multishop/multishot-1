@@ -15,7 +15,7 @@ gulp.task('updateReferences', function() {
 
 gulp.task("copyAssets", function() {
   return gulp.src('./build/*/**')
-    .pipe(gulp.dest('./../../api/hasthakatha/public/admin/'));
+    .pipe(gulp.dest('./../../api/hasthakatha/public/admin/', {overwrite: true}));
 });
 
 gulp.task('copyAssetsToAshishRepo', function() {
