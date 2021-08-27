@@ -1,4 +1,4 @@
-
+var atob = require('atob');
 var product_app = function (app,con) {
     app.get('/rest/product_list', (req, res) => {
         var sql = "SELECT * FROM product ";
@@ -82,10 +82,10 @@ var product_app = function (app,con) {
             temp = temp + sql;
         }
         console.log(temp);
-        con.query(sql, function (err, result) {
-            if (err) throw err;
-            res.send("data insert successfully");
-        });
+        // con.query(sql, function (err, result) {
+        //     if (err) throw err;
+        //     res.send("data insert successfully");
+        // });
     });
 
     app.post("/rest/addproduct", (req, res) => {
@@ -100,8 +100,12 @@ var product_app = function (app,con) {
         var material = req.body.material;
         var total_available = req.body.total_available;
         var total_quantity = req.body.total_quantity;
-
-        var sql = "INSERT INTO product(pid,category,title,price,price_without_embroidary,description,note,material,total_available,total_quantity)VALUES('" + pid + "','" + category + "','" + title + "','" + price + "','" + price_without_embroidary + "','" + description + "','" + note + "','" + material + "','" + total_available + "','" + total_quantity + "')";
+        var url =req.body.url;
+        var buffer =  Buffer.from(url, 'binary');
+        var t1= "INSERT INTO `product_images`(`imageid`, `pid`, `type`, `image_data`) VALUES (NULL,'"+pid+"','main','"+buffer+"');"; 
+        var t2 = "INSERT INTO product(pid,category,title,price,price_without_embroidary,description,note,material,total_available,total_quantity)VALUES('" + pid + "','" + category + "','" + title + "','" + price + "','" + price_without_embroidary + "','" + description + "','" + note + "','" + material + "','" + total_available + "','" + total_quantity + "');";
+        var sql =t1+t2;
+        console.log(sql);
         con.query(sql, (err, result) => {
             if (err) throw err;
             res.send('inserted');
