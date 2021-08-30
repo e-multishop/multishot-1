@@ -33,17 +33,15 @@ var common_app=function(app,con)
     
     });
 
-    app.post('/rest/product_images',(req,res)=>{
-        var url =req.body.image_data;
-      //  var img_data = atob(url);
-        var buffer =  Buffer.from(url, 'binary');
-        var sql= "INSERT INTO `product_images`(`imageid`, `pid`, `type`, `url`, `image_data`) VALUES ('ek2','hk02','mm','dd','"+buffer+"');"; 
-       // var sql = `insert into product_images values('im1','ha12','','',\`${buffer}\`);`;
-        con.query(sql, function (err, result) {
-            if (err) throw err;
-            res.send("data insert successfully");
-        });    
-    });
+    // app.post('/rest/product_images',(req,res)=>{
+    //     var url =req.body.image_data;
+    //     var buffer =  Buffer.from(url, 'binary');
+    //     var sql= "INSERT INTO `product_images`(`imageid`, `pid`, `type`, `url`, `image_data`) VALUES ('ek2','hk02','mm','dd','"+buffer+"');"; 
+    //     con.query(sql, function (err, result) {
+    //         if (err) throw err;
+    //         res.send("data insert successfully");
+    //     });    
+    // });
     
     
     

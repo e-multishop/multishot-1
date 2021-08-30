@@ -1,4 +1,9 @@
 var gulp = require('gulp');
+var del = require('del');
+
+gulp.task('cleanAssets', function() {
+    return del('./../../api/hasthakatha/public/**', {force: true});
+});
 
 gulp.task('copyMainFile', function() {
     return gulp.src('./public/index.html')
@@ -6,8 +11,8 @@ gulp.task('copyMainFile', function() {
 });
 
 gulp.task('copyAssets', function() {
-    return gulp.src('./dist/*')
+    return gulp.src('./dist/**')
         .pipe(gulp.dest('./../../api/hasthakatha/public/dist'));
 });
 
-gulp.task("default", gulp.series('copyMainFile', 'copyAssets'));
+gulp.task("default", gulp.series('cleanAssets', 'copyMainFile', 'copyAssets'));

@@ -1,4 +1,4 @@
-
+var atob = require('atob');
 var product_app = function (app,con) {
     app.get('/rest/product_list', (req, res) => {
         var sql = "SELECT * FROM product ";
@@ -10,7 +10,7 @@ var product_app = function (app,con) {
             let images = [];
             for (var k = 0; k < result.length; k++) {
                 let temp = result[k].pid;
-                let sql = "SELECT pid,type,url from `product_images` WHERE pid='" + temp + "'";
+                let sql = "SELECT pid,type,image_data from `product_images` WHERE pid='" + temp + "'";
                 //     let sql = `SELECT pid,type,url from product_images WHERE pid='${temp}'`;
                 let p = new Promise(function (resolve, reject) {
                     con.query(sql, function (err, result2) {
@@ -20,7 +20,12 @@ var product_app = function (app,con) {
                             for (var j = 0; j < images.length; j++) {
                                 var temp = result[i];
                                 if (temp.pid == images[j].pid) {
-                                    temp.url = images[j].url;
+                                   var image_data = images[j].image_data;
+                                   console.log(Object.keys(image_data));
+                                   var buff_data = image_data?Buffer.from(image_data):'';
+
+                                   temp.image_data= buff_data?buff_data.toString():'';
+                                    
                                 }
                             }
 
@@ -82,10 +87,10 @@ var product_app = function (app,con) {
             temp = temp + sql;
         }
         console.log(temp);
-        con.query(sql, function (err, result) {
-            if (err) throw err;
-            res.send("data insert successfully");
-        });
+        // con.query(sql, function (err, result) {
+        //     if (err) throw err;
+        //     res.send("data insert successfully");
+        // });
     });
 
     app.post("/rest/addproduct", (req, res) => {
@@ -100,8 +105,14 @@ var product_app = function (app,con) {
         var material = req.body.material;
         var total_available = req.body.total_available;
         var total_quantity = req.body.total_quantity;
-
-        var sql = "INSERT INTO product(pid,category,title,price,price_without_embroidary,description,note,material,total_available,total_quantity)VALUES('" + pid + "','" + category + "','" + title + "','" + price + "','" + price_without_embroidary + "','" + description + "','" + note + "','" + material + "','" + total_available + "','" + total_quantity + "')";
+        var url =req.body.url;
+        var buffer =  Buffer.from(url, 'binary');
+        var start= "START TRANSACTION;";
+        var t1= "INSERT INTO `product_images`(`imageid`, `pid`, `type`, `image_data`) VALUES (NULL,'"+pid+"','main','"+buffer+"');"; 
+        var t2 = "INSERT INTO product(pid,category,title,price,price_without_embroidary,description,note,material,total_available,total_quantity)VALUES('" + pid + "','" + category + "','" + title + "','" + price + "','" + price_without_embroidary + "','" + description + "','" + note + "','" + material + "','" + total_available + "','" + total_quantity + "');";
+        var end= "COMMIT;";
+        var sql =start+t1+t2+end;
+        console.log(sql);
         con.query(sql, (err, result) => {
             if (err) throw err;
             res.send('inserted');
