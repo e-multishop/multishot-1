@@ -119,5 +119,18 @@ var product_app = function (app,con) {
             //    res.end();
         });
     });
+
+    app.delete("/rest/delete",(req,res)=>{
+
+        var pid =req.body.pid;
+        var t1 ="DELETE FROM product WHERE pid='"+pid+"';";
+        var t2 ="DELETE FROM product_images WHERE pid='"+pid+"';"
+        var sql = t1+t2;
+        con.query(sql,(err,result)=>{
+            if(err) throw err;
+                res.send('deleted');
+        });
+
+    });
 }
 module.exports=product_app;
