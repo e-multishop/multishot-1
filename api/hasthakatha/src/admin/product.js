@@ -96,6 +96,9 @@ var product_app = function (app,con) {
     app.post("/rest/addproduct", (req, res) => {
 
         var pid = req.body.pid;
+        var sku = req.body.sku;
+        var status = req.body.status;
+        var available= req.body.available;
         var category = req.body.category;
         var title = req.body.title;
         var price = req.body.price;
@@ -109,7 +112,7 @@ var product_app = function (app,con) {
         var buffer =  Buffer.from(url, 'binary');
         var start= "START TRANSACTION;";
         var t1= "INSERT INTO `product_images`(`imageid`, `pid`, `type`, `image_data`) VALUES (NULL,'"+pid+"','main','"+buffer+"');"; 
-        var t2 = "INSERT INTO product(pid,category,title,price,price_without_embroidary,description,note,material,total_available,total_quantity)VALUES('" + pid + "','" + category + "','" + title + "','" + price + "','" + price_without_embroidary + "','" + description + "','" + note + "','" + material + "','" + total_available + "','" + total_quantity + "');";
+        var t2 = "INSERT INTO product(pid,category,title,price,price_without_embroidary,description,note,material,total_available,total_quantity,available,sku,status)VALUES('" + pid + "','" + category + "','" + title + "','" + price + "','" + price_without_embroidary + "','" + description + "','" + note + "','" + material + "','" + total_available + "','" + total_quantity + "','"+available+"','"+sku+"','"+status+"');";
         var end= "COMMIT;";
         var sql =start+t1+t2+end;
         console.log(sql);
@@ -131,6 +134,11 @@ var product_app = function (app,con) {
                 res.send('deleted');
         });
 
+    });
+
+    app.put("/rest/update",(req,res)=>{
+        var pid 
+        var sql ="UPDATE Customers SET ContactName = 'Alfred Schmidt', City= 'Frankfurt' WHERE CustomerID = 1;";
     });
 }
 module.exports=product_app;
