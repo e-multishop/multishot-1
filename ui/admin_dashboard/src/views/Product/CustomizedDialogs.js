@@ -67,6 +67,7 @@ export default function CustomizedDialogs(props) {
   const [formdata, setFormdata] = useState({
     category: "",
     title: " ",
+    sku:" ",
     price: " ",
     price_without_embroidary: " ",
     description: " ",
@@ -113,6 +114,7 @@ export default function CustomizedDialogs(props) {
     setFormdata({
       category: "",
       title: " ",
+      sku:" ",
       price: " ",
       price_without_embroidary: " ",
       description: " ",

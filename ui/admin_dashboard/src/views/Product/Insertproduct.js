@@ -66,6 +66,18 @@ const Insertproduct = (props) => {
                                     <span className="helper-text" data-error="Enter product title" ></span>
                                 </div>
                                 <div className="input-field col s12 ">
+                                    <input
+                                        id="sku"
+                                        type="text"
+                                        value={props.formData.sku}
+                                        name="sku"
+                                        onChange={(e) => handleChange(e)}
+                                        className="validate" required
+                                    />
+                                    <label htmlFor="sku">SKU<spam className="star_color">*</spam></label>
+                                    <span className="helper-text" data-error="Enter product SKU" ></span>
+                                </div>
+                                <div className="input-field col s12 ">
                                     <textarea
                                         id="pdescription"
                                         value={props.formData.description}

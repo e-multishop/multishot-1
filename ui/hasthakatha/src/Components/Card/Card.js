@@ -1,36 +1,41 @@
 import React, { useState } from 'react';
 import "./card.scss";
-const Card =(props)=>{
-
-    return(
+import {addToCart}  from '../../Redux/actions/index'
+import {useDispatch}from 'react-redux'
+const Card = (props) => {
+    const dispatch=useDispatch();
+    const data={ title: props.title, 
+        description: props.description, 
+        price: props.price
+    }
+    return (
         <div className="card hk-card">
             {
-                props.banner?
-                <div className="card-image">
-                    <img src={props.images}/>
-                </div> :''
+                props.banner ?
+                    <div className="card-image">
+                        <img src={props.images} />
+                    </div> : ''
             }
-                <div className="card-content">
-                    {
-                        props.title?
-                        <h2>{props.title}</h2>:''
-                    }
-                    {     
-                        props.description?                  
-                     <h6>{props.description}</h6>:''
+            <div className="card-content">
+                {
+                    props.title ?
+                        <h2>{props.title}</h2> : ''
+                }
+                {
+                    props.description ?
+                        <h6>{props.description}</h6> : ''
 
-                    }
-                    {
-                        props.action?
-                        <div className="hk-addcard">
-                             <a href="#">ADD TO CART</a>
-                        </div>:''
-                    }
-                    {
-                        props.footer?props.footer:''
-                    }
-                     
-                </div>             
+                }
+                {
+                    props.action ?
+                        <div className="hk-addcard" onClick={() => {dispatch(addToCart(data))}}>
+                            <a>ADD TO CART</a>
+                        </div> : ''
+                }
+                {
+                    props.footer ? props.footer : ''
+                }
+            </div>
         </div>
     );
 }

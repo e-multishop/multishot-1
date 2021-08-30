@@ -8,14 +8,15 @@ import { NavLink } from 'react-router-dom';
 import search from './Search';
 import Modal from '../Pages/login/Modal'
 import LoginDropdown from '../Pages/login/LoginDropdown'
-import { ToastContainer,toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
+import {useSelector} from 'react-redux'
 
-
-const Header = () => {
+const Header = (props) => {
 
     const [LoggedIn, setLoggedIn] = useState(false)
     const token = localStorage.getItem('token');
-    const [Email,setEmail]=useState();
+    const [Email, setEmail] = useState();
+    const cartData=useSelector((state)=>state.cartItems);
     // localStorage.clear();
     useEffect(() => {
         if (token != null) {
@@ -31,7 +32,7 @@ const Header = () => {
                     document.getElementById("modal")
                 );
             }
-            ReactDOM.render(<Modal destroydata={destroydata} setLoggedIn={setLoggedIn} setEmail={setEmail}/>, document.getElementById("modal"),);
+            ReactDOM.render(<Modal destroydata={destroydata} setLoggedIn={setLoggedIn} setEmail={setEmail} />, document.getElementById("modal"),);
         }
     }
 
@@ -53,18 +54,21 @@ const Header = () => {
                             {/* <li><LoginDropdown/></li> */}
                             <li onClick={search}><FontAwesomeIcon icon={faSearch} size="large" className="icon slide-out" /></li>
                             {<li>
-                                
-                                {LoggedIn?<LoginDropdown setLoggedIn={setLoggedIn} email={Email}/>:<button onClick={HandleChange}><FontAwesomeIcon icon={faUser} size='large' className="icon " />
+
+                                {LoggedIn ? <LoginDropdown setLoggedIn={setLoggedIn} email={Email} /> : <button onClick={HandleChange}><FontAwesomeIcon icon={faUser} size='large' className="icon " />
                                 </button>}
 
                             </li>}
-                            <li><NavLink to="/"><FontAwesomeIcon icon={faShoppingCart} size="large" className="icon " /></NavLink></li>
+                            <li>
+                                <NavLink to="/"><div className="cart"><FontAwesomeIcon icon={faShoppingCart} size="large" className="icon " /><span class="badge cart-badge">{cartData.length}</span></div>
+                                </NavLink>
+                            </li>
                         </ul>
                     </div>
                 </nav>
             </div>
-            <ToastContainer 
-            hideProgressBar={true}
+            <ToastContainer
+                hideProgressBar={true}
             />
         </div>
 

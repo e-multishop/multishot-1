@@ -27,4 +27,16 @@
     background-color: transparent;
     border:none;
 }
+.cart{
+    color:black;
+    margin-right:10px ;
+    .cart-badge{    
+        top: -.5em;
+        position: relative;
+        line-height: 0;
+        vertical-align: baseline;
+        padding:0 !important;
+        min-width: 0 !important;
+    }
+}
 

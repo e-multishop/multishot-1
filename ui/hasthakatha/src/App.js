@@ -16,7 +16,6 @@ import * as materialize  from 'materialize-css/dist/js/materialize';
 import Adminapp from './Components/Admin_dashboard/Adminapp'
 import Reset from './Components/Pages/login/Reset_password';
 
-
 class App extends Component{
   render(){
     return(
