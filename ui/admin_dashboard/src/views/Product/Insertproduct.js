@@ -18,14 +18,28 @@ const Insertproduct = (props) => {
 
     function handleChange(e) {
 
-        if (e.target.value != " ") {
-            setDisable(false)
-        }
-        else {
-
-        }
+        // if (e.target.value != " ") {
+        //     setDisable(false)
+        // }
+        // else {
+        // }
+        
+        // let reader = new FileReader();
+        // reader.readAsDataURL(upload_image[0]);
         props.setFormData({ ...props.formData, [e.target.name]: e.target.value });
+        // props.setFormData({props.formData.upload_image: "upload_image"});
         console.groupEnd();
+    }
+    function handleImage(e){
+        let upload_image= e.target.files;
+        let reader = new FileReader();
+        reader.readAsDataURL(upload_image[0]);
+        reader.onload=(e)=>{
+            // console.log("check iamge=",e.target.result);
+        
+            props.setUploadImage(e.target.result);
+        }
+        // console.log(upload_image[0]);
 
     }
     const options = [
@@ -72,7 +86,8 @@ const Insertproduct = (props) => {
                                         value={props.formData.sku}
                                         name="sku"
                                         onChange={(e) => handleChange(e)}
-                                        className="validate" required
+                                        className="validate" 
+                                        required
                                     />
                                     <label htmlFor="sku">SKU<spam className="star_color">*</spam></label>
                                     <span className="helper-text" data-error="Enter product SKU" ></span>
@@ -153,12 +168,12 @@ const Insertproduct = (props) => {
                                 <div className="input-field col s6">
                                     <label htmlFor="uploadimage">Upload Image<spam className="star_color">*</spam>
                                         <input
-                                            id="uploadimage"
+                                            id="upload_image"
                                             type="file"
+                                            accept="image/png, image/jpeg"
                                             className="validate"
-                                            // value={formdata.image}
-                                            name="image"
-                                            onChange={(e) => handleChange(e)}
+                                            name="file"
+                                            onChange={(e) => handleImage(e)}
                                             required
                                         />
                                     </label>

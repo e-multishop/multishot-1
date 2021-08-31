@@ -26,7 +26,7 @@ import { GuardProvider, GuardedRoute } from 'react-router-guards';
 import Admin from "layouts/Admin.js";
 // import InsertProduct from "./views/Product/Insertproduct.js";
 // import RTL from "layouts/RTL.js";
-import * as materialize  from 'materialize-css/dist/js/materialize';
+import * as materialize from 'materialize-css/dist/js/materialize';
 import "./Style.scss";
 import "assets/css/material-dashboard-react.css?v=1.10.0";
 //
@@ -36,10 +36,11 @@ import "assets/css/material-dashboard-react.css?v=1.10.0";
 // const store=createStore(rootReducers)
 // console.warn("store",store)
 //
-const getIsLoggedIn=()=>{
+
+const getIsLoggedIn = () => {
   const token = localStorage.getItem('token');
   if (token != null) {
-    return(true)
+    return (true)
     // setEmail(email)
   }
   else {
@@ -52,8 +53,8 @@ const requireLogin = (to, from, next) => {
     if (getIsLoggedIn()) {
       next();
     }
-    else{
-      document.location.href="/#/login?redirect_path=admin"
+    else {
+      document.location.href = "/#/login?redirect_path=admin"
     }
     // next.redirect('/login');
   } else {
@@ -63,13 +64,13 @@ const requireLogin = (to, from, next) => {
 
 ReactDOM.render(
   <BrowserRouter>
-      <GuardProvider guards={[requireLogin]} >
-    <Switch>
-      {/* <Route path="/addproduct" component={InsertProduct} /> */}
-      <GuardedRoute path="/admin" component={Admin} meta={{ auth: true }}/>
-      {/* <Route path="/rtl" component={RTL} /> */}
-      <Redirect from="/" to="/admin/table" />
-    </Switch>
+    <GuardProvider guards={[requireLogin]} >
+      <Switch>
+        {/* <Route path="/addproduct" component={InsertProduct} /> */}
+        <GuardedRoute path="/admin" component={Admin} meta={{ auth: true }} />
+        {/* <Route path="/rtl" component={RTL} /> */}
+        <Redirect from="/" to="/admin/table" />
+      </Switch>
     </GuardProvider>
   </BrowserRouter>,
   // <Provider store={store}>
