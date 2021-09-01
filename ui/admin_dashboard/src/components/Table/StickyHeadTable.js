@@ -15,21 +15,27 @@ const columns = [
   { id: 'title', label: 'Product Title', minWidth: 100 },
   { id: 'price', label: 'Price', minWidth: 70 },
   {
+    id: 'sku',
+    label: 'SKU',
+    minWidth: 40,
+    align: 'right',
+  },
+  {
     id: 'description',
     label: 'Descrtiption',
-    minWidth: 150,
+    minWidth: 100,
     align: 'right',
   },
   {
     id: 'size',
     label: 'Size',
-    minWidth: 70,
+    minWidth: 50,
     align: 'right',
   },
   {
     id: 'total_quantity',
     label: 'Quantity',
-    minWidth: 70,
+    minWidth: 50,
     align: 'right',
   },
   {
@@ -53,6 +59,12 @@ const columns = [
   {
     id: 'note',
     label: 'Care Instructions',
+    minWidth: 100,
+    align: 'right',
+  },
+  {
+    // id: 'action',
+    label: 'Actions',
     minWidth: 100,
     align: 'right',
   },
@@ -82,6 +94,7 @@ export default function StickyHeadTable(props) {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };

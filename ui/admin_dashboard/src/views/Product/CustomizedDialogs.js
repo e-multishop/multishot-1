@@ -10,7 +10,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import "./insertproduct.scss"
 import Axios from 'axios';
-import Insertproduct from "./Insertproduct.js"
+import Insertproduct from "./Insertproduct.js";
 import { ToastContainer, toast } from 'react-toastify';
 
 const styles = (theme) => ({
@@ -76,15 +76,14 @@ export default function CustomizedDialogs(props) {
     size: " ",
     total_available: " ",
     total_quantity: " ",
-    image: " ",
     dimension: " ",
     color: " ",
   });
-
+  const [uploadImage,setUploadImage]=useState("");
   function onSubmit() {
 
     Axios.post("/rest/addproduct", {
-      pid: "Hk34",
+      pid: "901",
       category: formdata.category,
       title: formdata.title,
       price: formdata.price,
@@ -94,6 +93,10 @@ export default function CustomizedDialogs(props) {
       material: formdata.material,
       total_available: "89",//89-demo data
       total_quantity: formdata.total_quantity,
+      available:'1',
+      sku:formdata.sku,
+      status:'1',
+      url:uploadImage
     }
     ).then(res => {
       // console.log(res.formdata)
@@ -120,13 +123,13 @@ export default function CustomizedDialogs(props) {
       description: " ",
       note: " ",
       material: " ",
-      size:[],
+      size:" ",
       total_available: " ",
       total_quantity: " ",
-      image: " ",
       dimension: " ",
       color: " ",
     });
+    setUploadImage(" ");
   }
 
   return (
@@ -146,7 +149,11 @@ export default function CustomizedDialogs(props) {
         </DialogTitle>
         <DialogContent dividers>
           <Typography gutterBottom>
-            <Insertproduct formData={formdata} setFormData={setFormdata} />
+            <Insertproduct 
+            formData={formdata}
+             setFormData={setFormdata}
+              setUploadImage={setUploadImage}
+              />
           </Typography>
         </DialogContent>
         <DialogActions>
