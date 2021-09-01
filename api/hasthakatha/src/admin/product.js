@@ -1,5 +1,5 @@
 var atob = require('atob');
-var product_app = function (app,con) {
+var product_app = function (app, con) {
     app.get('/rest/product_list', (req, res) => {
         var sql = "SELECT * FROM product ";
         con.query(sql, function (err, result) {
@@ -20,12 +20,12 @@ var product_app = function (app,con) {
                             for (var j = 0; j < images.length; j++) {
                                 var temp = result[i];
                                 if (temp.pid == images[j].pid) {
-                                   var image_data = images[j].image_data;
-                                   console.log(Object.keys(image_data));
-                                   var buff_data = image_data?Buffer.from(image_data):'';
+                                    var image_data = images[j].image_data;
+                                    console.log(Object.keys(image_data));
+                                    var buff_data = image_data ? Buffer.from(image_data) : '';
 
-                                   temp.image_data= buff_data?buff_data.toString():'';
-                                    
+                                    temp.image_data = buff_data ? buff_data.toString() : '';
+
                                 }
                             }
 
@@ -98,7 +98,7 @@ var product_app = function (app,con) {
         var pid = req.body.pid;
         var sku = req.body.sku;
         var status = req.body.status;
-        var available= req.body.available;
+        var available = req.body.available;
         var category = req.body.category;
         var title = req.body.title;
         var price = req.body.price;
@@ -108,37 +108,87 @@ var product_app = function (app,con) {
         var material = req.body.material;
         var total_available = req.body.total_available;
         var total_quantity = req.body.total_quantity;
-        var url =req.body.url;
-        var buffer =  Buffer.from(url, 'binary');
-        var start= "START TRANSACTION;";
-        var t1= "INSERT INTO `product_images`(`imageid`, `pid`, `type`, `image_data`) VALUES (NULL,'"+pid+"','main','"+buffer+"');"; 
-        var t2 = "INSERT INTO product(pid,category,title,price,price_without_embroidary,description,note,material,total_available,total_quantity,available,sku,status)VALUES('" + pid + "','" + category + "','" + title + "','" + price + "','" + price_without_embroidary + "','" + description + "','" + note + "','" + material + "','" + total_available + "','" + total_quantity + "','"+available+"','"+sku+"','"+status+"');";
-        var end= "COMMIT;";
-        var sql =start+t1+t2+end;
+        var url = req.body.url;
+        var buffer = Buffer.from(url, 'binary');
+        var start = "START TRANSACTION;";
+        var t1 = "INSERT INTO `product_images`(`imageid`, `pid`, `type`, `image_data`) VALUES (NULL,'" + pid + "','main','" + buffer + "');";
+        var t2 = "INSERT INTO product(pid,category,title,price,price_without_embroidary,description,note,material,total_available,total_quantity,available,sku,status)VALUES('" + pid + "','" + category + "','" + title + "','" + price + "','" + price_without_embroidary + "','" + description + "','" + note + "','" + material + "','" + total_available + "','" + total_quantity + "','" + available + "','" + sku + "','" + status + "');";
+        var end = "COMMIT;";
+        var sql = start + t1 + t2 + end;
         console.log(sql);
         con.query(sql, (err, result) => {
             if (err) throw err;
             res.send('inserted');
             //    res.end();
         });
+
+
     });
 
-    app.delete("/rest/delete",(req,res)=>{
+    app.delete("/rest/delete", (req, res) => {
 
-        var pid =req.body.pid;
-        var t1 ="DELETE FROM product WHERE pid='"+pid+"';";
-        var t2 ="DELETE FROM product_images WHERE pid='"+pid+"';"
-        var sql = t1+t2;
-        con.query(sql,(err,result)=>{
-            if(err) throw err;
-                res.send('deleted');
+        var pid = req.body.pid;
+        var t1 = "DELETE FROM product WHERE pid='" + pid + "';";
+        var t2 = "DELETE FROM product_images WHERE pid='" + pid + "';"
+        var sql = t1 + t2;
+        con.query(sql, (err, result) => {
+            if (err) throw err;
+            res.send('deleted');
         });
 
     });
+    app.get("/rest/get_pid", (req, res) => {
+        var sql = "SELECT MAX(pid) FROM product;";
+        con.query(sql, (err, result) => {
+            if (err) throw err;
+            var count = result[0]["MAX(pid)"];
+            //console.log(count);
+            if(count=="null")
+            {
+                res.send({"pid":1});
+            }else{
+                res.send({ "pid": count });
+            }
+            
+        });
+    });
+    app.put("/rest/update", (req, res) => {
+        var pid = req.body.pid;
+        var category = req.body.category;
+        var title = req.body.title;
+        var price = req.body.price;
+        var price_without_embroidary = req.body.price_without_embroidary;
+        var description = req.body.description;
+        var material = req.body.material;
+        var total_available = req.body.total_available;
+        var total_quantity = req.body.total_quantity;
+        var available = req.body.available;
+        var sku = req.body.sku;
+        var status = req.body.status;
+        var sql = "UPDATE product SET category = '" + category + "', title= '" + title + "',price ='" + price + "',price_without_embroidary='" + price_without_embroidary + "',description='" + description + "',note='" + note + "',material='" + material + "',total_available='" + total_available + "',total_quantity='" + total_quantity + "',available='" + available + "',sku='" + sku + "',status='" + status + "' WHERE pid = '" + pid + "';";
+        con.query(sql, (err, result) => {
+            if (err) throw err;
+            res.send('updated');
+        });
+    });
+    app.put("/rest/update_status", (req, res) => {
+        var pid = req.body.pid;
+        var status = req.body.status;
+        var sql = "UPDATE product SET status='" + status + "' Where pid='" + pid + "';";
+        con.query(sql, (err, result) => {
+            if (err) throw err;
+            res.send('updated');
+        });
+    });
 
-    app.put("/rest/update",(req,res)=>{
-        var pid 
-        var sql ="UPDATE Customers SET ContactName = 'Alfred Schmidt', City= 'Frankfurt' WHERE CustomerID = 1;";
+    app.put("/rest/update_available", (req, res) => {
+        var pid = req.body.pid;
+        var available = req.body.available;
+        var sql = "UPDATE product SET available='" + available + "' Where pid='" + pid + "';";
+        con.query(sql, (err, result) => {
+            if (err) throw err;
+            res.send('updated');
+        });
     });
 }
-module.exports=product_app;
+module.exports = product_app;
