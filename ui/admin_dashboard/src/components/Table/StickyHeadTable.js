@@ -12,14 +12,28 @@ import Axios from 'axios';
 import { ContactSupportOutlined } from '@material-ui/icons';
 // import EventEmitter from 'fbemitter';
 const columns = [
-  { id: 'title', label: 'Product Title', minWidth: 100 },
-  { id: 'price', label: 'Price', minWidth: 70 },
+  {
+    id: 'title',
+    label: 'Product Title',
+    minWidth: 100
+  },
+  {
+    id: 'price',
+    label: 'Price',
+    minWidth: 70
+  },
   {
     id: 'sku',
     label: 'SKU',
     minWidth: 40,
     align: 'right',
   },
+  // {
+  //   id: 'image_data',
+  //   label: 'Product Images',
+  //   minWidth: 40,
+  //   align: 'right',
+  // },
   {
     id: 'description',
     label: 'Descrtiption',
@@ -63,7 +77,7 @@ const columns = [
     align: 'right',
   },
   {
-    // id: 'action',
+    id: 'action',
     label: 'Actions',
     minWidth: 100,
     align: 'right',
@@ -94,7 +108,8 @@ export default function StickyHeadTable(props) {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  
+  const [Action, setAction] = React.useState('');
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -110,15 +125,13 @@ export default function StickyHeadTable(props) {
       const result = res.data;
       setProductData(result);
     })
-
   },[]);
-  if(props.updateTable==true)
-  {
+  if (props.updateTable == true) {
     Axios.get("/rest/product_list").then((res) => {
       // console.log(res.data);
       const result = res.data;
       setProductData(result);
-    }) 
+    })
   }
 
   return (
@@ -144,6 +157,9 @@ export default function StickyHeadTable(props) {
                 <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
                   {columns.map((column) => {
                     const value = row[column.id];
+                    // if (row[column.id] === "image_data") {
+                    //   const value[] = "check";
+                    // }
                     return (
                       <TableCell key={column.id} align={column.align}>
                         {column.format && typeof value === 'number' ? column.format(value) : value}

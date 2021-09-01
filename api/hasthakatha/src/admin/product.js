@@ -135,7 +135,6 @@ var product_app = function (app, con) {
             if (err) throw err;
             res.send('deleted');
         });
-
     });
     app.get("/rest/get_pid", (req, res) => {
         var sql = "SELECT MAX(pid) FROM product;";
@@ -147,6 +146,7 @@ var product_app = function (app, con) {
             {
                 res.send({"pid":1});
             }else{
+                count=count+1;
                 res.send({ "pid": count });
             }
             
