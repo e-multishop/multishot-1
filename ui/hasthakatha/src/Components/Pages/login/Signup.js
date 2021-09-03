@@ -4,6 +4,7 @@ import Axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {  faCheck} from '@fortawesome/free-solid-svg-icons'
+import Loader from "../../Common/Loader";
 
 const Signup = (props) => {
     const [signup, setSignup] = useState({
@@ -13,6 +14,7 @@ const Signup = (props) => {
     });
 
     const [status, setStatus] = useState('');
+    const [loader, setLoader] = useState(false);
     const handleChange = (e) => {
         setSignup({ ...signup, [e.target.id]: e.target.value });
         setStatus('');
@@ -23,21 +25,24 @@ const Signup = (props) => {
             setStatus('Password did not match');
         }
         else {
+            setLoader(true);
             Axios.post("/rest/signup", {
                 email: signup.hksignup_emailid,
                 password: signup.password
             }).then(res => {
                 setStatus('')
+                setLoader(false);
                 toast.success(<span ><FontAwesomeIcon icon={ faCheck} size='lg' color="white" className="icon toast-icon" />  Success</span>)
                 props.closeModal(true);
             }).catch(err => {
                 // console.warn(err);
+                setLoader(false);
                 setStatus('Email is already registered')
             });
         }
     }
-    return (
-        <div className="row no-margin ">
+    const show = () => {
+        return (
             <form className="signup-form">
                 <h5>Sign-Up</h5>
                 <div className="input-field">
@@ -60,6 +65,12 @@ const Signup = (props) => {
                     <a className="waves-effect waves-light btn signup-btn" onClick={() => onSubmit()}>Submit</a>
                 </div>
             </form>
+        )
+    }
+    return (
+        <div className="row no-margin hk-signup wrapper">
+            { loader ? <Loader height="250px" /> : ''}
+            { show() }
         </div>
 
     );

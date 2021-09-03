@@ -31,6 +31,9 @@ const ProductList = () => {
         description: "check description",
         price: "check price"
     }
+    var image_url;
+    console.warn("checku url",image_url);
+
     return (
         <>
             {/* shop badge */}
@@ -65,7 +68,12 @@ const ProductList = () => {
                                 <div className="hk-product_card">
                                     <NavLink to="/productdetails">
                                         <div className="img-wraper">
-                                            <img src={value.url} />
+                                            {/* {const url= atob(value.url)} */}
+                                            {
+                                                    //  image_url=atob(value.image_data)
+                                            }
+                                            {/* <p>{avalue.image_data}</p> */}
+                                            <img src={value.image_data} />
                                         </div>
                                         <div className="description">
                                             {value.title}

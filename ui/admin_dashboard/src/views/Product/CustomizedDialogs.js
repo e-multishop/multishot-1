@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -80,10 +80,19 @@ export default function CustomizedDialogs(props) {
     color: " ",
   });
   const [uploadImage,setUploadImage]=useState("");
-  function onSubmit() {
+  const [formPid,setFormPid]=useState(" ");
 
+  useEffect(()=>{
+      Axios.get("/rest/get_pid").then(res=>{
+
+        setFormPid(res.data.pid);  
+        // console.warn("check pid=",res.data.pid);
+
+      })
+  },[]);
+  function onSubmit() {
     Axios.post("/rest/addproduct", {
-      pid: "901",
+      pid: formPid,
       category: formdata.category,
       title: formdata.title,
       price: formdata.price,
