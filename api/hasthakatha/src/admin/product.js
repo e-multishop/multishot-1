@@ -36,8 +36,9 @@ var product_app = function (app, con) {
                 asyncoperations.push(p);
             }
             Promise.all(asyncoperations).then(function (ops) {
-                console.log(ops);
-                res.send(JSON.stringify(result));
+       //         console.log(ops);
+                           
+                  res.send(JSON.stringify(result));
 
 
             });
@@ -61,7 +62,64 @@ var product_app = function (app, con) {
         }
         console.log(data);
     });
+    app.get('/rest/product_pagination', (req, res) => {
+        var category=req.body.category; 
+        var chunk = req.body.pagesize;
+        var sql = "SELECT * FROM product where category='"+category+"';";
+        con.query(sql, function (err, result) {
+            if (err) throw err;
+            res.header("Content-Type", "application/json");
 
+            let asyncoperations = [];
+            let images = [];
+            for (var k = 0; k < result.length; k++) {
+                let temp = result[k].pid;
+                let sql = "SELECT pid,type,image_data from `product_images` WHERE pid='" + temp + "'";
+                //     let sql = `SELECT pid,type,url from product_images WHERE pid='${temp}'`;
+                let p = new Promise(function (resolve, reject) {
+                    con.query(sql, function (err, result2) {
+                        // console.log(result2[i].url);
+                        images = images.concat(result2);
+                        for (var i = 0; i < result.length; i++) {
+                            for (var j = 0; j < images.length; j++) {
+                                var temp = result[i];
+                                if (temp.pid == images[j].pid) {
+                                    var image_data = images[j].image_data;
+                                    console.log(Object.keys(image_data));
+                                    var buff_data = image_data ? Buffer.from(image_data) : '';
+
+                                    temp.image_data = buff_data ? buff_data.toString() : '';
+
+                                }
+                            }
+
+                        }
+                        resolve();
+                    })
+                });
+                asyncoperations.push(p);
+            }
+            Promise.all(asyncoperations).then(function (ops) {
+       //         console.log(ops);
+                 var i, j=1, temporary;
+                 var listOfObjects = [];
+                 console.log(result.length);
+                 for (i = 0; i < result.length; ) {
+                      
+                      temporary = {list: result.slice(i, i + chunk),total_record:((result.length)/chunk),page:(j)};
+                      listOfObjects.push(temporary);
+                     // console.log(temporary);
+                    i=i+chunk;
+                    j++;
+                  }
+                  console.log(listOfObjects);
+                  res.send(JSON.stringify( listOfObjects));
+
+
+            });
+
+        });
+    });
     app.get('/rest/sample', (req, res) => {
         var table = ["product", "product_size"]
         var arr = [{ pid: "hek110", category: "11", title: "Orange-Green Thread Anklet", price: "150", price_without_embroidary: "0", description: "Handmade thread anklet adorned with with beautiful bells.", note: "Length: 9.5", material: "Polyester, cotton", total_available: "1", total_quantity: "26" },
@@ -143,13 +201,13 @@ var product_app = function (app, con) {
             if (err) throw err;
             var count = result[0]["MAX(pid)"];
             //console.log(count);
-            if(count=="null")
-            {
-                res.send({"pid":1});
-            }else{
+            if (count == "null") {
+                res.send({ "pid": 1 });
+            } else {
+                count = count + 1;
                 res.send({ "pid": count });
             }
-            
+
         });
     });
     app.put("/rest/update", (req, res) => {
@@ -190,5 +248,8 @@ var product_app = function (app, con) {
             res.send('updated');
         });
     });
+    // app.post("/rest/add_to_cart", (req, res) => {
+
+    // });
 }
 module.exports = product_app;
