@@ -23,7 +23,10 @@ const ProductList = () => {
             return (result.json())
         }).then((product) => { setProduct(product) })
     }, []);
-
+    const image_url =(image_data)=>{
+        var image_url="data:image/png;base64,"+(image_data);  
+        return (<img src={image_url} />);
+    }
 
     const dispatch = useDispatch();
     const data = {
@@ -31,7 +34,6 @@ const ProductList = () => {
         description: "check description",
         price: "check price"
     }
-    var image_url;
     console.warn("checku url",image_url);
 
     return (
@@ -70,10 +72,10 @@ const ProductList = () => {
                                         <div className="img-wraper">
                                             {/* {const url= atob(value.url)} */}
                                             {
-                                                    //  image_url=atob(value.image_data)
+                                                value.image_data?image_url(value.image_data):""
                                             }
                                             {/* <p>{avalue.image_data}</p> */}
-                                            <img src={value.image_data} />
+                                            {/* <img src={image_url} /> */}
                                         </div>
                                         <div className="description">
                                             {value.title}

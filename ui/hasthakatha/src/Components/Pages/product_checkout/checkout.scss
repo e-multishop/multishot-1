@@ -1,0 +1,130 @@
+.header-checkout {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 2% 1% 1% 1%;
+
+    h2 {
+        font-size: 24px;
+        font-weight: 500;
+        margin: 0;
+    }
+    .keep-shopping {
+        font-size: 16px;
+        color: #000 !important;
+        padding: 10px;
+
+        &:hover {
+            background-color: rgb(204, 204, 204);
+            outline: 2px solid rgb(204, 204, 204);
+            // border-radius: 25px;
+        }
+    }
+}
+// checkout card style
+.hk-card-action {
+    border-top: 1px solid rgba(160, 160, 160, 0.2);
+    position: relative;
+    padding: 10px 0;
+}
+.card-price-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    border-top: 1px solid rgba(160, 160, 160, 0.2);
+    position: relative;
+    p {
+        font-size: 18px;
+    }
+}
+.card-total-amount {
+    padding: 15px 0;
+    p {
+        font-weight: bold;
+        font-size: 20px;
+    }
+}
+.hk-checkout-button {
+    background-color: var(--primary_color);
+    border: 1px solid var(--primary_color);
+    font-size: 16px;
+    border-radius: 0 20px;
+    padding: 6px;
+    margin: 5px;
+    text-align: center;
+    cursor: pointer;
+    letter-spacing: 2px;
+    a {
+        color: #ffffff;
+    }
+    &:hover {
+        background-color: white;
+        border: 1px solid var(--primary_color);
+        a {
+            color: var(--primary_color);
+        }
+    }
+}
+
+// checkout-card-item
+.card-item-flex {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(160, 160, 160, 0.2);
+    position: relative;
+    padding-bottom: 10px;
+    .item-image {
+        width: 20%;
+        img {
+            width: 100%;
+        }
+    }
+    .item-content {
+        width: 50%;
+        .title {
+            margin: 0;
+            font-size: 20px;
+            padding: 0;
+            color: #000;
+        }
+        p {
+            margin: 5px 0;
+            color: #5e5c5c;
+            font-size: 14px;
+        }
+        .save-remove {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: start;
+            p {
+                color: #000;
+                font-weight: bold;
+                margin: 15px 50px 5px 0;
+                &:hover {
+                    background-color: rgb(204, 204, 204);
+                    outline: 5px solid rgb(204, 204, 204);
+                }
+            }
+        }
+    }
+    .item-quantity {
+        width: 10%;
+        select{
+            &:hover{
+                border: 1px solid black;
+            }
+        }
+        
+    }
+    .item-price {
+        width: 15%;
+        p {
+            margin: 0;
+            color: #000;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    }
+}
