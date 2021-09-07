@@ -111,7 +111,7 @@ var login_app=function(app,con)
                                 pass: creds.PASS
                             }
                         });
-                        var password_reset_link = creds.Website+"/reset_password?token=" + new_hashpassword;
+                        var password_reset_link = creds.Website+"/reset_password/" + new_hashpassword;
                         var fileread = fs.readFileSync(__dirname+'/../assets/forgot_password_templet.html', 'utf8');
                         var mailOptions = {
                             from: creds.USER,
@@ -140,9 +140,9 @@ var login_app=function(app,con)
     
     });
     
-    app.post('/rest/validate_token', (req, res) => {
+    app.post('/rest/validate_token/:token', (req, res) => {
       //  var new_token=atob(token);
-        var sql = "select * from forgot_password where pass_token= '" + req.query.token + "'";
+        var sql = "select * from forgot_password where pass_token= '" + req.params.token + "'";
         con.query(sql, function (err, result) {
             if (result.length === 0) {
                 res.status(500);
@@ -167,8 +167,8 @@ var login_app=function(app,con)
             }
         });
     });
-    app.post('/rest/reset', (req, res) => {
-        var sql = "select * from forgot_password where pass_token= '" + req.query.token + "'";
+    app.post('/rest/reset/:token', (req, res) => {
+        var sql = "select * from forgot_password where pass_token= '" + req.params.token + "'";
         con.query(sql, function (err, result) {
             if (result.length === 0) {
                 res.status(500);
