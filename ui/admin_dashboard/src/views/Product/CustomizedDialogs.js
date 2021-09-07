@@ -84,10 +84,7 @@ export default function CustomizedDialogs(props) {
 
   useEffect(()=>{
       Axios.get("/rest/get_pid").then(res=>{
-
         setFormPid(res.data.pid);  
-        // console.warn("check pid=",res.data.pid);
-
       })
   },[]);
   function onSubmit() {
@@ -110,13 +107,13 @@ export default function CustomizedDialogs(props) {
     ).then(res => {
       // console.log(res.formdata)
       props.setUpdateTable(true);
-      toast.success("Success");
+      toast("Success");
       // EventEmitter.emit('newProduct',res.formdata)
       setOpen(false);
       reset();
     }).catch(err => {
       console.log(err)
-      toast.error("Data did not inserted")
+      toast("Data did not inserted")
     });
 
     // document.getElementById("insertproduct").reset();
@@ -139,6 +136,9 @@ export default function CustomizedDialogs(props) {
       color: " ",
     });
     setUploadImage(" ");
+    Axios.get("/rest/get_pid").then(res=>{
+      setFormPid(res.data.pid);  
+    })
   }
 
   return (

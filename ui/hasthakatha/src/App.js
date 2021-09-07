@@ -15,7 +15,7 @@ import Signup from'./Components/Pages/login/Signup';
 import * as materialize  from 'materialize-css/dist/js/materialize';
 import Adminapp from './Components/Admin_dashboard/Adminapp'
 import Reset from './Components/Pages/login/Reset_password';
-
+import Checkout from './Components/Pages/product_checkout/Checkout'
 class App extends Component{
   render(){
     return(
@@ -34,6 +34,7 @@ class App extends Component{
               <Route component={Adminapp} path="/admin"/>
               <Route  component={Login} path="/login"/>
               <Route component={Signup} path="/signup"/>
+              <Route component={Checkout} path="/viewcart"/>
               <Route exact component={Reset} path="/reset_password/:id"/>
         </Switch>
         <Footer/>

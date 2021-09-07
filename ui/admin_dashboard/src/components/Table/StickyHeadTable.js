@@ -132,6 +132,7 @@ export default function StickyHeadTable(props) {
       const result = res.data;
       setProductData(result);
     })
+
   }
 
   return (

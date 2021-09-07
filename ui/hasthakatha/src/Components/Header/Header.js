@@ -12,7 +12,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import {useSelector} from 'react-redux'
 
 const Header = (props) => {
-
     const [LoggedIn, setLoggedIn] = useState(false)
     const token = localStorage.getItem('token');
     const [Email, setEmail] = useState();
@@ -37,8 +36,8 @@ const Header = (props) => {
     }
 
     return (
-        <div className="row no-margin">
-            <div className="col s12 no-padding">
+        <div className="row no-margin navbar-fixed">
+            <div className="col s12 no-padding ">
                 <nav className="hk-header">
                     <div className="nav-wrapper">
                         <a href="/" className="brand-logo ">
@@ -60,7 +59,7 @@ const Header = (props) => {
 
                             </li>}
                             <li>
-                                <NavLink to="/"><div className="cart"><FontAwesomeIcon icon={faShoppingCart} size="large" className="icon " /><span class="badge cart-badge">{cartData.length}</span></div>
+                                <NavLink to="/viewcart"><div className="cart"><FontAwesomeIcon icon={faShoppingCart} size="large" className="icon " /><span class="badge cart-badge">{cartData.length}</span></div>
                                 </NavLink>
                             </li>
                         </ul>
