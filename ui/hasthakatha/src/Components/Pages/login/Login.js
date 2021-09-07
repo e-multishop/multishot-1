@@ -27,7 +27,6 @@ const Login = (props) => {
         event.preventDefault();
         setLoading(true);
         Axios.post("/rest/login", {
-            email: login.hklogin_emailid,
             password: login.password
         }).then(res => {
             // console.warn("value is success fill",res.data)
