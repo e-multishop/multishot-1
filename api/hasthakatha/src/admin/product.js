@@ -249,11 +249,11 @@ var product_app = function (app, con) {
     });
     app.get("/rest/add_to_cart",(req,res)=>{
         var uid = req.body.uid;
-        var sql = "select pid from add_to_cart where uid='"+uid+"';"
+        var sql = "SELECT * FROM `add_to_cart` NATURAL JOIN product"
         con.query(sql,(err,result)=>{
             if (err) throw err;
-            var pid = result[0]["pid"];
-            res.send({ "pid": pid });
+         //   var pid = result[0]["pid"];
+            res.send({"output":result });
         });
     });
     app.post("/rest/add_to_cart", (req, res) => {
@@ -269,8 +269,9 @@ var product_app = function (app, con) {
 
     app.put("/rest/add_to_cart", (req, res) => {
         var pid = req.body.pid;
-        var uid = req.body.ui;
-        var quantity = req.body.quantity;
+        var uid = req.body.uid;
+        var quantity = parseInt(req.body.quantity);
+
         var sql1 = "SELECT pid,total_available from product where pid='" + pid + "';";
         con.query(sql1, (err, result1) => {
             if (err) throw err;
