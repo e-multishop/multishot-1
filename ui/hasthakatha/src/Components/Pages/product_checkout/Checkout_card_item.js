@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import item_img from "../../../Images/megha.jpg"
 import "./checkout.scss";
 
-function Checkout_card_item() {
+function Checkout_card_item(props) {
 
     useEffect(() => {
         const dropdown1 = document.getElementById("select-quantity");
@@ -10,13 +10,14 @@ function Checkout_card_item() {
         const options = {};
         var instances = M.FormSelect.init(elems, options);
     });
+    console.log("propsdata=",props);
     return (
         <div className="card-item-flex " >
             <div className="item-image">
                 <img src={item_img} />
             </div>
             <div className="item-content">
-                <p className="title">Cream Print linen dress, Hand block print dress, Pleated dress, Made to order, Custom made, Plus size</p>
+                <p className="title">{props.producttitle}</p>
                 <p>Size: XS US women's letter</p>
                 <p>Primary color : white</p>
                 <div className="save-remove">
@@ -41,7 +42,7 @@ function Checkout_card_item() {
             </div >
 
             <div className="item-price">
-                <p>US$ 55.00</p>
+                <p>{props.productprice}</p>
             </div>
         </div>
     );

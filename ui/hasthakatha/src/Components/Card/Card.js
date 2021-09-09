@@ -6,8 +6,9 @@ const Card = (props) => {
     const dispatch=useDispatch();
     const data={ title: props.title, 
         description: props.description, 
-        price: props.price
+        price: "543"
     }
+    console.log(data)
     return (
         <div className="card hk-card">
             {

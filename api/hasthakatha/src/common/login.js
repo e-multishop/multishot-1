@@ -84,8 +84,7 @@ var login_app=function(app,con)
         // });
     });
     
-    app.post('/rest/forgot_password', (req, res) => {
-    
+    app.post('/rest/forgot_password', (req, res) => {    
         var sql = "select email from loginusers where email= '" + req.body.email + "'";
         con.query(sql, function (err, result) {
             console.log("messaage" + result);
@@ -111,7 +110,7 @@ var login_app=function(app,con)
                                 pass: creds.PASS
                             }
                         });
-                        var password_reset_link = creds.Website+"/reset_password/" + new_hashpassword;
+                        var password_reset_link = creds.Website+"/#/reset_password/" + new_hashpassword;
                         var fileread = fs.readFileSync(__dirname+'/../assets/forgot_password_templet.html', 'utf8');
                         var mailOptions = {
                             from: creds.USER,
@@ -222,7 +221,7 @@ var login_app=function(app,con)
            
         }
         else{
-            res.send("token vaild");
+            res.send("token valid");
         }
     });
 }
