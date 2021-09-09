@@ -35,11 +35,15 @@ const ProductList = () => {
     }
 
     const dispatch = useDispatch();
-    const data = {
-        title: "check title",
-        description: "check description",
-        price: "check price"
+    var data={};
+    function productdata(value){
+            data = {
+            title: value.title,
+            description: value.description,
+            price: value.price
+        }
     }
+   
     // console.warn("checku url", image_url);
 
     return (
@@ -79,6 +83,7 @@ const ProductList = () => {
                                 {/* <!-- Prodcuct list first row--> */}
                                 {/* <!--product details--> */}
                                 {product.map((value) => {
+                                    productdata(value);
                                     return (
                                         <>
                                             <div className="hk-product_card">

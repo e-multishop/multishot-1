@@ -1,5 +1,5 @@
 module.exports = {
-    Website: 'http://localhost:3000',
+    Website: 'http://localhost:3002',
     port: 3000,
     USER: 'manbatest123@gmail.com',
     PASS: 'hereiammanoj',

@@ -70,7 +70,6 @@ const Header = (props) => {
                 hideProgressBar={true}
             />
         </div>
-
     );
 }
 
