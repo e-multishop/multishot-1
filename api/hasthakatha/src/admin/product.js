@@ -247,9 +247,18 @@ var product_app = function (app, con) {
             res.send('updated');
         });
     });
+    app.get("/rest/add_to_cart",(req,res)=>{
+        var uid = req.body.uid;
+        var sql = "select pid from add_to_cart where uid='"+uid+"';"
+        con.query(sql,(err,result)=>{
+            if (err) throw err;
+            var pid = result[0]["pid"];
+            res.send({ "pid": pid });
+        });
+    });
     app.post("/rest/add_to_cart", (req, res) => {
         var pid = req.body.pid;
-        var uid = req.body.ui;
+        var uid = req.body.uid;
         var quantity = req.body.quantity;
         var sql = "INSERT INTO `add_to_cart`(`id`, `uid`, `pid`, `quantity`) VALUES (NULL,'" + uid + "','" + pid + "','" + quantity + "');";
         con.query(sql, (err, result) => {
