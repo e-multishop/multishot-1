@@ -36,9 +36,9 @@ var product_app = function (app, con) {
                 asyncoperations.push(p);
             }
             Promise.all(asyncoperations).then(function (ops) {
-       //         console.log(ops);
-                           
-                  res.send(JSON.stringify(result));
+                //         console.log(ops);
+
+                res.send(JSON.stringify(result));
 
 
             });
@@ -63,9 +63,9 @@ var product_app = function (app, con) {
         console.log(data);
     });
     app.get('/rest/product_pagination', (req, res) => {
-        var category=req.body.category; 
+        var category = req.body.category;
         var chunk = req.body.pagesize;
-        var sql = "SELECT * FROM product where category='"+category+"';";
+        var sql = "SELECT * FROM product where category='" + category + "';";
         con.query(sql, function (err, result) {
             if (err) throw err;
             res.header("Content-Type", "application/json");
@@ -100,20 +100,20 @@ var product_app = function (app, con) {
                 asyncoperations.push(p);
             }
             Promise.all(asyncoperations).then(function (ops) {
-       //         console.log(ops);
-                 var i, j=1, temporary;
-                 var listOfObjects = [];
-                 console.log(result.length);
-                 for (i = 0; i < result.length; ) {
-                      
-                      temporary = {list: result.slice(i, i + chunk),total_record:((result.length)/chunk),page:(j)};
-                      listOfObjects.push(temporary);
-                     // console.log(temporary);
-                    i=i+chunk;
+                //         console.log(ops);
+                var i, j = 1, temporary;
+                var listOfObjects = [];
+                console.log(result.length);
+                for (i = 0; i < result.length;) {
+
+                    temporary = { list: result.slice(i, i + chunk), total_record: ((result.length) / chunk), page: (j) };
+                    listOfObjects.push(temporary);
+                    // console.log(temporary);
+                    i = i + chunk;
                     j++;
-                  }
-                  console.log(listOfObjects);
-                  res.send(JSON.stringify( listOfObjects));
+                }
+                console.log(listOfObjects);
+                res.send(JSON.stringify(listOfObjects));
 
 
             });
@@ -200,11 +200,10 @@ var product_app = function (app, con) {
             if (err) throw err;
             var count = result[0]["MAX(pid)"];
             //console.log(count);
-            if(count=="null")
-            {
-                res.send({"pid":1});
-            }else{
-                count=count+1;
+            if (count == "null") {
+                res.send({ "pid": 1 });
+            } else {
+                count = count + 1;
                 res.send({ "pid": count });
             }
 
@@ -248,8 +247,53 @@ var product_app = function (app, con) {
             res.send('updated');
         });
     });
-    // app.post("/rest/add_to_cart", (req, res) => {
+    app.get("/rest/add_to_cart",(req,res)=>{
+        var uid = req.body.uid;
+        var sql = "select pid from add_to_cart where uid='"+uid+"';"
+        con.query(sql,(err,result)=>{
+            if (err) throw err;
+            var pid = result[0]["pid"];
+            res.send({ "pid": pid });
+        });
+    });
+    app.post("/rest/add_to_cart", (req, res) => {
+        var pid = req.body.pid;
+        var uid = req.body.uid;
+        var quantity = req.body.quantity;
+        var sql = "INSERT INTO `add_to_cart`(`id`, `uid`, `pid`, `quantity`) VALUES (NULL,'" + uid + "','" + pid + "','" + quantity + "');";
+        con.query(sql, (err, result) => {
+            if (err) throw err;
+            res.send('successfully add into the cart');
+        });
+    });
 
-    // });
+    app.put("/rest/add_to_cart", (req, res) => {
+        var pid = req.body.pid;
+        var uid = req.body.ui;
+        var quantity = req.body.quantity;
+        var sql1 = "SELECT pid,total_available from product where pid='" + pid + "';";
+        con.query(sql1, (err, result1) => {
+            if (err) throw err;
+            var count = result1[0]["total_available"];
+            if (quantity <= count && quantity <= 10) {
+                var sql = "UPDATE add_to_cart SET quantity='" + quantity + "' WHERE pid='" + pid + "' AND uid ='" + uid + "';";
+                con.query(sql, (err, result) => {
+                    if (err) throw err;
+                    res.send('successfully update into the cart');
+                });
+            }
+        });         
+ });
+
+app.delete("/rest/add_to_cart", (req, res) => {
+
+    var pid = req.body.pid;
+    var uid = req.body.uid;
+    var sql = "DELETE FROM add_to_cart WHERE pid='" + pid + "'AND uid ='" + uid + "';";
+    con.query(sql, (err, result) => {
+        if (err) throw err;
+        res.send('deleted');
+    });
+});
 }
 module.exports = product_app;

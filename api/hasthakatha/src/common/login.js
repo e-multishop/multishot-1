@@ -9,8 +9,6 @@ const creds = require('../config/config');
 var jwt_key = " secret";
 var login_data = [];
 const nodemailer = require('nodemailer');
-
-
 var login_app=function(app,con)
 {
     app.post('/rest/signup', (req, res) => {
