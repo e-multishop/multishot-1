@@ -36,16 +36,6 @@ const ProductList = () => {
 
     const dispatch = useDispatch();
     var data={};
-    function productdata(value){
-            data = {
-            title: value.title,
-            description: value.description,
-            price: value.price
-        }
-    }
-   
-    // console.warn("checku url", image_url);
-
     return (
         <>
 
@@ -83,9 +73,9 @@ const ProductList = () => {
                                 {/* <!-- Prodcuct list first row--> */}
                                 {/* <!--product details--> */}
                                 {product.map((value) => {
-                                    productdata(value);
                                     return (
                                         <>
+
                                             <div className="hk-product_card">
                                                 <NavLink to="/productdetails">
                                                     <div className="img-wraper">
@@ -103,7 +93,15 @@ const ProductList = () => {
                                                         {value.price}
                                                     </div>
                                                 </NavLink>
-                                                <div className="hk-addcard" onClick={() => { dispatch(addToCart(data)) }}>
+                                                <div className="hk-addcard" onClick={() => { dispatch(addToCart(
+                                                        data = {
+                                                            title: value.title,
+                                                            description: value.description,
+                                                            price: value.price,
+                                                 
+                                                        }
+                                                )) 
+                                                }}>
                                                     <a>ADD TO CART</a>
                                                 </div>
                                             </div>

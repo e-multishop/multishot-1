@@ -10,6 +10,8 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Axios from 'axios';
 import { ContactSupportOutlined } from '@material-ui/icons';
+import { NavLink } from 'react-router-dom';
+import ProductEdit from '../Edit/ProductEdit'
 // import EventEmitter from 'fbemitter';
 const columns = [
   {
@@ -34,12 +36,12 @@ const columns = [
   //   minWidth: 40,
   //   align: 'right',
   // },
-  {
-    id: 'description',
-    label: 'Descrtiption',
-    minWidth: 100,
-    align: 'right',
-  },
+  // {
+  //   id: 'description',
+  //   label: 'Descrtiption',
+  //   minWidth: 100,
+  //   align: 'right',
+  // },
   {
     id: 'size',
     label: 'Size',
@@ -52,18 +54,18 @@ const columns = [
     minWidth: 50,
     align: 'right',
   },
-  {
-    id: 'color',
-    label: 'Color',
-    minWidth: 100,
-    align: 'right',
-  },
-  {
-    id: 'dimension',
-    label: 'Dimention',
-    minWidth: 100,
-    align: 'right',
-  },
+  // {
+  //   id: 'color',
+  //   label: 'Color',
+  //   minWidth: 100,
+  //   align: 'right',
+  // },
+  // {
+  //   id: 'dimension',
+  //   label: 'Dimention',
+  //   minWidth: 100,
+  //   align: 'right',
+  // },
   {
     id: 'material',
     label: 'Material',
@@ -83,16 +85,6 @@ const columns = [
     align: 'right',
   },
 ];
-
-
-// function createData(ptitle, price, description, size, quantity, color, dimension, material, note) {
-//   // const density = population / size;
-//   return { ptitle, price, description, size, quantity, color, dimension, material, note };
-// }
-
-// const rows = [
-//   createData('Black', 'price', "description", "size", "quantity", "color", "dimension", "material", "note")
-// ];
 
 const useStyles = makeStyles({
   root: {
@@ -119,22 +111,36 @@ export default function StickyHeadTable(props) {
     setPage(0);
   };
   const [productData, setProductData] = useState([]);
+  const [updateTable,setUpdateTable]=useState(false);
   useEffect(() => {
     Axios.get("/rest/product_list").then((res) => {
       // console.log(res.data);
       const result = res.data;
       setProductData(result);
     })
-  },[]);
-  if (props.updateTable == true) {
+  }, []);
+  if (props.updateTable == true || updateTable==true) {
     Axios.get("/rest/product_list").then((res) => {
       // console.log(res.data);
       const result = res.data;
       setProductData(result);
     })
-
   }
-
+  const ShowData = (column, value,row) => {
+    switch (column.id) {
+      case "action":
+        return (
+          <TableCell key={column.id} align={column.align}>
+            <ProductEdit value={row} setUpdateTable={setUpdateTable}/>
+          </TableCell>
+        );
+      default: return (
+        <TableCell key={column.id} align={column.align}>
+          {column.format && typeof value === 'number' ? column.format(value) : value}
+        </TableCell>
+      );
+    }
+  }
   return (
     <Paper className={classes.root}>
       <TableContainer className={classes.container}>
@@ -158,13 +164,8 @@ export default function StickyHeadTable(props) {
                 <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
                   {columns.map((column) => {
                     const value = row[column.id];
-                    // if (row[column.id] === "image_data") {
-                    //   const value[] = "check";
-                    // }
                     return (
-                      <TableCell key={column.id} align={column.align}>
-                        {column.format && typeof value === 'number' ? column.format(value) : value}
-                      </TableCell>
+                      ShowData(column, value,row)
                     );
                   })}
                 </TableRow>

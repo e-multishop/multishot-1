@@ -41,8 +41,8 @@ function Checkout_card_item(props) {
                 </div>
             </div >
 
-            <div className="item-price">
-                <p>{props.productprice}</p>
+            <div className="item-price text-center">
+                <p>₹ {props.productprice}</p>
             </div>
         </div>
     );

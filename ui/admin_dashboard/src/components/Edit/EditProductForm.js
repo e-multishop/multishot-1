@@ -1,21 +1,22 @@
 import React, { Component, useEffect, useState } from 'react';
-import './insertproduct.scss';
+import '../../views/Product/Insertproduct';
 // import ImageUpload from '../../Shared/Imageupload/Imageupload'
+import Axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import CreatableSelect from 'react-select/creatable';
 
-const Insertproduct = (props) => {
+const EditProductForm = (props) => {
+    var modal;
     useEffect(() => {
-        const insertproduct = document.getElementById("insertproduct");
-        const elems = insertproduct.querySelectorAll('select');
+        const editproduct = document.getElementById("editproduct");
+        const elems = editproduct.querySelectorAll('select');
         const options = {};
         var instances = M.FormSelect.init(elems, options);
     });
 
-    const [disable, setDisable] = useState('true');
 
     function handleChange(e) {
-        props.setFormData({ ...props.formData, [e.target.name]: e.target.value });
+        props.setEditFormData({ ...props.Editformdata, [e.target.name]: e.target.value });
         console.groupEnd();
     }
     function handleImage(e){
@@ -24,7 +25,7 @@ const Insertproduct = (props) => {
         reader.readAsDataURL(upload_image[0]);
         reader.onload=(e)=>{
         
-            props.setUploadImage(e.target.result);
+            props.setEditUploadImage(e.target.result);
         }
     }
     const options = [
@@ -34,10 +35,10 @@ const Insertproduct = (props) => {
       ];
     return (
         <div className="row productinsertform">
-            <form className="col s10" id="insertproduct" >
+            <form className="col s10" id="editproduct" >
                 <div className="row">
                     <div className="input-field  col s6">
-                        <select name="category" value={props.formData.category} onChange={(e) => handleChange(e)}>
+                        <select name="category" value={props.Editformdata.category} onChange={(e) => handleChange(e)}>
                             <option value="" disabled selected>Choose your option</option>
                             <option value="11" >Dress</option>
                             <option value="12" >Scarf</option>
@@ -49,60 +50,58 @@ const Insertproduct = (props) => {
                         </select>
                         <label>Category Select<spam className="star_color">*</spam></label>
                     </div>
-                    {
-                        props.formData.category?
                             <div>
                                 <div className="input-field col s12 ">
                                     <input
                                         id="ptitle"
                                         type="text"
-                                        value={props.formData.title}
+                                        value={props.Editformdata.title}
                                         name="title"
                                         onChange={(e) => handleChange(e)}
                                         className="validate" required
                                     />
-                                    <label htmlFor="ptitle">Product Title<spam className="star_color">*</spam></label>
+                                    <label  class="active" htmlFor="ptitle">Product Title<spam className="star_color">*</spam></label>
                                     <span className="helper-text" data-error="Enter product title" ></span>
                                 </div>
                                 <div className="input-field col s12 ">
                                     <input
                                         id="sku"
                                         type="text"
-                                        value={props.formData.sku}
+                                        value={props.Editformdata.sku}
                                         name="sku"
                                         onChange={(e) => handleChange(e)}
                                         className="validate" 
                                         required
                                     />
-                                    <label htmlFor="sku">SKU<spam className="star_color">*</spam></label>
+                                    <label  class="active" htmlFor="sku">SKU<spam className="star_color">*</spam></label>
                                     <span className="helper-text" data-error="Enter product SKU" ></span>
                                 </div>
                                 <div className="input-field col s12 ">
                                     <textarea
                                         id="pdescription"
-                                        value={props.formData.description}
+                                        value={props.Editformdata.description}
                                         name="description"
                                         onChange={(e) => handleChange(e)}
                                         className="materialize-textarea" >
                                     </textarea>
-                                    <label htmlFor="pdescription">Description<spam className="star_color">*</spam></label>
+                                    <label class="active" htmlFor="pdescription">Description<spam className="star_color">*</spam></label>
                                 </div>
                                 <div className="input-field col s12 ">
                                     <input
                                         id="price"
-                                        value={props.formData.price}
+                                        value={props.Editformdata.price}
                                         type="number"
                                         name="price"
                                         onChange={(e) => handleChange(e)}
                                         className="validate"
                                         required
                                     />
-                                    <label htmlFor="price">Seller Price<spam className="star_color">*</spam></label>
+                                    <label class="active" htmlFor="price">Seller Price<spam className="star_color">*</spam></label>
                                     <span className="helper-text" data-error="Enter seller price"></span>
                                 </div>
-                                {(props.formData.category) === "16" ? '' :
+                                {(props.Editformdata.category) === "16" ? '' :
                                     <div className="input-field col s6">
-                                        <select value={props.formData.size} onChange={(e) => handleChange(e)} name="size" multiple>
+                                        <select value={props.Editformdata.size} onChange={(e) => handleChange(e)} name="size" multiple>
                                             <option value="" disabled selected>Choose your option</option>
                                             <option value="1">XS</option>
                                             <option value="2">S</option>
@@ -112,20 +111,20 @@ const Insertproduct = (props) => {
                                             <option value="6">XXL</option>
                                             <option value="7">OX</option>
                                         </select>
-                                        <label>Sizes<spam className="star_color">*</spam></label>
+                                        <label class="active">Sizes<spam className="star_color">*</spam></label>
                                     </div>
                                 }
                                 <div className="input-field col s6 ">
                                     <input
                                         id="quantity"
                                         type="number"
-                                        value={props.formData.total_quantity}
+                                        value={props.Editformdata.total_quantity}
                                         className="validate"
                                         name="total_quantity"
                                         onChange={(e) => handleChange(e)}
                                         required
                                     />
-                                    <label htmlFor="quantity">Quantity<spam className="star_color">*</spam></label>
+                                    <label class="active" htmlFor="quantity">Quantity<spam className="star_color">*</spam></label>
                                     <span className="helper-text" data-error="Enter Quantity"></span>
                                 </div>
                                 <div className="col s6 " >
@@ -137,7 +136,7 @@ const Insertproduct = (props) => {
                                     />
                                 </div>
                                 <div className="input-field col s6">
-                                    <label htmlFor="uploadimage">Upload Image<spam className="star_color">*</spam>
+                                    <label class="active" htmlFor="uploadimage">Upload Image<spam className="star_color">*</spam>
                                         <input
                                             id="upload_image"
                                             type="file"
@@ -156,25 +155,25 @@ const Insertproduct = (props) => {
                                 <div className="input-field col s12 ">
                                     <input
                                         id="dimension"
-                                        value={props.formData.dimension}
+                                        value={props.Editformdata.dimension}
                                         type="text"
                                         name="dimension"
                                         className="validate"
                                         onChange={(e) => handleChange(e)}
                                     />
-                                    <label htmlFor="dimension">Dimension</label>
+                                    <label class="active" htmlFor="dimension">Dimension</label>
                                     <span className="helper-text" data-error="Enter dimension"></span>
                                 </div>
                                 <div className="input-field col s12 ">
                                     <input
                                         id="material"
-                                        value={props.formData.material}
+                                        value={props.Editformdata.material}
                                         type="text"
                                         name="material"
                                         className="validate"
                                         onChange={(e) => handleChange(e)}
                                     />
-                                    <label htmlFor="material">Material</label>
+                                    <label class="active" htmlFor="material">Material</label>
                                     <span className="helper-text" data-error="Enter material"></span>
                                 </div>
                                 <div className="input-field col s12 ">
@@ -182,18 +181,17 @@ const Insertproduct = (props) => {
                                         id="instruction"
                                         type="text"
                                         name="note"
-                                        value={props.formData.note}
+                                        value={props.Editformdata.note}
                                         className="validate"
                                         onChange={(e) => handleChange(e)}
                                     />
-                                    <label htmlFor="instruction">Storage/Care Instructions</label>
+                                    <label class="active" htmlFor="instruction">Storage/Care Instructions</label>
                                     <span className="helper-text" data-error="Enter storage/care instructions"></span>
                                 </div>
                                 <div className="button col s12">
                                     <ToastContainer />
                                 </div>
                             </div>
-                            :''}
                 </div>
             </form>
         </div>
@@ -201,4 +199,4 @@ const Insertproduct = (props) => {
 
 }
 
-export default Insertproduct;
+export default EditProductForm;
