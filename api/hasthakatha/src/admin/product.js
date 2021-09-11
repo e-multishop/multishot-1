@@ -46,6 +46,65 @@ var product_app = function (app, con) {
         });
     });
 
+ 
+    app.get('/rest/product_pagination/:category/:page_size/:page_number', (req, res) => {
+        var category = req.params.category;
+        // var chunk = req.body.pagesize;
+        var page_number = parseInt(req.params.page_number);
+        var page_size = parseInt(req.params.page_size);
+        var offset = (page_size * (page_number - 1));
+        var sql3 = `SELECT COUNT(*) FROM product where category='${category}';`;
+        con.query(sql3, function (err, result3) {
+            var total_record = result3[0]["COUNT(*)"];
+            var sql = `SELECT * FROM product where category='${category}' LIMIT ${offset},${page_size};`;
+            con.query(sql, function (err, result) {
+                if (err) throw err;
+                res.header("Content-Type", "application/json");
+
+                let asyncoperations = [];
+                let images = [];
+                for (var k = 0; k < result.length; k++) {
+                    let temp = result[k].pid;
+                    let sql = "SELECT pid,type,image_data from `product_images` WHERE pid='" + temp + "'";
+                    //     let sql = `SELECT pid,type,url from product_images WHERE pid='${temp}'`;
+                    let p = new Promise(function (resolve, reject) {
+                        con.query(sql, function (err, result2) {
+                            // console.log(result2[i].url);
+                            images = images.concat(result2);
+                            for (var i = 0; i < result.length; i++) {
+                                for (var j = 0; j < images.length; j++) {
+                                    var temp = result[i];
+                                    if (temp.pid == images[j].pid) {
+                                        var image_data = images[j].image_data;
+                                        console.log(Object.keys(image_data));
+                                        var buff_data = image_data ? Buffer.from(image_data) : '';
+
+                                        temp.image_data = buff_data ? buff_data.toString() : '';
+
+                                    }
+                                }
+
+                            }
+                            resolve();
+                        })
+                    });
+                    asyncoperations.push(p);
+                }
+                Promise.all(asyncoperations).then(function (ops) {
+                    var temprorary;
+                    var listofobjects=[];
+                    temprorary ={list:result,total_record:(total_record)}
+                    listofobjects.push(temprorary);
+                    console.log(listofobjects);
+                    res.send(JSON.stringify(listofobjects));
+                });
+
+            });
+        });
+
+    });
+
+
     app.get('/rest/insert_data', (req, res) => {
 
         const workbook = xlsx.readFile(__dirname + "/ash.xlsx");
@@ -62,64 +121,7 @@ var product_app = function (app, con) {
         }
         console.log(data);
     });
-    app.get('/rest/product_pagination', (req, res) => {
-        var category = req.body.category;
-        var chunk = req.body.pagesize;
-        var sql = "SELECT * FROM product where category='" + category + "';";
-        con.query(sql, function (err, result) {
-            if (err) throw err;
-            res.header("Content-Type", "application/json");
-
-            let asyncoperations = [];
-            let images = [];
-            for (var k = 0; k < result.length; k++) {
-                let temp = result[k].pid;
-                let sql = "SELECT pid,type,image_data from `product_images` WHERE pid='" + temp + "'";
-                //     let sql = `SELECT pid,type,url from product_images WHERE pid='${temp}'`;
-                let p = new Promise(function (resolve, reject) {
-                    con.query(sql, function (err, result2) {
-                        // console.log(result2[i].url);
-                        images = images.concat(result2);
-                        for (var i = 0; i < result.length; i++) {
-                            for (var j = 0; j < images.length; j++) {
-                                var temp = result[i];
-                                if (temp.pid == images[j].pid) {
-                                    var image_data = images[j].image_data;
-                                    console.log(Object.keys(image_data));
-                                    var buff_data = image_data ? Buffer.from(image_data) : '';
-
-                                    temp.image_data = buff_data ? buff_data.toString() : '';
-
-                                }
-                            }
-
-                        }
-                        resolve();
-                    })
-                });
-                asyncoperations.push(p);
-            }
-            Promise.all(asyncoperations).then(function (ops) {
-                //         console.log(ops);
-                var i, j = 1, temporary;
-                var listOfObjects = [];
-                console.log(result.length);
-                for (i = 0; i < result.length;) {
-
-                    temporary = { list: result.slice(i, i + chunk), total_record: ((result.length) / chunk), page: (j) };
-                    listOfObjects.push(temporary);
-                    // console.log(temporary);
-                    i = i + chunk;
-                    j++;
-                }
-                console.log(listOfObjects);
-                res.send(JSON.stringify(listOfObjects));
-
-
-            });
-
-        });
-    });
+    
     app.get('/rest/sample', (req, res) => {
         var table = ["product", "product_size"]
         var arr = [{ pid: "hek110", category: "11", title: "Orange-Green Thread Anklet", price: "150", price_without_embroidary: "0", description: "Handmade thread anklet adorned with with beautiful bells.", note: "Length: 9.5", material: "Polyester, cotton", total_available: "1", total_quantity: "26" },
@@ -248,13 +250,13 @@ var product_app = function (app, con) {
             res.send('updated');
         });
     });
-    app.get("/rest/add_to_cart",(req,res)=>{
+    app.get("/rest/add_to_cart", (req, res) => {
         var uid = req.body.uid;
-        var sql = "select pid from add_to_cart where uid='"+uid+"';"
-        con.query(sql,(err,result)=>{
+        var sql = "SELECT * FROM `add_to_cart` NATURAL JOIN product"
+        con.query(sql, (err, result) => {
             if (err) throw err;
-            var pid = result[0]["pid"];
-            res.send({ "pid": pid });
+            //   var pid = result[0]["pid"];
+            res.send({ "output": result });
         });
     });
     app.post("/rest/add_to_cart", (req, res) => {
@@ -270,8 +272,9 @@ var product_app = function (app, con) {
 
     app.put("/rest/add_to_cart", (req, res) => {
         var pid = req.body.pid;
-        var uid = req.body.ui;
-        var quantity = req.body.quantity;
+        var uid = req.body.uid;
+        var quantity = parseInt(req.body.quantity);
+
         var sql1 = "SELECT pid,total_available from product where pid='" + pid + "';";
         con.query(sql1, (err, result1) => {
             if (err) throw err;
@@ -283,18 +286,18 @@ var product_app = function (app, con) {
                     res.send('successfully update into the cart');
                 });
             }
-        });         
- });
-
-app.delete("/rest/add_to_cart", (req, res) => {
-
-    var pid = req.body.pid;
-    var uid = req.body.uid;
-    var sql = "DELETE FROM add_to_cart WHERE pid='" + pid + "'AND uid ='" + uid + "';";
-    con.query(sql, (err, result) => {
-        if (err) throw err;
-        res.send('deleted');
+        });
     });
-});
+
+    app.delete("/rest/add_to_cart", (req, res) => {
+
+        var pid = req.body.pid;
+        var uid = req.body.uid;
+        var sql = "DELETE FROM add_to_cart WHERE pid='" + pid + "'AND uid ='" + uid + "';";
+        con.query(sql, (err, result) => {
+            if (err) throw err;
+            res.send('deleted');
+        });
+    });
 }
 module.exports = product_app;
