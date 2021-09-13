@@ -62,7 +62,7 @@ const Insertproduct = () => {
     
         }).catch(err =>{
             console.log(err)
-            toast.error("Data did not inserted")
+            toast.error("Error adding product. Please try again")
     });
         // document.getElementById("insertproduct").reset();
         // {html: 'I am a toast!'}
@@ -85,7 +85,7 @@ const Insertproduct = () => {
                                 <option value="16">Anklet</option>
                                 <option value="17">Jumpsuit</option>
                             </select>
-                            <label>Category Select<spam className="star_color">*</spam></label>
+                            <label>Category Select<span className="star_color">*</span></label>
                         </div>
                         {
                             formdata.category ?
@@ -99,7 +99,7 @@ const Insertproduct = () => {
                                             onChange={(e) => handleChange(e)}
                                             className="validate" required
                                         />
-                                        <label htmlFor="ptitle">Product Title<spam className="star_color">*</spam></label>
+                                        <label htmlFor="ptitle">Product Title<span className="star_color">*</span></label>
                                         <span className="helper-text" data-error="Enter product title" ></span>
                                     </div>
                                     <div className="input-field col s12 ">
@@ -110,7 +110,7 @@ const Insertproduct = () => {
                                             onChange={(e) => handleChange(e)}
                                             className="materialize-textarea" >
                                         </textarea>
-                                        <label htmlFor="pdescription">Description<spam className="star_color">*</spam></label>
+                                        <label htmlFor="pdescription">Description<span className="star_color">*</span></label>
                                     </div>
                                     <div className="input-field col s12 ">
                                         <input
@@ -122,7 +122,7 @@ const Insertproduct = () => {
                                             className="validate"
                                             required
                                         />
-                                        <label htmlFor="price">Seller Price<spam className="star_color">*</spam></label>
+                                        <label htmlFor="price">Seller Price<span className="star_color">*</span></label>
                                         <span className="helper-text" data-error="Enter seller price"></span>
                                     </div>
                                     {(formdata.category) === "16" ? '' :
@@ -137,7 +137,7 @@ const Insertproduct = () => {
                                                 <option value="6">XXL</option>
                                                 <option value="7">OX</option>
                                             </select>
-                                            <label>Sizes<spam className="star_color">*</spam></label>
+                                            <label>Sizes<span className="star_color">*</span></label>
                                         </div>
                                     }
                                     <div className="input-field col s6 ">
@@ -150,7 +150,7 @@ const Insertproduct = () => {
                                             onChange={(e) => handleChange(e)}
                                             required
                                         />
-                                        <label htmlFor="quantity">Quantity<spam className="star_color">*</spam></label>
+                                        <label htmlFor="quantity">Quantity<span className="star_color">*</span></label>
                                         <span className="helper-text" data-error="Enter Quantity"></span>
                                     </div>
                                     <div className="input-field col s6 ">
@@ -163,11 +163,11 @@ const Insertproduct = () => {
                                             onChange={(e) => handleChange(e)}
                                             required
                                         />
-                                        <label htmlFor="color">Color<spam className="star_color">*</spam></label>
+                                        <label htmlFor="color">Color<span className="star_color">*</span></label>
                                         <span className="helper-text" data-error="Enter color"></span>
                                     </div>
                                     <div className="input-field col s6">
-                                        <label htmlFor="uploadimage">Upload Image<spam className="star_color">*</spam>
+                                        <label htmlFor="uploadimage">Upload Image<span className="star_color">*</span>
                                             <input
                                                 id="uploadimage"
                                                 type="file"

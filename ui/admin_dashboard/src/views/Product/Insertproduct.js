@@ -6,17 +6,26 @@ import CreatableSelect from 'react-select/creatable';
 
 const Insertproduct = (props) => {
     useEffect(() => {
+        updateFormElements();
+    }, [props.formData.category]);
+
+    const [disable, setDisable] = useState('true');
+
+    function updateFormElements() {
         const insertproduct = document.getElementById("insertproduct");
         const elems = insertproduct.querySelectorAll('select');
         const options = {};
         var instances = M.FormSelect.init(elems, options);
-    });
-
-    const [disable, setDisable] = useState('true');
+    }
 
     function handleChange(e) {
-        props.setFormData({ ...props.formData, [e.target.name]: e.target.value });
+        const isFormValid = e.target.closest('form').checkValidity();
+        props.setFormData({ ...props.formData, [e.target.name]: e.target.value, valid: isFormValid});
         console.groupEnd();
+    }
+    function handleCategoryChange(e) {
+        props.setFormData({ ...props.formData, [e.target.name]: e.target.value, valid: false});
+        updateFormElements();
     }
     function handleImage(e){
         let upload_image= e.target.files;
@@ -37,7 +46,7 @@ const Insertproduct = (props) => {
             <form className="col s10" id="insertproduct" >
                 <div className="row">
                     <div className="input-field  col s6">
-                        <select name="category" value={props.formData.category} onChange={(e) => handleChange(e)}>
+                        <select name="category" value={props.formData.category} onChange={(e) => handleCategoryChange(e)} required>
                             <option value="" disabled selected>Choose your option</option>
                             <option value="11" >Dress</option>
                             <option value="12" >Scarf</option>
@@ -47,7 +56,7 @@ const Insertproduct = (props) => {
                             <option value="16">Anklet</option>
                             <option value="17">Jumpsuit</option>
                         </select>
-                        <label>Category Select<spam className="star_color">*</spam></label>
+                        <label>Category Select<span className="star_color">*</span></label>
                     </div>
                     {
                         props.formData.category?
@@ -61,7 +70,7 @@ const Insertproduct = (props) => {
                                         onChange={(e) => handleChange(e)}
                                         className="validate" required
                                     />
-                                    <label htmlFor="ptitle">Product Title<spam className="star_color">*</spam></label>
+                                    <label htmlFor="ptitle">Product Title<span className="star_color">*</span></label>
                                     <span className="helper-text" data-error="Enter product title" ></span>
                                 </div>
                                 <div className="input-field col s12 ">
@@ -74,7 +83,7 @@ const Insertproduct = (props) => {
                                         className="validate" 
                                         required
                                     />
-                                    <label htmlFor="sku">SKU<spam className="star_color">*</spam></label>
+                                    <label htmlFor="sku">SKU<span className="star_color">*</span></label>
                                     <span className="helper-text" data-error="Enter product SKU" ></span>
                                 </div>
                                 <div className="input-field col s12 ">
@@ -85,7 +94,7 @@ const Insertproduct = (props) => {
                                         onChange={(e) => handleChange(e)}
                                         className="materialize-textarea" >
                                     </textarea>
-                                    <label htmlFor="pdescription">Description<spam className="star_color">*</spam></label>
+                                    <label htmlFor="pdescription">Description<span className="star_color">*</span></label>
                                 </div>
                                 <div className="input-field col s12 ">
                                     <input
@@ -97,7 +106,7 @@ const Insertproduct = (props) => {
                                         className="validate"
                                         required
                                     />
-                                    <label htmlFor="price">Seller Price<spam className="star_color">*</spam></label>
+                                    <label htmlFor="price">Seller Price<span className="star_color">*</span></label>
                                     <span className="helper-text" data-error="Enter seller price"></span>
                                 </div>
                                 {(props.formData.category) === "16" ? '' :
@@ -112,7 +121,7 @@ const Insertproduct = (props) => {
                                             <option value="6">XXL</option>
                                             <option value="7">OX</option>
                                         </select>
-                                        <label>Sizes<spam className="star_color">*</spam></label>
+                                        <label>Sizes<span className="star_color">*</span></label>
                                     </div>
                                 }
                                 <div className="input-field col s6 ">
@@ -125,11 +134,11 @@ const Insertproduct = (props) => {
                                         onChange={(e) => handleChange(e)}
                                         required
                                     />
-                                    <label htmlFor="quantity">Quantity<spam className="star_color">*</spam></label>
+                                    <label htmlFor="quantity">Quantity<span className="star_color">*</span></label>
                                     <span className="helper-text" data-error="Enter Quantity"></span>
                                 </div>
                                 <div className="col s6 " >
-                                <label htmlFor="color">Color<spam className="star_color">*</spam></label>
+                                <label htmlFor="color">Color<span className="star_color">*</span></label>
                                     <CreatableSelect
                                         isMulti
                                         // onChange={(e)=>handleChange(e)}
@@ -137,7 +146,7 @@ const Insertproduct = (props) => {
                                     />
                                 </div>
                                 <div className="input-field col s6">
-                                    <label htmlFor="uploadimage">Upload Image<spam className="star_color">*</spam>
+                                    <label htmlFor="uploadimage">Upload Image<span className="star_color">*</span>
                                         <input
                                             id="upload_image"
                                             type="file"
@@ -154,14 +163,13 @@ const Insertproduct = (props) => {
                                 <br/><br/>
 
                                 <div className="input-field col s12 ">
-                                    <input
+                                    <textarea
                                         id="dimension"
                                         value={props.formData.dimension}
-                                        type="text"
                                         name="dimension"
-                                        className="validate"
+                                        className="materialize-textarea" 
                                         onChange={(e) => handleChange(e)}
-                                    />
+                                    ></textarea>
                                     <label htmlFor="dimension">Dimension</label>
                                     <span className="helper-text" data-error="Enter dimension"></span>
                                 </div>
@@ -178,14 +186,14 @@ const Insertproduct = (props) => {
                                     <span className="helper-text" data-error="Enter material"></span>
                                 </div>
                                 <div className="input-field col s12 ">
-                                    <input
+                                    <textarea
                                         id="instruction"
-                                        type="text"
                                         name="note"
                                         value={props.formData.note}
-                                        className="validate"
+                                        className="materialize-textarea" 
                                         onChange={(e) => handleChange(e)}
-                                    />
+                                    ></textarea>
+
                                     <label htmlFor="instruction">Storage/Care Instructions</label>
                                     <span className="helper-text" data-error="Enter storage/care instructions"></span>
                                 </div>

@@ -48,7 +48,7 @@ const EditProductForm = (props) => {
                             <option value="16">Anklet</option>
                             <option value="17">Jumpsuit</option>
                         </select>
-                        <label>Category Select<spam className="star_color">*</spam></label>
+                        <label>Category Select<span className="star_color">*</span></label>
                     </div>
                             <div>
                                 <div className="input-field col s12 ">
@@ -60,7 +60,7 @@ const EditProductForm = (props) => {
                                         onChange={(e) => handleChange(e)}
                                         className="validate" required
                                     />
-                                    <label  class="active" htmlFor="ptitle">Product Title<spam className="star_color">*</spam></label>
+                                    <label  class="active" htmlFor="ptitle">Product Title<span className="star_color">*</span></label>
                                     <span className="helper-text" data-error="Enter product title" ></span>
                                 </div>
                                 <div className="input-field col s12 ">
@@ -73,7 +73,7 @@ const EditProductForm = (props) => {
                                         className="validate" 
                                         required
                                     />
-                                    <label  class="active" htmlFor="sku">SKU<spam className="star_color">*</spam></label>
+                                    <label  class="active" htmlFor="sku">SKU<span className="star_color">*</span></label>
                                     <span className="helper-text" data-error="Enter product SKU" ></span>
                                 </div>
                                 <div className="input-field col s12 ">
@@ -84,7 +84,7 @@ const EditProductForm = (props) => {
                                         onChange={(e) => handleChange(e)}
                                         className="materialize-textarea" >
                                     </textarea>
-                                    <label class="active" htmlFor="pdescription">Description<spam className="star_color">*</spam></label>
+                                    <label class="active" htmlFor="pdescription">Description<span className="star_color">*</span></label>
                                 </div>
                                 <div className="input-field col s12 ">
                                     <input
@@ -96,7 +96,7 @@ const EditProductForm = (props) => {
                                         className="validate"
                                         required
                                     />
-                                    <label class="active" htmlFor="price">Seller Price<spam className="star_color">*</spam></label>
+                                    <label class="active" htmlFor="price">Seller Price<span className="star_color">*</span></label>
                                     <span className="helper-text" data-error="Enter seller price"></span>
                                 </div>
                                 {(props.Editformdata.category) === "16" ? '' :
@@ -111,7 +111,7 @@ const EditProductForm = (props) => {
                                             <option value="6">XXL</option>
                                             <option value="7">OX</option>
                                         </select>
-                                        <label class="active">Sizes<spam className="star_color">*</spam></label>
+                                        <label class="active">Sizes<span className="star_color">*</span></label>
                                     </div>
                                 }
                                 <div className="input-field col s6 ">
@@ -124,11 +124,11 @@ const EditProductForm = (props) => {
                                         onChange={(e) => handleChange(e)}
                                         required
                                     />
-                                    <label class="active" htmlFor="quantity">Quantity<spam className="star_color">*</spam></label>
+                                    <label class="active" htmlFor="quantity">Quantity<span className="star_color">*</span></label>
                                     <span className="helper-text" data-error="Enter Quantity"></span>
                                 </div>
                                 <div className="col s6 " >
-                                <label htmlFor="color">Color<spam className="star_color">*</spam></label>
+                                <label htmlFor="color">Color<span className="star_color">*</span></label>
                                     <CreatableSelect
                                         isMulti
                                         // onChange={(e)=>handleChange(e)}
@@ -136,7 +136,7 @@ const EditProductForm = (props) => {
                                     />
                                 </div>
                                 <div className="input-field col s6">
-                                    <label class="active" htmlFor="uploadimage">Upload Image<spam className="star_color">*</spam>
+                                    <label class="active" htmlFor="uploadimage">Upload Image<span className="star_color">*</span>
                                         <input
                                             id="upload_image"
                                             type="file"

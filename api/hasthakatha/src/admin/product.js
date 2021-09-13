@@ -1,4 +1,5 @@
 const atob = require('atob');
+const btoa = require('btoa');
 const xlsx = require('xlsx');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -9,8 +10,11 @@ const ProductUtil = require('./../utils/ProductUtil');
 const ProductSql = require('../common/sql/ProductSql');
 
 var product_app = function (app, con, hasthaBean) {
-    app.get('/rest/product_list', (req, res) => {
-        var sql = "SELECT * FROM product ";
+    app.get('/rest/product_list/:page_size/:page_number', (req, res) => {
+        var pageSize = parseInt(req.params.page_size);
+        var pageNumber = parseInt(req.params.page_number);
+        var offset = (pageSize * (pageNumber - 1));
+        var sql = `SELECT * FROM product LIMIT ${offset}, ${pageSize}` ;
         con.query(sql, function (err, result) {
             if (err) throw err;
             res.header("Content-Type", "application/json");
@@ -32,7 +36,6 @@ var product_app = function (app, con, hasthaBean) {
                                     var image_data = images[j].image_data;
                                     console.log(Object.keys(image_data));
                                     var buff_data = image_data ? Buffer.from(image_data) : '';
-
                                     temp.image_data = buff_data ? buff_data.toString() : '';
 
                                 }
@@ -172,7 +175,7 @@ var product_app = function (app, con, hasthaBean) {
         var title = req.body.title;
         var price = req.body.price;
         var price_without_embroidary = req.body.price_without_embroidary;
-        var description = req.body.description;
+        var description = req.body.description ? btoa(req.body.description) : '';
         var note = req.body.note;
         var material = req.body.material;
         var total_available = req.body.total_available;
@@ -181,6 +184,8 @@ var product_app = function (app, con, hasthaBean) {
         var updatedDate=req.body.updatedDate;
         var url = req.body.url;
         var buffer = Buffer.from(url, 'binary');
+        var createdDate = (new Date()).getTime();
+        var updatedDate = (new Date()).getTime();
         var start = "START TRANSACTION;";
         var t1 = "INSERT INTO `product_images`(`imageid`, `pid`, `type`, `image_data`) VALUES (NULL,'" + pid + "','main','" + buffer + "');";
         var t2 = "INSERT INTO product(pid,category,title,price,price_without_embroidary,description,note,material,total_available,total_quantity,available,sku,status,createdDate,updatedDate)VALUES(NULL,'" + category + "','" + title + "','" + price + "','" + price_without_embroidary + "','" + description + "','" + note + "','" + material + "','" + total_available + "','" + total_quantity + "','" + available + "','" + sku + "','" + status + "','"+createdDate+"','"+updatedDate+"');";
