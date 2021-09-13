@@ -1,5 +1,6 @@
 import React from "react";
 import classNames from "classnames";
+import { Link } from "react-router-dom";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -18,7 +19,6 @@ import Search from "@material-ui/icons/Search";
 // core components
 import CustomInput from "components/CustomInput/CustomInput.js";
 import Button from "components/CustomButtons/Button.js";
-
 import styles from "assets/jss/material-dashboard-react/components/headerLinksStyle.js";
 
 const useStyles = makeStyles(styles);
@@ -46,7 +46,12 @@ export default function AdminNavbarLinks() {
   };
   const handleCloseProfile = () => {
     setOpenProfile(null);
+
   };
+  const handleLogout =()=>{
+    // localStorage.clear();
+    setOpenProfile(null);
+  }
   return (
     <div>
       <div className={classes.searchWrapper}>
@@ -88,7 +93,7 @@ export default function AdminNavbarLinks() {
           className={classes.buttonLink}
         >
           <Notifications className={classes.icons} />
-          <span className={classes.notifications}>5</span>
+          {/* <span className={classes.notifications}>5</span> */}
           <Hidden mdUp implementation="css">
             <p onClick={handleCloseNotification} className={classes.linkText}>
               Notification
@@ -116,7 +121,7 @@ export default function AdminNavbarLinks() {
               }}
             >
               <Paper>
-                <ClickAwayListener onClickAway={handleCloseNotification}>
+                {/* <ClickAwayListener onClickAway={handleCloseNotification}>
                   <MenuList role="menu">
                     <MenuItem
                       onClick={handleCloseNotification}
@@ -149,7 +154,7 @@ export default function AdminNavbarLinks() {
                       Another One
                     </MenuItem>
                   </MenuList>
-                </ClickAwayListener>
+                </ClickAwayListener> */}
               </Paper>
             </Grow>
           )}
@@ -193,21 +198,18 @@ export default function AdminNavbarLinks() {
               <Paper>
                 <ClickAwayListener onClickAway={handleCloseProfile}>
                   <MenuList role="menu">
-                    <MenuItem
-                      onClick={handleCloseProfile}
-                      className={classes.dropdownItem}
-                    >
-                      Profile
-                    </MenuItem>
-                    <MenuItem
-                      onClick={handleCloseProfile}
-                      className={classes.dropdownItem}
-                    >
-                      Settings
-                    </MenuItem>
+                    <Link to="/user">
+                      <MenuItem
+                        onClick={handleCloseProfile}
+                        className={classes.dropdownItem}
+                      >
+                        Profile
+                      </MenuItem>
+                    </Link>
                     <Divider light />
                     <MenuItem
-                      onClick={handleCloseProfile}
+
+                      onClick={handleLogout}
                       className={classes.dropdownItem}
                     >
                       Logout

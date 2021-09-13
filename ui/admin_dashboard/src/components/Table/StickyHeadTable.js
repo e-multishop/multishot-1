@@ -126,6 +126,7 @@ export default function StickyHeadTable(props) {
       setProductData(result);
     })
   }
+  
   const ShowData = (column, value,row) => {
     switch (column.id) {
       case "action":
