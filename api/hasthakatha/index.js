@@ -2,6 +2,8 @@ var mysql = require('mysql');
 // for local setup, enable this
 const settings = require('./src/config/config');
 
+const HasthaBean = require('./src/common/beans');
+
 // for production setup, enable this
 // const settings = require('./src/config/config-prod');
 
@@ -22,8 +24,12 @@ const hasthakatha_app = require('./src/app');
 const login_app = require('./src/common/login');
 const common_app = require('./src/common/common');
 const product_app = require('./src/admin/product');
-const hasthakatha_data=hasthakatha_app();
+const hasthakatha_data=hasthakatha_app(settings);
+
+const hasthaBean = new HasthaBean(con);
+hasthaBean.initialize();
+
 login_app(hasthakatha_data,con);
-product_app(hasthakatha_data,con);
+product_app(hasthakatha_data,con,hasthaBean);
 common_app(hasthakatha_data,con);
 hasthakatha_data.listen(port);
