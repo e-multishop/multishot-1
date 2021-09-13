@@ -177,11 +177,13 @@ var product_app = function (app, con, hasthaBean) {
         var material = req.body.material;
         var total_available = req.body.total_available;
         var total_quantity = req.body.total_quantity;
+        var createdDate=req.body.createdDate;
+        var updatedDate=req.body.updatedDate;
         var url = req.body.url;
         var buffer = Buffer.from(url, 'binary');
         var start = "START TRANSACTION;";
         var t1 = "INSERT INTO `product_images`(`imageid`, `pid`, `type`, `image_data`) VALUES (NULL,'" + pid + "','main','" + buffer + "');";
-        var t2 = "INSERT INTO product(pid,category,title,price,price_without_embroidary,description,note,material,total_available,total_quantity,available,sku,status)VALUES(NULL,'" + category + "','" + title + "','" + price + "','" + price_without_embroidary + "','" + description + "','" + note + "','" + material + "','" + total_available + "','" + total_quantity + "','" + available + "','" + sku + "','" + status + "');";
+        var t2 = "INSERT INTO product(pid,category,title,price,price_without_embroidary,description,note,material,total_available,total_quantity,available,sku,status,createdDate,updatedDate)VALUES(NULL,'" + category + "','" + title + "','" + price + "','" + price_without_embroidary + "','" + description + "','" + note + "','" + material + "','" + total_available + "','" + total_quantity + "','" + available + "','" + sku + "','" + status + "','"+createdDate+"','"+updatedDate+"');";
         var end = "COMMIT;";
         var sql = start + t1 + t2 + end;
         console.log(sql);
@@ -314,7 +316,9 @@ var product_app = function (app, con, hasthaBean) {
         var pid = req.body.pid;
         var uid = req.body.uid;
         var quantity = req.body.quantity;
-        var sql = "INSERT INTO `add_to_cart`(`id`, `uid`, `pid`, `quantity`) VALUES (NULL,'" + uid + "','" + pid + "','" + quantity + "');";
+        var createdDate = req.body.createdDate;
+        var updatedDate = req.body.updatedDate;
+        var sql = "INSERT INTO `add_to_cart`(`id`, `uid`, `pid`, `quantity`, `createdDate`, `updatedDate`) VALUES (NULL,'" + uid + "','" + pid + "','" + quantity + "','"+createdDate+"','"+updatedDate+"');";
         con.query(sql, (err, result) => {
             if (err) throw err;
             res.send('successfully add into the cart');
@@ -353,11 +357,40 @@ var product_app = function (app, con, hasthaBean) {
 
     app.get("/rest/add_to_cart_price_calculate",(req,res)=>{
 
+        var temprorary;
+        var listofobjects=[];
+        
         var uid=req.body.uid;
         var sql ="select * from add_to_cart where uid='"+uid+"';"
         con.query(sql,(err,result)=>{
             if(err) throw err;
-            
+            let asyncoperations = [];
+            for(let i=0;i<result.length;i++)
+            {
+                let temp=result[i]["pid"];
+                let quantity=result[i]["quantity"]
+                let sql1 = "select price from product where pid='"+temp+"';";
+                let p = new Promise(function (resolve, reject) {
+                    con.query(sql1,(err,result1)=>{
+                        if(err) throw err;
+                        temprorary=((result1[0]["price"])*(quantity));
+                        listofobjects.push(temprorary);
+                        resolve();
+                    });
+                    
+
+                });
+                asyncoperations.push(p);
+               
+            }
+            Promise.all(asyncoperations).then(function (ops) {
+     
+                const reducer = (previousValue, currentValue) => previousValue + currentValue;
+                var Total_Amount = listofobjects.reduce(reducer);
+                res.send({"Total_Amount":Total_Amount});
+
+
+            });
         })
     });
 }
