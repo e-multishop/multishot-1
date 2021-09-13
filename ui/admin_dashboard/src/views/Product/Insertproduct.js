@@ -1,12 +1,10 @@
 import React, { Component, useEffect, useState } from 'react';
 import './insertproduct.scss';
 // import ImageUpload from '../../Shared/Imageupload/Imageupload'
-import Axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import CreatableSelect from 'react-select/creatable';
 
 const Insertproduct = (props) => {
-    var modal;
     useEffect(() => {
         const insertproduct = document.getElementById("insertproduct");
         const elems = insertproduct.querySelectorAll('select');
@@ -17,17 +15,7 @@ const Insertproduct = (props) => {
     const [disable, setDisable] = useState('true');
 
     function handleChange(e) {
-
-        // if (e.target.value != " ") {
-        //     setDisable(false)
-        // }
-        // else {
-        // }
-        
-        // let reader = new FileReader();
-        // reader.readAsDataURL(upload_image[0]);
         props.setFormData({ ...props.formData, [e.target.name]: e.target.value });
-        // props.setFormData({props.formData.upload_image: "upload_image"});
         console.groupEnd();
     }
     function handleImage(e){
@@ -35,12 +23,9 @@ const Insertproduct = (props) => {
         let reader = new FileReader();
         reader.readAsDataURL(upload_image[0]);
         reader.onload=(e)=>{
-            // console.log("check iamge=",e.target.result);
         
             props.setUploadImage(e.target.result);
         }
-        // console.log(upload_image[0]);
-
     }
     const options = [
         { value: 'chocolate', label: 'Chocolate' },
@@ -65,7 +50,7 @@ const Insertproduct = (props) => {
                         <label>Category Select<spam className="star_color">*</spam></label>
                     </div>
                     {
-                        props.formData.category ?
+                        props.formData.category?
                             <div>
                                 <div className="input-field col s12 ">
                                     <input
@@ -143,20 +128,6 @@ const Insertproduct = (props) => {
                                     <label htmlFor="quantity">Quantity<spam className="star_color">*</spam></label>
                                     <span className="helper-text" data-error="Enter Quantity"></span>
                                 </div>
-                                {/* <div className="input-field col s6 "> */}
-                                    {/* <input
-                                        id="color"
-                                        type="text"
-                                        value={props.formData.color}
-                                        className="validate"
-                                        name="color"
-                                        onChange={(e) => handleChange(e)}
-                                        required
-                                    />
-                                    <label htmlFor="color">Color<spam className="star_color">*</spam></label>
-                                    <span className="helper-text" data-error="Enter color"></span> */}
-
-                                {/* </div> */}
                                 <div className="col s6 " >
                                 <label htmlFor="color">Color<spam className="star_color">*</spam></label>
                                     <CreatableSelect
@@ -219,12 +190,10 @@ const Insertproduct = (props) => {
                                     <span className="helper-text" data-error="Enter storage/care instructions"></span>
                                 </div>
                                 <div className="button col s12">
-                                    {/* <a className="waves-effect waves-light btn"  onClick={(e) => onSubmit(e)} disabled={disable} >Submit</a> */}
                                     <ToastContainer />
                                 </div>
                             </div>
-                            : ''
-                    }
+                            :''}
                 </div>
             </form>
         </div>

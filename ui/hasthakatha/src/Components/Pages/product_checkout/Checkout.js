@@ -21,7 +21,12 @@ function Checkout() {
                     {
                         cartData.map((data)=>{
                             return(
-                                <Checkout_card_item producttitle={data.title} productprice={data.price}/>
+                                // <h1>{data.cardData.title}</h1>
+                                <Checkout_card_item 
+                                producttitle={data.cardData.title} 
+                                productprice={data.cardData.price}
+                                productimg={data.cardData.img_url}
+                                />
                             )
                         })
                     }

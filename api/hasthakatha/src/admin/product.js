@@ -218,6 +218,7 @@ var product_app = function (app, con) {
         var price = req.body.price;
         var price_without_embroidary = req.body.price_without_embroidary;
         var description = req.body.description;
+        var note=req.body.note;
         var material = req.body.material;
         var total_available = req.body.total_available;
         var total_quantity = req.body.total_quantity;
