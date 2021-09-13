@@ -1,11 +1,10 @@
 var mysql = require('mysql');
+const isheroku =process && process.env && process.env.PORT ? true : false;
 // for local setup, enable this
-const settings = require('./src/config/config');
 
+const settings = isheroku ?require('./src/config/config-prod'):require('./src/config/config');
 const HasthaBean = require('./src/common/beans');
 
-// for production setup, enable this
-// const settings = require('./src/config/config-prod');
 
 var con = mysql.createConnection({
     host: settings.db_host,
