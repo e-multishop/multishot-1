@@ -1,5 +1,14 @@
-var atob = require('atob');
-var product_app = function (app, con) {
+const atob = require('atob');
+const xlsx = require('xlsx');
+const express = require('express');
+const bodyParser = require('body-parser');
+const Product = require('./../common/models/Product');
+const CommonUtil = require('./../utils/CommonUtil');
+const BeanUtil = require('./../utils/BeanUtil');
+const ProductUtil = require('./../utils/ProductUtil');
+const ProductSql = require('../common/sql/ProductSql');
+
+var product_app = function (app, con, hasthaBean) {
     app.get('/rest/product_list', (req, res) => {
         var sql = "SELECT * FROM product ";
         con.query(sql, function (err, result) {
@@ -172,7 +181,7 @@ var product_app = function (app, con) {
         var buffer = Buffer.from(url, 'binary');
         var start = "START TRANSACTION;";
         var t1 = "INSERT INTO `product_images`(`imageid`, `pid`, `type`, `image_data`) VALUES (NULL,'" + pid + "','main','" + buffer + "');";
-        var t2 = "INSERT INTO product(pid,category,title,price,price_without_embroidary,description,note,material,total_available,total_quantity,available,sku,status)VALUES('" + pid + "','" + category + "','" + title + "','" + price + "','" + price_without_embroidary + "','" + description + "','" + note + "','" + material + "','" + total_available + "','" + total_quantity + "','" + available + "','" + sku + "','" + status + "');";
+        var t2 = "INSERT INTO product(pid,category,title,price,price_without_embroidary,description,note,material,total_available,total_quantity,available,sku,status)VALUES(NULL,'" + category + "','" + title + "','" + price + "','" + price_without_embroidary + "','" + description + "','" + note + "','" + material + "','" + total_available + "','" + total_quantity + "','" + available + "','" + sku + "','" + status + "');";
         var end = "COMMIT;";
         var sql = start + t1 + t2 + end;
         console.log(sql);
@@ -183,6 +192,47 @@ var product_app = function (app, con) {
         });
 
 
+    });
+
+    app.post("/rest/addproductbulk", (req, res) => {
+        // read the excel file
+        const workbook = xlsx.readFile(__dirname + "/../../hastha_2.xlsx");
+        let data = [];
+
+        const sheets = workbook.SheetNames;
+        let query = '';
+        for (let i = 0; i < sheets.length; i++) {
+            const sheetData = xlsx.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[i]]);
+            const products = [];
+            sheetData.forEach(row => {
+                products.push(new Product(
+                    '', 
+                    CommonUtil.getData(row['SKU']), 
+                    1, 
+                    1, 
+                    BeanUtil.getCategoryIDFromName(hasthaBean.getCategoryList(), CommonUtil.getData(row['Category'])), 
+                    CommonUtil.getData(row['Product Title']), 
+                    ProductUtil.getProductPrice(row['Seller Price']), 
+                    ProductUtil.getProductPrice(row['Seller Price']), 
+                    ProductUtil.getProductDescription(row['Description']), 
+                    '', 
+                    CommonUtil.getData(row['Material']), 
+                    ProductUtil.getTotalAvailable(row['Total quantity']),
+                    ProductUtil.getTotalAvailable(row['Total quantity'])
+                ));
+            });
+            products.forEach((p) => {
+                const productSql = new ProductSql(p);
+                query += productSql.post();
+            });
+        }
+        if (query) {
+            const queryWithTransaction = "START TRANSACTION;" + query + "COMMIT;"
+            con.query(queryWithTransaction, (err, result) => {
+                if (err) throw err;
+                res.send('success');
+            });
+        }
     });
 
     app.delete("/rest/delete", (req, res) => {
@@ -259,6 +309,7 @@ var product_app = function (app, con) {
             res.send({ "output": result });
         });
     });
+
     app.post("/rest/add_to_cart", (req, res) => {
         var pid = req.body.pid;
         var uid = req.body.uid;

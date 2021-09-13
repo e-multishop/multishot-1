@@ -10,8 +10,12 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Axios from 'axios';
 import { ContactSupportOutlined } from '@material-ui/icons';
+<<<<<<< Updated upstream
 import { NavLink } from 'react-router-dom';
 import ProductEdit from '../Edit/ProductEdit'
+=======
+import Loader from 'shared/Loader';
+>>>>>>> Stashed changes
 // import EventEmitter from 'fbemitter';
 const columns = [
   {
@@ -91,6 +95,7 @@ const useStyles = makeStyles({
     width: '100%',
   },
   container: {
+    minHeight: 400,
     maxHeight: 440,
   },
 });
@@ -111,19 +116,32 @@ export default function StickyHeadTable(props) {
     setPage(0);
   };
   const [productData, setProductData] = useState([]);
+<<<<<<< Updated upstream
   const [updateTable,setUpdateTable]=useState(false);
+=======
+  const [loader, showLoader] = useState(true);
+>>>>>>> Stashed changes
   useEffect(() => {
+    showLoader(true);
     Axios.get("/rest/product_list").then((res) => {
       // console.log(res.data);
       const result = res.data;
       setProductData(result);
+      showLoader(false);
     })
+<<<<<<< Updated upstream
   }, []);
   if (props.updateTable == true || updateTable==true) {
+=======
+  },[]);
+  if (props.updateTable == true) {
+    showLoader(true);
+>>>>>>> Stashed changes
     Axios.get("/rest/product_list").then((res) => {
       // console.log(res.data);
       const result = res.data;
       setProductData(result);
+      showLoader(false);
     })
   }
   const ShowData = (column, value,row) => {
@@ -144,6 +162,7 @@ export default function StickyHeadTable(props) {
   return (
     <Paper className={classes.root}>
       <TableContainer className={classes.container}>
+        { loader ? <Loader height="400px" /> : 
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
@@ -173,6 +192,7 @@ export default function StickyHeadTable(props) {
             })}
           </TableBody>
         </Table>
+      }
       </TableContainer>
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
