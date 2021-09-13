@@ -183,14 +183,22 @@ var product_app = function (app, con, hasthaBean) {
         var createdDate=req.body.createdDate;
         var updatedDate=req.body.updatedDate;
         var url = req.body.url;
+        var size = req.body.size;
         var buffer = Buffer.from(url, 'binary');
         var createdDate = (new Date()).getTime();
         var updatedDate = (new Date()).getTime();
         var start = "START TRANSACTION;";
         var t1 = "INSERT INTO `product_images`(`imageid`, `pid`, `type`, `image_data`) VALUES (NULL,'" + pid + "','main','" + buffer + "');";
         var t2 = "INSERT INTO product(pid,category,title,price,price_without_embroidary,description,note,material,total_available,total_quantity,available,sku,status,createdDate,updatedDate)VALUES(NULL,'" + category + "','" + title + "','" + price + "','" + price_without_embroidary + "','" + description + "','" + note + "','" + material + "','" + total_available + "','" + total_quantity + "','" + available + "','" + sku + "','" + status + "','"+createdDate+"','"+updatedDate+"');";
+        var sizeQuery = '';
+        if (size && size.length > 0) {
+            size.forEach(s => {
+                sizeQuery = sizeQuery ?  sizeQuery + `,(NULL,'${pid}','${s}')` : `(NULL,'${pid}','${s}')`;
+            });
+        }
+        var t3 = `INSERT INTO \`product_size\`(\`id\`, \`pid\`, \`size\`) VALUES ${sizeQuery};`;
         var end = "COMMIT;";
-        var sql = start + t1 + t2 + end;
+        var sql = start + t1 + t2 + (sizeQuery ? t3 : '') + end;
         console.log(sql);
         con.query(sql, (err, result) => {
             if (err) throw err;

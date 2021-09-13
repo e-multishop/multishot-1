@@ -97,6 +97,7 @@ export default function CustomizedDialogs(props) {
       price_without_embroidary: "89",
       description: formdata.description,
       note: formdata.note,
+      size: formdata.size,
       material: formdata.material,
       total_available: "89",//89-demo data
       total_quantity: formdata.total_quantity,

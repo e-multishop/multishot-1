@@ -18,6 +18,13 @@ const Insertproduct = (props) => {
         var instances = M.FormSelect.init(elems, options);
     }
 
+    function handleMultiSelectChange(e) {
+        var instance = M.FormSelect.getInstance(e.currentTarget);
+        const values = instance.getSelectedValues();
+        const isFormValid = e.target.closest('form').checkValidity();
+        props.setFormData({ ...props.formData, [e.target.name]: values, valid: isFormValid});
+    }
+
     function handleChange(e) {
         const isFormValid = e.target.closest('form').checkValidity();
         props.setFormData({ ...props.formData, [e.target.name]: e.target.value, valid: isFormValid});
@@ -111,7 +118,7 @@ const Insertproduct = (props) => {
                                 </div>
                                 {(props.formData.category) === "16" ? '' :
                                     <div className="input-field col s6">
-                                        <select value={props.formData.size} onChange={(e) => handleChange(e)} name="size" multiple>
+                                        <select value={props.formData.size} onChange={(e) => handleMultiSelectChange(e)} name="size" multiple>
                                             <option value="" disabled selected>Choose your option</option>
                                             <option value="1">XS</option>
                                             <option value="2">S</option>
