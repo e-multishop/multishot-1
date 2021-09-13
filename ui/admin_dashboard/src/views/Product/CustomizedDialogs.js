@@ -78,6 +78,7 @@ export default function CustomizedDialogs(props) {
     total_quantity: " ",
     dimension: " ",
     color: " ",
+    valid: false
   });
   const [uploadImage,setUploadImage]=useState("");
   const [formPid,setFormPid]=useState(" ");
@@ -105,15 +106,12 @@ export default function CustomizedDialogs(props) {
       url:uploadImage
     }
     ).then(res => {
-      // console.log(res.formdata)
       props.setUpdateTable(true);
-      toast("Success");
-      // EventEmitter.emit('newProduct',res.formdata)
       setOpen(false);
       reset();
     }).catch(err => {
       console.log(err)
-      toast("Data did not inserted")
+      toast("Error adding. Please try again.")
     });
 
     // document.getElementById("insertproduct").reset();
@@ -166,7 +164,7 @@ export default function CustomizedDialogs(props) {
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={() => {onSubmit()}} color="primary">
+          <Button disabled={formdata.valid ? null : true} autoFocus onClick={() => {onSubmit()}} color="primary">
             Submit
           </Button>
         </DialogActions>

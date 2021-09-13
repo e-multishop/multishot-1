@@ -13,6 +13,7 @@ import Search from './Components/Header/Search';
 import Login from './Components/Pages/login/Login';
 import Signup from'./Components/Pages/login/Signup';
 import * as materialize  from 'materialize-css/dist/js/materialize';
+import 'react-toastify/dist/ReactToastify.css';
 import Adminapp from './Components/Admin_dashboard/Adminapp'
 import Reset from './Components/Pages/login/Reset_password';
 import Checkout from './Components/Pages/product_checkout/Checkout'

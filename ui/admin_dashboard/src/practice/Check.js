@@ -7,12 +7,12 @@ function Check(props){
             <h1>Check component</h1>
             <div>cart-0</div>
             <div className="">
-                <spam>
+                <span>
                     i phone
-                </spam>
-                <spam>
+                </span>
+                <span>
                     Price:3005
-                </spam>
+                </span>
                 <div>
                     <button 
                     onClick={

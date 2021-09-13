@@ -13,6 +13,7 @@ import { ContactSupportOutlined } from '@material-ui/icons';
 import { NavLink } from 'react-router-dom';
 import ProductEdit from '../Edit/ProductEdit'
 import Loader from 'shared/Loader';
+import ProductUtil from './../../common/util/ProductUtil';
 // import EventEmitter from 'fbemitter';
 const columns = [
   {
@@ -115,11 +116,14 @@ export default function StickyHeadTable(props) {
   const [productData, setProductData] = useState([]);
   const [updateTable,setUpdateTable]=useState(false);
   const [loader, showLoader] = useState(true);
+  const [pageSize, setPageSize] = useState(10);
+  const [pageNumber, setPageNumber] = useState(1);
   useEffect(() => {
       showLoader(true);
-      Axios.get("/rest/product_list").then((res) => {
+      Axios.get("/rest/product_list/"+pageSize+"/"+pageNumber).then((res) => {
         // console.log(res.data);
         const result = res.data;
+        ProductUtil.updateProductData(result);
         setProductData(result);
         showLoader(false);
       })
