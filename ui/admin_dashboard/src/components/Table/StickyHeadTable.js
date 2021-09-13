@@ -10,12 +10,9 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Axios from 'axios';
 import { ContactSupportOutlined } from '@material-ui/icons';
-<<<<<<< Updated upstream
 import { NavLink } from 'react-router-dom';
 import ProductEdit from '../Edit/ProductEdit'
-=======
 import Loader from 'shared/Loader';
->>>>>>> Stashed changes
 // import EventEmitter from 'fbemitter';
 const columns = [
   {
@@ -116,34 +113,19 @@ export default function StickyHeadTable(props) {
     setPage(0);
   };
   const [productData, setProductData] = useState([]);
-<<<<<<< Updated upstream
   const [updateTable,setUpdateTable]=useState(false);
-=======
   const [loader, showLoader] = useState(true);
->>>>>>> Stashed changes
   useEffect(() => {
-    showLoader(true);
-    Axios.get("/rest/product_list").then((res) => {
-      // console.log(res.data);
-      const result = res.data;
-      setProductData(result);
-      showLoader(false);
-    })
-<<<<<<< Updated upstream
+    if (props.updateTable == true || updateTable == true) {
+      showLoader(true);
+      Axios.get("/rest/product_list").then((res) => {
+        // console.log(res.data);
+        const result = res.data;
+        setProductData(result);
+        showLoader(false);
+      })
+    }
   }, []);
-  if (props.updateTable == true || updateTable==true) {
-=======
-  },[]);
-  if (props.updateTable == true) {
-    showLoader(true);
->>>>>>> Stashed changes
-    Axios.get("/rest/product_list").then((res) => {
-      // console.log(res.data);
-      const result = res.data;
-      setProductData(result);
-      showLoader(false);
-    })
-  }
   const ShowData = (column, value,row) => {
     switch (column.id) {
       case "action":
