@@ -123,14 +123,7 @@ var common_app=function(app,con)
                 }
             });
         })
-    
-        //    const app = express()
-        app.use(cors())
-        app.use(express.json())
         app.use('/', router)
-        // app.listen(3002)
-    
-    
     });
 }
 module.exports=common_app;

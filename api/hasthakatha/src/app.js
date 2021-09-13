@@ -1,13 +1,15 @@
 const express = require('express')
 var cors = require('cors');
 const bodyParser = require('body-parser');
-var hasthakatha_app = function () {
+var hasthakatha_app = function (settings) {
     const app = express()
-   // app.use(express.json());
-    app.use(bodyParser.json({ limit: "10mb" }));
+    if (settings.CORS) {
+        // enabled for local testing only
+        app.use(cors());
+    }
     app.use(express.static(__dirname + '/../public'));  //Serves resources from public folder
-   // app.use(express.json());
-    app.use(cors());
+    app.use(express.json({ limit: "50mb" }));
+    app.use(express.urlencoded({limit: "50mb", extended: true, parameterLimit: 50000 }));
     return app;
 }
 module.exports = hasthakatha_app;

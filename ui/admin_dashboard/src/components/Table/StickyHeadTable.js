@@ -12,6 +12,7 @@ import Axios from 'axios';
 import { ContactSupportOutlined } from '@material-ui/icons';
 import { NavLink } from 'react-router-dom';
 import ProductEdit from '../Edit/ProductEdit'
+import Loader from 'shared/Loader';
 // import EventEmitter from 'fbemitter';
 const columns = [
   {
@@ -91,6 +92,7 @@ const useStyles = makeStyles({
     width: '100%',
   },
   container: {
+    minHeight: 400,
     maxHeight: 440,
   },
 });
@@ -112,12 +114,15 @@ export default function StickyHeadTable(props) {
   };
   const [productData, setProductData] = useState([]);
   const [updateTable,setUpdateTable]=useState(false);
+  const [loader, showLoader] = useState(true);
   useEffect(() => {
-    Axios.get("/rest/product_list").then((res) => {
-      // console.log(res.data);
-      const result = res.data;
-      setProductData(result);
-    })
+      showLoader(true);
+      Axios.get("/rest/product_list").then((res) => {
+        // console.log(res.data);
+        const result = res.data;
+        setProductData(result);
+        showLoader(false);
+      })
   }, []);
   if (props.updateTable == true || updateTable==true) {
     Axios.get("/rest/product_list").then((res) => {
@@ -145,6 +150,7 @@ export default function StickyHeadTable(props) {
   return (
     <Paper className={classes.root}>
       <TableContainer className={classes.container}>
+        { loader ? <Loader height="400px" /> : 
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
@@ -174,6 +180,7 @@ export default function StickyHeadTable(props) {
             })}
           </TableBody>
         </Table>
+      }
       </TableContainer>
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
