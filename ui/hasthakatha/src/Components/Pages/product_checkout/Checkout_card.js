@@ -1,7 +1,16 @@
 import React from 'react'
 import "./checkout.scss"
+import Axios from 'axios';
 
 function Checkout_card() {
+    useEffect(() => {
+        Axios.get("/rest/add_to_cart_price_calculate",
+        uid="2").then((res) => {
+          // console.log(res.data);
+          const result = res.data;
+          console.log(result);
+        })
+    }, []);
     return (
         <>
 
