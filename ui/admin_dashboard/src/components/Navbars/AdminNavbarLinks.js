@@ -1,6 +1,6 @@
 import React from "react";
 import classNames from "classnames";
-import { Link } from "react-router-dom";
+import {Link,Redirect} from "react-router-dom";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -49,12 +49,14 @@ export default function AdminNavbarLinks() {
 
   };
   const handleLogout =()=>{
-    // localStorage.clear();
+    localStorage.clear();
     setOpenProfile(null);
+    document.location.href = "/"
+
   }
   return (
     <div>
-      <div className={classes.searchWrapper}>
+      {/* <div className={classes.searchWrapper}>
         <CustomInput
           formControlProps={{
             className: classes.margin + " " + classes.search,
@@ -69,7 +71,7 @@ export default function AdminNavbarLinks() {
         <Button color="white" aria-label="edit" justIcon round>
           <Search />
         </Button>
-      </div>
+      </div> */}
       <Button
         color={window.innerWidth > 959 ? "transparent" : "white"}
         justIcon={window.innerWidth > 959}
@@ -198,7 +200,7 @@ export default function AdminNavbarLinks() {
               <Paper>
                 <ClickAwayListener onClickAway={handleCloseProfile}>
                   <MenuList role="menu">
-                    <Link to="/user">
+                    <Link to="/admin/user">
                       <MenuItem
                         onClick={handleCloseProfile}
                         className={classes.dropdownItem}

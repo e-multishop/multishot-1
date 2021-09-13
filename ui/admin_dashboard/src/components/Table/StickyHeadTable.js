@@ -43,12 +43,12 @@ const columns = [
   //   minWidth: 100,
   //   align: 'right',
   // },
-  {
-    id: 'size',
-    label: 'Size',
-    minWidth: 50,
-    align: 'right',
-  },
+  // {
+  //   id: 'size',
+  //   label: 'Size',
+  //   minWidth: 50,
+  //   align: 'right',
+  // },
   {
     id: 'total_quantity',
     label: 'Quantity',

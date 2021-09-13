@@ -66,6 +66,7 @@ export default function Admin({ ...rest }) {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
   const getRoute = () => {
     return window.location.pathname !== "/admin/maps";
   };
@@ -96,7 +97,7 @@ export default function Admin({ ...rest }) {
     <div className={classes.wrapper}>
       <Sidebar
         routes={routes}
-        logoText={"HasthKatha"}
+        logoText={"HasthaKatha"}
         logo={logo}
         image={image}
         handleDrawerToggle={handleDrawerToggle}

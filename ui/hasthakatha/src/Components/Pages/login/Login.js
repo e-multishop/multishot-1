@@ -32,7 +32,7 @@ const Login = (props) => {
         }).then(res => {
             // console.warn("value is success fill",res.data)
             const token = res.data.token;
-            localStorage.setItem('token', token);
+            localStorage.setItem('token',token);
             setStatus('')
             setLoading(false);
             // console.log("email",login.email)
