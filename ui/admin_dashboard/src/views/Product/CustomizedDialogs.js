@@ -12,6 +12,7 @@ import "./insertproduct.scss"
 import Axios from 'axios';
 import Insertproduct from "./Insertproduct.js";
 import { ToastContainer, toast } from 'react-toastify';
+import PostAddTwoToneIcon from '@material-ui/icons/PostAddTwoTone';
 
 const styles = (theme) => ({
   root: {
@@ -152,8 +153,8 @@ export default function CustomizedDialogs(props) {
         fullWidth={true}
         maxWidth="sm"
       >
-        <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-          Add New Product
+        <DialogTitle id="customized-dialog-title" onClose={handleClose} classes={{root: 'hs-add-product title'}}>
+          <PostAddTwoToneIcon fontSize="large" classes={{root: 'hs-add-product icon'}}/> Add New Product
         </DialogTitle>
         <DialogContent dividers>
           <Typography gutterBottom>

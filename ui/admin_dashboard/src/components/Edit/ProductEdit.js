@@ -11,6 +11,8 @@ import Typography from '@material-ui/core/Typography';
 import Axios from 'axios';
 import EditProductForm from './EditProductForm'
 import { ToastContainer, toast } from 'react-toastify';
+import BorderColorOutlinedIcon from '@material-ui/icons/BorderColorOutlined';
+import './ProductEdit.scss';
 
 const styles = (theme) => ({
     root: {
@@ -22,7 +24,7 @@ const styles = (theme) => ({
         right: theme.spacing(1),
         top: theme.spacing(1),
         color: theme.palette.grey[500],
-    },
+    }
 });
 
 const DialogTitle = withStyles(styles)((props) => {
@@ -158,8 +160,8 @@ export default function ProductEdit(props) {
                 fullWidth={true}
                 maxWidth="sm"
             >
-                <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-                    Edit Product
+                <DialogTitle id="customized-dialog-title" classes={{root: 'hs-edit-product title'}} onClose={handleClose}>
+                    <BorderColorOutlinedIcon fontSize="large" classes={{root: 'hs-edit-product icon'}}/> Edit Product
                 </DialogTitle>
                 <DialogContent dividers>
                     <Typography gutterBottom>

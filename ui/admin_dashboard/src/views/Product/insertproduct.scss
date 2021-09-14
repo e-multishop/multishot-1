@@ -19,3 +19,14 @@
 .addproduct-button{
     text-align: right;
 }
+.hs-add-product {
+    .icon {
+        vertical-align: bottom;
+        color: #00acc1;
+    }
+    &.title {
+        h6 {
+            color: #00acc1;
+        }
+    }
+}
