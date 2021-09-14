@@ -156,7 +156,7 @@ export default function ProductEdit(props) {
                  </Button>
             </div>
 
-            <Dialog fullscreen onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}
+            <Dialog fullScreen onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}
                 fullWidth={true}
                 maxWidth="sm"
             >
