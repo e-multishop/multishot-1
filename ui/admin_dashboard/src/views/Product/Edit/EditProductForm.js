@@ -1,5 +1,5 @@
 import React, { Component, useEffect, useState } from 'react';
-import '../../views/Product/Insertproduct';
+import '../Insertproduct';
 // import ImageUpload from '../../Shared/Imageupload/Imageupload'
 import Axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';

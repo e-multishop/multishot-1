@@ -22,10 +22,11 @@ import LibraryBooks from "@material-ui/icons/LibraryBooks";
 // core components/views for Admin layout
 // import DashboardPage from "views/Dashboard/Dashboard.js";
 import UserProfile from "views/UserProfile/UserProfile.js";
-import TableList from "views/TableList/TableList.js";
+import ProductList from "views/Product/ProductList";
 import Typography from "views/Typography/Typography.js";
 import UploadFile from "views/UploadFile/UploadFile"
 import Check from "./practice/Check"
+import ProductListWrapper from "views/Product/ProductListWrapper";
 // core components/views for RTL layout
 
 const dashboardRoutes = [
@@ -41,7 +42,7 @@ const dashboardRoutes = [
     path: "/table",
     name: "Product List",
     icon: "content_paste",
-    component: TableList,
+    component: ProductListWrapper,
     layout: "/admin",
   },
   {

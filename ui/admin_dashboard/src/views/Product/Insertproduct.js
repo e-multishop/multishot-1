@@ -54,8 +54,8 @@ const Insertproduct = (props) => {
             <form className="col s10" id="insertproduct" >
                 <div className="row">
                     <div className="input-field  col s6">
-                        <select name="category" value={props.formData.category} onChange={(e) => handleCategoryChange(e)} required>
-                            <option value="" disabled selected>Choose your option</option>
+                        <select name="category" defaultValue="" value={props.formData.category} onChange={(e) => handleCategoryChange(e)} required>
+                            <option value="" disabled>Choose your option</option>
                             <option value="11" >Dress</option>
                             <option value="12" >Scarf</option>
                             <option value="13">Tops</option>

@@ -13,7 +13,9 @@ import EditProductForm from './EditProductForm'
 import { ToastContainer, toast } from 'react-toastify';
 import BorderColorOutlinedIcon from '@material-ui/icons/BorderColorOutlined';
 import './ProductEdit.scss';
-
+import ReactDOM from 'react-dom';
+import { EventBus } from '../../../common/event-bus';
+import { EventType } from '../../../common/events';
 const styles = (theme) => ({
     root: {
         margin: 0,
@@ -55,49 +57,32 @@ const DialogActions = withStyles((theme) => ({
 }))(MuiDialogActions);
 
 export default function ProductEdit(props) {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(true);
 
 
     const handleClose = () => {
         setOpen(false);
         reset();
-
+        ReactDOM.unmountComponentAtNode(document.getElementById('product-dialog'));
     };
 
-    const [Editformdata, setEditFormdata] = useState({
-        category: " ",
-        title: " ",
-        sku: " ",
-        price: " ",
-        price_without_embroidary: " ",
-        description: " ",
-        note: " ",
-        material: " ",
-        size: " ",
-        total_available: " ",
-        total_quantity: " ",
-        dimension: " ",
-        color: " ",
-    });
     const [editUploadImage, setEditUploadImage] = useState(" ");
-     const handleClickOpen = (value) => {
-            setEditFormdata({
-                category:value.category,
-                title:value.title,
-                sku:value.sku,
-                price:value.price,
-                price_without_embroidary:value.price_without_embroidary,
-                description:value.description,
-                note:value.note,
-                material:value.material,
-                size:value.size,
-                total_available:value.available,
-                total_quantity:value.total_quantity,
-                dimension:value.dimension,
-                color:value.color,
-            });
-        setOpen(true);
-    };
+    const [Editformdata, setEditFormdata] = useState({
+        category: props.category,
+        title: props.title,
+        sku: props.sku,
+        price: props.price,
+        price_without_embroidary: props.price,
+        description: props.description,
+        note: props.note,
+        material: props.material,
+        size: props.size,
+        total_available: props.total_quantity,
+        total_quantity: props.total_quantity,
+        dimension: props.dimension,
+        color: props.color,
+    });
+    
     function onSubmit(pid) {
         console.log("submit pid check=",pid);
         Axios.put("/rest/update", {
@@ -116,18 +101,13 @@ export default function ProductEdit(props) {
             status: '1',
         }
         ).then(res => {
-            // console.log(res.formdata)
-            props.setUpdateTable(true);
             toast("Success");
-            setOpen(false);
-            reset();
+            EventBus.dispatch(EventType.UPDATE_PRODUCT_TABLE);
+            handleClose();
         }).catch(err => {
             console.log(err)
             toast("Data did not updated")
         });
-
-        // document.getElementById("insertproduct").reset();
-        // {html: 'I am a toast!'}
     }
     function reset() {
         setEditFormdata({
@@ -150,12 +130,6 @@ export default function ProductEdit(props) {
 
     return (
         <div>
-            <div className="addproduct-button">
-                <Button color="primary" onClick={() => { handleClickOpen(props.value) }} >
-                    Edit
-                 </Button>
-            </div>
-
             <Dialog fullScreen onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}
                 fullWidth={true}
                 maxWidth="sm"
@@ -173,7 +147,7 @@ export default function ProductEdit(props) {
                     </Typography>
                 </DialogContent>
                 <DialogActions>
-                    <Button autoFocus onClick={() => { onSubmit(props.value.pid) }} color="primary">
+                    <Button autoFocus onClick={() => { onSubmit(props.pid) }} color="primary">
                         Submit
           </Button>
                 </DialogActions>
