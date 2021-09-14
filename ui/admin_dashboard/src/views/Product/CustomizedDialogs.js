@@ -141,6 +141,10 @@ export default function CustomizedDialogs(props) {
     })
   }
 
+  const setFormValidity = (isValid) => {
+    formdata.valid = isValid;
+  }
+
   return (
     <div>
       <div className="addproduct-button">
@@ -162,6 +166,7 @@ export default function CustomizedDialogs(props) {
             formData={formdata}
              setFormData={setFormdata}
               setUploadImage={setUploadImage}
+              setFormValidity={setFormValidity}
               />
           </Typography>
         </DialogContent>

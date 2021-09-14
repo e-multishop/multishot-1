@@ -35,18 +35,19 @@ const Insertproduct = (props) => {
         updateFormElements();
     }
     function handleImage(e){
+        const isFormValid = e.target.closest('form').checkValidity();
+        props.setFormValidity(isFormValid);
         let upload_image= e.target.files;
         let reader = new FileReader();
         reader.readAsDataURL(upload_image[0]);
         reader.onload=(e)=>{
-        
             props.setUploadImage(e.target.result);
         }
     }
     const options = [
         { value: 'chocolate', label: 'Chocolate' },
-        { value: 'strawberry', label: 'Strawberry' },
-        { value: 'vanilla', label: 'Vanilla' },
+        { value: 'black', label: 'Black' },
+        { value: 'blue', label: 'Blue' },
       ];
     return (
         <div className="row productinsertform">
@@ -146,7 +147,7 @@ const Insertproduct = (props) => {
                                 </div>
                                 <div className="col s6 " >
                                 <label htmlFor="color">Color<span className="star_color">*</span></label>
-                                    <CreatableSelect
+                                    <CreatableSelect className="hs-select2"
                                         isMulti
                                         // onChange={(e)=>handleChange(e)}
                                         options={options}
