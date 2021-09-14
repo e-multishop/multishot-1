@@ -276,7 +276,7 @@ var product_app = function (app, con, hasthaBean) {
         var title = req.body.title;
         var price = req.body.price;
         var price_without_embroidary = req.body.price_without_embroidary;
-        var description = req.body.description;
+        var description = req.body.description ? btoa(req.body.description) : '';
         var note=req.body.note;
         var material = req.body.material;
         var total_available = req.body.total_available;
@@ -284,7 +284,8 @@ var product_app = function (app, con, hasthaBean) {
         var available = req.body.available;
         var sku = req.body.sku;
         var status = req.body.status;
-        var sql = "UPDATE product SET category = '" + category + "', title= '" + title + "',price ='" + price + "',price_without_embroidary='" + price_without_embroidary + "',description='" + description + "',note='" + note + "',material='" + material + "',total_available='" + total_available + "',total_quantity='" + total_quantity + "',available='" + available + "',sku='" + sku + "',status='" + status + "' WHERE pid = '" + pid + "';";
+        var updatedDate = (new Date()).getTime();
+        var sql = "UPDATE product SET category = '" + category + "', title= '" + title + "',price ='" + price + "',price_without_embroidary='" + price_without_embroidary + "',description='" + description + "',note='" + note + "',material='" + material + "',total_available='" + total_available + "',total_quantity='" + total_quantity + "',available='" + available + "',sku='" + sku + "',status='" + status + "',updatedDate='" + updatedDate + "' WHERE pid = '" + pid + "';";
         con.query(sql, (err, result) => {
             if (err) throw err;
             res.send('updated');

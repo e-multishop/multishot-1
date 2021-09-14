@@ -153,7 +153,7 @@ export default function CustomizedDialogs(props) {
       </Button>
       </div>
 
-      <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}
+      <Dialog fullScreen onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}
         fullWidth={true}
         maxWidth="sm"
       >

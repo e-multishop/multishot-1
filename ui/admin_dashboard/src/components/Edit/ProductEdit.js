@@ -105,11 +105,11 @@ export default function ProductEdit(props) {
             category: Editformdata.category,
             title: Editformdata.title,
             price: Editformdata.price,
-            price_without_embroidary: "89",
+            price_without_embroidary: Editformdata.price,
             description: Editformdata.description,
             note: Editformdata.note,
             material: Editformdata.material,
-            total_available: "89",//89-demo data
+            total_available: Editformdata.total_quantity,
             total_quantity: Editformdata.total_quantity,
             available: '1',
             sku: Editformdata.sku,
@@ -156,7 +156,7 @@ export default function ProductEdit(props) {
                  </Button>
             </div>
 
-            <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}
+            <Dialog fullscreen onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}
                 fullWidth={true}
                 maxWidth="sm"
             >

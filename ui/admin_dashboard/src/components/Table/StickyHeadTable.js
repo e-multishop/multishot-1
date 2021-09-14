@@ -108,12 +108,6 @@ export default function StickyHeadTable(props) {
   const [totalRecords, setTotalRecords] = useState(0);
   const [updateTable,setUpdateTable]=useState(false);
   const [loader, showLoader] = useState(true);
-  useEffect(() => {
-    getProductList(page, rowsPerPage);
-  }, []);
-  if (props.updateTable == true || updateTable==true) {
-    getProductList(page, rowsPerPage);
-  }
 
   const getProductList = (page, rowsPerPage) => {
     showLoader(true);
@@ -124,6 +118,13 @@ export default function StickyHeadTable(props) {
       setTotalRecords(result.totalRecords);
       showLoader(false);
     })
+  }
+
+  useEffect(() => {
+    getProductList(page, rowsPerPage);
+  }, []);
+  if (props.updateTable == true || updateTable==true) {
+    getProductList(page, rowsPerPage);
   }
 
   const handleChangePage = (event, newPage) => {
