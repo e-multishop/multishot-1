@@ -1,7 +1,7 @@
 module.exports = class ProductImage {
     
-    pid;
-    image_data;
+    // pid;
+    // image_data;
 
     constructor(pid, image_data) {
         this.pid = pid;

@@ -11,3 +11,16 @@ export default function cartItems (state=[], action) {
             return state
     }
 }
+
+export default function AdminDashboard (state=[], action) {
+    switch (action.type) {
+        case "Admin_Login":
+            return ([
+                ...state,
+                {LoginData:action.data}
+            ])
+            break;
+        default:
+            return state
+    }
+}

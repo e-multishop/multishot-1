@@ -111,12 +111,11 @@
     }
     .item-quantity {
         width: 10%;
-        select{
-            &:hover{
+        select {
+            &:hover {
                 border: 1px solid black;
             }
         }
-        
     }
     .item-price {
         width: 15%;
@@ -124,6 +123,23 @@
             margin: 0;
             color: #000;
             font-size: 20px;
+            font-weight: bold;
+        }
+    }
+}
+//empty checkout style
+
+.empty-checkout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 350px;
+    .empty-checkout-content {
+        text-align: center;
+        h2 {
+            padding: 0;
+            margin: 10px;
+            font-size: 32px;
             font-weight: bold;
         }
     }

@@ -1,17 +1,17 @@
 module.exports = class Product {
-    pid;
-    sku;
-    status;
-    available;
-    category;
-    title;
-    price;
-    price_without_embroidary;
-    description;
-    note;
-    material;
-    total_available;
-    total_quantity;
+    // pid;
+    // sku;
+    // status;
+    // available;
+    // category;
+    // title;
+    // price;
+    // price_without_embroidary;
+    // description;
+    // note;
+    // material;
+    // total_available;
+    // total_quantity;
     constructor(pid, sku, status, available, category, title, price, price_without_embroidary, description, note, material, total_available, total_quantity) {
         this.pid = pid;
         this.sku = sku;

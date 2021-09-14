@@ -1,5 +1,5 @@
 module.exports = class CategorySql {
-    category;
+    // category;
     constructor(category) {
         this.category = category;
     }

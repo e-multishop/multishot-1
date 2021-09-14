@@ -1,16 +1,20 @@
-import React from 'react'
+import React,{useEffect,useState} from 'react'
 import "./checkout.scss"
 import Axios from 'axios';
 
 function Checkout_card() {
+    const [data,setData]=useState({
+        discount:"0",
+        tax:"0",
+        totalAmount:"0"
+    })
     useEffect(() => {
-        Axios.get("/rest/add_to_cart_price_calculate",
-        uid="2").then((res) => {
+        Axios.get("/rest/add_to_cart_price_calculate").then((res) => {
           // console.log(res.data);
           const result = res.data;
-          console.log(result);
+          setData(result);
         })
-    }, []);
+    },[]);
     return (
         <>
 
@@ -21,19 +25,23 @@ function Checkout_card() {
                             <span class="card-title">PRICE DETAILS</span>
                             <div className="hk-card-action card-price-section">
                                 <p>Price</p>
-                                <p>₹500</p>
+                                <p>₹{data.totalAmount}</p>
+                            </div>
+                            <div className="hk-card-action card-price-section">
+                                <p>Tax</p>
+                                <p>₹{data.tax}</p>
                             </div>
                             <div className="hk-card-action card-price-section">
                                 <p>Discount</p>
-                                <p>-₹100</p>
+                                <p>-₹{data.discount}</p>
                             </div>
                             <div className="hk-card-action card-price-section">
                                 <p>Delivary Charges</p>
-                                <p className="green-text">Free</p>
+                                <p className="green-text">FREE</p>
                             </div>
                             <div className="hk-card-action card-price-section card-total-amount">
                                 <p>Total Amount</p>
-                                <p>₹400</p>
+                                <p>₹{data.totalAmount}</p>
                             </div>
                             <div className="hk-checkout-button" >
                                 <a>Checkout</a>

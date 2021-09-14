@@ -1,5 +1,5 @@
 module.exports = class ProductSql {
-    product;
+    // product;
     constructor(product) {
         this.product = product;
     }

@@ -22,7 +22,7 @@ const ProductList = () => {
         }).then((categories) => {
             setCategories(categories)
         })
-        fetch('/rest/product_list').then((result) => {
+        fetch('/rest/product_list/10/1').then((result) => {
             return (result.json())
         }).then((product) => {
             setProduct(product)

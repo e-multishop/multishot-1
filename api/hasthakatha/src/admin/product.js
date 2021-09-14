@@ -368,7 +368,7 @@ var product_app = function (app, con, hasthaBean) {
         var temprorary;
         var listofobjects=[];
         
-        var uid=req.body.uid;
+        var uid="27";
         var sql ="select * from add_to_cart where uid='"+uid+"';"
         con.query(sql,(err,result)=>{
             if(err) throw err;

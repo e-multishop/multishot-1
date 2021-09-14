@@ -21,13 +21,13 @@ const Footer =()=>{
                 {/* <h5 className="text-color">Hasthakatha</h5> */}
                 {/* <p className=" text-lighten-4 text-color">email-hasthakatha@gmail.com</p> */}
                 <p><a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=hasthakatha@gmail.com" target="_blank" className="text-lighten-4 text-color"><FontAwesomeIcon icon={faEnvelope} size="large" className=""/> hasthakatha@gmail.com </a></p>
-
               </div>
               <div className="col l3 offset-l2 s12">
                 <h5 className="text-color">Quick Links</h5>
                 <ul>
                   <li><NavLink className=" text-lighten-3 text-color" to="/">Home</NavLink></li>
                   <li><NavLink className=" text-lighten-3 text-color" to="/about">About Us</NavLink></li>
+                  <li><NavLink className=" text-lighten-3 text-color" to="/about">Amin Dashboard</NavLink></li>
                   <li><NavLink className=" text-lighten-3 text-color" to="/">Terms & Conditions</NavLink></li>
                   <li><NavLink className=" text-lighten-3 text-color" to="/">FAQ</NavLink></li>
                 </ul>
@@ -61,7 +61,6 @@ const Footer =()=>{
             </div>
           </div>
         </footer>
-              
     );
 }
 

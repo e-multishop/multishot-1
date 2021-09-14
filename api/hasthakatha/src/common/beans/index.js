@@ -1,7 +1,7 @@
 const CategorySql = require('./../sql/CategorySql');
 const Category = require('./../models/Category');
 module.exports = class HasthaBean {
-    categoryList;
+    // categoryList;
     constructor(con) {
         this.con = con;
         this.categoryList = [];
