@@ -104,37 +104,38 @@ export default function StickyHeadTable(props) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [Action, setAction] = React.useState('');
+  const [productData, setProductData] = useState([]);
+  const [totalRecords, setTotalRecords] = useState(0);
+  const [updateTable,setUpdateTable]=useState(false);
+  const [loader, showLoader] = useState(true);
+  useEffect(() => {
+    getProductList(page, rowsPerPage);
+  }, []);
+  if (props.updateTable == true || updateTable==true) {
+    getProductList(page, rowsPerPage);
+  }
+
+  const getProductList = (page, rowsPerPage) => {
+    showLoader(true);
+    Axios.get("/rest/product_list/"+rowsPerPage+"/"+(page + 1)).then((res) => {
+      const result = res.data;
+      ProductUtil.updateProductData(result.list);
+      setProductData(result.list);
+      setTotalRecords(result.totalRecords);
+      showLoader(false);
+    })
+  }
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
+    getProductList(newPage, rowsPerPage);
   };
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
+    getProductList(0, event.target.value);
   };
-  const [productData, setProductData] = useState([]);
-  const [updateTable,setUpdateTable]=useState(false);
-  const [loader, showLoader] = useState(true);
-  const [pageSize, setPageSize] = useState(10);
-  const [pageNumber, setPageNumber] = useState(1);
-  useEffect(() => {
-      showLoader(true);
-      Axios.get("/rest/product_list/"+pageSize+"/"+pageNumber).then((res) => {
-        // console.log(res.data);
-        const result = res.data;
-        ProductUtil.updateProductData(result);
-        setProductData(result);
-        showLoader(false);
-      })
-  }, []);
-  if (props.updateTable == true || updateTable==true) {
-    Axios.get("/rest/product_list").then((res) => {
-      // console.log(res.data);
-      const result = res.data;
-      setProductData(result);
-    })
-  }
   
   const ShowData = (column, value,row) => {
     switch (column.id) {
@@ -170,7 +171,7 @@ export default function StickyHeadTable(props) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {productData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+            {productData.map((row) => {
               return (
                 <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
                   {columns.map((column) => {
@@ -189,11 +190,11 @@ export default function StickyHeadTable(props) {
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={productData.length}
+        count={totalRecords}
         rowsPerPage={rowsPerPage}
         page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
+        onChangePage={handleChangePage}
+        onChangeRowsPerPage={handleChangeRowsPerPage}
       />
     </Paper>
   );

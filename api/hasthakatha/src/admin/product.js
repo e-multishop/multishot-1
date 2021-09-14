@@ -14,54 +14,48 @@ var product_app = function (app, con, hasthaBean) {
         var pageSize = parseInt(req.params.page_size);
         var pageNumber = parseInt(req.params.page_number);
         var offset = (pageSize * (pageNumber - 1));
+        var countSql = `SELECT COUNT(*) FROM product`;
         var sql = `SELECT * FROM product LIMIT ${offset}, ${pageSize}` ;
-        con.query(sql, function (err, result) {
-            if (err) throw err;
-            res.header("Content-Type", "application/json");
-
-            let asyncoperations = [];
-            let images = [];
-            for (var k = 0; k < result.length; k++) {
-                let temp = result[k].pid;
-                let sql = "SELECT pid,type,image_data from `product_images` WHERE pid='" + temp + "'";
-                //     let sql = `SELECT pid,type,url from product_images WHERE pid='${temp}'`;
-                let p = new Promise(function (resolve, reject) {
-                    con.query(sql, function (err, result2) {
-                        // console.log(result2[i].url);
-                        images = images.concat(result2);
-                        for (var i = 0; i < result.length; i++) {
-                            for (var j = 0; j < images.length; j++) {
-                                var temp = result[i];
-                                if (temp.pid == images[j].pid) {
-                                    var image_data = images[j].image_data;
-                                    console.log(Object.keys(image_data));
-                                    var buff_data = image_data ? Buffer.from(image_data) : '';
-                                    temp.image_data = buff_data ? buff_data.toString() : '';
-
+        con.query(countSql, function(err, result1){
+            const totalRecords = result1[0]["COUNT(*)"];
+            con.query(sql, function (err, result) {
+                if (err) throw err;
+                res.header("Content-Type", "application/json");
+                let asyncoperations = [];
+                let images = [];
+                for (var k = 0; k < result.length; k++) {
+                    let temp = result[k].pid;
+                    let sql = "SELECT pid,type,image_data from `product_images` WHERE pid='" + temp + "'";
+                    let p = new Promise(function (resolve, reject) {
+                        con.query(sql, function (err, result2) {
+                            images = images.concat(result2);
+                            for (var i = 0; i < result.length; i++) {
+                                for (var j = 0; j < images.length; j++) {
+                                    var temp = result[i];
+                                    if (temp.pid == images[j].pid) {
+                                        var image_data = images[j].image_data;
+                                        console.log(Object.keys(image_data));
+                                        var buff_data = image_data ? Buffer.from(image_data) : '';
+                                        temp.image_data = buff_data ? buff_data.toString() : '';
+    
+                                    }
                                 }
                             }
-
-                        }
-                        resolve();
-                    })
+                            resolve();
+                        })
+                    });
+                    asyncoperations.push(p);
+                }
+                Promise.all(asyncoperations).then(function (ops) {
+                    res.send({list: result, totalRecords: totalRecords});
                 });
-                asyncoperations.push(p);
-            }
-            Promise.all(asyncoperations).then(function (ops) {
-                //         console.log(ops);
-
-                res.send(JSON.stringify(result));
-
-
             });
-
         });
     });
 
  
     app.get('/rest/product_pagination/:category/:page_size/:page_number', (req, res) => {
         var category = req.params.category;
-        // var chunk = req.body.pagesize;
         var page_number = parseInt(req.params.page_number);
         var page_size = parseInt(req.params.page_size);
         var offset = (page_size * (page_number - 1));
