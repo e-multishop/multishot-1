@@ -337,8 +337,8 @@ var product_app = function (app, con, hasthaBean) {
         var pid = req.body.pid;
         var uid = req.body.uid;
         var quantity = req.body.quantity;
-        var createdDate = req.body.createdDate;
-        var updatedDate = req.body.updatedDate;
+        var createdDate = (new Date()).getTime();
+        var updatedDate = createdDate;
         var sql = "INSERT INTO `add_to_cart`(`id`, `uid`, `pid`, `quantity`, `createdDate`, `updatedDate`) VALUES (NULL,'" + uid + "','" + pid + "','" + quantity + "','"+createdDate+"','"+updatedDate+"');";
         con.query(sql, (err, result) => {
             if (err) throw err;
@@ -375,13 +375,21 @@ var product_app = function (app, con, hasthaBean) {
             res.send('deleted');
         });
     });
+    app.get("/rest/add_to_cart/number_of_items/:uid",(req,res)=>{
+        var uid=req.params.uid;
+        var sql="select count(*) from add_to_cart where uid='"+uid+"';"
+        con.query(sql,(err,result)=>{
+            if(err) throw err;
+            var number_of_items = result[0]["count(*)"];
+            res.send({"number_of_items":number_of_items});
+        })
+    })
 
-    app.get("/rest/add_to_cart_price_calculate",(req,res)=>{
+    app.get("/rest/add_to_cart_price_calculate/:uid",(req,res)=>{
 
         var temprorary;
-        var listofobjects=[];
-        
-        var uid="27";
+        var listofobjects=[];        
+        var uid=req.params.uid;
         var sql ="select * from add_to_cart where uid='"+uid+"';"
         con.query(sql,(err,result)=>{
             if(err) throw err;
