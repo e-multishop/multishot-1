@@ -11,6 +11,7 @@ const ProductList = () => {
     const [categories, setCategories] = useState([]);
     const [product, setProduct] = useState([]);
     const [Loading, setLoading] = useState(true);
+    const [pageNumber, setPageNumber] = useState(1);
     
     const getProduct=(pageNumber)=>{
         setLoading(true);
