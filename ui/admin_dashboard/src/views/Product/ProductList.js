@@ -20,6 +20,11 @@ import { Button } from '@material-ui/core';
 
 const columns = [
   {
+    id: 'image_data', 
+    label: 'Image',
+    minWidth: 50
+  },
+  {
     id: 'title',
     label: 'Product Title',
     minWidth: 100
@@ -161,6 +166,12 @@ export default function ProductList(props) {
             </div>
           </TableCell>
         );
+      case "image_data":
+        return (
+          <TableCell key={cindex} align={column.align}>
+            { row ? <img src={value} className="hs-product-thumbnail" width="50"/> : '' }   
+          </TableCell>
+        )
       default: return (
         <TableCell key={column.id} align={column.align}>
           {column.format && typeof value === 'number' ? column.format(value) : value}
