@@ -23,3 +23,14 @@ $roboto-font-path: '~roboto-fontface/fonts';
 .pad28{
     padding: 28px;
 }
+
+.hs-no-products {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    p {
+      font-weight: bold;
+    }
+  }

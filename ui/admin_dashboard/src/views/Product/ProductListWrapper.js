@@ -4,11 +4,14 @@ import { makeStyles } from "@material-ui/core/styles";
 // core components
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
-import Table from "components/Table/StickyHeadTable";
+import ProductList from "./ProductList";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
-import Modal from "views/Product/CustomizedDialogs.js";
+import InsertProductDialog from "views/Product/InsertProductDialog.js";
+import ProductEdit from "./Edit/ProductEdit";
+import { Button } from "@material-ui/core";
+import ReactDOM from 'react-dom';
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
@@ -41,19 +44,33 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-export default function TableList() {
+export default function ProductListWrapper() {
   const [updateTable,setUpdateTable]=useState(false);
   const classes = useStyles();
+
+  const showInsertDialog = () => {
+    ReactDOM.render(<InsertProductDialog setUpdateTable={setUpdateTable}/>, document.getElementById('product-dialog'));
+  };
+
+  const showEditDialog = (dialogData) => {
+    ReactDOM.render(<ProductEdit {...dialogData} />, document.getElementById('product-dialog'));
+  }
+
   return (
     <GridContainer>
       <GridItem xs={12} sm={12} md={12}>
-        <Modal setUpdateTable={setUpdateTable}/>
+      <div className="addproduct-button">
+        <Button variant="outlined" color="primary" onClick={showInsertDialog}>
+          Add New Product
+        </Button>
+        <div id="product-dialog"></div>
+      </div>
         <Card>
           <CardHeader color="primary">
             <h4 className={classes.cardTitleWhite}>Product List</h4>
           </CardHeader>
           <CardBody>
-            <Table updateTable={updateTable}/>
+            <ProductList updateTable={updateTable} showEditDialog={showEditDialog} />
           </CardBody>
         </Card>
       </GridItem>

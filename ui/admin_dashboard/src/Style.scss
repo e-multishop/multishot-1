@@ -1,1 +1,14 @@
 @import '~materialize-css/dist/css/materialize.min.css';
+
+/** Global styles **/
+.hs-no-products {
+    width: 100%;
+    text-align: center;
+    height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    p {
+        font-weight: bold;
+    }
+}

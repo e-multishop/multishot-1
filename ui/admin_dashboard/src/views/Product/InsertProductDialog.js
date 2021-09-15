@@ -13,7 +13,9 @@ import Axios from 'axios';
 import Insertproduct from "./Insertproduct.js";
 import { ToastContainer, toast } from 'react-toastify';
 import PostAddTwoToneIcon from '@material-ui/icons/PostAddTwoTone';
-
+import ReactDOM from 'react-dom';
+import { EventBus } from '../../common/event-bus';
+import { EventType } from '../../common/events';
 const styles = (theme) => ({
   root: {
     margin: 0,
@@ -54,17 +56,15 @@ const DialogActions = withStyles((theme) => ({
   },
 }))(MuiDialogActions);
 
-export default function CustomizedDialogs(props) {
-  const [open, setOpen] = React.useState(false);
+export default function InsertProductDialog(props) {
+  const [open, setOpen] = React.useState(true);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
   const handleClose = () => {
     setOpen(false);
     reset();
-
+    ReactDOM.unmountComponentAtNode(document.getElementById('product-dialog'));
   };
+
   const [formdata, setFormdata] = useState({
     category: "",
     title: " ",
@@ -89,6 +89,7 @@ export default function CustomizedDialogs(props) {
         setFormPid(res.data.pid);  
       })
   },[]);
+
   function onSubmit() {
     Axios.post("/rest/addproduct", {
       pid: formPid,
@@ -98,7 +99,7 @@ export default function CustomizedDialogs(props) {
       price_without_embroidary: formdata.price,
       description: formdata.description,
       note: formdata.note,
-      size: formdata.size,
+      size: formdata.size ? formdata.size : [],
       material: formdata.material,
       total_available: formdata.total_quantity,
       total_quantity: formdata.total_quantity,
@@ -108,17 +109,15 @@ export default function CustomizedDialogs(props) {
       url:uploadImage
     }
     ).then(res => {
-      props.setUpdateTable(true);
-      setOpen(false);
-      reset();
+      EventBus.dispatch(EventType.UPDATE_PRODUCT_TABLE);
+      toast.success("New product added successfully.");
+      handleClose();
     }).catch(err => {
       console.log(err)
-      toast("Error adding. Please try again.")
+      toast.error("Error adding product. Please try again later.")
     });
-
-    // document.getElementById("insertproduct").reset();
-    // {html: 'I am a toast!'}
   }
+
   function reset(){
     setFormdata({
       category: "",
@@ -129,7 +128,7 @@ export default function CustomizedDialogs(props) {
       description: " ",
       note: " ",
       material: " ",
-      size:" ",
+      size:[],
       total_available: " ",
       total_quantity: " ",
       dimension: " ",
@@ -147,12 +146,6 @@ export default function CustomizedDialogs(props) {
 
   return (
     <div>
-      <div className="addproduct-button">
-        <Button variant="outlined" color="primary" onClick={handleClickOpen} >
-          Add New Product
-      </Button>
-      </div>
-
       <Dialog fullScreen onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}
         fullWidth={true}
         maxWidth="sm"
@@ -163,8 +156,8 @@ export default function CustomizedDialogs(props) {
         <DialogContent dividers>
           <Typography gutterBottom>
             <Insertproduct 
-            formData={formdata}
-             setFormData={setFormdata}
+              formData={formdata}
+              setFormData={setFormdata}
               setUploadImage={setUploadImage}
               setFormValidity={setFormValidity}
               />

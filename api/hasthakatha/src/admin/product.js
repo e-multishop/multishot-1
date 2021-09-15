@@ -179,10 +179,11 @@ var product_app = function (app, con, hasthaBean) {
         var url = req.body.url;
         var size = req.body.size;
         var buffer = Buffer.from(url, 'binary');
+        var mimeType = req.body.mimeType;
         var createdDate = (new Date()).getTime();
         var updatedDate = (new Date()).getTime();
         var start = "START TRANSACTION;";
-        var t1 = "INSERT INTO `product_images`(`imageid`, `pid`, `type`, `image_data`) VALUES (NULL,'" + pid + "','main','" + buffer + "');";
+        var t1 = "INSERT INTO `product_images`(`imageid`, `pid`, `type`, `image_data`, `mime_type`) VALUES (NULL,'" + pid + "','main','" + buffer + "','" + mimeType + "');";
         var t2 = "INSERT INTO product(pid,category,title,price,price_without_embroidary,description,note,material,total_available,total_quantity,available,sku,status,createdDate,updatedDate)VALUES(NULL,'" + category + "','" + title + "','" + price + "','" + price_without_embroidary + "','" + description + "','" + note + "','" + material + "','" + total_available + "','" + total_quantity + "','" + available + "','" + sku + "','" + status + "','"+createdDate+"','"+updatedDate+"');";
         var sizeQuery = '';
         if (size && size.length > 0) {
@@ -204,16 +205,35 @@ var product_app = function (app, con, hasthaBean) {
     });
 
     app.post("/rest/addproductbulk", (req, res) => {
-        // read the excel file
-        const workbook = xlsx.readFile(__dirname + "/../../hastha_2.xlsx");
-        let data = [];
-
-        const sheets = workbook.SheetNames;
+        // read excel file from body
+        const excelFileBody = req.body.data;
+        let sheets = '';
+        let workbook;
+        if (excelFileBody) {
+            try {
+                // read the excel file from request body
+                const decoded = atob(excelFileBody);
+                const convertArray = new Uint8Array(decoded);
+                workbook = xlsx.read(decoded, {type: 'binary'});
+                sheets = workbook.SheetNames;
+                // read the excel file from file system
+                // const workbook = xlsx.readFile(__dirname + "/../../hastha_2.xlsx");
+            } catch(e) {
+                console.log('error' + e);
+                res.status(500);
+                res.send({type: 'error', message: e});
+                return;
+            }
+        } else {
+            res.status(500);
+            res.send('Error reading file');
+        }
         let query = '';
         for (let i = 0; i < sheets.length; i++) {
             const sheetData = xlsx.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[i]]);
             const products = [];
             sheetData.forEach(row => {
+                const currentTime = (new Date()).getTime();
                 products.push(new Product(
                     '', 
                     CommonUtil.getData(row['SKU']), 
@@ -227,7 +247,9 @@ var product_app = function (app, con, hasthaBean) {
                     '', 
                     CommonUtil.getData(row['Material']), 
                     ProductUtil.getTotalAvailable(row['Total quantity']),
-                    ProductUtil.getTotalAvailable(row['Total quantity'])
+                    ProductUtil.getTotalAvailable(row['Total quantity']),
+                    currentTime,
+                    currentTime
                 ));
             });
             products.forEach((p) => {
@@ -241,6 +263,9 @@ var product_app = function (app, con, hasthaBean) {
                 if (err) throw err;
                 res.send('success');
             });
+        } else {
+            res.status(500);
+            res.send('Empty file/Error reading file');
         }
     });
 

@@ -12,7 +12,11 @@ export default function cartItems(state = [], action) {
     }
 }
 
+<<<<<<< HEAD
 export function AdminDashboard(state = false, action) {
+=======
+export function AdminDashboard (state=[], action) {
+>>>>>>> 9d523a542cbabd0ec88e661c28a183c4ee45ae5b
     switch (action.type) {
         case "Admin_Login":
             return (action.data)

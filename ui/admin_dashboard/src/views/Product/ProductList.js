@@ -11,10 +11,13 @@ import TableRow from '@material-ui/core/TableRow';
 import Axios from 'axios';
 import { ContactSupportOutlined } from '@material-ui/icons';
 import { NavLink } from 'react-router-dom';
-import ProductEdit from '../Edit/ProductEdit'
+import ProductEdit from './Edit/ProductEdit'
 import Loader from 'shared/Loader';
-import ProductUtil from './../../common/util/ProductUtil';
-// import EventEmitter from 'fbemitter';
+import ProductUtil from '../../common/util/ProductUtil';
+import { EventBus } from '../../common/event-bus';
+import { EventType } from '../../common/events';
+import { Button } from '@material-ui/core';
+
 const columns = [
   {
     id: 'title',
@@ -98,15 +101,13 @@ const useStyles = makeStyles({
   },
 });
 
-export default function StickyHeadTable(props) {
+export default function ProductList(props) {
 
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [Action, setAction] = React.useState('');
   const [productData, setProductData] = useState([]);
   const [totalRecords, setTotalRecords] = useState(0);
-  const [updateTable,setUpdateTable]=useState(false);
   const [loader, showLoader] = useState(true);
 
   const getProductList = (page, rowsPerPage) => {
@@ -122,10 +123,10 @@ export default function StickyHeadTable(props) {
 
   useEffect(() => {
     getProductList(page, rowsPerPage);
+    return function cleanup() {
+      EventBus.unsubscribe(EventType.UPDATE_PRODUCT_TABLE);
+    }
   }, []);
-  if (props.updateTable == true || updateTable==true) {
-    getProductList(page, rowsPerPage);
-  }
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -137,39 +138,27 @@ export default function StickyHeadTable(props) {
     setPage(0);
     getProductList(0, event.target.value);
   };
-<<<<<<< Updated upstream
-=======
-  const [productData, setProductData] = useState([]);
-  const [updateTable,setUpdateTable]=useState(false);
-  const [loader, showLoader] = useState(true);
-  const [pageSize, setPageSize] = useState(10);
-  const [pageNumber, setPageNumber] = useState(1);
-  useEffect(() => {
-      showLoader(true);
-      Axios.get("/rest/product_list/"+pageSize+"/"+pageNumber).then((res) => {
-        // console.log(res.data);
-        const result = res.data;
-        ProductUtil.updateProductData(result);
-        setProductData(result);
-        showLoader(false);
-      })
-  }, []);
-  if (props.updateTable == true || updateTable==true) {
-    Axios.get("/rest/product_list").then((res) => {
-      // console.log(res.data);
-      const result = res.data;
-      ProductUtil.updateProductData(result);
-      setProductData(result);
-    })
+
+  const launchEditProductDialog = (productValue) => {
+    props.showEditDialog(productValue);
   }
->>>>>>> Stashed changes
+
+  const getProducts = () => {
+    getProductList(page, rowsPerPage);
+  }
+
+  EventBus.subscribe(EventType.UPDATE_PRODUCT_TABLE, getProducts);
   
-  const ShowData = (column, value,row) => {
+  const ShowData = (column, value,row, cindex) => {
     switch (column.id) {
       case "action":
         return (
-          <TableCell key={column.id} align={column.align}>
-            <ProductEdit value={row} setUpdateTable={setUpdateTable}/>
+          <TableCell key={cindex} align={column.align}>
+            <div className="editproduct-button">
+              <Button color="primary" onClick={() => { launchEditProductDialog(row) }} >
+                Edit
+              </Button>
+            </div>
           </TableCell>
         );
       default: return (
@@ -179,6 +168,18 @@ export default function StickyHeadTable(props) {
       );
     }
   }
+
+  const showEmptyData = () => {
+    return (
+      <tr>
+        <td colspan="7">
+          <div className="hs-no-products">
+            <p>No products found. Please add a product.</p>
+          </div>
+        </td>
+      </tr>
+    )
+  }
   return (
     <Paper className={classes.root}>
       <TableContainer className={classes.container}>
@@ -186,8 +187,8 @@ export default function StickyHeadTable(props) {
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
-              {columns.map((column) => (
-                <TableCell
+              {columns.map((column, index) => (
+                <TableCell key={index}
                   key={column.id}
                   align={column.align}
                   style={{ minWidth: column.minWidth }}
@@ -198,18 +199,21 @@ export default function StickyHeadTable(props) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {productData.map((row) => {
+            {productData.map((row, index) => {
               return (
-                <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                  {columns.map((column) => {
+                <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                  {columns.map((column, cindex) => {
                     const value = row[column.id];
                     return (
-                      ShowData(column, value,row)
+                      ShowData(column, value,row, cindex)
                     );
                   })}
                 </TableRow>
               );
             })}
+            {
+              productData.length === 0 ? showEmptyData() : ''
+            }
           </TableBody>
         </Table>
       }
