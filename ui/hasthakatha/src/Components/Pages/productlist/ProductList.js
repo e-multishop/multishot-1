@@ -11,6 +11,7 @@ const ProductList = () => {
     const [categories, setCategories] = useState([]);
     const [product, setProduct] = useState([]);
     const [Loading, setLoading] = useState(true);
+    
     const getProduct=(pageNumber)=>{
         fetch('/rest/product_list/10/'+pageNumber).then((result) => {
             return (result.json())

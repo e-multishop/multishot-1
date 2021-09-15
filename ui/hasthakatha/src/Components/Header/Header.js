@@ -9,13 +9,15 @@ import search from './Search';
 import Modal from '../Pages/login/Modal'
 import LoginDropdown from '../Pages/login/LoginDropdown'
 import { ToastContainer, toast } from 'react-toastify';
-import {useSelector} from 'react-redux'
+import { useSelector } from 'react-redux'
+import { Provider } from 'react-redux'
+import store from '../../Redux/store'
 
 const Header = (props) => {
     const [LoggedIn, setLoggedIn] = useState(false)
     const token = localStorage.getItem('token');
     const [Email, setEmail] = useState();
-    const cartData=useSelector((state)=>state.cartItems);
+    const cartData = useSelector((state) => state.cartItems);
     // localStorage.clear();
     useEffect(() => {
         if (token != null) {
@@ -31,7 +33,11 @@ const Header = (props) => {
                     document.getElementById("modal")
                 );
             }
-            ReactDOM.render(<Modal destroydata={destroydata} setLoggedIn={setLoggedIn} setEmail={setEmail} />, document.getElementById("modal"),);
+            ReactDOM.render(
+                <Provider store={store}>
+                    <Modal destroydata={destroydata} setLoggedIn={setLoggedIn} setEmail={setEmail} />
+                </Provider>,
+                document.getElementById("modal"));
         }
     }
 
