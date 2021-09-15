@@ -34,11 +34,7 @@ const Footer =()=>{
                 <ul>
                   <li><NavLink className=" text-lighten-3 text-color" to="/">Home</NavLink></li>
                   <li><NavLink className=" text-lighten-3 text-color" to="/about">About Us</NavLink></li>
-<<<<<<< HEAD
                  {isAdmin?<li className=" text-lighten-3 text-color admin-dashboard" onClick={handleAdmin}>Admin Dashboard</li>:""} 
-=======
-                  <li>Admin Dashboard</li>
->>>>>>> 9d523a542cbabd0ec88e661c28a183c4ee45ae5b
                   <li><NavLink className=" text-lighten-3 text-color" to="/">Terms & Conditions</NavLink></li>
                   <li><NavLink className=" text-lighten-3 text-color" to="/">FAQ</NavLink></li>
                 </ul>

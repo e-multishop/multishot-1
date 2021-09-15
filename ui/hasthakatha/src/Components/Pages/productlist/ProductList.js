@@ -25,16 +25,7 @@ const ProductList = () => {
         }).then((categories) => {
             setCategories(categories)
         })
-<<<<<<< HEAD
         getProduct(1)
-=======
-        fetch('/rest/product_list/10/1').then((result) => {
-            return (result.json())
-        }).then((product) => {
-            setProduct(product.list)
-            setLoading(false);
-        })
->>>>>>> 9d523a542cbabd0ec88e661c28a183c4ee45ae5b
     }, []);
     const image_url = (image_data) => {
         var image_url = "data:image/png;base64," + (image_data);
