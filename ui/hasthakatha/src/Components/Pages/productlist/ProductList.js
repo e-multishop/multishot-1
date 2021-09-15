@@ -35,8 +35,7 @@ const ProductList = () => {
         getProduct(pageNumber);
     }, [pageNumber])
     const image_url = (image_data) => {
-        var image_url = "data:image/png;base64," + (image_data);
-        return (<img src={image_url} />);
+        return (<img src={image_data} />);
     }
   
     const dispatch = useDispatch();
