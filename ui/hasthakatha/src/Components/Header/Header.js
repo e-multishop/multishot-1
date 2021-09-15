@@ -17,8 +17,8 @@ const Header = (props) => {
     const [LoggedIn, setLoggedIn] = useState(false)
     const token = localStorage.getItem('token');
     const [Email, setEmail] = useState();
-    // debugger;
-    const numberOfItems = useSelector((state) => state.numberOfItems);
+    const numberOfItems = useSelector((state) => state.cartItems.numberOfItems);
+    console.log("check number of items",numberOfItems);
     // localStorage.clear();
     useEffect(() => {
         if (token != null) {

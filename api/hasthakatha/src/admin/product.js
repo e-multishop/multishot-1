@@ -323,9 +323,10 @@ var product_app = function (app, con, hasthaBean) {
             res.send('updated');
         });
     });
-    app.get("/rest/add_to_cart", (req, res) => {
-        var uid = req.body.uid;
-        var sql = "SELECT * FROM `add_to_cart` NATURAL JOIN product"
+
+    app.get("/rest/add_to_cart/:uid", (req, res) => {
+        var uid = req.params.uid;
+        var sql = "SELECT * FROM `add_to_cart` AS A LEFT JOIN product as P ON A.pid=P.pid where A.uid='" + uid + "';";
         con.query(sql, (err, result) => {
             if (err) throw err;
             //   var pid = result[0]["pid"];

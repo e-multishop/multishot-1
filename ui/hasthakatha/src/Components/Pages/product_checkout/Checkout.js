@@ -1,15 +1,24 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import "./checkout.scss";
 import Checkout_card from "./Checkout_card"
 import Checkout_card_item from "./Checkout_card_item"
 import { useSelector } from 'react-redux'
 import Empty_checkout from './Empty_checkout'
-function Checkout() {
-    const cartData = useSelector((state) => state.cartItems);
-    console.log("cart data check =", cartData);
-    return (
+import Axios from 'axios';
 
+function Checkout() {
+    // const cartData = useSelector((state) => state.cartItems);
+    // console.log("cart data check =", cartData);
+    const [cartData,setCartData]=useState([]);
+
+    useEffect(()=>{
+        Axios.get('/rest/add_to_cart/'+localStorage.getItem('userId')).then(res=>{
+            // debugger;
+            setCartData(res.data.output);
+        })
+    },[]);
+    return (
         <div className="hk-container">
             {cartData.length?
             <div>
@@ -26,9 +35,9 @@ function Checkout() {
                                     return (
                                         // <h1>{data.cardData.title}</h1>
                                         <Checkout_card_item
-                                            producttitle={data.cardData.title}
-                                            productprice={data.cardData.price}
-                                            productimg={data.cardData.img_url}
+                                            producttitle={data.title}
+                                            productprice={data.price}
+                                            productimg={data.img_url}
                                         />
                                     )
                                 })
