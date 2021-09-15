@@ -38,10 +38,12 @@ const Insertproduct = (props) => {
         const isFormValid = e.target.closest('form').checkValidity();
         props.setFormValidity(isFormValid);
         let upload_image= e.target.files;
-        let reader = new FileReader();
-        reader.readAsDataURL(upload_image[0]);
-        reader.onload=(e)=>{
-            props.setUploadImage(e.target.result);
+        if (upload_image && upload_image.length > 0) {
+            let reader = new FileReader();
+            reader.readAsDataURL(upload_image[0]);
+            reader.onload=(e)=>{
+                props.setUploadImage(e.target.result);
+            }
         }
     }
     const options = [
