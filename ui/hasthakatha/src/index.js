@@ -5,9 +5,9 @@ import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import rootReducer from './Redux/reducers/index';
 const store=createStore(rootReducer,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
-// console.log("check store",store);
+console.warn("check store",store);
 ReactDOM.render(
-    <Provider store={store}>
+<Provider store={store}>
         <App />
-    </Provider>,
-    document.getElementById("root"));
+</Provider>,
+document.getElementById("root"));

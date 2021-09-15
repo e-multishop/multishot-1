@@ -18,7 +18,7 @@ function Modal(props) {
         modal=instances[0];
         modal.open();
 
-    });
+    },[]);
     const closeModal=(loggedin)=>{
         // modal.destroy();
         props.setLoggedIn(loggedin);

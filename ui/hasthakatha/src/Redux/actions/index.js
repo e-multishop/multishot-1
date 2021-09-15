@@ -10,6 +10,6 @@ export const addToCart =(data)=>{
 export const AdminLogin=(data)=>{
     return{
         type:"Admin_Login",
-        data:data
+        data,
     };
 }

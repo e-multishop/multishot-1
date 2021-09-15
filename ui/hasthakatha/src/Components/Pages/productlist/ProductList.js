@@ -8,32 +8,30 @@ import Loader from "../../Shared/loader/Loader"
 
 const ProductList = () => {
 
-    // state = {
-    //     categories: [],
-    //     product: []
-    // };
     const [categories, setCategories] = useState([]);
     const [product, setProduct] = useState([]);
     const [Loading, setLoading] = useState(true);
-
+    const getProduct=(pageNumber)=>{
+        fetch('/rest/product_list/10/'+pageNumber).then((result) => {
+            return (result.json())
+        }).then((product) => {
+            setProduct(product.list)
+            setLoading(false);
+        })
+    }
     useEffect(() => {
         fetch('rest/categories').then((result) => {
             return (result.json())
         }).then((categories) => {
             setCategories(categories)
         })
-        fetch('/rest/product_list/10/1').then((result) => {
-            return (result.json())
-        }).then((product) => {
-            setProduct(product)
-            setLoading(false);
-        })
+        getProduct(1)
     }, []);
     const image_url = (image_data) => {
         var image_url = "data:image/png;base64," + (image_data);
         return (<img src={image_url} />);
     }
-
+  
     const dispatch = useDispatch();
     var data={};
     return (

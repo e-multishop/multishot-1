@@ -1,6 +1,7 @@
 import {combineReducers} from 'redux'
-import cartItems from './reducer'
+import cartItems,{AdminDashboard} from './reducer'
 
 export default combineReducers({
     cartItems,
+    AdminDashboard,
 })

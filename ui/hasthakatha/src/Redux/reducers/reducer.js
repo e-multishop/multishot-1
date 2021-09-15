@@ -1,10 +1,10 @@
 
-export default function cartItems (state=[], action) {
+export default function cartItems(state = [], action) {
     switch (action.type) {
         case "Add_To_Cart":
             return ([
                 ...state,
-                {cardData:action.data}
+                { cardData: action.data }
             ])
             break;
         default:
@@ -12,13 +12,10 @@ export default function cartItems (state=[], action) {
     }
 }
 
-export default function AdminDashboard (state=[], action) {
+export function AdminDashboard(state = false, action) {
     switch (action.type) {
         case "Admin_Login":
-            return ([
-                ...state,
-                {LoginData:action.data}
-            ])
+            return (action.data)
             break;
         default:
             return state

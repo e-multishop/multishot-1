@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import "./card.scss";
-import {addToCart}  from '../../Redux/actions/index'
-import {useDispatch}from 'react-redux'
+import {addToCart}  from '../../Redux/actions/index';
+import {useDispatch}from 'react-redux';
 const Card = (props) => {
     const dispatch=useDispatch();
     const data={ title: props.title, 

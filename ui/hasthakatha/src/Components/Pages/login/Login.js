@@ -6,11 +6,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {  faCheck} from '@fortawesome/free-solid-svg-icons'
 import { ToastContainer, toast } from 'react-toastify';
 import Loader from '../../Common/Loader';
+import {AdminLogin}  from '../../../Redux/actions/index';
+import {useDispatch} from 'react-redux';
+
 // import { useEffect } from 'react/cjs/react.production.min';
 // import { useParams } from 'react-router';
 
 const Login = (props) => {
-    // const redirect_path=useParams();
+    var dispatch = useDispatch();
     const [login, setLogin] = useState({
         hklogin_emailid: '',
         password: ''
@@ -34,6 +37,12 @@ const Login = (props) => {
             const token = res.data.token;
             localStorage.setItem('token',token);
             setStatus('')
+            if(login.hklogin_emailid==="hasthakatha@gmail.com"){
+                dispatch(AdminLogin(true))
+            }
+            else{
+                dispatch(AdminLogin(false))
+            }
             setLoading(false);
             // console.log("email",login.email)
             if (props && props.closeModal) {
