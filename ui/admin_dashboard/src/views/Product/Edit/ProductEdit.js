@@ -81,6 +81,7 @@ export default function ProductEdit(props) {
         total_quantity: props.total_quantity,
         dimension: props.dimension,
         color: props.color,
+        image_data: props.image_data
     });
     
     function onSubmit(pid) {
@@ -99,6 +100,7 @@ export default function ProductEdit(props) {
             available: '1',
             sku: Editformdata.sku,
             status: '1',
+            image_data: editUploadImage
         }
         ).then(res => {
             EventBus.dispatch(EventType.UPDATE_PRODUCT_TABLE);

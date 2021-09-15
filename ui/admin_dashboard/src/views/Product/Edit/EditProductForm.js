@@ -7,6 +7,7 @@ import CreatableSelect from 'react-select/creatable';
 
 const EditProductForm = (props) => {
     var modal;
+    const [showImage, setShowImage] = useState(props.Editformdata && props.Editformdata.image_data ? true : false);
     useEffect(() => {
         const editproduct = document.getElementById("editproduct");
         const elems = editproduct.querySelectorAll('select');
@@ -21,11 +22,15 @@ const EditProductForm = (props) => {
     }
     function handleImage(e){
         let upload_image= e.target.files;
-        let reader = new FileReader();
-        reader.readAsDataURL(upload_image[0]);
-        reader.onload=(e)=>{
-        
-            props.setEditUploadImage(e.target.result);
+        if (upload_image && upload_image.length > 0) {
+            let reader = new FileReader();
+            reader.readAsDataURL(upload_image[0]);
+            reader.onload=(e)=>{
+                props.setEditUploadImage(e.target.result);
+            }
+            setShowImage(false);
+        } else {
+            setShowImage(true);
         }
     }
     const options = [
@@ -146,6 +151,7 @@ const EditProductForm = (props) => {
                                             onChange={(e) => handleImage(e)}
                                             required
                                         />
+                                        { showImage ? <img src={props.Editformdata.image_data} width="50"/> : '' }
                                     </label>
                                     <span className="helper-text" data-error="Upload image"></span>
                                 </div>

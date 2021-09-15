@@ -13,6 +13,7 @@ const ProductList = () => {
     const [Loading, setLoading] = useState(true);
     
     const getProduct=(pageNumber)=>{
+        setLoading(true);
         fetch('/rest/product_list/10/'+pageNumber).then((result) => {
             return (result.json())
         }).then((product) => {
@@ -26,8 +27,12 @@ const ProductList = () => {
         }).then((categories) => {
             setCategories(categories)
         })
-        getProduct(1)
+        getProduct(pageNumber);
     }, []);
+
+    useEffect(() => {
+        getProduct(pageNumber);
+    }, [pageNumber])
     const image_url = (image_data) => {
         var image_url = "data:image/png;base64," + (image_data);
         return (<img src={image_url} />);
@@ -126,7 +131,7 @@ const ProductList = () => {
                                 product && product.length === 0 
                                 ? showEmptyData() 
                                 :   <div className="center-align pagination">
-                                        <Pagination />
+                                        <Pagination setPageNumber={setPageNumber} pageNumber={pageNumber} />
                                     </div>
                             }
                         </div>

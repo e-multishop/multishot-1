@@ -15,40 +15,19 @@ var product_app = function (app, con, hasthaBean) {
         var pageNumber = parseInt(req.params.page_number);
         var offset = (pageSize * (pageNumber - 1));
         var countSql = `SELECT COUNT(*) FROM product`;
-        var sql = `SELECT * FROM product LIMIT ${offset}, ${pageSize}` ;
+        var sql = `SELECT * FROM product NATURAL JOIN product_images LIMIT ${offset}, ${pageSize}` ;
         con.query(countSql, function(err, result1){
             const totalRecords = result1[0]["COUNT(*)"];
             con.query(sql, function (err, result) {
                 if (err) throw err;
                 res.header("Content-Type", "application/json");
-                let asyncoperations = [];
-                let images = [];
-                for (var k = 0; k < result.length; k++) {
-                    let temp = result[k].pid;
-                    let sql = "SELECT pid,type,image_data from `product_images` WHERE pid='" + temp + "'";
-                    let p = new Promise(function (resolve, reject) {
-                        con.query(sql, function (err, result2) {
-                            images = images.concat(result2);
-                            for (var i = 0; i < result.length; i++) {
-                                for (var j = 0; j < images.length; j++) {
-                                    var temp = result[i];
-                                    if (temp.pid == images[j].pid) {
-                                        var image_data = images[j].image_data;
-                                        console.log(Object.keys(image_data));
-                                        var buff_data = image_data ? Buffer.from(image_data) : '';
-                                        temp.image_data = buff_data ? buff_data.toString() : '';
-    
-                                    }
-                                }
-                            }
-                            resolve();
-                        })
-                    });
-                    asyncoperations.push(p);
-                }
-                Promise.all(asyncoperations).then(function (ops) {
-                    res.send({list: result, totalRecords: totalRecords});
-                });
+                result.forEach(r => {
+                    if (r.image_data && r.image_data.buffer) {
+                        const buff_data = Buffer.from(r.image_data);
+                        r.image_data = buff_data ? buff_data.toString() : '';
+                    }
+                })
+                res.send({list: result, totalRecords: totalRecords});
             });
         });
     });
@@ -183,8 +162,8 @@ var product_app = function (app, con, hasthaBean) {
         var createdDate = (new Date()).getTime();
         var updatedDate = (new Date()).getTime();
         var start = "START TRANSACTION;";
-        var t1 = "INSERT INTO `product_images`(`imageid`, `pid`, `type`, `image_data`, `mime_type`) VALUES (NULL,'" + pid + "','main','" + buffer + "','" + mimeType + "');";
-        var t2 = "INSERT INTO product(pid,category,title,price,price_without_embroidary,description,note,material,total_available,total_quantity,available,sku,status,createdDate,updatedDate)VALUES(NULL,'" + category + "','" + title + "','" + price + "','" + price_without_embroidary + "','" + description + "','" + note + "','" + material + "','" + total_available + "','" + total_quantity + "','" + available + "','" + sku + "','" + status + "','"+createdDate+"','"+updatedDate+"');";
+        var t1 = "INSERT INTO `product_images`(`imageid`, `pid`, `type`, `image_data`, `mime_type`) VALUES (NULL,'" + pid + "','main','" + buffer + "','" + "');";
+        var t2 = "INSERT INTO product(pid,category,title,price,price_without_embroidary,description,note,material,total_available,total_quantity,available,sku,status,createdDate,updatedDate)VALUES(" + pid + ",'" + category + "','" + title + "','" + price + "','" + price_without_embroidary + "','" + description + "','" + note + "','" + material + "','" + total_available + "','" + total_quantity + "','" + available + "','" + sku + "','" + status + "','"+createdDate+"','"+updatedDate+"');";
         var sizeQuery = '';
         if (size && size.length > 0) {
             size.forEach(s => {
@@ -309,11 +288,20 @@ var product_app = function (app, con, hasthaBean) {
         var available = req.body.available;
         var sku = req.body.sku;
         var status = req.body.status;
+        var image_data = req.body.image_data;
         var updatedDate = (new Date()).getTime();
         var sql = "UPDATE product SET category = '" + category + "', title= '" + title + "',price ='" + price + "',price_without_embroidary='" + price_without_embroidary + "',description='" + description + "',note='" + note + "',material='" + material + "',total_available='" + total_available + "',total_quantity='" + total_quantity + "',available='" + available + "',sku='" + sku + "',status='" + status + "',updatedDate='" + updatedDate + "' WHERE pid = '" + pid + "';";
         con.query(sql, (err, result) => {
             if (err) throw err;
-            res.send('updated');
+            if (image_data) {
+                const imageBufferData = Buffer.from(image_data, 'binary');
+                const imageUpdateSql = "UPDATE product_images SET image_data ='"+imageBufferData+"' WHERE pid="+pid+";"
+                con.query(imageUpdateSql, (err, result2) =>{
+                    res.send('updated');
+                })
+            } else {
+                res.send('updated');
+            }
         });
     });
     app.put("/rest/update_status", (req, res) => {
