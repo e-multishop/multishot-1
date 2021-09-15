@@ -40,14 +40,14 @@ const dashboardRoutes = [
 
   {
     path: "/table",
-    name: "Product List",
+    name: "Products",
     icon: "content_paste",
     component: ProductListWrapper,
     layout: "/admin",
   },
   {
     path: "/uploadfile",
-    name: "Upload Bulk Product",
+    name: "Upload Bulk Products",
     icon: LibraryBooks,
     component: UploadFile,
     layout: "/admin",

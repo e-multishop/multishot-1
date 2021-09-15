@@ -1,4 +1,4 @@
-const atob = require('atob');
+const btoa = require('btoa');
 module.exports = class ProductUtil {
     static getTotalAvailable(data) {
         if (data === 0) {
@@ -7,7 +7,7 @@ module.exports = class ProductUtil {
         return data ? parseInt(data) : -1;
     }
     static getProductDescription(data) {
-        return data ? atob(data) : '';
+        return data ? btoa(data) : '';
     }
     static getProductPrice(data) {
         if (data === 0) {

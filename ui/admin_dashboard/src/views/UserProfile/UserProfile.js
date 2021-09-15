@@ -56,6 +56,9 @@ export default function UserProfile() {
                     formControlProps={{
                       fullWidth: true,
                     }}
+                    inputProps={{
+                      value: 'hasthakatha@gmail.com'
+                    }}
                   />
                 </GridItem>
               </GridContainer>
@@ -67,6 +70,9 @@ export default function UserProfile() {
                     formControlProps={{
                       fullWidth: true,
                     }}
+                    inputProps={{
+                      value: 'Admin'
+                    }}
                   />
                 </GridItem>
                 <GridItem xs={12} sm={12} md={6}>
@@ -75,6 +81,9 @@ export default function UserProfile() {
                     id="last-name"
                     formControlProps={{
                       fullWidth: true,
+                    }}
+                    inputProps={{
+                      value: 'Admin'
                     }}
                   />
                 </GridItem>

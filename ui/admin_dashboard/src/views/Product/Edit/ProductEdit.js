@@ -101,12 +101,12 @@ export default function ProductEdit(props) {
             status: '1',
         }
         ).then(res => {
-            toast("Success");
             EventBus.dispatch(EventType.UPDATE_PRODUCT_TABLE);
+            toast.success("Product updated successfully");
             handleClose();
         }).catch(err => {
             console.log(err)
-            toast("Data did not updated")
+            toast.error("Error updating product. Please try again later.")
         });
     }
     function reset() {

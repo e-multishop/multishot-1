@@ -168,6 +168,18 @@ export default function ProductList(props) {
       );
     }
   }
+
+  const showEmptyData = () => {
+    return (
+      <tr>
+        <td colspan="7">
+          <div className="hs-no-products">
+            <p>No products found. Please add a product.</p>
+          </div>
+        </td>
+      </tr>
+    )
+  }
   return (
     <Paper className={classes.root}>
       <TableContainer className={classes.container}>
@@ -199,6 +211,9 @@ export default function ProductList(props) {
                 </TableRow>
               );
             })}
+            {
+              productData.length === 0 ? showEmptyData() : ''
+            }
           </TableBody>
         </Table>
       }

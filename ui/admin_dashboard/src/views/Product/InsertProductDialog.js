@@ -110,10 +110,11 @@ export default function InsertProductDialog(props) {
     }
     ).then(res => {
       EventBus.dispatch(EventType.UPDATE_PRODUCT_TABLE);
+      toast.success("New product added successfully.");
       handleClose();
     }).catch(err => {
       console.log(err)
-      toast("Error adding. Please try again.")
+      toast.error("Error adding product. Please try again later.")
     });
   }
 

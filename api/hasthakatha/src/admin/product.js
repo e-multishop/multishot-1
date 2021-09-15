@@ -205,16 +205,35 @@ var product_app = function (app, con, hasthaBean) {
     });
 
     app.post("/rest/addproductbulk", (req, res) => {
-        // read the excel file
-        const workbook = xlsx.readFile(__dirname + "/../../hastha_2.xlsx");
-        let data = [];
-
-        const sheets = workbook.SheetNames;
+        // read excel file from body
+        const excelFileBody = req.body.data;
+        let sheets = '';
+        let workbook;
+        if (excelFileBody) {
+            try {
+                // read the excel file from request body
+                const decoded = atob(excelFileBody);
+                const convertArray = new Uint8Array(decoded);
+                workbook = xlsx.read(decoded, {type: 'binary'});
+                sheets = workbook.SheetNames;
+                // read the excel file from file system
+                // const workbook = xlsx.readFile(__dirname + "/../../hastha_2.xlsx");
+            } catch(e) {
+                console.log('error' + e);
+                res.status(500);
+                res.send({type: 'error', message: e});
+                return;
+            }
+        } else {
+            res.status(500);
+            res.send('Error reading file');
+        }
         let query = '';
         for (let i = 0; i < sheets.length; i++) {
             const sheetData = xlsx.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[i]]);
             const products = [];
             sheetData.forEach(row => {
+                const currentTime = (new Date()).getTime();
                 products.push(new Product(
                     '', 
                     CommonUtil.getData(row['SKU']), 
@@ -228,7 +247,9 @@ var product_app = function (app, con, hasthaBean) {
                     '', 
                     CommonUtil.getData(row['Material']), 
                     ProductUtil.getTotalAvailable(row['Total quantity']),
-                    ProductUtil.getTotalAvailable(row['Total quantity'])
+                    ProductUtil.getTotalAvailable(row['Total quantity']),
+                    currentTime,
+                    currentTime
                 ));
             });
             products.forEach((p) => {
@@ -242,6 +263,9 @@ var product_app = function (app, con, hasthaBean) {
                 if (err) throw err;
                 res.send('success');
             });
+        } else {
+            res.status(500);
+            res.send('Empty file/Error reading file');
         }
     });
 
