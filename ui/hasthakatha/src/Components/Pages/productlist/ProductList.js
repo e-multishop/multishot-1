@@ -25,7 +25,7 @@ const ProductList = () => {
         fetch('/rest/product_list/10/1').then((result) => {
             return (result.json())
         }).then((product) => {
-            setProduct(product)
+            setProduct(product.list)
             setLoading(false);
         })
     }, []);
@@ -36,6 +36,13 @@ const ProductList = () => {
 
     const dispatch = useDispatch();
     var data={};
+    const showEmptyData = () => {
+        return (
+            <div className="hs-no-products">
+                <p>No products found.</p>
+            </div>
+        )
+    }
     return (
         <>
 
@@ -72,11 +79,11 @@ const ProductList = () => {
                             <div class="product_list">
                                 {/* <!-- Prodcuct list first row--> */}
                                 {/* <!--product details--> */}
-                                {product.map((value) => {
+                                {product.map((value, index) => {
                                     return (
                                         <>
 
-                                            <div className="hk-product_card">
+                                            <div className="hk-product_card" key={index}>
                                                 <NavLink to="/productdetails">
                                                     <div className="img-wraper">
                                                         {/* {const url= atob(value.url)} */}
@@ -105,20 +112,19 @@ const ProductList = () => {
                                                     <a>ADD TO CART</a>
                                                 </div>
                                             </div>
-                                            {/* <div className="row">
-                                <div className="col s3">
-                                    <Card images={value.url} banner={true} title={value.title} description={value.price}/>
-                                </div>
-                            </div> */}
 
                                         </>
                                     );
                                 })
                                 }
                             </div>
-                            <div className="center-align pagination">
-                                <Pagination />
-                            </div>
+                            {
+                                product && product.length === 0 
+                                ? showEmptyData() 
+                                :   <div className="center-align pagination">
+                                        <Pagination />
+                                    </div>
+                            }
                         </div>
                         {/* </div> */}
                     </div>

@@ -12,7 +12,7 @@ export default function cartItems (state=[], action) {
     }
 }
 
-export default function AdminDashboard (state=[], action) {
+export function AdminDashboard (state=[], action) {
     switch (action.type) {
         case "Admin_Login":
             return ([

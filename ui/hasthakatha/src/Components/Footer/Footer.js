@@ -27,7 +27,7 @@ const Footer =()=>{
                 <ul>
                   <li><NavLink className=" text-lighten-3 text-color" to="/">Home</NavLink></li>
                   <li><NavLink className=" text-lighten-3 text-color" to="/about">About Us</NavLink></li>
-                  <li><NavLink className=" text-lighten-3 text-color" to="/about">Amin Dashboard</NavLink></li>
+                  <li>Admin Dashboard</li>
                   <li><NavLink className=" text-lighten-3 text-color" to="/">Terms & Conditions</NavLink></li>
                   <li><NavLink className=" text-lighten-3 text-color" to="/">FAQ</NavLink></li>
                 </ul>
