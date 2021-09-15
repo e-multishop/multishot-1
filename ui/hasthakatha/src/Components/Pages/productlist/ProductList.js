@@ -1,11 +1,11 @@
 import React, { Component, useEffect, useState } from 'react';
 import "./ProductList.scss";
 import { NavLink } from 'react-router-dom';
-import { addToCart } from '../../../Redux/actions/index';
+import {cartItems} from '../../../Redux/actions/index';
 import { useDispatch } from 'react-redux';
 import Pagination from './Pagination'
 import Loader from "../../Shared/loader/Loader"
-
+import Axios from 'axios'
 const ProductList = () => {
 
     const [categories, setCategories] = useState([]);
@@ -41,6 +41,19 @@ const ProductList = () => {
                 <p>No products found.</p>
             </div>
         )
+    }
+    const addToCartData=(value)=>{
+    Axios.post('/rest/add_to_cart',{
+            pid : value.pid,
+            uid : localStorage.getItem('userId'),
+            quantity : "1",
+        }).then(res=>{
+            const userId=localStorage.getItem('userId')
+            Axios.get('/rest/add_to_cart/number_of_items/'+userId).then(res=>{
+                const numberOfItems=res.data.number_of_items;                
+                dispatch(cartItems(numberOfItems))
+            })
+        })
     }
     return (
         <>
@@ -99,15 +112,7 @@ const ProductList = () => {
                                                         {value.price}
                                                     </div>
                                                 </NavLink>
-                                                <div className="hk-addcard" onClick={() => { dispatch(addToCart(
-                                                        data = {
-                                                            title: value.title,
-                                                            description: value.description,
-                                                            price: value.price,
-                                                 
-                                                        }
-                                                )) 
-                                                }}>
+                                                <div className="hk-addcard" onClick={() => {addToCartData(value)}}>
                                                     <a>ADD TO CART</a>
                                                 </div>
                                             </div>

@@ -8,8 +8,10 @@ function Checkout_card() {
         tax:"0",
         totalAmount:"0"
     })
+    
     useEffect(() => {
-        Axios.get("/rest/add_to_cart_price_calculate").then((res) => {
+        const userId=localStorage.getItem('userId')
+        Axios.get("/rest/add_to_cart_price_calculate/"+userId).then((res) => {
           // console.log(res.data);
           const result = res.data;
           setData(result);

@@ -17,7 +17,8 @@ const Header = (props) => {
     const [LoggedIn, setLoggedIn] = useState(false)
     const token = localStorage.getItem('token');
     const [Email, setEmail] = useState();
-    const cartData = useSelector((state) => state.cartItems);
+    // debugger;
+    const numberOfItems = useSelector((state) => state.numberOfItems);
     // localStorage.clear();
     useEffect(() => {
         if (token != null) {
@@ -65,7 +66,7 @@ const Header = (props) => {
 
                             </li>}
                             <li>
-                                <NavLink to="/viewcart"><div className="cart"><FontAwesomeIcon icon={faShoppingCart} size="large" className="icon " /><span class="badge cart-badge">{cartData.length}</span></div>
+                                <NavLink to="/viewcart"><div className="cart"><FontAwesomeIcon icon={faShoppingCart} size="large" className="icon " /><span class="badge cart-badge">{numberOfItems}</span></div>
                                 </NavLink>
                             </li>
                         </ul>

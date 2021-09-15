@@ -3,11 +3,12 @@ import "./login.scss";
 // import Modal from "./Modal"
 import Axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {  faCheck} from '@fortawesome/free-solid-svg-icons'
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { ToastContainer, toast } from 'react-toastify';
 import Loader from '../../Common/Loader';
-import {AdminLogin}  from '../../../Redux/actions/index';
-import {useDispatch} from 'react-redux';
+import { AdminLogin } from '../../../Redux/actions/index';
+import { useDispatch } from 'react-redux';
+import jwt_decode from "jwt-decode";
 
 // import { useEffect } from 'react/cjs/react.production.min';
 // import { useParams } from 'react-router';
@@ -30,17 +31,22 @@ const Login = (props) => {
         event.preventDefault();
         setLoading(true);
         Axios.post("/rest/login", {
-            email:login.hklogin_emailid,
+            email: login.hklogin_emailid,
             password: login.password
         }).then(res => {
             // console.warn("value is success fill",res.data)
-            const token = res.data.token;
-            localStorage.setItem('token',token);
+            const session_id = res.data.session_id;
+
+            var decodedSessionId = jwt_decode(session_id);
+            // console.log("check decode value=", decodedSessionId.userId);
+            localStorage.setItem('userId',decodedSessionId.userId);
+
+            localStorage.setItem('token', session_id);
             setStatus('')
-            if(login.hklogin_emailid==="hasthakatha@gmail.com"){
+            if (login.hklogin_emailid === "hasthakatha@gmail.com") {
                 dispatch(AdminLogin(true))
             }
-            else{
+            else {
                 dispatch(AdminLogin(false))
             }
             setLoading(false);
@@ -51,7 +57,7 @@ const Login = (props) => {
             else {
                 document.location.href = "/admin";
             }
-            toast.success(<span ><FontAwesomeIcon icon={ faCheck} size='lg' color="white" className="icon toast-icon" />  Success</span>)
+            toast.success(<span ><FontAwesomeIcon icon={faCheck} size='lg' color="white" className="icon toast-icon" />  Success</span>)
             // props.history.push("/about"); 
         }).catch(err => {
             setLoading(false);
@@ -112,8 +118,8 @@ const Login = (props) => {
     }
     return (
         <div className="hk-login wrapper">
-            { loading ? <Loader height="250px"/> : '' }
-            { show() }
+            { loading ? <Loader height="250px" /> : ''}
+            { show()}
         </div>
     );
 

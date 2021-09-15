@@ -6,6 +6,13 @@ export const addToCart =(data)=>{
         data:data
     };
 }
+export const cartItems=(data)=>{
+    // console.log("action data check",data);
+    return{
+        type: "addToCartItems",
+        data:data
+    };
+}
 
 export const AdminLogin=(data)=>{
     return{

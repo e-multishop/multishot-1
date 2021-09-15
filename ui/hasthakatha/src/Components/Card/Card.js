@@ -3,12 +3,14 @@ import "./card.scss";
 import {addToCart}  from '../../Redux/actions/index';
 import {useDispatch}from 'react-redux';
 const Card = (props) => {
+
     const dispatch=useDispatch();
-    const data={ title: props.title, 
+    const data={ 
+        title: props.title, 
         description: props.description, 
         price: "543"
     }
-    console.log(data)
+    // console.log(data)
     return (
         <div className="card hk-card">
             {

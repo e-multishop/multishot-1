@@ -1,5 +1,5 @@
 
-export default function cartItems(state = [], action) {
+export default function cartItems(state = {}, action) {
     switch (action.type) {
         case "Add_To_Cart":
             return ([
@@ -7,6 +7,8 @@ export default function cartItems(state = [], action) {
                 { cardData: action.data }
             ])
             break;
+        case "addToCartItems":
+            return({numberOfItems: action.data})
         default:
             return state
     }

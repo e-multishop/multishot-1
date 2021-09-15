@@ -18,7 +18,7 @@ function Modal(props) {
         modal=instances[0];
         modal.open();
 
-    },[]);
+    });
     const closeModal=(loggedin)=>{
         // modal.destroy();
         props.setLoggedIn(loggedin);
@@ -47,7 +47,7 @@ function Modal(props) {
             <div id="modal1" class="modal">
                 <div class="modal-content">
                     {/* <button>dsfsd</button> */}
-                        <FontAwesomeIcon icon={faTimes} size='lg'onClick={()=>{closeModal(false)}} className="close-icon" />
+                        <FontAwesomeIcon icon={faTimes} size='lg' onClick={()=>{closeModal(false)}} className="close-icon" />
                     <div >
                         <h3 className="center-align logo-name">HasthaKatha</h3>
                     </div>
