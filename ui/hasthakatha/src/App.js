@@ -33,8 +33,8 @@ class App extends Component{
               <Route component={ProductList} path="/shop"/>
               <Route component={Productdetails} path="/productdetails/:pid"/>
               <Route component={Contact} path="/contact"/>
-              <Route component={Adminapp} path="/admin"/>
-              <Route  component={Login} path="/login"/>
+              {/* <Route component={Adminapp} path="/admin"/> */}
+              <Route component={Login} path="/login"/>
               <Route component={Signup} path="/signup"/>
               <Route component={Checkout} path="/viewcart"/>
               <Route component={PageNotFound}/>

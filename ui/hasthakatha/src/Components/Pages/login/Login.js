@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 import "./login.scss";
 // import Modal from "./Modal"
 import Axios from 'axios'
@@ -22,6 +22,12 @@ const Login = (props) => {
     const [status, setStatus] = useState('');
     const [loading, setLoading] = useState(false);
 
+    useEffect(() => {
+        const isLoggedIn = localStorage.getItem('token');
+        if (isLoggedIn) {
+            props.history.push('/page-not-found');
+        }
+    })
     const handleChange = (e) => {
         setLogin({ ...login, [e.target.id]: e.target.value });
         setStatus('')
