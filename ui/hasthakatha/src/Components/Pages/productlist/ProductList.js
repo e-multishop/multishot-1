@@ -51,6 +51,11 @@ const ProductList = () => {
         )
     }
     const addToCartData=(value)=>{
+        const isLoggedIn = localStorage.getItem('token');
+        if (!isLoggedIn) {
+            document.location.href="/#/login";
+            return;
+        }
         Axios.post('/rest/add_to_cart',{
             pid : value.pid,
             uid : localStorage.getItem('userId'),

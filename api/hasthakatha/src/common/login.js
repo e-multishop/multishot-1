@@ -69,14 +69,14 @@ var login_app=function(app,con)
     
                     } else {
                         res.status(500);
-                        res.send("error");
+                        res.send({type: "error", message: "Email and password do not match."});
                     }
     
                 });
             }
             else{
                 res.status(500);
-                res.send("error");
+                res.send({type: "error", message: "Email and password do not match."});
                  
             }
        //     if (err) throw err;

@@ -50,7 +50,13 @@ const Login = (props) => {
                 props.closeModal(true);
             }
             else {
-                document.location.href = "/admin";
+                const redirectPathParam = props.location.search;
+                const redirectPath = redirectPathParam.substr(redirectPathParam.indexOf('redirect_path') + 'redirect_path'.length+1, redirectPathParam.length);
+                if (redirectPath === '/admin') {
+                    document.location.href = "/admin";
+                } else {
+                    props.history.push(redirectPath);
+                }
             }
             toast.success(<span ><FontAwesomeIcon icon={faCheck} size='lg' color="white" className="icon toast-icon" />  Success</span>)
             // props.history.push("/about"); 
