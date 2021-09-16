@@ -417,8 +417,7 @@ var product_app = function (app, con, hasthaBean) {
                 const reducer = (previousValue, currentValue) => previousValue + currentValue;
                 var totalAmount = listofobjects.reduce(reducer);
                 res.send({"totalAmount":totalAmount,"discount":100,"tax":((totalAmount*18)/100)});
-
-
+                
             });
         })
     });
