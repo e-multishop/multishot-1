@@ -63,6 +63,16 @@ const ProductList = () => {
             })
         })
     }
+    const getProductByCategory = (category) => {
+        setLoading(true);
+        setPageNumber(1);
+        Axios.get(`/rest/product_list_by_category/${category}/${pageSize}/1`).then(res => {
+            const product = res.data;
+            setProduct(product.list)
+            setTotalRecords(product.totalRecords);
+            setLoading(false);
+        });
+    }
     return (
         <>
 
@@ -70,10 +80,7 @@ const ProductList = () => {
             <div className="shop-badge">
                 Shop
                     </div>
-            {Loading ?
-                <div className="loader">
-                    <Loader />
-                </div> :
+            { false ? '' :
                 <div>
                     <div className="hk-filter">
                         <div className=" heading">Items</div>
@@ -89,7 +96,7 @@ const ProductList = () => {
                             <div>All</div>
                             {
                                 categories.map((value) => {
-                                    return (<div>{value.name}</div>)
+                                    return (<div onClick={() => getProductByCategory(value.cid)}>{value.name}</div>)
                                 })
                             }
                         </div>
@@ -99,7 +106,7 @@ const ProductList = () => {
                             <div class="product_list">
                                 {/* <!-- Prodcuct list first row--> */}
                                 {/* <!--product details--> */}
-                                {product.map((value, index) => {
+                                { Loading ? <div className="loader"><Loader /></div> : product.map((value, index) => {
                                     return (
                                         <>
 

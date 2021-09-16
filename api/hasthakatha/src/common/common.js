@@ -9,7 +9,7 @@ var common_app=function(app,con)
     });
     
     app.get('/rest/categories', (req, res) => {
-        var sql = "SELECT name FROM `category`";
+        var sql = "SELECT name, cid FROM `category`";
         con.query(sql, function (err, result) {
             if (err) throw err;
             res.send(JSON.stringify(result));
@@ -50,6 +50,29 @@ var common_app=function(app,con)
         const productSizeSql = `Select id, size, S.name from product_size as P left join size as S on P.size = S.sid where pid=${req.params.pid}`;
         con.query(productSizeSql, (err, result) => {
             res.send({output: result});
+        });
+    });
+
+    app.get('/rest/product_list_by_category/:category/:page_size/:page_number', (req, res) => {
+        var pageSize = parseInt(req.params.page_size);
+        var pageNumber = parseInt(req.params.page_number);
+        var offset = (pageSize * (pageNumber - 1));
+        var category = req.params.category;
+        var countSql = `SELECT COUNT(*) FROM product where category=${category}`;
+        var sql = `SELECT P.pid, P.category, P.title, P.price, P.price_without_embroidary, P.description, P.note, P.material, P.total_available, P.total_quantity, P.available, P.sku, P.status, P.createdDate, P.updatedDate, I.image_data FROM product as P LEFT JOIN product_images as I on P.pid = I.pid WHERE P.category=${category} LIMIT ${offset}, ${pageSize}` ;
+        con.query(countSql, function(err, result1){
+            const totalRecords = result1[0]["COUNT(*)"];
+            con.query(sql, function (err, result) {
+                if (err) throw err;
+                res.header("Content-Type", "application/json");
+                result.forEach(r => {
+                    if (r.image_data && r.image_data.buffer) {
+                        const buff_data = Buffer.from(r.image_data);
+                        r.image_data = buff_data ? buff_data.toString() : '';
+                    }
+                })
+                res.send({list: result, totalRecords: totalRecords});
+            });
         });
     });
 
