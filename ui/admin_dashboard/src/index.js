@@ -48,13 +48,22 @@ const getIsLoggedIn = () => {
   }
 }
 
+const isAdmin = () => {
+  const userType = localStorage.getItem('userType');
+  return userType && userType === '1';
+}
+
 const requireLogin = (to, from, next) => {
   if (to.meta.auth) {
     if (getIsLoggedIn()) {
-      next();
+      if (isAdmin()) {
+        next();
+      } else {
+        document.location.href = "/#/page-not-found?redirect_path=admin";
+      }
     }
     else {
-      document.location.href = "/#/login?redirect_path=admin"
+      document.location.href = "/#/login?redirect_path=admin";
     }
     // next.redirect('/login');
   } else {

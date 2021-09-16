@@ -10,14 +10,23 @@ import {
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
 import {faEnvelope} from '@fortawesome/free-solid-svg-icons';
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
+import { useState, useEffect } from 'react';
 
 const Footer =()=>{
   const handleAdmin=()=>{
     document.location.href="/admin"
   }
-  const isAdmin= useSelector((state) => state.AdminDashboard);
-  console.log("check login",isAdmin)
+  const [isAdmin, setIsAdmin] = useState(false);
+  const isAdminUser = useSelector((state) => state.AdminDashboard);
+  useEffect(() => {
+    const userType = localStorage.getItem('userType');
+    if (userType === '1') {
+      setIsAdmin(true);
+    } else {
+      setIsAdmin(false);
+    }
+  })
     return(
         
         <footer className="page-footer hk-footer">
@@ -34,7 +43,7 @@ const Footer =()=>{
                 <ul>
                   <li><NavLink className=" text-lighten-3 text-color" to="/">Home</NavLink></li>
                   <li><NavLink className=" text-lighten-3 text-color" to="/about">About Us</NavLink></li>
-                 {isAdmin?<li className=" text-lighten-3 text-color admin-dashboard" onClick={handleAdmin}>Admin Dashboard</li>:""} 
+                 {isAdmin || isAdminUser ?<li className=" text-lighten-3 text-color admin-dashboard" onClick={handleAdmin}>Admin Dashboard</li>:""} 
                   <li><NavLink className=" text-lighten-3 text-color" to="/">Terms & Conditions</NavLink></li>
                   <li><NavLink className=" text-lighten-3 text-color" to="/">FAQ</NavLink></li>
                 </ul>

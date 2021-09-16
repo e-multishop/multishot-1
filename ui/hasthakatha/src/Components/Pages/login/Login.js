@@ -40,15 +40,10 @@ const Login = (props) => {
             var decodedSessionId = jwt_decode(session_id);
             // console.log("check decode value=", decodedSessionId.userId);
             localStorage.setItem('userId',decodedSessionId.userId);
-
+            localStorage.setItem('userType', decodedSessionId.userType);
             localStorage.setItem('token', session_id);
+            dispatch(AdminLogin(decodedSessionId.userType === 1))
             setStatus('')
-            if (login.hklogin_emailid === "hasthakatha@gmail.com") {
-                dispatch(AdminLogin(true))
-            }
-            else {
-                dispatch(AdminLogin(false))
-            }
             setLoading(false);
             // console.log("email",login.email)
             if (props && props.closeModal) {

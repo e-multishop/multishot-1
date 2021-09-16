@@ -1,6 +1,6 @@
 import React, { Component, useEffect, useState } from 'react';
 import "./ProductList.scss";
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import {cartItems} from '../../../Redux/actions/index';
 import { useDispatch } from 'react-redux';
 import Pagination from './Pagination'
@@ -10,15 +10,18 @@ import Axios from 'axios'
 const ProductList = () => {
     const [categories, setCategories] = useState([]);
     const [product, setProduct] = useState([]);
+    const [totalRecords, setTotalRecords] = useState(0);
+    const [pageSize, setPageSize] = useState(10);
     const [Loading, setLoading] = useState(true);
     const [pageNumber, setPageNumber] = useState(1);
     
     const getProduct=(pageNumber)=>{
         setLoading(true);
-        fetch('/rest/product_list/10/'+pageNumber).then((result) => {
+        fetch('/rest/product_list/'+pageSize+'/'+pageNumber).then((result) => {
             return (result.json())
         }).then((product) => {
             setProduct(product.list)
+            setTotalRecords(product.totalRecords);
             setLoading(false);
         })
     }
@@ -48,7 +51,7 @@ const ProductList = () => {
         )
     }
     const addToCartData=(value)=>{
-    Axios.post('/rest/add_to_cart',{
+        Axios.post('/rest/add_to_cart',{
             pid : value.pid,
             uid : localStorage.getItem('userId'),
             quantity : "1",
@@ -60,6 +63,16 @@ const ProductList = () => {
             })
         })
     }
+    const getProductByCategory = (category) => {
+        setLoading(true);
+        setPageNumber(1);
+        Axios.get(`/rest/product_list_by_category/${category}/${pageSize}/1`).then(res => {
+            const product = res.data;
+            setProduct(product.list)
+            setTotalRecords(product.totalRecords);
+            setLoading(false);
+        });
+    }
     return (
         <>
 
@@ -67,10 +80,7 @@ const ProductList = () => {
             <div className="shop-badge">
                 Shop
                     </div>
-            {Loading ?
-                <div className="loader">
-                    <Loader />
-                </div> :
+            { false ? '' :
                 <div>
                     <div className="hk-filter">
                         <div className=" heading">Items</div>
@@ -86,7 +96,7 @@ const ProductList = () => {
                             <div>All</div>
                             {
                                 categories.map((value) => {
-                                    return (<div>{value.name}</div>)
+                                    return (<div onClick={() => getProductByCategory(value.cid)}>{value.name}</div>)
                                 })
                             }
                         </div>
@@ -96,12 +106,12 @@ const ProductList = () => {
                             <div class="product_list">
                                 {/* <!-- Prodcuct list first row--> */}
                                 {/* <!--product details--> */}
-                                {product.map((value, index) => {
+                                { Loading ? <div className="loader"><Loader /></div> : product.map((value, index) => {
                                     return (
                                         <>
 
                                             <div className="hk-product_card" key={index}>
-                                                <NavLink to="/productdetails">
+                                                <Link to={"/productdetails/"+value.pid}>
                                                     <div className="img-wraper">
                                                         {/* {const url= atob(value.url)} */}
                                                         {
@@ -116,7 +126,7 @@ const ProductList = () => {
                                                     <div className="price">
                                                         {value.price}
                                                     </div>
-                                                </NavLink>
+                                                </Link>
                                                 <div className="hk-addcard" onClick={() => {addToCartData(value)}}>
                                                     <a>ADD TO CART</a>
                                                 </div>
@@ -131,7 +141,7 @@ const ProductList = () => {
                                 product && product.length === 0 
                                 ? showEmptyData() 
                                 :   <div className="center-align pagination">
-                                        <Pagination setPageNumber={setPageNumber} pageNumber={pageNumber} />
+                                        <Pagination pageSize={pageSize} setPageSize={setPageSize} totalRecords={totalRecords} setPageNumber={setPageNumber} pageNumber={pageNumber} />
                                     </div>
                             }
                         </div>
