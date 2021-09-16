@@ -41,3 +41,10 @@ $roboto-font-path: '~roboto-fontface/fonts';
         color: #fff !important;
     }
 }
+
+.hs-page-not-found {
+    font-size: 24px;
+    text-align: center;
+    min-height: calc(100vh - 358px);
+    line-height: calc(100vh - 358px);
+}

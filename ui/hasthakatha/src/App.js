@@ -17,6 +17,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Adminapp from './Components/Admin_dashboard/Adminapp'
 import Reset from './Components/Pages/login/Reset_password';
 import Checkout from './Components/Pages/product_checkout/Checkout'
+import PageNotFound from "./Components/Pages/PageNotFound/PageNotFound";
 class App extends Component{
   render(){
     return(
@@ -36,6 +37,7 @@ class App extends Component{
               <Route  component={Login} path="/login"/>
               <Route component={Signup} path="/signup"/>
               <Route component={Checkout} path="/viewcart"/>
+              <Route component={PageNotFound} path="/page-not-found"/>
               <Route exact component={Reset} path="/reset_password/:id"/>
         </Switch>
         <Footer/>
