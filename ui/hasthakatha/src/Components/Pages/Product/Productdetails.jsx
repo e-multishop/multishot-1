@@ -9,10 +9,45 @@ import { NavLink } from 'react-router-dom';
 import ProductReview from './ProductReview';
 import {faStar} from '@fortawesome/free-solid-svg-icons';
 import Demoimg from '../../../Images/megha.jpg';
-
+import Axios from 'axios';
 
 class Productdetails extends Component{
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            pid: '',
+            productdetail: {},
+            sizes: []
+        }
+    }
+
+    componentWillMount() {
+        const pid = this.props.match.params.pid;
+        this.setState({pid: pid});
+        Axios.get('rest/productdetails/'+pid).then(response => {
+            this.setState({productdetail: response.data.output})
+        })
+        this.loadProductSize(pid);
+    }
    
+    componentDidUpdate() {
+        const insertproduct = document.getElementById("hs_product_details");
+        const elems = insertproduct.querySelectorAll('select');
+        const options = {};
+        var instances = M.FormSelect.init(elems, options);
+    }
+
+    loadProductSize(pid) {
+        Axios.get('/rest/productsize/'+pid).then(res => {
+            this.setState({sizes: res.data.output});
+        });
+    }
+
+    getSizeOptions() {
+        return this.state.sizes.map(s => <option>{s.size}</option>)
+    }
+
     render(){
         const ReviewData=[
             {
@@ -37,7 +72,7 @@ class Productdetails extends Component{
         ];
         return(
           <>
-           <div className="hs_product">
+           <div className="hs_product" id="hs_product_details">
                 <div className="hs_product_details">
                     
                     <div className="img1 item1">
@@ -56,7 +91,7 @@ class Productdetails extends Component{
                         <img src={imgproduct} alt="product image" />
                     </div>
                     <div className="img-main item6">
-                        <img src={imgproduct} alt="product image" />
+                        <img src={this.state.productdetail.image_data} alt="product image" />
                     </div>
                 </div>
                 <div className="hs_product_side">
@@ -78,12 +113,11 @@ class Productdetails extends Component{
                             </div>
                         </div>
                         <h1>
-                        Button-down Lilac Pants, Linen Pants for Women, 
-                        Elasticated Pants, Made to Order, Custom Made, Plus Size
+                            { this.state.productdetail.title }
                         </h1>
                         <div className="price-section">
                                 <div className="hk-product-price">
-                                    <h2>USD $40.00</h2>
+                                    <h2>Rs. {this.state.productdetail.price}</h2>
                                     {/* <p>Local taxes included (where applicable)</p> */}
                                 </div>
                                 <p className="stock"><FontAwesomeIcon icon={faCheck}/> In stock </p>
@@ -92,26 +126,27 @@ class Productdetails extends Component{
                     <div className="hs_product_order">
                         
                         <div>
-                            <p>Size</p>
-                            <ul id="dropdown2" class="dropdown-content">
-                                <li><a href="#!">one<span class="badge">1</span></a></li>
-                                <li><a href="#!">two<span class="new badge">1</span></a></li>
-                                <li><a href="#!">three</a></li>
-                            </ul>
-                            <a class="btn dropdown-trigger hk-btn" href="#!" data-target="dropdown2">Select an option<FontAwesomeIcon icon={faChevronDown}/></a>            
+                            <div class="input-field col s12">
+                                <select>
+                                    <option value="" disabled selected>Choose size</option>
+                                   {this.getSizeOptions()}
+                                </select>
+                            </div>
                         </div>
                         <div>
-                             <p>Primary color</p>
-                             <ul id="dropdown2" class="dropdown-content">
-                                <li><a href="#!">one<span class="badge">1</span></a></li>
-                                <li><a href="#!">two<span class="new badge">1</span></a></li>
-                                <li><a href="#!">three</a></li>
-                            </ul>
-                            <a class="btn dropdown-trigger hk-btn" href="#!" data-target="dropdown2">Select an option<FontAwesomeIcon icon={faChevronDown}/></a>
-                             <p>Add your personalisation</p>
+                        <div class="input-field col s12">
+                                <select>
+                                    <option value="" disabled selected>Choose color</option>
+                                    <option>Black</option>
+                                    <option>Blue</option>
+                                    <option>Brown</option>
+                                </select>
+                            </div>
+                            {/* <a class="btn dropdown-trigger hk-btn" href="#!" data-target="dropdown2">Select an option<FontAwesomeIcon icon={faChevronDown}/></a>
+                             <p>Add your personalisation</p> */}
                         </div>
                         <div className="hk-addcard">
-                                    <a href="#">ADD TO CART</a>
+                                <a href="#">ADD TO CART</a>
                         </div>
                     </div>
                 </div>
@@ -120,7 +155,7 @@ class Productdetails extends Component{
             <div className="hs_review comment">
                 <div className="hk-review-head">   
                     <h2 className="hk-review-heading">234 Shop reviews</h2>
-                    <p classname="hk-review-filter">sfdfsdf</p>
+                    <p classname="hk-review-filter"></p>
                 </div>
                 <div>
                     {

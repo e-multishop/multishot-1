@@ -18,10 +18,15 @@ var login_app=function(app,con)
             if (result.length === 0) {
                 const hash = bcrypt.hash(req.body.password, 10, function (err, hashpassword) {
                     console.log(hashpassword);
-                    var sql = "insert into loginusers values(null,'','" + req.body.email + "','" + hashpassword + "')";
-                    con.query(sql, function (err, result2) {
+                    const createdDate = (new Date()).getTime();
+                    const tStart = 'START TRANSACTION;';
+                    const loginSql = "insert into loginusers values(null,'','" + req.body.email + "','" + hashpassword + "');";
+                    const userSql = `insert into user (name, type, uid, created_date) values('${req.body.email}', '0', LAST_INSERT_ID(), ${createdDate});`;
+                    const tEnd = 'COMMIT;';
+                    const actualSql = tStart + loginSql + userSql + tEnd;
+                    con.query(actualSql, function (err, result2) {
                         if (err) throw err;
-                        res.send(" sucess");
+                        res.send("sucess");
                     });
     
                 });
@@ -42,7 +47,7 @@ var login_app=function(app,con)
     
     
     app.post('/rest/login', (req, res) => {
-        var sql = "select * from loginusers where email= '" + req.body.email + "'";
+        var sql = "select * from loginusers as L LEFT JOIN user as U on L.id = U.uid WHERE L.email= '" + req.body.email + "'";
         con.query(sql, function (err, result) {
             if (result != null && result.length == 1) {
     
@@ -51,7 +56,8 @@ var login_app=function(app,con)
                         const session_id = jwt.sign(
                             {
                                 email: result[0].email,
-                                userId: result[0].id
+                                userId: result[0].id,
+                                userType: result[0].type
                             },
                             jwt_key,
                             {
@@ -59,7 +65,7 @@ var login_app=function(app,con)
                             }
                         );
                         login_data.push(session_id);
-                        res.send({ "session_id": session_id });
+                        res.send({ "session_id": session_id});
     
                     } else {
                         res.status(500);

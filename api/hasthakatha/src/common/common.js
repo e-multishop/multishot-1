@@ -33,6 +33,26 @@ var common_app=function(app,con)
     
     });
 
+    app.get('/rest/productdetails/:pid', (req, res) => {
+        const productDetailSql = `select * from product as P LEFT JOIN product_images as I on P.pid = I.pid where P.pid='${req.params.pid}'`;
+        con.query(productDetailSql, function (err, result) {
+            if (err) throw err;
+            const outputData = result.length > 0 ? result[0]: {};
+            if (outputData.image_data && outputData.image_data.buffer) {
+                const bufferData = Buffer.from(outputData.image_data, 'binary');
+                outputData.image_data = bufferData.toString();
+            }
+            res.send({output: outputData});
+        })
+    });
+
+    app.get('/rest/productsize/:pid', (req, res) => {
+        const productSizeSql = `Select id, size from product_size where pid=${req.params.pid}`;
+        con.query(productSizeSql, (err, result) => {
+            res.send({output: result});
+        });
+    });
+
     // app.post('/rest/product_images',(req,res)=>{
     //     var url =req.body.image_data;
     //     var buffer =  Buffer.from(url, 'binary');

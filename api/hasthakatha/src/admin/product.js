@@ -15,7 +15,7 @@ var product_app = function (app, con, hasthaBean) {
         var pageNumber = parseInt(req.params.page_number);
         var offset = (pageSize * (pageNumber - 1));
         var countSql = `SELECT COUNT(*) FROM product`;
-        var sql = `SELECT * FROM product NATURAL JOIN product_images LIMIT ${offset}, ${pageSize}` ;
+        var sql = `SELECT P.pid, P.category, P.title, P.price, P.price_without_embroidary, P.description, P.note, P.material, P.total_available, P.total_quantity, P.available, P.sku, P.status, P.createdDate, P.updatedDate, I.image_data FROM product as P LEFT JOIN product_images as I on P.pid = I.pid LIMIT ${offset}, ${pageSize}` ;
         con.query(countSql, function(err, result1){
             const totalRecords = result1[0]["COUNT(*)"];
             con.query(sql, function (err, result) {
