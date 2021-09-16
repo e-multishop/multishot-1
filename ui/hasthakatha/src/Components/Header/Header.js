@@ -9,22 +9,31 @@ import search from './Search';
 import Modal from '../Pages/login/Modal'
 import LoginDropdown from '../Pages/login/LoginDropdown'
 import { ToastContainer, toast } from 'react-toastify';
-import { useSelector } from 'react-redux'
+import { useSelector ,useDispatch} from 'react-redux'
 import { Provider } from 'react-redux'
 import store from '../../Redux/store'
+import {cartItems}  from '../../Redux/actions/index';
+
+import Axios from 'axios';
 
 const Header = (props) => {
     const [LoggedIn, setLoggedIn] = useState(false)
     const token = localStorage.getItem('token');
     const [Email, setEmail] = useState();
     const numberOfItems = useSelector((state) => state.cartItems.numberOfItems);
-    console.log("check number of items",numberOfItems);
+    console.log("check number of items", numberOfItems);
     // localStorage.clear();
+    const dispatch=useDispatch();
     useEffect(() => {
         if (token != null) {
             setLoggedIn(true)
             // setEmail(email)
         }
+        const userId = localStorage.getItem('userId')
+        Axios.get('/rest/add_to_cart/number_of_items/' + userId).then(res => {
+            const numberOfItems = res.data.number_of_items;
+            dispatch(cartItems(numberOfItems))
+        })
     }, []);
 
     const HandleChange = function () {

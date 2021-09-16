@@ -366,16 +366,16 @@ var product_app = function (app, con, hasthaBean) {
         });
     });
 
-    app.delete("/rest/add_to_cart", (req, res) => {
+    app.delete("/rest/add_to_cart/:id", (req, res) => {
 
-        var pid = req.body.pid;
-        var uid = req.body.uid;
-        var sql = "DELETE FROM add_to_cart WHERE pid='" + pid + "'AND uid ='" + uid + "';";
+        var id= req.params.id;
+        var sql = "DELETE FROM add_to_cart WHERE id='" + id + "';";
         con.query(sql, (err, result) => {
             if (err) throw err;
             res.send('deleted');
         });
     });
+
     app.get("/rest/add_to_cart/number_of_items/:uid",(req,res)=>{
         var uid=req.params.uid;
         var sql="select count(*) from add_to_cart where uid='"+uid+"';"

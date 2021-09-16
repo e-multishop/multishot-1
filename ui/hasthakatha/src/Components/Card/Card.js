@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "./card.scss";
-import {addToCart}  from '../../Redux/actions/index';
 import {useDispatch}from 'react-redux';
+import Axios from 'axios';
 const Card = (props) => {
-
     const dispatch=useDispatch();
     const data={ 
         title: props.title, 

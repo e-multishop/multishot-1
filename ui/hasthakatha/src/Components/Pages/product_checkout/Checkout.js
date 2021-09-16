@@ -11,9 +11,9 @@ function Checkout() {
     // const cartData = useSelector((state) => state.cartItems);
     // console.log("cart data check =", cartData);
     const [cartData,setCartData]=useState([]);
-
     useEffect(()=>{
-        Axios.get('/rest/add_to_cart/'+localStorage.getItem('userId')).then(res=>{
+        const userId=localStorage.getItem('userId')
+        Axios.get('/rest/add_to_cart/'+userId).then(res=>{
             // debugger;
             setCartData(res.data.output);
         })
@@ -38,6 +38,7 @@ function Checkout() {
                                             producttitle={data.title}
                                             productprice={data.price}
                                             productimg={data.img_url}
+                                            id={data.id}
                                         />
                                     )
                                 })

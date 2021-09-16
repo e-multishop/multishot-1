@@ -1,3 +1,4 @@
+import Axios from 'axios';
 import React, { useEffect } from 'react'
 import item_img from "../../../Images/megha.jpg"
 import "./checkout.scss";
@@ -10,7 +11,12 @@ function Checkout_card_item(props) {
         const options = {};
         var instances = M.FormSelect.init(elems, options);
     });
-    console.log("propsdata=",props);
+    // console.log("propsdata=",props);
+    const handleRemove=(id)=>{
+        Axios.delete('/rest/add_to_cart/'+id).then(res=>{
+            console.log(res.data);
+        })
+    }
     return (
         <div className="card-item-flex " >
             <div className="item-image">
@@ -22,7 +28,7 @@ function Checkout_card_item(props) {
                 <p>Primary color : white</p>
                 <div className="save-remove">
                     <p>Save for later</p>
-                    <p> Remove</p>
+                    <p onClick={handleRemove(props.id)}> Remove</p>
                 </div>
             </div>
             <div className="item-quantity">

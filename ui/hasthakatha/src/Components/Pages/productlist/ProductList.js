@@ -6,8 +6,8 @@ import { useDispatch } from 'react-redux';
 import Pagination from './Pagination'
 import Loader from "../../Shared/loader/Loader"
 import Axios from 'axios'
-const ProductList = () => {
 
+const ProductList = () => {
     const [categories, setCategories] = useState([]);
     const [product, setProduct] = useState([]);
     const [Loading, setLoading] = useState(true);
