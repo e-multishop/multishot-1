@@ -57,6 +57,7 @@ const Login = (props) => {
                 props.closeModal(true);
             }
             else {
+                
                 const redirectPathParam = props.location.search;
                 const hasRedirectPath = redirectPathParam.indexOf('redirect_path') > -1;
                 if (hasRedirectPath) {
