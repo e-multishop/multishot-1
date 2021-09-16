@@ -6,24 +6,42 @@ import Checkout_card_item from "./Checkout_card_item"
 import { useSelector } from 'react-redux'
 import Empty_checkout from './Empty_checkout'
 import Axios from 'axios';
+import Loader from '../../Shared/loader/Loader';
 
 function Checkout() {
     // const cartData = useSelector((state) => state.cartItems);
     // console.log("cart data check =", cartData);
+    const [data,setData]=useState({
+        discount:"0",
+        tax:"0",
+        totalAmount:"0"
+    })
     const [cartData,setCartData]=useState([]);
-    useEffect(()=>{
-        const userId=localStorage.getItem('userId')
+    const[Loading,setLoading]=useState(false);
+    const numberOfItems = useSelector((state) => state.cartItems.numberOfItems);
+    const getCart=(userId)=>{
+        setLoading(true);
         Axios.get('/rest/add_to_cart/'+userId).then(res=>{
-            // debugger;
             setCartData(res.data.output);
         })
+        Axios.get("/rest/add_to_cart_price_calculate/"+userId).then((res) => {
+            // console.log(res.data);
+            const result = res.data;
+            setData(result);
+            setLoading(false);
+        })
+    }
+    useEffect(()=>{
+        const userId=localStorage.getItem('userId')
+        getCart(userId)
     },[]);
     return (
         <div className="hk-container">
-            {cartData.length?
+            { Loading ? <div className="loader checkout"><Loader /></div> :
+            cartData.length?
             <div>
                     <div className="header-checkout">
-                        <h2>{cartData.length} items in your basket</h2>
+                        <h2>{numberOfItems} items in your basket</h2>
                         <NavLink to="/shop" className="keep-shopping">
                             Keep Shopping
                     </NavLink>
@@ -39,13 +57,14 @@ function Checkout() {
                                             productprice={data.price}
                                             productimg={data.img_url}
                                             id={data.id}
+                                            getCart={getCart}
                                         />
                                     )
                                 })
                             }
                         </div>
                         <div className="col s4">
-                            <Checkout_card />
+                            <Checkout_card data={data}/>
                         </div>
                     </div>
                 </div>:<Empty_checkout />}

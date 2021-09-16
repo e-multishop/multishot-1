@@ -12,9 +12,12 @@ function Checkout_card_item(props) {
         var instances = M.FormSelect.init(elems, options);
     });
     // console.log("propsdata=",props);
-    const handleRemove=(id)=>{
-        Axios.delete('/rest/add_to_cart/'+id).then(res=>{
+    const handleRemove=()=>{
+        Axios.delete('/rest/add_to_cart/'+props.id).
+        then(res=>{
             console.log(res.data);
+            const userId=localStorage.getItem('userId');
+            props.getCart(userId);
         })
     }
     return (
@@ -28,7 +31,7 @@ function Checkout_card_item(props) {
                 <p>Primary color : white</p>
                 <div className="save-remove">
                     <p>Save for later</p>
-                    <p onClick={handleRemove(props.id)}> Remove</p>
+                    <p onClick={()=>handleRemove()}> Remove</p>
                 </div>
             </div>
             <div className="item-quantity">

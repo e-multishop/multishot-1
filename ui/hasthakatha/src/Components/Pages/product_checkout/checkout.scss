@@ -1,9 +1,15 @@
+.loader{
+    &.checkout{
+        height: 400px !important;
+    }
+}
+
 .header-checkout {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     margin: 2% 1% 1% 1%;
-
+   
     h2 {
         font-size: 24px;
         font-weight: 500;
