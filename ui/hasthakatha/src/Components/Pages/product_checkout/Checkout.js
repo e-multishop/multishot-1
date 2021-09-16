@@ -3,10 +3,12 @@ import { NavLink } from 'react-router-dom'
 import "./checkout.scss";
 import Checkout_card from "./Checkout_card"
 import Checkout_card_item from "./Checkout_card_item"
-import { useSelector } from 'react-redux'
+import { useSelector,useDispatch} from 'react-redux'
 import Empty_checkout from './Empty_checkout'
 import Axios from 'axios';
 import Loader from '../../Shared/loader/Loader';
+import {cartItems}  from '../../../Redux/actions/index';
+
 
 function Checkout() {
     // const cartData = useSelector((state) => state.cartItems);
@@ -18,6 +20,8 @@ function Checkout() {
     })
     const [cartData,setCartData]=useState([]);
     const[Loading,setLoading]=useState(false);
+    const dispatch=useDispatch();
+
     const numberOfItems = useSelector((state) => state.cartItems.numberOfItems);
     const getCart=(userId)=>{
         setLoading(true);
@@ -30,6 +34,10 @@ function Checkout() {
             setData(result);
             setLoading(false);
         })
+        Axios.get('/rest/add_to_cart/number_of_items/' + userId).then(res => {
+            const numberOfItems = res.data.number_of_items;
+            dispatch(cartItems(numberOfItems))
+        })
     }
     useEffect(()=>{
         const userId=localStorage.getItem('userId')
@@ -38,7 +46,7 @@ function Checkout() {
     return (
         <div className="hk-container">
             { Loading ? <div className="loader checkout"><Loader /></div> :
-            cartData.length?
+            numberOfItems?
             <div>
                     <div className="header-checkout">
                         <h2>{numberOfItems} items in your basket</h2>
