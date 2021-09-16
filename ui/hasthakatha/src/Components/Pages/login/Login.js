@@ -57,11 +57,16 @@ const Login = (props) => {
             }
             else {
                 const redirectPathParam = props.location.search;
-                const redirectPath = redirectPathParam.substr(redirectPathParam.indexOf('redirect_path') + 'redirect_path'.length+1, redirectPathParam.length);
-                if (redirectPath === '/admin') {
-                    document.location.href = "/admin";
+                const hasRedirectPath = redirectPathParam.indexOf('redirect_path') > -1;
+                if (hasRedirectPath) {
+                    const redirectPath = redirectPathParam.substr(redirectPathParam.indexOf('redirect_path') + 'redirect_path'.length+1, redirectPathParam.length);
+                    if (redirectPath === '/admin') {
+                        document.location.href = "/admin";
+                    } else {
+                        props.history.push(redirectPath);
+                    }
                 } else {
-                    props.history.push(redirectPath);
+                    document.location.href = "/";
                 }
             }
             toast.success(<span ><FontAwesomeIcon icon={faCheck} size='lg' color="white" className="icon toast-icon" />  Success</span>)
