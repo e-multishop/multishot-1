@@ -30,7 +30,7 @@ function Checkout_card_item(props) {
                 <p>Size: XS US women's letter</p>
                 <p>Primary color : white</p>
                 <div className="save-remove">
-                    <p>Save for later</p>
+                    {/* <p>Save for later</p> */}
                     <p onClick={()=>handleRemove()}> Remove</p>
                 </div>
             </div>
