@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 import "./login.scss";
 // import Modal from "./Modal"
 import Axios from 'axios'
@@ -22,6 +22,12 @@ const Login = (props) => {
     const [status, setStatus] = useState('');
     const [loading, setLoading] = useState(false);
 
+    useEffect(() => {
+        const isLoggedIn = localStorage.getItem('token');
+        if (isLoggedIn) {
+            props.history.push('/page-not-found');
+        }
+    })
     const handleChange = (e) => {
         setLogin({ ...login, [e.target.id]: e.target.value });
         setStatus('')
@@ -50,7 +56,18 @@ const Login = (props) => {
                 props.closeModal(true);
             }
             else {
-                document.location.href = "/admin";
+                const redirectPathParam = props.location.search;
+                const hasRedirectPath = redirectPathParam.indexOf('redirect_path') > -1;
+                if (hasRedirectPath) {
+                    const redirectPath = redirectPathParam.substr(redirectPathParam.indexOf('redirect_path') + 'redirect_path'.length+1, redirectPathParam.length);
+                    if (redirectPath === '/admin') {
+                        document.location.href = "/admin";
+                    } else {
+                        props.history.push(redirectPath);
+                    }
+                } else {
+                    document.location.href = "/";
+                }
             }
             toast.success(<span ><FontAwesomeIcon icon={faCheck} size='lg' color="white" className="icon toast-icon" />  Success</span>)
             // props.history.push("/about"); 

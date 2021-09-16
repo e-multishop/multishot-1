@@ -415,9 +415,10 @@ var product_app = function (app, con, hasthaBean) {
             Promise.all(asyncoperations).then(function (ops) {
      
                 const reducer = (previousValue, currentValue) => previousValue + currentValue;
-                var totalAmount = listofobjects.reduce(reducer);
-                res.send({"totalAmount":totalAmount,"discount":100,"tax":((totalAmount*18)/100)});
-                
+                var totalAmount = listofobjects.length > 0 ? listofobjects.reduce(reducer): 0;
+                res.send({"totalAmount":totalAmount,"discount":totalAmount ? 100: 0,"tax":((totalAmount*18)/100)});
+
+
             });
         })
     });
