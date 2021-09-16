@@ -46,6 +46,7 @@ const Login = (props) => {
             var decodedSessionId = jwt_decode(session_id);
             // console.log("check decode value=", decodedSessionId.userId);
             localStorage.setItem('userId',decodedSessionId.userId);
+            localStorage.setItem('userEmail',decodedSessionId.email);
             localStorage.setItem('userType', decodedSessionId.userType);
             localStorage.setItem('token', session_id);
             dispatch(AdminLogin(decodedSessionId.userType === 1))

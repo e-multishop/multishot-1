@@ -19,6 +19,7 @@ function LoginDropdown(props) {
         // dropdown.close();
         // props.destroydata();
     }
+    const userEmail = localStorage.getItem('userEmail');
     return (
         <div id="dropdown-share">
 
@@ -34,7 +35,7 @@ function LoginDropdown(props) {
                     >
                         <FontAwesomeIcon icon={faUserCircle} size='4x' className="icon" />
                     </li>
-                    <li><a href="#!" className="email">hasthakatha@gmail.com</a></li>
+                <li><a href="#!" className="email">{userEmail}</a></li>
                     <li><a onClick={HandleChange}>Logout</a></li>
                 </ul>
             {/* </div> */}
