@@ -104,7 +104,7 @@ const ProductList = () => {
                                         <>
 
                                             <div className="hk-product_card" key={index}>
-                                                <Link to={"/productdetails/"+value.pid} params={{pid: value.pid}}>
+                                                <Link to={"/productdetails/"+value.pid}>
                                                     <div className="img-wraper">
                                                         {/* {const url= atob(value.url)} */}
                                                         {

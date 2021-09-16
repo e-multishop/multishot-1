@@ -45,7 +45,7 @@ class Productdetails extends Component{
     }
 
     getSizeOptions() {
-        return this.state.sizes.map(s => <option>{s.size}</option>)
+        return this.state.sizes.map(s => <option >{s.name}</option>)
     }
 
     render(){

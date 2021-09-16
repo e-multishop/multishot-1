@@ -47,7 +47,7 @@ var common_app=function(app,con)
     });
 
     app.get('/rest/productsize/:pid', (req, res) => {
-        const productSizeSql = `Select id, size from product_size where pid=${req.params.pid}`;
+        const productSizeSql = `Select id, size, S.name from product_size as P left join size as S on P.size = S.sid where pid=${req.params.pid}`;
         con.query(productSizeSql, (err, result) => {
             res.send({output: result});
         });

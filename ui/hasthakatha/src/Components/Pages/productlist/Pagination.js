@@ -9,7 +9,7 @@ const Pagination = (props) => {
     e.preventDefault();
     e.stopPropagation();
   }
-  const totalPageCount = parseInt(props.totalRecords)/props.pageSize;
+  const totalPageCount = Math.ceil(parseInt(props.totalRecords)/props.pageSize);
 
   const handlePreviousPage = (e) => {
     if (props.pageNumber !== 1) {
@@ -24,13 +24,18 @@ const Pagination = (props) => {
   }
 
   const showData = (count) => {
-    return [...Array(count)].map((item, i) => <li className={props.pageNumber === i+1 ? "hs-active" : "waves-effect"}><a onClick={(e) => handlePageNumberChange(i+1, e)}>{i+1}</a></li>)
+    const dataMap = [];
+    const actualCount = Math.ceil(count);
+    for(let i = 0; i < actualCount; i++) { 
+      dataMap.push(1);
+    }
+    return (<>{dataMap.map((item, i) => <li key={i} className={props.pageNumber === i+1 ? "hs-active" : "waves-effect"}><a onClick={(e) => handlePageNumberChange(i+1, e)}>{i+1}</a></li>)}</>)
   }
 
   return (
     <ul className="pagination">
-      <li className={props.pageNumber>1 ? 'waves-effect' : 'disabled'}><a onClick={(e) => handlePreviousPage(e)}><FontAwesomeIcon icon={faChevronLeft} size="large"/></a></li>
-      {showData(totalPageCount)}
+      <li className={props.pageNumber > 1 ? 'waves-effect' : 'disabled'}><a onClick={(e) => handlePreviousPage(e)}><FontAwesomeIcon icon={faChevronLeft} size="large"/></a></li>
+      { showData(totalPageCount) }
       <li className={props.pageNumber===totalPageCount? 'disabled' : "waves-effect"}><a onClick={(e) => handleNextPage(e)}><FontAwesomeIcon icon={faChevronRight} size="large"/></a></li>
     </ul>
   );

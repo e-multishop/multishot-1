@@ -158,11 +158,10 @@ var product_app = function (app, con, hasthaBean) {
         var url = req.body.url;
         var size = req.body.size;
         var buffer = Buffer.from(url, 'binary');
-        var mimeType = req.body.mimeType;
         var createdDate = (new Date()).getTime();
         var updatedDate = (new Date()).getTime();
         var start = "START TRANSACTION;";
-        var t1 = "INSERT INTO `product_images`(`imageid`, `pid`, `type`, `image_data`, `mime_type`) VALUES (NULL,'" + pid + "','main','" + buffer + "','" + "');";
+        var t1 = "INSERT INTO `product_images`(`imageid`, `pid`, `type`, `image_data`) VALUES (NULL,'" + pid + "','main','" + buffer + "');";
         var t2 = "INSERT INTO product(pid,category,title,price,price_without_embroidary,description,note,material,total_available,total_quantity,available,sku,status,createdDate,updatedDate)VALUES(" + pid + ",'" + category + "','" + title + "','" + price + "','" + price_without_embroidary + "','" + description + "','" + note + "','" + material + "','" + total_available + "','" + total_quantity + "','" + available + "','" + sku + "','" + status + "','"+createdDate+"','"+updatedDate+"');";
         var sizeQuery = '';
         if (size && size.length > 0) {
