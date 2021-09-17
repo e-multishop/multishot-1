@@ -25,7 +25,9 @@ const Login = (props) => {
     useEffect(() => {
         const isLoggedIn = localStorage.getItem('token');
         if (isLoggedIn) {
-            props.history.push('/page-not-found');
+            if (props.history) {
+                props.history.push('/page-not-found');
+            }
         }
     })
     const handleChange = (e) => {
