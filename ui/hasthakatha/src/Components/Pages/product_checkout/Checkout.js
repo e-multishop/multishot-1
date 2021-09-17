@@ -66,6 +66,7 @@ function Checkout() {
                                             productimg={data.img_url}
                                             id={data.id}
                                             getCart={getCart}
+                                            imgdata={data.image_data}
                                         />
                                     )
                                 })

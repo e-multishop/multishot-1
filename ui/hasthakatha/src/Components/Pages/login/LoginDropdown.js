@@ -2,8 +2,7 @@ import React, { useEffect } from 'react'
 import "./login.scss";
 import icon from "../../../Images/logo.png"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser,faUserCircle } from '@fortawesome/free-solid-svg-icons'
-
+import { faUserCheck,faUserCircle } from '@fortawesome/free-solid-svg-icons'
 function LoginDropdown(props) {
     useEffect(() => {
         const dropdown1 = document.getElementById("dropdown-share");
@@ -25,7 +24,7 @@ function LoginDropdown(props) {
 
             {/* <!-- Dropdown Trigger --> */}
             <a class='dropdown-trigger' href='#' data-target='dropdown1'>
-                <FontAwesomeIcon icon={faUser} size='large' className="icon" />
+                <FontAwesomeIcon icon={faUserCheck} size='large' className="icon" />
             </a>
             {/* //   <!-- Dropdown Structure --> */}
             {/* <div className="dropdown-con"> */}
