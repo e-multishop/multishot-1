@@ -128,6 +128,7 @@ export default function ProductList(props) {
 
   useEffect(() => {
     getProductList(page, rowsPerPage);
+    EventBus.subscribe(EventType.UPDATE_PRODUCT_TABLE, getProducts);
     return function cleanup() {
       EventBus.unsubscribe(EventType.UPDATE_PRODUCT_TABLE);
     }
@@ -151,8 +152,6 @@ export default function ProductList(props) {
   const getProducts = () => {
     getProductList(page, rowsPerPage);
   }
-
-  EventBus.subscribe(EventType.UPDATE_PRODUCT_TABLE, getProducts);
   
   const ShowData = (column, value,row, cindex) => {
     switch (column.id) {
