@@ -325,10 +325,16 @@ var product_app = function (app, con, hasthaBean) {
 
     app.get("/rest/add_to_cart/:uid", (req, res) => {
         var uid = req.params.uid;
-        var sql = "SELECT * FROM `add_to_cart` AS A LEFT JOIN product as P ON A.pid=P.pid where A.uid='" + uid + "';";
+        var sql = "SELECT A.id,A.pid,A.quantity,A.createdDate,P.title,P.price,P.description,I.image_data FROM `add_to_cart` AS A LEFT JOIN product as P ON A.pid=P.pid LEFT JOIN product_images as I ON P.pid=I.pid where A.uid='"+uid+"'; ";
         con.query(sql, (err, result) => {
             if (err) throw err;
-            //   var pid = result[0]["pid"];
+             res.header("Content-Type", "application/json");
+                result.forEach(r => {
+                    if (r.image_data && r.image_data.buffer) {
+                        const buff_data = Buffer.from(r.image_data);
+                        r.image_data = buff_data ? buff_data.toString() : '';
+                    }
+                })
             res.send({ "output": result });
         });
     });
