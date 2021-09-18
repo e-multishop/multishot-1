@@ -1,6 +1,5 @@
 import React, { useState, Fragment, useEffect } from 'react';
 import "./login.scss";
-// import Modal from "./Modal"
 import Axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
@@ -9,9 +8,6 @@ import Loader from '../../Common/Loader';
 import { AdminLogin } from '../../../Redux/actions/index';
 import { useDispatch } from 'react-redux';
 import jwt_decode from "jwt-decode";
-
-// import { useEffect } from 'react/cjs/react.production.min';
-// import { useParams } from 'react-router';
 
 const Login = (props) => {
     var dispatch = useDispatch();
