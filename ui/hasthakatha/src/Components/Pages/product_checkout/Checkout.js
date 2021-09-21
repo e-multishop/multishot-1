@@ -52,7 +52,7 @@ function Checkout() {
                         <h2>{numberOfItems} items in your basket</h2>
                         <NavLink to="/shop" className="keep-shopping">
                             Keep Shopping
-                    </NavLink>
+                        </NavLink>
                     </div>
                     <div className="row">
                         <div className="col s8">
