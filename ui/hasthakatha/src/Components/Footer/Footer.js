@@ -29,21 +29,21 @@ const Footer = () => {
       setIsAdmin(false);
     }
   })
-  const chatbox=()=>{
-    ReactDOM.render(
-      <MessengerCustomerChat
-        pageId="2169258479972828"
-        appId="<APP_ID>"
-        htmlRef="<REF_STRING>"
-      />,
-      document.getElementById('demo-messanger')
-    );
-  }
+  // const chatbox=()=>{
+  //   ReactDOM.render(
+  //     <MessengerCustomerChat
+  //       pageId="2169258479972828"
+  //       appId="<APP_ID>"
+  //       htmlRef="<REF_STRING>"
+  //     />,
+  //     document.getElementById('demo-messanger')
+  //   );
+  // }
   return (
     <footer className="page-footer hk-footer">
       <div className="container">
         {/* <button onClick={chatbox}>chat</button> */}
-        <div id="demo-messanger"></div>
+        {/* <div id="demo-messanger"></div> */}
         <div className="row">
           <div className="col l4 s12">
             <NavLink to="/"><img src={logo} alt="logo" className="logo" /></NavLink>

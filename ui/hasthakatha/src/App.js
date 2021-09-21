@@ -14,10 +14,11 @@ import Login from './Components/Pages/login/Login';
 import Signup from'./Components/Pages/login/Signup';
 import * as materialize  from 'materialize-css/dist/js/materialize';
 import 'react-toastify/dist/ReactToastify.css';
-import Adminapp from './Components/Admin_dashboard/Adminapp'
 import Reset from './Components/Pages/login/Reset_password';
 import Checkout from './Components/Pages/product_checkout/Checkout'
 import PageNotFound from "./Components/Pages/PageNotFound/PageNotFound";
+import Account from "./Components/Pages/User_dashboard/account/Account";
+
 class App extends Component{
   render(){
     return(
@@ -33,7 +34,7 @@ class App extends Component{
               <Route component={ProductList} path="/shop"/>
               <Route component={Productdetails} path="/productdetails/:pid"/>
               <Route component={Contact} path="/contact"/>
-              {/* <Route component={Adminapp} path="/admin"/> */}
+              <Route component={Account} path="/account"/>
               <Route component={Login} path="/login"/>
               <Route component={Signup} path="/signup"/>
               <Route component={Checkout} path="/viewcart"/>

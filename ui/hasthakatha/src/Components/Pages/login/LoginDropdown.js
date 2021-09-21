@@ -3,6 +3,8 @@ import "./login.scss";
 import icon from "../../../Images/logo.png"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCheck,faUserCircle } from '@fortawesome/free-solid-svg-icons'
+import { NavLink } from 'react-router-dom';
+
 function LoginDropdown(props) {
     useEffect(() => {
         const dropdown1 = document.getElementById("dropdown-share");
@@ -29,12 +31,10 @@ function LoginDropdown(props) {
             {/* //   <!-- Dropdown Structure --> */}
             {/* <div className="dropdown-con"> */}
                 <ul id='dropdown1' className='dropdown-content logout-op'>
-                    <li 
-                    className="icon-block"
-                    >
+                    <li className="icon-block">
                         <FontAwesomeIcon icon={faUserCircle} size='4x' className="icon" />
                     </li>
-                <li><a href="#!" className="email">{userEmail}</a></li>
+                    <li><NavLink to="/account" className="email">{userEmail}</NavLink></li>
                     <li><a onClick={HandleChange}>Logout</a></li>
                 </ul>
             {/* </div> */}
