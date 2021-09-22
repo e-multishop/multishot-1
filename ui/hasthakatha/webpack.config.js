@@ -54,6 +54,7 @@ module.exports = {
     hotOnly: true,
     proxy: {
       '/rest': 'http://localhost:3000'
+  
     },
     watchOptions: {
       poll: true,

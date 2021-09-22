@@ -21,6 +21,7 @@ function Checkout() {
     const [cartData,setCartData]=useState([]);
     const[Loading,setLoading]=useState(false);
     const dispatch=useDispatch();
+    const userId=localStorage.getItem('userId');
 
     const numberOfItems = useSelector((state) => state.cartItems.numberOfItems);
     const getCart=(userId)=>{
@@ -40,9 +41,18 @@ function Checkout() {
         })
     }
     useEffect(()=>{
-        const userId=localStorage.getItem('userId')
         getCart(userId)
     },[]);
+    const handleSubmit=()=>{
+        const data=[]
+        Axios.post('/rest/creating_order',{
+            amount: data.totalAmount,
+            data: cartData,
+            uid: userId
+        }).then(res=>{
+            console.log(res);
+        })
+    }
     return (
         <div className="hk-container">
             { Loading ? <div className="loader checkout"><Loader /></div> :
@@ -73,7 +83,7 @@ function Checkout() {
                             }
                         </div>
                         <div className="col s4">
-                            <Checkout_card data={data}/>
+                            <Checkout_card data={data} handleSubmit={handleSubmit}/>
                         </div>
                     </div>
                 </div>:<Empty_checkout />}

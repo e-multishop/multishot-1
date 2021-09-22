@@ -14,7 +14,7 @@ var payment_app = function (app, con) {
         var quantity;
         var pid;
         var t_status = 1;
-        var temp = '';
+        var temp ='';
         var t2 = "INSERT INTO `transaction_detail`(`id`,`tid`, `pid`,`quantity`) VALUES (null,'" + tranction_id + "','$pid','$quantity');";
         var t1 = "INSERT INTO `transaction`(`tid`, `uid`, `created_date`, `t_status`,`updated_date`) VALUES ('" + tranction_id + "','" + uid + "','" + created_date + "','" + t_status + "','" + updated_date + "');";
         for (let i = 0; i < data.length; i++) {

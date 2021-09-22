@@ -3,23 +3,8 @@ import "./checkout.scss"
 import Axios from 'axios';
 
 function Checkout_card(props) {
-    // const [data,setData]=useState({
-    //     discount:"0",
-    //     tax:"0",
-    //     totalAmount:"0"
-    // })
-    
-    // useEffect(() => {
-    //     const userId=localStorage.getItem('userId')
-    //     Axios.get("/rest/add_to_cart_price_calculate/"+userId).then((res) => {
-    //       // console.log(res.data);
-    //       const result = res.data;
-    //       setData(result);
-    //     })
-    // },[]);
     return (
         <>
-
             <div class="row">
                 <div class="col s12">
                     <div class="card">
@@ -46,7 +31,7 @@ function Checkout_card(props) {
                                 <p>₹{props.data.totalAmount}</p>
                             </div>
                             <div className="hk-checkout-button" >
-                                <a>Checkout</a>
+                                <a onClick={()=>{props.handleSubmit()}}>Checkout</a>
                             </div>
                             <p className="center-align ">
                                 Local taxes included (where applicable)<br />
