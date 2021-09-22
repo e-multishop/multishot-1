@@ -5,7 +5,7 @@ var payment_app = function (app, con) {
 
     app.post('/rest/creating_order', (req, res) => {
 
-        var total_amount = parseInt(req.body.amount);
+        var total_amount = req.body.amount;
         var tranction_id = nanoId(16);
         var created_date = (new Date()).getTime();
         var updated_date = (new Date()).getTime();
@@ -14,15 +14,31 @@ var payment_app = function (app, con) {
         var quantity;
         var pid;
         var t_status = 1;
+<<<<<<< HEAD
         var temp ='';
+=======
+        var temp = '';
+        var sql3='';
+        var temp1 = `SELECT price FROM product where pid='$pid';`;
+>>>>>>> 3560cf625b9a4ac2f55d1bbd1e18105d532f8d53
         var t2 = "INSERT INTO `transaction_detail`(`id`,`tid`, `pid`,`quantity`) VALUES (null,'" + tranction_id + "','$pid','$quantity');";
         var t1 = "INSERT INTO `transaction`(`tid`, `uid`, `created_date`, `t_status`,`updated_date`) VALUES ('" + tranction_id + "','" + uid + "','" + created_date + "','" + t_status + "','" + updated_date + "');";
         for (let i = 0; i < data.length; i++) {
             var t3 = t2.replace("$pid", data[i].pid);
             t3 = t3.replace("$quantity", data[i].quantity);
             temp = temp + t3;
+
+   //         sql3=sql3+temp1.replace("$pid",data[i].pid);
         }
 //        console.log(temp);
+        // con.query(sql3,(err,result2)=>{
+        //     if (err) throw err;
+        //     for(let i=0; i<result2.length; i++)
+        //     {
+        //         console.log(result2[i]["price"]);
+        //     }
+        //     res.send(total_amount);
+        // });
         con.query(t1,(err,result1)=>{
             if (err) throw err;
             con.query(temp, (err, result) => {
