@@ -5,7 +5,7 @@ var payment_app = function (app, con) {
 
     app.post('/rest/creating_order', (req, res) => {
 
-        var total_amount = req.body.amount;
+        var total_amount = '500';
         var tranction_id = nanoId(16);
         var created_date = (new Date()).getTime();
         var updated_date = (new Date()).getTime();
@@ -15,6 +15,11 @@ var payment_app = function (app, con) {
         var pid;
         var t_status = 1;
         var temp = '';
+<<<<<<< HEAD
+=======
+        var sql3='';
+        var temp1 = `SELECT price FROM product where pid='$pid';`;
+>>>>>>> 8af36d0b4b751cd190fe7c152685b7ad97f6a643
         var t2 = "INSERT INTO `transaction_detail`(`id`,`tid`, `pid`,`quantity`) VALUES (null,'" + tranction_id + "','$pid','$quantity');";
         var t1 = "INSERT INTO `transaction`(`tid`, `uid`, `created_date`, `t_status`,`updated_date`) VALUES ('" + tranction_id + "','" + uid + "','" + created_date + "','" + t_status + "','" + updated_date + "');";
         for (let i = 0; i < data.length; i++) {
