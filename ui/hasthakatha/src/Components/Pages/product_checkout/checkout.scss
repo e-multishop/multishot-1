@@ -57,16 +57,16 @@
     border-radius: 0 20px;
     padding: 6px;
     margin: 5px;
-    text-align: center;
+    text-align: center; 
     cursor: pointer;
     letter-spacing: 2px;
-    a {
+    p {
         color: #ffffff;
     }
     &:hover {
         background-color: white;
         border: 1px solid var(--primary_color);
-        a {
+        p {
             color: var(--primary_color);
         }
     }

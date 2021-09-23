@@ -60,7 +60,7 @@ class Contact extends React.Component {
                                     </div>
                                 </div>
                                 <div className="button">
-                                    <a class="waves-effect waves-light btn">Submit</a>
+                                    <a class="waves-effect waves-light btn btn-color">Submit</a>
                                 </div>
                             </div>
                         </form>

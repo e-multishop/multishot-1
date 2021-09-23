@@ -8,7 +8,7 @@ import Empty_checkout from './Empty_checkout'
 import Axios from 'axios';
 import Loader from '../../Shared/loader/Loader';
 import {cartItems}  from '../../../Redux/actions/index';
-
+import logo from '../../../Images/logo.png'
 
 function Checkout() {
     // const cartData = useSelector((state) => state.cartItems);
@@ -67,7 +67,7 @@ function Checkout() {
             "currency": checkoutPaymentDetails.currency,
             "name": checkoutPaymentDetails.name,
             "description": checkoutPaymentDetails.description,
-            "image": "https://example.com/your_logo",
+            "image": logo,
             "order_id": checkoutPaymentDetails.order_id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
             "handler": function (response){
                 alert(response.razorpay_payment_id);
