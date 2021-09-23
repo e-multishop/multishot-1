@@ -27,13 +27,13 @@ module.exports = {
           }}]
       },
 
-      {
-        test: /\.(png|jpg)$/,
-        use: ["url-loader"]
+      // {
+      //   test: /\.(png|jpg)$/,
+      //   use: ["url-loader"]
        
-      },
+      // },
       {
-        test: /\.(woff2?)$/,
+        test: /\.(woff2?|png|jpg|jpeg|gif)$/,
         use: ["file-loader"]
       },
     ]
