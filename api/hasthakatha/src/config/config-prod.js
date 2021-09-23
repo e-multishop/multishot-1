@@ -7,5 +7,6 @@ module.exports = {
     db_host: "db4free.net",
     db_user: "admin_has_123",
     db_password: "Welcome@123",
-    db_database: "hastakatha_app"
+    db_database: "hastakatha_app",
+    session_secret: "thisismy"
 }
