@@ -53,5 +53,6 @@ jobs:
         git -C ./heroku-hasthakatha add ./public/readme.md
         git -C ./heroku-hasthakatha add ./public/admin/index.html
         git -C ./heroku-hasthakatha add ./src
+        git -C ./heroku-hasthakatha add ./index.js
         git -C ./heroku-hasthakatha commit -m "updating assets"
         git -C ./heroku-hasthakatha push origin main
