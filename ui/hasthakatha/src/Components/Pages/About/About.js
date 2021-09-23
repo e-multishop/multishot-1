@@ -2,9 +2,12 @@ import React from 'react';
 import "./about.scss";
 import img1 from "../../../Images/aboutimage.jpg";
 import img2 from "../../../Images/aboutusimage2.jpg"
+import Header from '../../Header/Header';
+import Footer from '../../Footer/Footer';
 const About = () => {
     return (
         <>
+            <Header />
             <div className="row hk-aboutus">
                 <div className="col s6 aboutusimg">
                     <img src={img1} alt="about us image" />
@@ -31,6 +34,7 @@ const About = () => {
                         </h3> */}
                 </div>
             </div>
+            <Footer/>
             {/* <div className="row hk-aboutus bg-color">
                 <div className="col s6 aboutuscontent">
                     <h2>

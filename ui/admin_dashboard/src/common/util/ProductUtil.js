@@ -3,7 +3,11 @@ export default class ProductUtil {
         if (productData) {
             productData.forEach(p => {
                 if (p.description) {
-                    p.description = atob(p.description);
+                    try {
+                        p.description = atob(p.description);
+                    } catch {
+                        console.error('error on product description data')
+                    }
                 }
             })
         }

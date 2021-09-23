@@ -1,5 +1,12 @@
 .hk-signup.wrapper {
     position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .input-field {
+        width: 300px;
+    }
 }
 
 .signup-form{

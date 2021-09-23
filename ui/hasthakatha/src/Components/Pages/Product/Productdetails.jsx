@@ -1,6 +1,9 @@
 import React,{Component} from 'react';
 import "./Productdetails.scss";
 import imgproduct from '../../../Images/pant.jpg';
+import imgproduct2 from '../../../Images/skirts.jpg';
+import imgproduct3 from '../../../Images/top.jpg';
+import imgproduct4 from '../../../Images/dresses.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faMapMarkerAlt} from '@fortawesome/free-solid-svg-icons'
 import {faCheck} from '@fortawesome/free-solid-svg-icons'
@@ -10,6 +13,8 @@ import ProductReview from './ProductReview';
 import {faStar} from '@fortawesome/free-solid-svg-icons';
 import Demoimg from '../../../Images/megha.jpg';
 import Axios from 'axios';
+import Header from '../../Header/Header';
+import Footer from '../../Footer/Footer';
 
 class Productdetails extends Component{
 
@@ -18,7 +23,8 @@ class Productdetails extends Component{
         this.state = {
             pid: '',
             productdetail: {},
-            sizes: []
+            sizes: [],
+            mainImage: ''
         }
     }
 
@@ -26,7 +32,7 @@ class Productdetails extends Component{
         const pid = this.props.match.params.pid;
         this.setState({pid: pid});
         Axios.get('rest/productdetails/'+pid).then(response => {
-            this.setState({productdetail: response.data.output})
+            this.setState({productdetail: response.data.output, mainImage: response.data.output.image_data});
         })
         this.loadProductSize(pid);
     }
@@ -46,6 +52,10 @@ class Productdetails extends Component{
 
     getSizeOptions() {
         return this.state.sizes.map(s => <option >{s.name}</option>)
+    }
+
+    setMainImage(image) {
+        this.setState({mainImage: image});
     }
 
     render(){
@@ -70,28 +80,35 @@ class Productdetails extends Component{
             },
             
         ];
+
+
         return(
           <>
+           <Header />
            <div className="hs_product" id="hs_product_details">
                 <div className="hs_product_details">
                     
                     <div className="img1 item1">
-                        <img src={imgproduct} alt="product image" />
+                        <img src={imgproduct} alt="product image" onClick={() => this.setMainImage(imgproduct)}/>
                     </div>
                     <div className="img1 item2">
-                        <img src={imgproduct} alt="product image" />      
+                        <img src={imgproduct2} alt="product image" onClick={() => this.setMainImage(imgproduct2)}/>      
                     </div>
                     <div className="img1 item3">
-                    <img src={imgproduct} alt="product image" />
+                    <img src={imgproduct3} alt="product image" onClick={() => this.setMainImage(imgproduct3)}/>
                     </div>
                     <div className="img1 item4">
-                        <img src={imgproduct} alt="product image" />
+                        <img src={imgproduct4} alt="product image" onClick={() => this.setMainImage(imgproduct4)}/>
                     </div>
                     <div className="img1 item5">
-                        <img src={imgproduct} alt="product image" />
+                        <img src={imgproduct} alt="product image" onClick={() => this.setMainImage(imgproduct)}/>
                     </div>
                     <div className="img-main item6">
-                        <img src={this.state.productdetail.image_data} alt="product image" />
+                        {
+                            this.state.mainImage
+                                ? <img src={this.state.mainImage} alt="product image" />
+                                : <b className="hs-image-preview">Image preview not available</b>
+                        }
                     </div>
                 </div>
                 <div className="hs_product_side">
@@ -155,7 +172,7 @@ class Productdetails extends Component{
             <div className="hs_review comment">
                 <div className="hk-review-head">   
                     <h2 className="hk-review-heading">234 Shop reviews</h2>
-                    <p classname="hk-review-filter"></p>
+                    <p className="hk-review-filter"></p>
                 </div>
                 <div>
                     {
@@ -181,6 +198,7 @@ class Productdetails extends Component{
             {/* // <!--slider section--> */}
             <div className="hs_slider">
             </div>
+            <Footer />
         </>
         );
     };  

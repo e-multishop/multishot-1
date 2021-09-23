@@ -23,9 +23,6 @@ class App extends Component{
   render(){
     return(
       <HashRouter>
-        <Header/>
-        <div id="search"></div>
-        <div id="modal"></div>
         {/* <div id="LoginDropdown"></div> */}
 
           <Switch>
@@ -41,7 +38,6 @@ class App extends Component{
               <Route component={PageNotFound}/>
               <Route exact component={Reset} path="/reset_password/:id"/>
         </Switch>
-        <Footer/>
     </HashRouter> 
     );
   };

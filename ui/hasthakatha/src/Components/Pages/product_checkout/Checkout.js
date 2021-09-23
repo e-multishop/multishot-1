@@ -9,6 +9,8 @@ import Axios from 'axios';
 import Loader from '../../Shared/loader/Loader';
 import {cartItems}  from '../../../Redux/actions/index';
 import logo from '../../../Images/logo.png'
+import Header from '../../Header/Header';
+import Footer from '../../Footer/Footer';
 
 function Checkout() {
     // const cartData = useSelector((state) => state.cartItems);
@@ -101,40 +103,44 @@ function Checkout() {
     }
 
     return (
-        <div className="hk-container">
-            { Loading ? <div className="loader checkout"><Loader /></div> :
-            numberOfItems?
-            <div>
-                    <div className="header-checkout">
-                        <h2>{numberOfItems} items in your basket</h2>
-                        <NavLink to="/shop" className="keep-shopping">
-                            Keep Shopping
-                        </NavLink>
-                    </div>
-                    <div className="row">
-                        <div className="col s8">
-                            {
-                                cartData.map((data) => {
-                                    return (
-                                        // <h1>{data.cardData.title}</h1>
-                                        <Checkout_card_item
-                                            producttitle={data.title}
-                                            productprice={data.price}
-                                            productimg={data.img_url}
-                                            id={data.id}
-                                            getCart={getCart}
-                                            imgdata={data.image_data}
-                                        />
-                                    )
-                                })
-                            }
+        <>
+            <Header />
+            <div className="hk-container">
+                { Loading ? <div className="loader checkout"><Loader /></div> :
+                numberOfItems?
+                <div>
+                        <div className="header-checkout">
+                            <h2>{numberOfItems} items in your basket</h2>
+                            <NavLink to="/shop" className="keep-shopping">
+                                Keep Shopping
+                            </NavLink>
                         </div>
-                        <div className="col s4">
-                            <Checkout_card data={data} handleSubmit={handleSubmit}/>
+                        <div className="row">
+                            <div className="col s8">
+                                {
+                                    cartData.map((data) => {
+                                        return (
+                                            // <h1>{data.cardData.title}</h1>
+                                            <Checkout_card_item
+                                                producttitle={data.title}
+                                                productprice={data.price}
+                                                productimg={data.img_url}
+                                                id={data.id}
+                                                getCart={getCart}
+                                                imgdata={data.image_data}
+                                            />
+                                        )
+                                    })
+                                }
+                            </div>
+                            <div className="col s4">
+                                <Checkout_card data={data} handleSubmit={handleSubmit}/>
+                            </div>
                         </div>
-                    </div>
-                </div>:<Empty_checkout />}
-        </div>
+                    </div>:<Empty_checkout />}
+            </div>
+            <Footer />
+        </>
     );
 }
 

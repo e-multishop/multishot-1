@@ -91,6 +91,7 @@ const Login = (props) => {
                         <div className="hk-card">
                             <div class="card-content">
                                 <div className="input-field">
+                                {/* <i class="large material-icons">insert_chart</i> */}
                                     <input id="hklogin_emailid" type="email" className="validate" value={login.hklogin_emailid} onChange={(e) => handleChange(e)} />
                                     <label for="hklogin_emailid" className="">Email</label>
                                     <span className="helper-text" data-error="Email is not valid" ></span>

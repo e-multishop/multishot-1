@@ -58,8 +58,17 @@ var common_app=function(app,con)
         var pageNumber = parseInt(req.params.page_number);
         var offset = (pageSize * (pageNumber - 1));
         var category = req.params.category;
-        var countSql = `SELECT COUNT(*) FROM product where category=${category}`;
-        var sql = `SELECT P.pid, P.category, P.title, P.price, P.price_without_embroidary, P.description, P.note, P.material, P.total_available, P.total_quantity, P.available, P.sku, P.status, P.createdDate, P.updatedDate, I.image_data FROM product as P LEFT JOIN product_images as I on P.pid = I.pid WHERE P.category=${category} LIMIT ${offset}, ${pageSize}` ;
+        const isAllCategory = category === '0' ? true : false;
+        let countSql;
+        let sql;
+        if (isAllCategory) {
+            countSql = `SELECT COUNT(*) FROM product where 1`;
+            sql = `SELECT P.pid, P.category, P.title, P.price, P.price_without_embroidary, P.description, P.note, P.material, P.total_available, P.total_quantity, P.available, P.sku, P.status, P.createdDate, P.updatedDate, I.image_data FROM product as P LEFT JOIN product_images as I on P.pid = I.pid WHERE 1 LIMIT ${offset}, ${pageSize}` ;
+        } else {
+            countSql = `SELECT COUNT(*) FROM product where category='${category}'`;
+            sql = `SELECT P.pid, P.category, P.title, P.price, P.price_without_embroidary, P.description, P.note, P.material, P.total_available, P.total_quantity, P.available, P.sku, P.status, P.createdDate, P.updatedDate, I.image_data FROM product as P LEFT JOIN product_images as I on P.pid = I.pid WHERE P.category='${category}' LIMIT ${offset}, ${pageSize}` ;
+
+        }
         con.query(countSql, function(err, result1){
             const totalRecords = result1[0]["COUNT(*)"];
             con.query(sql, function (err, result) {
