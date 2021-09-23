@@ -1,4 +1,5 @@
-const express = require('express')
+const express = require('express');
+const compression = require('compression');
 const cookieParser = require("cookie-parser");
 const sessions = require('express-session');
 var cors = require('cors');
