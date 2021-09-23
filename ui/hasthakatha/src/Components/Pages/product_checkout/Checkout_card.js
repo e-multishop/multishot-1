@@ -33,7 +33,7 @@ function Checkout_card(props) {
                             <div className="hk-checkout-button" >
                                 <p onClick={()=>{props.handleSubmit()}}>Checkout</p>
                             </div>
-                            <p className="center-align ">
+                            <p className="center-align">
                                 Local taxes included (where applicable)<br />
                         * Additional duties and taxes may apply</p>
                         </div>
