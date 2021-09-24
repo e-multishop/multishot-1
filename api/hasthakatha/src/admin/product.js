@@ -204,7 +204,7 @@ var product_app = function (app, con, hasthaBean) {
             }
         } else {
             res.status(500);
-            res.send('Error reading file');
+            res.send({type: 'error', message: 'Error reading file'});
         }
         let query = '';
         for (let i = 0; i < sheets.length; i++) {
