@@ -288,11 +288,12 @@ var product_app = function (app, con, hasthaBean) {
         var sku = req.body.sku;
         var status = req.body.status;
         var image_data = req.body.image_data;
+        var image_data_changed = req.body.image_data_changed;
         var updatedDate = (new Date()).getTime();
         var sql = "UPDATE product SET category = '" + category + "', title= '" + title + "',price ='" + price + "',price_without_embroidary='" + price_without_embroidary + "',description='" + description + "',note='" + note + "',material='" + material + "',total_available='" + total_available + "',total_quantity='" + total_quantity + "',available='" + available + "',sku='" + sku + "',status='" + status + "',updatedDate='" + updatedDate + "' WHERE pid = '" + pid + "';";
         con.query(sql, (err, result) => {
             if (err) throw err;
-            if (image_data) {
+            if (image_data_changed && image_data) {
                 const imageQuery = `SELECT count(*) from product_images WHERE pid='${pid}'`;
                 con.query(imageQuery, (err, result3) => {
                     const imageBufferData = Buffer.from(image_data, 'binary');
