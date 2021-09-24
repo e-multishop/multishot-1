@@ -4,8 +4,10 @@ import icon from "../../../Images/logo.png"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCheck,faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import { NavLink } from 'react-router-dom';
-
+import { useDispatch } from 'react-redux';
+import {cartItems} from '../../../Redux/actions/index';
 function LoginDropdown(props) {
+    const dispatch = useDispatch();
     useEffect(() => {
         const dropdown1 = document.getElementById("dropdown-share");
         var elems = dropdown1.querySelectorAll('.dropdown-trigger');
@@ -17,8 +19,9 @@ function LoginDropdown(props) {
     const HandleChange = () => {
         localStorage.clear();
         props.setLoggedIn(false);
-        // dropdown.close();
-        // props.destroydata();
+        // clear cart
+        document.location.href = '/';
+         
     }
     const userEmail = localStorage.getItem('userEmail');
     return (
