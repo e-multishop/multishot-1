@@ -4,6 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {  faCheck} from '@fortawesome/free-solid-svg-icons' 
 import Loader from '../../Common/Loader';
+import Logo from '../../Common/Logo';
 
 function Forgotpassword(props) {
     const [email, setEmail] = useState('');
@@ -43,6 +44,7 @@ function Forgotpassword(props) {
             <form className="signup-form">
                 <h5>Forgot Password</h5>
                 <div className="input-field">
+                    <i class="material-icons hs-form-icon">email</i>
                     <input id="email" type="email" className="validate" value={email} onChange={(e) => handleChange(e)} />
                     <label for="email">Email</label>
                     {/* <span className="helper-text" data-error="Email is not valid" data-success="right"></span> */}
@@ -56,10 +58,13 @@ function Forgotpassword(props) {
         )
     };
     return (
-        <div className="row no-margin hk-forgot-password wrapper">
-            { loader ? <Loader height="250px" /> : ''}
-            { show() }
-        </div>
+        <>
+            <Logo />
+            <div className="row no-margin hk-forgot-password hk-account wrapper">
+                { loader ? <Loader height="250px" /> : ''}
+                { show() }
+            </div>
+        </>
     );
 }
 

@@ -1,7 +1,10 @@
 #modal1 {
-    .hk-login {
+    .hk-account {
         &.wrapper {
             height: 100%;
         }
+    }
+    .hk-logo.wrapper {
+        display: none;
     }
 }

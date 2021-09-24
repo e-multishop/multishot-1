@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {  faCheck} from '@fortawesome/free-solid-svg-icons'
 import Loader from "../../Common/Loader";
+import Logo from "../../Common/Logo";
 
 const Signup = (props) => {
     const [signup, setSignup] = useState({
@@ -37,7 +38,7 @@ const Signup = (props) => {
             }).catch(err => {
                 // console.warn(err);
                 setLoader(false);
-                setStatus('Email is already registered')
+                setStatus(err.response.data.message);
             });
         }
     }
@@ -46,17 +47,20 @@ const Signup = (props) => {
             <form className="signup-form">
                 <h5>Sign-Up</h5>
                 <div className="input-field">
+                    <i class="material-icons hs-form-icon">email</i>
                     <input id="hksignup_emailid" type="email" className="validate" value={signup.hksignup_emailid} onChange={(e) => handleChange(e)} />
                     <label for="hksignup_emailid">Email</label>
 
                     {/* <span className="helper-text" data-error="wrong" data-success="right"></span> */}
                 </div>
                 <div class="input-field ">
+                    <i class="material-icons hs-form-icon">vpn_key</i>
                     <input id="password" type="password" className="validate" value={signup.password} onChange={(e) => handleChange(e)} />
                     <label for="password">Password</label>
 
                 </div>
-                <div className="input-field ">
+                <div className="input-field">
+                    <i class="material-icons hs-form-icon">vpn_key</i>
                     <input id="confirm_password" type="password" className="validate" value={signup.confirm_password} onChange={(e) => handleChange(e)} />
                     <label for="confirm_password">Confirm Password</label>
                 </div>
@@ -68,10 +72,13 @@ const Signup = (props) => {
         )
     }
     return (
-        <div className="row no-margin hk-signup wrapper">
-            { loader ? <Loader height="250px" /> : ''}
-            { show() }
-        </div>
+        <>
+            <Logo />
+            <div className="row no-margin hk-signup hk-account wrapper">
+                { loader ? <Loader height="250px" /> : ''}
+                { show() }
+            </div>
+        </>
 
     );
 }

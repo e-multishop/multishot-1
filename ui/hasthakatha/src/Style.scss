@@ -48,3 +48,14 @@ $roboto-font-path: '~roboto-fontface/fonts';
     min-height: calc(100vh - 358px);
     line-height: calc(100vh - 358px);
 }
+
+.ft-12 {
+    font-size: 12px!important;
+}
+
+.hs-form-icon {
+    font-size: 24px;
+    position: absolute;
+    right: 0;
+    top: 8px;
+}
