@@ -26,7 +26,7 @@ jobs:
         clean: 'true'
         path: 'heroku-hasthakatha'
         ref: 'main'
-        token: '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'
+        token: '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'
         
     - name: Build Hasthakatha UI
       run: |
