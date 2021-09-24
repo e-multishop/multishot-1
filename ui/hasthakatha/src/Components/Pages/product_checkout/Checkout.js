@@ -79,7 +79,7 @@ function Checkout() {
             "prefill": {
                 "name": "check razor pay hasthakatha",
                 "email": "hasthakatha@gmail.com",
-                "contact": "999999999"
+                "contact": "9147785762"
             },
             "notes": {
                 "address": "Razorpay Corporate Office"
