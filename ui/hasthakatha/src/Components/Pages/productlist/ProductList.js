@@ -9,7 +9,7 @@ import Axios from 'axios'
 import Header from '../../Header/Header';
 import Footer from '../../Footer/Footer';
 
-const ProductList = () => {
+const ProductList = (props) => {
     const [categories, setCategories] = useState([]);
     const [product, setProduct] = useState([]);
     const [totalRecords, setTotalRecords] = useState(0);
@@ -55,7 +55,10 @@ const ProductList = () => {
     const addToCartData=(value)=>{
         const isLoggedIn = localStorage.getItem('token');
         if (!isLoggedIn) {
-            document.location.href="/#/login";
+            props.history.push({ 
+                pathname: '/login', 
+                search: '?redirect_path=' + props.location.pathname
+            })
             return;
         }
         Axios.post('/rest/add_to_cart',{

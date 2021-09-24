@@ -36,7 +36,7 @@ class App extends Component{
               <Route component={Checkout} path="/viewcart"/>
               <Route component={Login} path="/login"/>
               <Route component={Signup} path="/signup"/>
-              <Route component={Forgotpassword} path="/forgotpass"/>
+              <Route component={Forgotpassword} path="/forgotpassword"/>
               <Route exact component={Reset} path="/reset_password/:id"/>
               <Route component={PageNotFound}/>
         </Switch>

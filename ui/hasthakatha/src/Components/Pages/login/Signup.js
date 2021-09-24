@@ -33,8 +33,17 @@ const Signup = (props) => {
             }).then(res => {
                 setStatus('')
                 setLoader(false);
-                toast.success(<span ><FontAwesomeIcon icon={ faCheck} size='lg' color="white" className="icon toast-icon" />  Success</span>)
-                props.closeModal(true);
+                if (props && props.closeModal) {
+                    toast.success(<span ><FontAwesomeIcon icon={ faCheck} size='lg' color="white" className="icon toast-icon" />  Success</span>)
+                    props.closeModal(true);
+                } else {
+                    const redirectPath = new URLSearchParams(props.location.search).get("redirect_path");
+                    if (redirectPath) {
+                        document.location.href = '/#' + redirectPath;
+                    } else {
+                        props.history.push('/');
+                    }
+                }
             }).catch(err => {
                 // console.warn(err);
                 setLoader(false);
@@ -47,20 +56,20 @@ const Signup = (props) => {
             <form className="signup-form">
                 <h5>Sign-Up</h5>
                 <div className="input-field">
-                    <i class="material-icons hs-form-icon">email</i>
+                    <i className="material-icons hs-form-icon">email</i>
                     <input id="hksignup_emailid" type="email" className="validate" value={signup.hksignup_emailid} onChange={(e) => handleChange(e)} />
                     <label for="hksignup_emailid">Email</label>
 
                     {/* <span className="helper-text" data-error="wrong" data-success="right"></span> */}
                 </div>
-                <div class="input-field ">
-                    <i class="material-icons hs-form-icon">vpn_key</i>
+                <div className="input-field ">
+                    <i className="material-icons hs-form-icon">vpn_key</i>
                     <input id="password" type="password" className="validate" value={signup.password} onChange={(e) => handleChange(e)} />
                     <label for="password">Password</label>
 
                 </div>
                 <div className="input-field">
-                    <i class="material-icons hs-form-icon">vpn_key</i>
+                    <i className="material-icons hs-form-icon">vpn_key</i>
                     <input id="confirm_password" type="password" className="validate" value={signup.confirm_password} onChange={(e) => handleChange(e)} />
                     <label for="confirm_password">Confirm Password</label>
                 </div>

@@ -57,17 +57,16 @@ const Login = (props) => {
             }
             else {
                 
-                const redirectPathParam = props.location.search;
-                const hasRedirectPath = redirectPathParam.indexOf('redirect_path') > -1;
-                if (hasRedirectPath) {
-                    const redirectPath = redirectPathParam.substr(redirectPathParam.indexOf('redirect_path') + 'redirect_path'.length+1, redirectPathParam.length);
+                const redirectPath = new URLSearchParams(props.location.search).get("redirect_path");
+                if (redirectPath) {
                     if (redirectPath === '/admin') {
                         document.location.href = "/admin";
                     } else {
-                        props.history.push(redirectPath);
+                        // props.history.push(redirectPath);
+                        document.location.href = '/#' + redirectPath;
                     }
                 } else {
-                    document.location.href = "/";
+                    props.history.push('/');
                 }
             }
             toast.success(<span ><FontAwesomeIcon icon={faCheck} size='lg' color="white" className="icon toast-icon" />  Success</span>)
@@ -75,12 +74,16 @@ const Login = (props) => {
         }).catch(err => {
             setLoading(false);
             console.warn(err);
-            setStatus('Email & password did not match')
+            setStatus(err.response.data.message);
         });
     }
     function setViewStatus(value) {
         if (props && props.setVeiwstatus) {
+            // inside modal
             props.setVeiwstatus(value)
+        } else {
+            // as a page
+            document.location.href = `/#/${value}`;
         }
     }
     var show = () => {
@@ -92,13 +95,13 @@ const Login = (props) => {
                         <div className="hk-card">
                             <div class="card-content">
                                 <div className="input-field">
-                                    <i class="material-icons hs-form-icon">email</i>
+                                    <i className="material-icons hs-form-icon">email</i>
                                     <input id="hklogin_emailid" type="email" className="validate" value={login.hklogin_emailid} onChange={(e) => handleChange(e)} />
                                     <label for="hklogin_emailid" className="">Email</label>
                                     <span className="helper-text" data-error="Email is not valid" ></span>
                                 </div>
                                 <div className="input-field">
-                                    <i class="material-icons hs-form-icon">vpn_key</i>
+                                    <i className="material-icons hs-form-icon">vpn_key</i>
                                     <input id="password" type="password" value={login.password} onChange={(e) => handleChange(e)} />
                                     <label for="password">Password</label>
                                 </div>
@@ -117,7 +120,7 @@ const Login = (props) => {
                                 </div>
                                 <p className="status">{status}</p>
                                 <div className="button center-align">
-                                    <button class="waves-effect waves-light btn sign-in-btn" onClick={(e) => { onSubmit(e) }}>SIGN IN</button>
+                                    <button className="waves-effect waves-light btn sign-in-btn" onClick={(e) => { onSubmit(e) }}>SIGN IN</button>
                                 </div>
                                 <div className="join-now center-align ft-12">
                                     Not yet a member?<button

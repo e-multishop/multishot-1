@@ -293,13 +293,26 @@ var product_app = function (app, con, hasthaBean) {
         con.query(sql, (err, result) => {
             if (err) throw err;
             if (image_data) {
-                const imageBufferData = Buffer.from(image_data, 'binary');
-                const imageUpdateSql = "UPDATE product_images SET image_data ='"+imageBufferData+"' WHERE pid="+pid+";"
-                con.query(imageUpdateSql, (err, result2) =>{
-                    res.send('updated');
-                })
+                const imageQuery = `SELECT count(*) from product_images WHERE pid='${pid}'`;
+                con.query(imageQuery, (err, result3) => {
+                    const imageBufferData = Buffer.from(image_data, 'binary');
+                    let imageSQLQuery = '';
+                    if (result3[0]['count(*)'] === 0) {
+                        imageSQLQuery = `INSERT into product_images(imageid, pid, type, image_data) values(NULL, '${pid}', 'main', '${imageBufferData}')`;
+                    } else {
+                        imageSQLQuery = "UPDATE product_images SET image_data ='"+imageBufferData+"' WHERE pid="+pid+";"
+                    }
+                    con.query(imageSQLQuery, (err, result2) =>{
+                        if (err) {
+                            res.status(500);
+                            res.send({type: 'error', message: 'Error updating image'});
+                        } else {
+                            res.send({type: 'success', message:'Product updated'});
+                        }
+                    })
+                });
             } else {
-                res.send('updated');
+                res.send({type: 'success', message:'Product updated'});
             }
         });
     });

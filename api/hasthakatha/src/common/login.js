@@ -37,7 +37,7 @@ var login_app=function(app,con)
                 });
             } else {
                 res.status(500);
-                res.send({type: "error", message: "email is already registered"});
+                res.send({type: "error", message: "Email is already registered"});
             }
     
             if(err) throw err;
@@ -52,6 +52,11 @@ var login_app=function(app,con)
     
     
     app.post('/rest/login', (req, res) => {
+        if (!req.body.email || !req.body.password) {
+            res.status(500);
+            res.send({type: 'error', message: 'Email and password are mandatory'});
+            return;
+        }
         var sql = "select * from loginusers as L LEFT JOIN user as U on L.id = U.uid WHERE L.email= '" + req.body.email + "'";
         con.query(sql, function (err, result) {
             if (result != null && result.length == 1) {
@@ -94,6 +99,11 @@ var login_app=function(app,con)
     });
     
     app.post('/rest/forgot_password', (req, res) => {    
+        if (!req.body.email) {
+            res.status(500);
+            res.send({type: 'error', message: 'Email is mandatory'})
+            return;
+        }
         var sql = "select email from loginusers where email= '" + req.body.email + "'";
         con.query(sql, function (err, result) {
             console.log("messaage" + result);
@@ -130,10 +140,10 @@ var login_app=function(app,con)
                         transport.sendMail(mailOptions, function (err, result) {
                             if (err) {
                                 res.status(500);
-                                res.send('Internal server error');
+                                res.send({type: 'error', message: 'Internal server error, error sending mail'});
                             } else {
                                
-                                res.send("Mail sent succesfully");
+                                res.send({type: 'success', message: "Mail sent succesfully"});
                             }
                         })
                         // if (err) throw err;
