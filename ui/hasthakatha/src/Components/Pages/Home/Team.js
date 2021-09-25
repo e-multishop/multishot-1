@@ -6,7 +6,7 @@ const Team =()=>{
     const TeamData=[
         {
             img:imgcheck,
-            name:"shiv Pradad",
+            name:"Team Member Name",
             designation:"Founder",
             description:"I am a very simple card. I am good at containing small bits of information.I am good at containing small bits of information.I am good at containing small bits of information.",
             fblink:"https://www.facebook.com/Hastha-Katha-1102781866557529/",
@@ -16,7 +16,7 @@ const Team =()=>{
         },
         {
             img:imgcheck,
-            name:"shiv Pradad",
+            name:"Team Member Name",
             designation:"Founder",
             description:"I am a very simple card. I am good at containing small bits of information.I am good at containing small bits of information.I am good at containing small bits of information.",
             fblink:"https://www.facebook.com/Hastha-Katha-1102781866557529/",
@@ -25,7 +25,7 @@ const Team =()=>{
         },
         {
             img:imgcheck,
-            name:"shiv Pradad",
+            name:"Team Member Name",
             designation:"Founder",
             description:"I am a very simple card. I am good at containing small bits of information.I am good at containing small bits of information.I am good at containing small bits of information.",
             fblink:"https://www.facebook.com/Hastha-Katha-1102781866557529/",
@@ -34,7 +34,7 @@ const Team =()=>{
         },
         {
             img:imgcheck,
-            name:"shiv Pradad",
+            name:"Team Member Name",
             designation:"Founder",
             description:"I am a very simple card. I am good at containing small bits of information.I am good at containing small bits of information.I am good at containing small bits of information.",
             fblink:"https://www.facebook.com/Hastha-Katha-1102781866557529/",

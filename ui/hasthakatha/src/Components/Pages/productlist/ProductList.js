@@ -90,7 +90,7 @@ const ProductList = (props) => {
             {/* shop badge */}
             <div className="shop-badge">
                 Shop
-                    </div>
+            </div>
             { false ? '' :
                 <div>
                     <div className="hk-filter">

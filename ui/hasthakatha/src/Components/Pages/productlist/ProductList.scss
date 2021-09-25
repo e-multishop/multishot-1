@@ -1,11 +1,9 @@
 .shop-badge {
-  background-color: #5c0a05;
+  background-color:var(--primary_color);
   color: #ffffff;
   font-size: 50px;
   font-weight: 300;
-  padding: 30px 0px 30px 10px;
-  background-image: url("../../../Images/bg.png");
-  background-repeat: no-repeat;
+  padding: 20px 0px 20px 10px;
 }
 .hk-filter {
   display: flex;
