@@ -1,6 +1,6 @@
 import React,{ Component} from "react";
 import "./Style.scss";
-import "./App.css";
+import "./App.scss";
 import Header from './Components/Header/Header.js';
 import Footer from './Components/Footer/Footer';
 import Home from './Components/Pages/Home/Home';
@@ -18,14 +18,12 @@ import Reset from './Components/Pages/login/Reset_password';
 import Checkout from './Components/Pages/product_checkout/Checkout'
 import PageNotFound from "./Components/Pages/PageNotFound/PageNotFound";
 import Account from "./Components/Pages/User_dashboard/account/Account";
+import Forgotpassword from "./Components/Pages/login/Forgotpassword";
 
 class App extends Component{
   render(){
     return(
       <HashRouter>
-        <Header/>
-        <div id="search"></div>
-        <div id="modal"></div>
         {/* <div id="LoginDropdown"></div> */}
 
           <Switch>
@@ -35,13 +33,13 @@ class App extends Component{
               <Route component={Productdetails} path="/productdetails/:pid"/>
               <Route component={Contact} path="/contact"/>
               <Route component={Account} path="/account"/>
+              <Route component={Checkout} path="/viewcart"/>
               <Route component={Login} path="/login"/>
               <Route component={Signup} path="/signup"/>
-              <Route component={Checkout} path="/viewcart"/>
-              <Route component={PageNotFound}/>
+              <Route component={Forgotpassword} path="/forgotpassword"/>
               <Route exact component={Reset} path="/reset_password/:id"/>
+              <Route component={PageNotFound}/>
         </Switch>
-        <Footer/>
     </HashRouter> 
     );
   };

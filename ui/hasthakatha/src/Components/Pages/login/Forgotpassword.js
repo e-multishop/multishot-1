@@ -4,6 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {  faCheck} from '@fortawesome/free-solid-svg-icons' 
 import Loader from '../../Common/Loader';
+import Logo from '../../Common/Logo';
 
 function Forgotpassword(props) {
     const [email, setEmail] = useState('');
@@ -27,15 +28,24 @@ function Forgotpassword(props) {
                 If you are registered with us, you should get an email containing instructions to reset your password
                 </span>)
             // props.history.push("/about");
-            props.closeModal();
+            if (props.closeModal) {
+                props.closeModal();
+            } else { 
+                const redirectPath = new URLSearchParams(props.location.search).get("redirect_path");
+                if (redirectPath) {
+                    document.location.href = '/#' + redirectPath;
+                } else {
+                    props.history.push('/');
+                }
+            }
         }).catch(err => {
-            // console.warn(err);
-            // setStatus('Email is not registred')
             setLoader(false);
-            props.closeModal();
-            toast.info("If you are registered with us, you should get an email containing instructions to reset your password")
-
-
+            if (props.closeModal) {
+                props.closeModal();
+                toast.info("If you are registered with us, you should get an email containing instructions to reset your password")
+            } else {
+                setStatus(err.response.data.message);
+            }
         });
     }
     const show = () => {
@@ -43,8 +53,9 @@ function Forgotpassword(props) {
             <form className="signup-form">
                 <h5>Forgot Password</h5>
                 <div className="input-field">
+                    <i className="material-icons hs-form-icon">email</i>
                     <input id="email" type="email" className="validate" value={email} onChange={(e) => handleChange(e)} />
-                    <label for="email">Email</label>
+                    <label htmlFor="email">Email</label>
                     {/* <span className="helper-text" data-error="Email is not valid" data-success="right"></span> */}
                     <br />
                 </div>
@@ -56,10 +67,13 @@ function Forgotpassword(props) {
         )
     };
     return (
-        <div className="row no-margin hk-forgot-password wrapper">
-            { loader ? <Loader height="250px" /> : ''}
-            { show() }
-        </div>
+        <>
+            <Logo />
+            <div className="row no-margin hk-forgot-password hk-account wrapper">
+                { loader ? <Loader height="250px" /> : ''}
+                { show() }
+            </div>
+        </>
     );
 }
 

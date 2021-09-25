@@ -204,7 +204,7 @@ var product_app = function (app, con, hasthaBean) {
             }
         } else {
             res.status(500);
-            res.send('Error reading file');
+            res.send({type: 'error', message: 'Error reading file'});
         }
         let query = '';
         for (let i = 0; i < sheets.length; i++) {
@@ -288,18 +288,32 @@ var product_app = function (app, con, hasthaBean) {
         var sku = req.body.sku;
         var status = req.body.status;
         var image_data = req.body.image_data;
+        var image_data_changed = req.body.image_data_changed;
         var updatedDate = (new Date()).getTime();
         var sql = "UPDATE product SET category = '" + category + "', title= '" + title + "',price ='" + price + "',price_without_embroidary='" + price_without_embroidary + "',description='" + description + "',note='" + note + "',material='" + material + "',total_available='" + total_available + "',total_quantity='" + total_quantity + "',available='" + available + "',sku='" + sku + "',status='" + status + "',updatedDate='" + updatedDate + "' WHERE pid = '" + pid + "';";
         con.query(sql, (err, result) => {
             if (err) throw err;
-            if (image_data) {
-                const imageBufferData = Buffer.from(image_data, 'binary');
-                const imageUpdateSql = "UPDATE product_images SET image_data ='"+imageBufferData+"' WHERE pid="+pid+";"
-                con.query(imageUpdateSql, (err, result2) =>{
-                    res.send('updated');
-                })
+            if (image_data_changed && image_data) {
+                const imageQuery = `SELECT count(*) from product_images WHERE pid='${pid}'`;
+                con.query(imageQuery, (err, result3) => {
+                    const imageBufferData = Buffer.from(image_data, 'binary');
+                    let imageSQLQuery = '';
+                    if (result3[0]['count(*)'] === 0) {
+                        imageSQLQuery = `INSERT into product_images(imageid, pid, type, image_data) values(NULL, '${pid}', 'main', '${imageBufferData}')`;
+                    } else {
+                        imageSQLQuery = "UPDATE product_images SET image_data ='"+imageBufferData+"' WHERE pid="+pid+";"
+                    }
+                    con.query(imageSQLQuery, (err, result2) =>{
+                        if (err) {
+                            res.status(500);
+                            res.send({type: 'error', message: 'Error updating image'});
+                        } else {
+                            res.send({type: 'success', message:'Product updated'});
+                        }
+                    })
+                });
             } else {
-                res.send('updated');
+                res.send({type: 'success', message:'Product updated'});
             }
         });
     });

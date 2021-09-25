@@ -6,8 +6,10 @@ import { useDispatch } from 'react-redux';
 import Pagination from './Pagination'
 import Loader from "../../Shared/loader/Loader"
 import Axios from 'axios'
+import Header from '../../Header/Header';
+import Footer from '../../Footer/Footer';
 
-const ProductList = () => {
+const ProductList = (props) => {
     const [categories, setCategories] = useState([]);
     const [product, setProduct] = useState([]);
     const [totalRecords, setTotalRecords] = useState(0);
@@ -53,7 +55,10 @@ const ProductList = () => {
     const addToCartData=(value)=>{
         const isLoggedIn = localStorage.getItem('token');
         if (!isLoggedIn) {
-            document.location.href="/#/login";
+            props.history.push({ 
+                pathname: '/login', 
+                search: '?redirect_path=' + props.location.pathname
+            })
             return;
         }
         Axios.post('/rest/add_to_cart',{
@@ -80,6 +85,7 @@ const ProductList = () => {
     }
     return (
         <>
+            <Header />
 
             {/* shop badge */}
             <div className="shop-badge">
@@ -98,7 +104,7 @@ const ProductList = () => {
                     <div class="hs-container">
                         {/* <!--product side list category--> */}
                         <div class="side_category">
-                            <div>All</div>
+                            <div onClick={() => getProductByCategory(0)}>All</div>
                             {
                                 categories.map((value) => {
                                     return (<div onClick={() => getProductByCategory(value.cid)}>{value.name}</div>)
@@ -111,48 +117,58 @@ const ProductList = () => {
                             <div class="product_list">
                                 {/* <!-- Prodcuct list first row--> */}
                                 {/* <!--product details--> */}
-                                { Loading ? <div className="loader"><Loader /></div> : product.map((value, index) => {
-                                    return (
+                                { 
+                                    Loading ? <div className="loader"><Loader /></div> : 
                                         <>
-
-                                            <div className="hk-product_card" key={index}>
-                                                <Link to={"/productdetails/"+value.pid}>
-                                                    <div className="img-wraper">
-                                                        {/* {const url= atob(value.url)} */}
-                                                        {
-                                                            value.image_data ? image_url(value.image_data) : ""
-                                                        }
-                                                        {/* <p>{avalue.image_data}</p> */}
-                                                        {/* <img src={image_url} /> */}
+                                    {
+                                        product && product.length === 0 
+                                        ? showEmptyData() 
+                                        : product.map((value, index) => {
+                                            return (
+                                                <>
+        
+                                                    <div className="hk-product_card" key={index}>
+                                                        <Link to={"/productdetails/"+value.pid}>
+                                                            <div className="img-wraper">
+                                                                {/* {const url= atob(value.url)} */}
+                                                                {
+                                                                    value.image_data ? image_url(value.image_data) : <b className="hs-image-preview">No preview</b>
+                                                                }
+                                                                {/* <p>{avalue.image_data}</p> */}
+                                                                {/* <img src={image_url} /> */}
+                                                            </div>
+                                                            <div className="description">
+                                                                {value.title}
+                                                            </div>
+                                                            <div className="price">
+                                                                &#8377; {value.price}
+                                                            </div>
+                                                        </Link>
+                                                        <div className="hk-addcard" onClick={() => {addToCartData(value)}}>
+                                                            <a>ADD TO CART</a>
+                                                        </div>
                                                     </div>
-                                                    <div className="description">
-                                                        {value.title}
-                                                    </div>
-                                                    <div className="price">
-                                                        {value.price}
-                                                    </div>
-                                                </Link>
-                                                <div className="hk-addcard" onClick={() => {addToCartData(value)}}>
-                                                    <a>ADD TO CART</a>
-                                                </div>
-                                            </div>
-
-                                        </>
-                                    );
-                                })
+        
+                                                </>
+                                            );
+                                        })
+                                    }
+                                    </>
+                                
                                 }
                             </div>
                             {
-                                product && product.length === 0 
-                                ? showEmptyData() 
-                                :   <div className="center-align pagination">
-                                        <Pagination pageSize={pageSize} setPageSize={setPageSize} totalRecords={totalRecords} setPageNumber={setPageNumber} pageNumber={pageNumber} />
-                                    </div>
+                                !Loading && product && product.length > 0 
+                                    ?  <div className="center-align pagination">
+                                            <Pagination pageSize={pageSize} setPageSize={setPageSize} totalRecords={totalRecords} setPageNumber={setPageNumber} pageNumber={pageNumber} />
+                                        </div>
+                                    : ''
                             }
                         </div>
-                        {/* </div> */}
+                            
                     </div>
                 </div>}
+            <Footer/>
         </>
     );
 }
