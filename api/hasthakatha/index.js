@@ -5,7 +5,6 @@ const isheroku =process && process.env && process.env.PORT ? true : false;
 const settings = isheroku ?require('./src/config/config-prod'):require('./src/config/config');
 const HasthaBean = require('./src/common/beans');
 
-
 var con = mysql.createConnection({
     host: settings.db_host,
     user: settings.db_user,
