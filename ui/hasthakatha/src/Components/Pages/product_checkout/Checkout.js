@@ -59,10 +59,10 @@ function Checkout() {
         }).then(res=>{
             // console.warn("check response data of order:",res.data);
             setCheckoutPaymentDetails(res.data);
-            launchRazorPay();
+            launchRazorPay(res.data);
         });
     }
-    const launchRazorPay=()=>{
+    const launchRazorPay=(checkoutPaymentDetails)=>{
         var options = {
             "key": checkoutPaymentDetails.key_id, // Enter the Key ID generated from the Dashboard
             "amount": checkoutPaymentDetails.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
