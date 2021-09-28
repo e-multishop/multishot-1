@@ -1,5 +1,6 @@
 const Razorpay = require('razorpay');
 var nanoId = require('nano-id');
+var SHA256 = require("crypto-js/hmac-sha256");
 
 var payment_app = function (app, con) {
 
@@ -50,7 +51,18 @@ var payment_app = function (app, con) {
                 };
                 instance.orders.create(options, function (err, order) {
                     console.log(order);
-                    res.send({ "key_id": key_id, "amount": total_amount, "currency": currency, "name": "hasthakatha", "description": "test_transation", "order_id": order.id })
+                    sql = "INSERT INTO `transaction`(`order_id`) VALUES ('" + order.id + "') where tid='"+tranction_id+"';";
+                    //store orderid from database
+                    con.query(sql,(err,result3)=>{
+                        if(err){
+                            res.status(500);
+                            res.send({type:"error"});
+                        }
+                        else{
+                            res.send({ "key_id": key_id, "amount": total_amount, "currency": currency, "name": "hasthakatha", "description": "test_transation", "order_id": order.id });
+                        }
+                    });
+
                 });
             });
         })
@@ -58,11 +70,35 @@ var payment_app = function (app, con) {
     });
 
     app.post('rest/payment_status', (req, res) => {
-
+        var userid=req.body.uid;
         var order_id=req.body.order_id;
         var razorpay_order_id= req.body.razorpay_order_id;
         var payment_id=req.body.razorpay_payment_id;
-        var signature=req.razorpay_signature;
+        var signature=req.body.razorpay_signature;
+    //    var secret=req.body.key_secret;
+        var sql = "INSERT INTO `transaction`(`razorpay_order_id`, `payment_id`) VALUES ('" + razorpay_order_id+ "','" +payment_id + "')where uid='"+userid+"' AND order_id='"+order_id+"';";
+        
+                var generated_signature = SHA256(order_id + "|" + payment_id, secret);  
+                if (generated_signature == razorpay_signature) 
+                {   
+                    con.query(sql,(err,result)=>{
+                        if(err)
+                        {
+                            res.status(500);
+                            res.send({type:"error",message:"Temporary Error. Please Contact Support. "});
+                        }
+                        else{
+                            res.send({type:"success",message:"payment is successful"});  
+                        } 
+                    });
+                }
+                else{
+                    res.status(500);
+                    res.send({type:"error",message:"Temporary Error. Please Contact Support."})
+                }
+
+            
+        
     });
 
 }
