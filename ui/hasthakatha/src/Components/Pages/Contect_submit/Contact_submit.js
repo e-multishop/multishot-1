@@ -2,6 +2,8 @@ import React from 'react';
 import "./ContactUs.scss";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faEnvelope} from '@fortawesome/free-solid-svg-icons'
+import Header from '../../Header/Header';
+import Footer from '../../Footer/Footer';
 
 class Contact extends React.Component {
 
@@ -37,6 +39,8 @@ class Contact extends React.Component {
     }
     render() {
         return (
+            <>
+                <Header />
                 <div className="row hk-contactus no-margin">
                         <form className="col s6 hk-contactform">
                             <div className="hk-formcontent">
@@ -60,7 +64,7 @@ class Contact extends React.Component {
                                     </div>
                                 </div>
                                 <div className="button">
-                                    <a class="waves-effect waves-light btn">Submit</a>
+                                    <a class="waves-effect waves-light btn btn-color">Submit</a>
                                 </div>
                             </div>
                         </form>
@@ -71,7 +75,8 @@ class Contact extends React.Component {
 
                         </div>
                 </div>
-
+                <Footer />
+            </>
         );
     }
     onNameChange(event) {

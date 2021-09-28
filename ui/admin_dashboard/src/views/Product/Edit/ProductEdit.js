@@ -67,6 +67,7 @@ export default function ProductEdit(props) {
     };
 
     const [editUploadImage, setEditUploadImage] = useState(" ");
+    const [editUploadImageChanged, setEditUploadImageChanged] = useState(false);
     const [Editformdata, setEditFormdata] = useState({
         category: props.category,
         title: props.title,
@@ -81,7 +82,8 @@ export default function ProductEdit(props) {
         total_quantity: props.total_quantity,
         dimension: props.dimension,
         color: props.color,
-        image_data: props.image_data
+        image_data: props.image_data,
+        imageDataChanged: editUploadImageChanged
     });
     
     function onSubmit(pid) {
@@ -100,7 +102,8 @@ export default function ProductEdit(props) {
             available: '1',
             sku: Editformdata.sku,
             status: '1',
-            image_data: editUploadImage
+            image_data: editUploadImage,
+            image_data_changed: editUploadImageChanged
         }
         ).then(res => {
             EventBus.dispatch(EventType.UPDATE_PRODUCT_TABLE);
@@ -126,6 +129,7 @@ export default function ProductEdit(props) {
             total_quantity: " ",
             dimension: " ",
             color: " ",
+            image_data_changed: false
         });
         setEditUploadImage(" ");
     }
@@ -145,6 +149,7 @@ export default function ProductEdit(props) {
                             Editformdata={Editformdata}
                             setEditFormData={setEditFormdata}
                             setEditUploadImage={setEditUploadImage}
+                            setEditUploadImageChanged={setEditUploadImageChanged}
                         />
                     </Typography>
                 </DialogContent>

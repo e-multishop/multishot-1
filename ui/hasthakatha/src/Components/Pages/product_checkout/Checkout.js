@@ -8,7 +8,9 @@ import Empty_checkout from './Empty_checkout'
 import Axios from 'axios';
 import Loader from '../../Shared/loader/Loader';
 import {cartItems}  from '../../../Redux/actions/index';
-
+import logo from '../../../Images/logo.png'
+import Header from '../../Header/Header';
+import Footer from '../../Footer/Footer';
 
 function Checkout() {
     // const cartData = useSelector((state) => state.cartItems);
@@ -57,17 +59,17 @@ function Checkout() {
         }).then(res=>{
             // console.warn("check response data of order:",res.data);
             setCheckoutPaymentDetails(res.data);
-            launchRazorPay();
+            launchRazorPay(res.data);
         });
     }
-    const launchRazorPay=()=>{
+    const launchRazorPay=(checkoutPaymentDetails)=>{
         var options = {
             "key": checkoutPaymentDetails.key_id, // Enter the Key ID generated from the Dashboard
             "amount": checkoutPaymentDetails.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
             "currency": checkoutPaymentDetails.currency,
             "name": checkoutPaymentDetails.name,
             "description": checkoutPaymentDetails.description,
-            "image": "https://example.com/your_logo",
+            "image": logo,
             "order_id": checkoutPaymentDetails.order_id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
             "handler": function (response){
                 alert(response.razorpay_payment_id);
@@ -77,7 +79,7 @@ function Checkout() {
             "prefill": {
                 "name": "check razor pay hasthakatha",
                 "email": "hasthakatha@gmail.com",
-                "contact": "999999999"
+                "contact": "9147785762"
             },
             "notes": {
                 "address": "Razorpay Corporate Office"
@@ -101,40 +103,44 @@ function Checkout() {
     }
 
     return (
-        <div className="hk-container">
-            { Loading ? <div className="loader checkout"><Loader /></div> :
-            numberOfItems?
-            <div>
-                    <div className="header-checkout">
-                        <h2>{numberOfItems} items in your basket</h2>
-                        <NavLink to="/shop" className="keep-shopping">
-                            Keep Shopping
-                        </NavLink>
-                    </div>
-                    <div className="row">
-                        <div className="col s8">
-                            {
-                                cartData.map((data) => {
-                                    return (
-                                        // <h1>{data.cardData.title}</h1>
-                                        <Checkout_card_item
-                                            producttitle={data.title}
-                                            productprice={data.price}
-                                            productimg={data.img_url}
-                                            id={data.id}
-                                            getCart={getCart}
-                                            imgdata={data.image_data}
-                                        />
-                                    )
-                                })
-                            }
+        <>
+            <Header />
+            <div className="hk-container">
+                { Loading ? <div className="loader checkout"><Loader /></div> :
+                numberOfItems?
+                <div>
+                        <div className="header-checkout">
+                            <h2>{numberOfItems} items in your basket</h2>
+                            <NavLink to="/shop" className="keep-shopping">
+                                Keep Shopping
+                            </NavLink>
                         </div>
-                        <div className="col s4">
-                            <Checkout_card data={data} handleSubmit={handleSubmit}/>
+                        <div className="row">
+                            <div className="col s8">
+                                {
+                                    cartData.map((data) => {
+                                        return (
+                                            // <h1>{data.cardData.title}</h1>
+                                            <Checkout_card_item
+                                                producttitle={data.title}
+                                                productprice={data.price}
+                                                productimg={data.img_url}
+                                                id={data.id}
+                                                getCart={getCart}
+                                                imgdata={data.image_data}
+                                            />
+                                        )
+                                    })
+                                }
+                            </div>
+                            <div className="col s4">
+                                <Checkout_card data={data} handleSubmit={handleSubmit}/>
+                            </div>
                         </div>
-                    </div>
-                </div>:<Empty_checkout />}
-        </div>
+                    </div>:<Empty_checkout />}
+            </div>
+            <Footer />
+        </>
     );
 }
 

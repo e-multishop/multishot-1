@@ -27,10 +27,12 @@ const EditProductForm = (props) => {
             reader.readAsDataURL(upload_image[0]);
             reader.onload=(e)=>{
                 props.setEditUploadImage(e.target.result);
+                props.setEditUploadImageChanged(true);
             }
             setShowImage(false);
         } else {
             setShowImage(true);
+            props.setEditUploadImageChanged(true);
         }
     }
     const options = [

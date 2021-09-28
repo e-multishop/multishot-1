@@ -83,6 +83,8 @@ const Header = (props) => {
             <ToastContainer
                 hideProgressBar={true}
             />
+            <div id="search"></div>
+            <div id="modal"></div>
         </div>
     );
 }

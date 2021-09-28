@@ -5,6 +5,7 @@ import Forgotpassword from './Forgotpassword'
 // import {useHistory} from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes} from '@fortawesome/free-solid-svg-icons'
+import './modal.scss';
 
 function Modal(props) {
     // let history =useHistory();
