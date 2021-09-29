@@ -75,6 +75,9 @@ function Checkout() {
                 alert(response.razorpay_payment_id);
                 alert(response.razorpay_order_id);
                 alert(response.razorpay_signature)
+                Axios.post('rest/payment_status',{
+
+                }).then();
             },
             "prefill": {
                 "name": "check razor pay hasthakatha",
