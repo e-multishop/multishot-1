@@ -1,10 +1,14 @@
 import React from 'react'
 import Sidebar from '../sidebar/Sidebar'
+import Header from '../../../Header/Header';
+import Footer from '../../../Footer/Footer';
 
 function Account() {
     // const cartData = useSelector((state) => state.cartItems);
     // console.log("cart data check =", cartData);
     return (
+        <>
+        <Header/>
         <div className="hk-container">
             <div>
                     <div className="row">
@@ -17,7 +21,8 @@ function Account() {
                     </div>
                 </div>
         </div>
-        // <h1>adsfsdjf</h1>
+        <Footer/>
+        </>
     );
 }
 
