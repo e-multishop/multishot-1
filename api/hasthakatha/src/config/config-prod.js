@@ -4,9 +4,9 @@ module.exports = {
     CORS: false,
     USER: 'manbatest123@gmail.com',
     PASS: 'hereiammanoj',
-    db_host: "db4free.net",
-    db_user: "admin_has_123",
+    db_host: "ec2-35-154-229-6.ap-south-1.compute.amazonaws.com",
+    db_user: "hs_admin",
     db_password: "Welcome@123",
-    db_database: "hastakatha_app",
+    db_database: "hasthakatha",
     session_secret: "thisismy"
 }
