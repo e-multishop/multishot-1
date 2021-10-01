@@ -2,7 +2,7 @@ const Razorpay = require('razorpay');
 var nanoId = require('nano-id');
 var SHA256 = require("crypto-js/hmac-sha256");
 
-var payment_app = function (app, con) {
+var payment_app = function (app, con,settings) {
 
     app.post('/rest/creating_order', (req, res) => {
 
@@ -41,7 +41,7 @@ var payment_app = function (app, con) {
                 var key_id = 'rzp_test_cprfpdDbrBfN3x';
                 var currency = "INR";
 
-                var instance = new Razorpay({ key_id: key_id, key_secret: 'UdhvSLqrzcMK9h3PLFv7lDFT' })
+                var instance = new Razorpay({ key_id: key_id, key_secret: settings.razorpay_secret })
 
                 var options = {
                     amount: total_amount * 100,  // amount in the smallest currency unit
@@ -77,7 +77,7 @@ var payment_app = function (app, con) {
     //    var secret=req.body.key_secret;
         var sql = "UPDATE `transaction` SET `razorpay_order_id`='" + razorpay_order_id+ "' ,`payment_id`='" +payment_id + "' where uid='"+userid+"' AND order_id='"+order_id+"';";
         
-                var generated_signature = SHA256(order_id + "|" + payment_id, secret);  
+                var generated_signature = SHA256(order_id + "|" + payment_id, settings.razorpay_secret);  
                 if (generated_signature == signature) 
                 {   
                     con.query(sql,(err,result)=>{

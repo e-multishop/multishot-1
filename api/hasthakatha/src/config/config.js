@@ -8,5 +8,6 @@ module.exports = {
     db_user: "hs_admin",
     db_password: "Welcome@123",
     db_database: "hasthakatha",
-    session_secret: "thisismy"
+    session_secret: "thisismy",
+    razorpay_secret:"UdhvSLqrzcMK9h3PLFv7lDFT"
 }
