@@ -31,5 +31,5 @@ hasthaBean.initialize();
 login_app(hasthakatha_data,con);
 product_app(hasthakatha_data,con,hasthaBean);
 common_app(hasthakatha_data,con);
-payment_app(hasthakatha_data,con);
+payment_app(hasthakatha_data,con,settings);
 hasthakatha_data.listen(port);
