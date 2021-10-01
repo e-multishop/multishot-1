@@ -50,7 +50,7 @@ var payment_app = function (app, con) {
                 };
                 instance.orders.create(options, function (err, order) {
                     console.log(order);
-                    sql = "UPDATE `transaction` set `order_id`='" + order.id + "') where tid='"+tranction_id+"';";
+                    sql = "UPDATE `transaction` set `order_id`='" + order.id + "' where tid='"+tranction_id+"';";
                     //store orderid from database
                     con.query(sql,(err,result3)=>{
                         if(err){
