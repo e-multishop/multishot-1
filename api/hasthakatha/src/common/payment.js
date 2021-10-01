@@ -87,7 +87,14 @@ var payment_app = function (app, con) {
                             res.send({type:"error",message:"Temporary Error. Please Contact Support. "});
                         }
                         else{
-                            res.send({type:"success",message:"payment is successful"});  
+                            const deleteQuery = `DELETE FROM add_to_cart where uid='${userid}';`;
+                            con.query(deleteQuery,(err, result) => {
+                                if (err) {
+                                    res.send({type: 'error', message: 'Temporary error. Please contact support', details: err});
+                                } else {
+                                    res.send({type:"success",message:"Order is successful."});  
+                                }
+                            })
                         } 
                     });
                 }
