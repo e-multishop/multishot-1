@@ -50,12 +50,12 @@ var payment_app = function (app, con) {
                 };
                 instance.orders.create(options, function (err, order) {
                     console.log(order);
-                    sql = "INSERT INTO `transaction`(`order_id`) VALUES ('" + order.id + "') where tid='"+tranction_id+"';";
+                    sql = "UPDATE `transaction` set `order_id`='" + order.id + "') where tid='"+tranction_id+"';";
                     //store orderid from database
                     con.query(sql,(err,result3)=>{
                         if(err){
                             res.status(500);
-                            res.send({type:"error",message:"Temprory Issue. Please Contact Support", details: err});
+                            res.send({type:"error",message:"Temporary Issue. Please Contact Support", details: err});
                         }
                         else{
                             res.send({ "key_id": key_id, "amount": total_amount, "currency": currency, "name": "hasthakatha", "description": "test_transation", "order_id": order.id });
