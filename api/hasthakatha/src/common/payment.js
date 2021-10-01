@@ -55,7 +55,7 @@ var payment_app = function (app, con) {
                     con.query(sql,(err,result3)=>{
                         if(err){
                             res.status(500);
-                            res.send({type:"error",message:"Temprory Issue. Please Contact Support"});
+                            res.send({type:"error",message:"Temprory Issue. Please Contact Support", details: err});
                         }
                         else{
                             res.send({ "key_id": key_id, "amount": total_amount, "currency": currency, "name": "hasthakatha", "description": "test_transation", "order_id": order.id });
