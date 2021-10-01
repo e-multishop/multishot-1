@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import "./checkout.scss";
 import Checkout_card from "./Checkout_card"
 import Checkout_card_item from "./Checkout_card_item"
@@ -11,6 +13,7 @@ import {cartItems}  from '../../../Redux/actions/index';
 import logo from '../../../Images/logo.png'
 import Header from '../../Header/Header';
 import Footer from '../../Footer/Footer';
+import { toast } from 'react-toastify';
 
 function Checkout() {
     // const cartData = useSelector((state) => state.cartItems);
@@ -75,7 +78,7 @@ function Checkout() {
                 alert(response.razorpay_payment_id);
                 alert(response.razorpay_order_id);
                 alert(response.razorpay_signature)
-                Axios.post('rest/payment_status',{
+                Axios.post('/rest/payment_status',{
                     userid:userId,
                     order_id:checkoutPaymentDetails.order_id,
                     razorpay_order_id:response.razorpay_payment_id,
@@ -83,6 +86,8 @@ function Checkout() {
                     signature:response.razorpay_signature
                 }).then(res=>{
                     alert(res.data.message);
+                    toast.success(<span ><FontAwesomeIcon icon={faCheck} size='lg' color="white" className="icon toast-icon" />  Success</span>)
+
                 });
             },
             "prefill": {
