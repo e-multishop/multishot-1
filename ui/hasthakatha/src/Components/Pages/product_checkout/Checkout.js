@@ -85,7 +85,7 @@ function Checkout() {
                     payment_id:response.razorpay_payment_id,
                     signature:response.razorpay_signature
                 }).then(res=>{
-                    alert(res.data.message);
+                    console.log(res.data.message);
                     toast.success(<span ><FontAwesomeIcon icon={faCheck} size='lg' color="white" className="icon toast-icon" />  Success</span>)
 
                 });
