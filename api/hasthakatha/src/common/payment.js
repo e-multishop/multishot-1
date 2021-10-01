@@ -23,7 +23,6 @@ var payment_app = function (app, con) {
             t3 = t3.replace("$quantity", data[i].quantity);
             temp = temp + t3;
 
-            //         sql3=sql3+temp1.replace("$pid",data[i].pid);
         }
         //        console.log(temp);
         // con.query(sql3,(err,result2)=>{
