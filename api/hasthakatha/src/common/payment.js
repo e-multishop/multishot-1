@@ -78,7 +78,7 @@ var payment_app = function (app, con) {
         var sql = "UPDATE `transaction` SET `razorpay_order_id`='" + razorpay_order_id+ "' ,`payment_id`='" +payment_id + "' where uid='"+userid+"' AND order_id='"+order_id+"';";
         
                 var generated_signature = SHA256(order_id + "|" + payment_id, secret);  
-                if (generated_signature == razorpay_signature) 
+                if (generated_signature == signature) 
                 {   
                     con.query(sql,(err,result)=>{
                         if(err)
