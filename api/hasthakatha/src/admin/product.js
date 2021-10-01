@@ -273,6 +273,7 @@ var product_app = function (app, con, hasthaBean) {
 
         });
     });
+    
     app.put("/rest/update", (req, res) => {
         var pid = req.body.pid;
         var category = req.body.category;
