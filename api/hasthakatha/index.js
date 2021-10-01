@@ -1,4 +1,4 @@
-var mysql = require('mysql');
+var mysql = require('mysql2');
 const isheroku =process && process.env && process.env.PORT ? true : false;
 // for local setup, enable this
 
