@@ -68,14 +68,14 @@ var payment_app = function (app, con) {
 
     });
 
-    app.post('rest/payment_status', (req, res) => {
+    app.post('/rest/payment_status', (req, res) => {
         var userid=req.body.uid;
         var order_id=req.body.order_id;
         var razorpay_order_id= req.body.razorpay_order_id;
         var payment_id=req.body.razorpay_payment_id;
         var signature=req.body.razorpay_signature;
     //    var secret=req.body.key_secret;
-        var sql = "INSERT INTO `transaction`(`razorpay_order_id`, `payment_id`) VALUES ('" + razorpay_order_id+ "','" +payment_id + "')where uid='"+userid+"' AND order_id='"+order_id+"';";
+        var sql = "UPDATE `transaction` SET `razorpay_order_id`='" + razorpay_order_id+ "' ,`payment_id`='" +payment_id + "' where uid='"+userid+"' AND order_id='"+order_id+"';";
         
                 var generated_signature = SHA256(order_id + "|" + payment_id, secret);  
                 if (generated_signature == razorpay_signature) 

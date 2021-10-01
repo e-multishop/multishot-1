@@ -16,15 +16,19 @@ function Sidebar() {
                         </div>
                     </div>
                     <div class="card">
-                        <div class="card-content">
+                        <div class="card-content order">
                             <span class="card-title">
-                                <div>
-                                    <FontAwesomeIcon icon={faUser} size='1x' className="icon" />
-                                </div>
-                                <div>
-                                     Shiv Prasad
-                                </div>
+                                <FontAwesomeIcon icon={faUser} size='1x' className="icon" /> MY ORDERS
                             </span>
+                        </div>
+                        <div class="card-content profile">
+                            <span class="card-title">
+                                <FontAwesomeIcon icon={faUser} size='1x' className="icon" /> ACCOUNT SETTINGS
+                            </span>
+                            <div className="profile-content">
+                                <p>Profile Information</p>
+                                <p>Manage Addresess</p>
+                            </div>
                         </div>
                     </div>
                 </div>
