@@ -100,7 +100,10 @@ var payment_app = function (app, con,settings) {
                 }
                 else{
                     res.status(500);
-                    res.send({type:"error",message:"Temporary Error. Please Contact Support."})
+                    res.send({type:"error",message:"Temporary Error. Please Contact Support.", details: {
+                        generatedSig: generated_signature,
+                        signature: signature
+                    }})
                 }
 
             
