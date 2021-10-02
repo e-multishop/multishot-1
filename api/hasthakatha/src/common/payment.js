@@ -72,8 +72,8 @@ var payment_app = function (app, con,settings) {
         var userid=req.body.userid;
         var order_id=req.body.order_id;
         var razorpay_order_id= req.body.razorpay_order_id;
-        var payment_id=req.body.razorpay_payment_id;
-        var signature=req.body.razorpay_signature;
+        var payment_id=req.body.payment_id;
+        var signature=req.body.signature;
     //    var secret=req.body.key_secret;
         var sql = "UPDATE `transaction` SET `razorpay_order_id`='" + razorpay_order_id+ "' ,`payment_id`='" +payment_id + "' where uid='"+userid+"' AND order_id='"+order_id+"';";
         
