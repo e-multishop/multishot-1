@@ -69,7 +69,7 @@ var payment_app = function (app, con,settings) {
     });
 
     app.post('/rest/payment_status', (req, res) => {
-        var userid=req.body.uid;
+        var userid=req.body.userid;
         var order_id=req.body.order_id;
         var razorpay_order_id= req.body.razorpay_order_id;
         var payment_id=req.body.razorpay_payment_id;
