@@ -107,5 +107,26 @@ var payment_app = function (app, con,settings) {
         
     });
 
+    app.post('/rest/payment_failure',(req,res)=>{
+        var code = req.body.code;
+        var description=req.body.description;
+        var source = req.body.source;
+        var step = req.body.step;
+        var reason=req.body.reason;
+        var userid = req.body.userid;
+        var payment_id=req.body.payment_id;
+        var sql = "UPDATE `transaction` SET `code`='" + code + "' ,`description`='" + description + "' ,`source`='" + source+ "' ,`step`='" +step+ "' ,`reason`='" +reason+ "' where uid='"+userid+"' AND order_id='"+order_id+"';";
+        con.query(sql,(err,result)=>{
+            if(err)
+            {
+                res.status(500);
+                res.send({type:"error",message:"Temporary Error. Please Contact Support."})
+            }
+            else{
+                    res.send({type:"success",message:"inserted"});
+            }
+        })
+    });
+
 }
 module.exports = payment_app;
