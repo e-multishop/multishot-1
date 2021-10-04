@@ -24,7 +24,8 @@ class Productdetails extends Component{
             pid: '',
             productdetail: {},
             sizes: [],
-            mainImage: ''
+            mainImage: '',
+            loading: true
         }
     }
 
@@ -32,16 +33,20 @@ class Productdetails extends Component{
         const pid = this.props.match.params.pid;
         this.setState({pid: pid});
         Axios.get('rest/productdetails/'+pid).then(response => {
-            this.setState({productdetail: response.data.output, mainImage: response.data.output.image_data});
+            this.setState({productdetail: response.data.output, mainImage: response.data.output.image_data, loading: false});
         })
         this.loadProductSize(pid);
     }
    
     componentDidUpdate() {
         const insertproduct = document.getElementById("hs_product_details");
-        const elems = insertproduct.querySelectorAll('select');
-        const options = {};
-        var instances = M.FormSelect.init(elems, options);
+        if (insertproduct) {
+            const elems = insertproduct.querySelectorAll('select');
+            if (elems) {
+                const options = {};
+                var instances = M.FormSelect.init(elems, options);
+            }
+        }
     }
 
     loadProductSize(pid) {
@@ -85,119 +90,124 @@ class Productdetails extends Component{
         return(
           <>
            <Header />
-           <div className="hs_product" id="hs_product_details">
-                <div className="hs_product_details">
-                    
-                    <div className="img1 item1">
-                        <img src={imgproduct} alt="product image" onClick={() => this.setMainImage(imgproduct)}/>
-                    </div>
-                    <div className="img1 item2">
-                        <img src={imgproduct2} alt="product image" onClick={() => this.setMainImage(imgproduct2)}/>      
-                    </div>
-                    <div className="img1 item3">
-                    <img src={imgproduct3} alt="product image" onClick={() => this.setMainImage(imgproduct3)}/>
-                    </div>
-                    <div className="img1 item4">
-                        <img src={imgproduct4} alt="product image" onClick={() => this.setMainImage(imgproduct4)}/>
-                    </div>
-                    <div className="img1 item5">
-                        <img src={imgproduct} alt="product image" onClick={() => this.setMainImage(imgproduct)}/>
-                    </div>
-                    <div className="img-main item6">
-                        {
-                            this.state.mainImage
-                                ? <img src={this.state.mainImage} alt="product image" />
-                                : <b className="hs-image-preview">Image preview not available</b>
-                        }
-                    </div>
-                </div>
-                <div className="hs_product_side">
-                    <div className="hs_product_head">
-                        <NavLink to="/"><p>HasthaKatha</p></NavLink>
-                        <div className="hk-rating">
-                            {/* <div>
-                                <p><FontAwesomeIcon icon={faMapMarkerAlt}/> Seller</p>
-                            </div> */}
-                            {/* <div className="sales">
-                                927 sales
-                            </div> */}
-                            <div > 
-                                <FontAwesomeIcon icon={faStar}/>
-                                <FontAwesomeIcon icon={faStar}/>
-                                <FontAwesomeIcon icon={faStar}/>
-                                <FontAwesomeIcon icon={faStar}/>
-                                <FontAwesomeIcon icon={faStar}/>
-                            </div>
-                        </div>
-                        <h1>
-                            { this.state.productdetail.title }
-                        </h1>
-                        <div className="price-section">
-                                <div className="hk-product-price">
-                                    <h2>Rs. {this.state.productdetail.price}</h2>
-                                    {/* <p>Local taxes included (where applicable)</p> */}
-                                </div>
-                                <p className="stock"><FontAwesomeIcon icon={faCheck}/> In stock </p>
-                        </div>
-                    </div>
-                    <div className="hs_product_order">
+           { 
+            this.state.loading === true ? <div className="hs_product_details wrapper"></div> :  
+            <>
+                <div className="hs_product" id="hs_product_details">
+                    <div className="hs_product_details">
                         
-                        <div>
+                        <div className="img1 item1">
+                            <img src={imgproduct} alt="product image" onClick={() => this.setMainImage(imgproduct)}/>
+                        </div>
+                        <div className="img1 item2">
+                            <img src={imgproduct2} alt="product image" onClick={() => this.setMainImage(imgproduct2)}/>      
+                        </div>
+                        <div className="img1 item3">
+                        <img src={imgproduct3} alt="product image" onClick={() => this.setMainImage(imgproduct3)}/>
+                        </div>
+                        <div className="img1 item4">
+                            <img src={imgproduct4} alt="product image" onClick={() => this.setMainImage(imgproduct4)}/>
+                        </div>
+                        <div className="img1 item5">
+                            <img src={imgproduct} alt="product image" onClick={() => this.setMainImage(imgproduct)}/>
+                        </div>
+                        <div className="img-main item6">
+                            {
+                                this.state.mainImage
+                                    ? <img src={this.state.mainImage} alt="product image" />
+                                    : <b className="hs-image-preview">Image preview not available</b>
+                            }
+                        </div>
+                    </div>
+                    <div className="hs_product_side">
+                        <div className="hs_product_head">
+                            <NavLink to="/"><p>HasthaKatha</p></NavLink>
+                            <div className="hk-rating">
+                                {/* <div>
+                                    <p><FontAwesomeIcon icon={faMapMarkerAlt}/> Seller</p>
+                                </div> */}
+                                {/* <div className="sales">
+                                    927 sales
+                                </div> */}
+                                <div > 
+                                    <FontAwesomeIcon icon={faStar}/>
+                                    <FontAwesomeIcon icon={faStar}/>
+                                    <FontAwesomeIcon icon={faStar}/>
+                                    <FontAwesomeIcon icon={faStar}/>
+                                    <FontAwesomeIcon icon={faStar}/>
+                                </div>
+                            </div>
+                            <h1>
+                                { this.state.productdetail.title }
+                            </h1>
+                            <div className="price-section">
+                                    <div className="hk-product-price">
+                                        <h2>Rs. {this.state.productdetail.price}</h2>
+                                        {/* <p>Local taxes included (where applicable)</p> */}
+                                    </div>
+                                    <p className="stock"><FontAwesomeIcon icon={faCheck}/> In stock </p>
+                            </div>
+                        </div>
+                        <div className="hs_product_order">
+                            
+                            <div>
+                                <div class="input-field col s12">
+                                    <select>
+                                        <option value="" disabled selected>Choose size</option>
+                                    {this.getSizeOptions()}
+                                    </select>
+                                </div>
+                            </div>
+                            <div>
                             <div class="input-field col s12">
-                                <select>
-                                    <option value="" disabled selected>Choose size</option>
-                                   {this.getSizeOptions()}
-                                </select>
+                                    <select>
+                                        <option value="" disabled selected>Choose color</option>
+                                        <option>Black</option>
+                                        <option>Blue</option>
+                                        <option>Brown</option>
+                                    </select>
+                                </div>
+                                {/* <a class="btn dropdown-trigger hk-btn" href="#!" data-target="dropdown2">Select an option<FontAwesomeIcon icon={faChevronDown}/></a>
+                                <p>Add your personalisation</p> */}
                             </div>
-                        </div>
-                        <div>
-                        <div class="input-field col s12">
-                                <select>
-                                    <option value="" disabled selected>Choose color</option>
-                                    <option>Black</option>
-                                    <option>Blue</option>
-                                    <option>Brown</option>
-                                </select>
+                            <div className="hk-addcard">
+                                    <a href="#">ADD TO CART</a>
                             </div>
-                            {/* <a class="btn dropdown-trigger hk-btn" href="#!" data-target="dropdown2">Select an option<FontAwesomeIcon icon={faChevronDown}/></a>
-                             <p>Add your personalisation</p> */}
-                        </div>
-                        <div className="hk-addcard">
-                                <a href="#">ADD TO CART</a>
                         </div>
                     </div>
                 </div>
-            </div>
-            {/* // <!--review and comment section--> */}
-            <div className="hs_review comment">
-                <div className="hk-review-head">   
-                    <h2 className="hk-review-heading">234 Shop reviews</h2>
-                    <p className="hk-review-filter"></p>
+                {/* // <!--review and comment section--> */}
+                <div className="hs_review comment">
+                    <div className="hk-review-head">   
+                        <h2 className="hk-review-heading">234 Shop reviews</h2>
+                        <p className="hk-review-filter"></p>
+                    </div>
+                    <div>
+                        {
+                            ReviewData.map((value)=>{
+                            return(
+                                <>
+                                    <ProductReview
+                                        CustmerImg={value.CustmerImg}
+                                        CustmerName={value.CustmerName}
+                                        ReviewDate={value.ReviewDate}
+                                        ReviewContent={value.ReviewContent}
+                                        ProductImg={value.ProductImg}
+                                        PurchaseImg={value.PurchaseImg}
+                                        PurchaseName={value.PurchaseName}
+                                    />
+                                </>
+                            );  
+                            })   
+                        }
+                        
+                    </div>
                 </div>
-                <div>
-                    {
-                        ReviewData.map((value)=>{
-                          return(
-                            <>
-                                <ProductReview
-                                    CustmerImg={value.CustmerImg}
-                                    CustmerName={value.CustmerName}
-                                    ReviewDate={value.ReviewDate}
-                                    ReviewContent={value.ReviewContent}
-                                    ProductImg={value.ProductImg}
-                                    PurchaseImg={value.PurchaseImg}
-                                    PurchaseName={value.PurchaseName}
-                                />
-                            </>
-                          );  
-                        })   
-                    }
-                    
+                {/* // <!--slider section--> */}
+                <div className="hs_slider">
                 </div>
-            </div>
-            {/* // <!--slider section--> */}
-            <div className="hs_slider">
-            </div>
+            </>
+            }
             <Footer />
         </>
         );
