@@ -19,7 +19,7 @@ import Checkout from './Components/Pages/product_checkout/Checkout'
 import PageNotFound from "./Components/Pages/PageNotFound/PageNotFound";
 import Account from "./Components/Pages/User_dashboard/account/Account";
 import Forgotpassword from "./Components/Pages/login/Forgotpassword";
-
+import Order from "./Components/Pages/User_dashboard/order/Order"
 class App extends Component{
   render(){
     return(
@@ -39,6 +39,7 @@ class App extends Component{
               <Route component={Forgotpassword} path="/forgotpassword"/>
               <Route exact component={Reset} path="/reset_password/:id"/>
               <Route component={PageNotFound}/>
+              <Route component={Order} path="/order"/>
         </Switch>
     </HashRouter> 
     );

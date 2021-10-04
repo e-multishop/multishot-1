@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { NavLink } from 'react-router-dom';
 import './sidebar.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCircle, faUser } from '@fortawesome/free-solid-svg-icons'
@@ -18,7 +19,7 @@ function Sidebar() {
                     <div class="card">
                         <div class="card-content order">
                             <span class="card-title">
-                                <FontAwesomeIcon icon={faUser} size='1x' className="icon" /> MY ORDERS
+                                <NavLink to="/order"><FontAwesomeIcon icon={faUser} size='1x' className="icon" /> MY ORDERS</NavLink>
                             </span>
                         </div>
                         <div class="card-content profile">
@@ -26,7 +27,7 @@ function Sidebar() {
                                 <FontAwesomeIcon icon={faUser} size='1x' className="icon" /> ACCOUNT SETTINGS
                             </span>
                             <div className="profile-content">
-                                <p>Profile Information</p>
+                                <p >Profile Information</p>
                                 <p>Manage Addresess</p>
                             </div>
                         </div>
