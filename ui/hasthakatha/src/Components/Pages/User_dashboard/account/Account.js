@@ -18,9 +18,7 @@ function Account() {
                             <Sidebar/>
                         </div>
                         <div className="col s9">
-                        <NavLink to="/orderdetails"><OrderList/></NavLink>
-                        <NavLink to="/orderdetails"><OrderList/></NavLink>
-
+                            
                         </div>
                     </div>
                 </div>
