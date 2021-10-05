@@ -2,7 +2,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    border: 1px solid #5e5c5c;
+    border: 1px solid #D5D9D9;
     border-radius: 10px;
     padding: 10px;
     margin: 10px 0px;
@@ -52,5 +52,54 @@
             color: #5e5c5c;
             font-size: 14px;
         }
+    }
+}
+//orderdetails page
+.order-details-container {
+    padding: 15px;
+    .order-details-title {
+        font-size: 32px;
+        font-weight: 500;
+        margin: 0;
+    }
+    p {
+        padding: 0;
+        margin: 0 0 15px 0;
+    }
+    .details-section {
+        display: flex;
+        justify-content: space-between;
+        border: 1px solid #D5D9D9;
+        border-radius: 10px;
+        padding: 10px;
+        .address-section{
+            width: 30%;
+        }
+        .payment-method{
+            width: 30%;
+        }
+        .price-section{
+            width: 35%;
+            div{
+                display: flex;
+                justify-content: space-between;
+                margin-left:10px;
+                p{
+                    margin: 2px;
+                }
+                .grand-total{
+                        font-weight: 600 !important;
+                }
+            }
+        }
+        .details-section-heading {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        p{
+            margin: 10px;
+            font-size: 14px;
+        }
+        
     }
 }

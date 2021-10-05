@@ -3,6 +3,7 @@ import Sidebar from '../sidebar/Sidebar'
 import Header from '../../../Header/Header';
 import Footer from '../../../Footer/Footer';
 import OrderList from './OrderList';
+import { NavLink } from 'react-router-dom';
 
 function Order() {
     // const cartData = useSelector((state) => state.cartItems);
@@ -17,11 +18,10 @@ function Order() {
                             <Sidebar />
                         </div>
                         <div className="col s9">
-                            <OrderList />
-                            <OrderList />
-                            <OrderList />
-                            <OrderList />
-
+                            <NavLink to="/orderdetails"><OrderList /></NavLink>
+                            <NavLink to="/orderdetails"><OrderList /></NavLink>
+                            <NavLink to="/orderdetails"><OrderList /></NavLink>
+                            <NavLink to="/orderdetails"><OrderList /></NavLink>
                         </div>
                     </div>
                 </div>
