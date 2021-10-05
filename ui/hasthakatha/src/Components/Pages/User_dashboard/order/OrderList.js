@@ -18,6 +18,7 @@ function OrderList() {
                 <div className="order-delivery">
                     <p className="title">Delivry by 3 Oct 2021</p>
                     <p>Your order has been placed</p>
+                    <p>Rate & Reviews Product</p>
                 </div>
             </div>
         </>
