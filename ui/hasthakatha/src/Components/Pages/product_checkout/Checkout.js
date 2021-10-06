@@ -93,7 +93,7 @@ function Checkout() {
                 }).then(res=>{
                     console.log(res.data.message);
                     toast.success(<span ><FontAwesomeIcon icon={faCheck} size='lg' color="white" className="icon toast-icon" />  Success</span>)
-
+                    document.location.href = '/#/orderdetails/'+checkoutPaymentDetails.order_id
                 });
             },
             "prefill": {

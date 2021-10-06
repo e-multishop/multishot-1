@@ -1,14 +1,20 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Sidebar from '../sidebar/Sidebar'
 import Header from '../../../Header/Header';
 import Footer from '../../../Footer/Footer';
 import OrderList from './OrderList';
 import { NavLink } from 'react-router-dom';
+import Axios from 'axios';
 
 function Order() {
-    // const cartData = useSelector((state) => state.cartItems);
-    // console.log("cart data check =", cartData);
-    return (
+    const [orderList, setOrderList] = useState([]);
+    useEffect(() => {
+        const uid = localStorage.getItem('userId');
+        Axios.get('/rest/order/list/'+uid).then(res => {
+            setOrderList(res.data);
+        });
+    }, []);
+    return ( 
         <>
             <Header />
             <div className="hk-container">
@@ -18,10 +24,13 @@ function Order() {
                             <Sidebar />
                         </div>
                         <div className="col s9">
-                            <NavLink to="/orderdetails"><OrderList /></NavLink>
-                            <NavLink to="/orderdetails"><OrderList /></NavLink>
-                            <NavLink to="/orderdetails"><OrderList /></NavLink>
-                            <NavLink to="/orderdetails"><OrderList /></NavLink>
+                            {
+                                orderList.map (o => {
+                                    return (
+                                        <NavLink to={'/orderdetails/'+o.order_id}><OrderList {...o}/></NavLink>
+                                    )
+                                })
+                            }
                         </div>
                     </div>
                 </div>

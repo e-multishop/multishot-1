@@ -41,7 +41,7 @@ class App extends Component{
               <Route component={Forgotpassword} path="/forgotpassword"/>
               <Route exact component={Reset} path="/reset_password/:id"/>
               <Route component={Order} path="/order"/>
-              <Route component={Orderdetails} path="/orderdetails"/>
+              <Route component={Orderdetails} path="/orderdetails/:order_id"/>
               <Route component={Add_address} path="/addaddress"/>
               <Route component={PageNotFound}/>
         </Switch>
