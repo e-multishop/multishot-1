@@ -6,9 +6,15 @@ var profile_app=function(app,con){
         var id=req.body.id;
         var userid=req.body.userid;
         var name=req.body.name;
+        var country = req.body.country;
+        var address1=req.body.address1;
+        var city=req.body.city;
+        var state=req.body.state;
+        var pincode=req.body.pincode;
+        var phone = req.body.phone;
         var created_date=(new Date()).getTime();
         var updated_date=(new Date()).getTime();
-        var sql= "INSERT INTO `shipping_address`( `id`,`uid`,`name`,`address`, `created_date`,`updated_date`) VALUES (NULL,'" + uid + "','"+name+"','" + address+ "','" + created_date  + "','" + updated_date + "');";
+        var sql= "INSERT INTO `shipping_address`( `id`,`uid`,`country`,`name`,`address`,`address1`,`city`,`state`,`pincode`,`phone`, `created_date`,`updated_date`) VALUES (NULL,'" + uid + "','"+country+"','"+name+"','" + address+ "','"+address1+"','"+city+"','"+state+"','"+pincode+"','"+phone+"','" + created_date  + "','" + updated_date + "');";
         con.query(sql,(err,result)=>{
             if(err){
                 res.status(500);
@@ -22,10 +28,16 @@ var profile_app=function(app,con){
     app.put('/rest/address',(req,res)=>{
         var userid=req.body.userid;
         var id =req.body.id;
-    //    var name =req.body.name;
+        var name =req.body.name;
         var address=req.body.address;
+        var address1=req.body.address1;
+        var country=req.body.country;
+        var city=req.body.city;
+        var state=req.body.state;
+        var pincode=req.body.pincode;
+        var phone=req.body.phone;
         var updated_date=(new Date()).getTime();
-        var sql="UPDATE `shipping_address` SET `address`='" + address+ "' ,`updated_date`='" +updated_date + "' where uid='"+userid+"' AND id='"+id+"';";
+        var sql="UPDATE `shipping_address` SET `country`='"+country+"',`name`='"+name+"',`address`='" + address+ "' ,`address1`='"+address1+"',`city`='"+city+"',`state`='"+state+"',`pincode`='"+pincode+"',`phone`='"+phone+"',`updated_date`='" +updated_date + "' where uid='"+userid+"' AND id='"+id+"';";
         con.query(sql,(err,result)=>{
             if(err)
             {
