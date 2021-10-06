@@ -1,6 +1,19 @@
 
 var profile_app=function(app,con){
     
+    app.get('/rest/county_detail',(req,res)=>{
+        var sql ="select * from country;";
+        con.query(sql,(err,result)=>{
+            if(err)
+            {
+                res.status(500);
+                res.send({type:"error",messsage:"Temporary Issue. Sorry we can't find country details"});
+            }
+            else{
+                res.send({type:"success",messsage:"Now you show list of all country","result":result})
+            }
+        })
+    });
     app.post('/rest/address',(req,res)=>{
         var address = req.body.address;
         var id=req.body.id;
