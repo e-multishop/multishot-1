@@ -47,19 +47,6 @@ function Checkout() {
                 setLoading(false);
             }
         });
-        // Axios.get('/rest/add_to_cart/'+userId).then(res=>{
-        //     setCartData(res.data.output);
-        // })
-        // Axios.get("/rest/add_to_cart_price_calculate/"+userId).then((res) => {
-        //     // console.log(res.data);
-        //     const result = res.data;
-        //     setData(result);
-        //     setLoading(false);
-        // })
-        // Axios.get('/rest/add_to_cart/number_of_items/' + userId).then(res => {
-        //     const numberOfItems = res.data.number_of_items;
-        //     dispatch(cartItems(numberOfItems))
-        // })
     }
 
     useEffect(()=>{
@@ -67,10 +54,16 @@ function Checkout() {
     },[]);
 
     const handleSubmit=()=>{
-        const data=[]
         Axios.post('/rest/creating_order',{
             amount: data.totalAmount,
-            data: cartData,
+            data: cartData.map(cart => {
+                return {
+                    price: cart.price,
+                    pid: cart.pid, 
+                    quantity: cart.quantity,
+                    id: cart.id
+                }
+            }),
             uid: userId
         }).then(res=>{
             // console.warn("check response data of order:",res.data);
