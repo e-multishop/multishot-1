@@ -1,0 +1,27 @@
+// address list section start
+
+.address-list-page-title{
+    font-size: 28px;
+    font-weight: 500;
+}
+.add-new-address-title{
+    font-size: 20px;
+    padding: 10px;
+    border: 1px solid #D5D9D9;
+    border-radius: 10px;
+    color:#4F2725;
+}
+
+//add address section
+.add-address-section{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    .add-address-form{
+        width: 50%;
+        h2{
+            font-size: 28px;
+            font-weight: 500;
+        }
+    }
+}
