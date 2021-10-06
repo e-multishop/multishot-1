@@ -32,3 +32,16 @@ ul{
     width: 68px;
   }
 }
+
+.hk-order-status {
+  float: right;
+  &.active {
+    color: blue;
+  }
+  &.success {
+    color: green;
+  }
+  &.error {
+    color: red;
+  }
+}

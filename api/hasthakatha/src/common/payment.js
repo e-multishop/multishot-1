@@ -75,7 +75,7 @@ var payment_app = function (app, con,settings) {
         var payment_id=req.body.payment_id;
         var signature=req.body.signature;
     //    var secret=req.body.key_secret;
-        var sql = "UPDATE `transaction` SET `razorpay_order_id`='" + razorpay_order_id+ "' ,`payment_id`='" +payment_id + "' where uid='"+userid+"' AND order_id='"+order_id+"';";
+        var sql = "UPDATE `transaction` SET `t_status`=2, `razorpay_order_id`='" + razorpay_order_id+ "' ,`payment_id`='" +payment_id + "' where uid='"+userid+"' AND order_id='"+order_id+"';";
         
                 var generated_signature = SHA256(order_id + "|" + payment_id, settings.razorpay_secret);  
                 if (generated_signature == signature) 

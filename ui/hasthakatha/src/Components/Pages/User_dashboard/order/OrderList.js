@@ -1,8 +1,13 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './order.scss';
 import demoimg from '../../../../Images/megha.jpg'
 import { NavLink } from 'react-router-dom';
-function OrderList() {
+import Axios from 'axios';
+function OrderList(props) {
+    const showDate = (datetime) => {
+        // return (new Date(datetime)).toLocaleDateString();
+        return datetime;
+    };
     return (
         <>
            <div className="orderlist-flex">
@@ -10,6 +15,7 @@ function OrderList() {
                     <img src={demoimg} />
                 </div>
                 <div className="order-content">
+                    <span>{props.order_id}</span>
                     <p className="title">black dress </p>
                     <p>Primary color : white</p>
                 </div>
@@ -17,7 +23,7 @@ function OrderList() {
                     <p>₹ 500</p>
                 </div>
                 <div className="order-delivery">
-                    <p className="title">Delivry by 3 Oct 2021</p>
+                    <p className="title">Delivry by {showDate(props.created_date)}</p>
                     <p>Your order has been placed</p>
                     <p>Rate & Reviews Product</p>
                 </div>
