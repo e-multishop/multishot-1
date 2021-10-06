@@ -2,7 +2,7 @@ import React from 'react'
 import Sidebar from '../sidebar/Sidebar'
 import Header from '../../../Header/Header';
 import Footer from '../../../Footer/Footer';
-import OrderList from '../order/OrderList';
+import Address_list from '../address/Address_list'
 import { NavLink } from 'react-router-dom';
 
 function Account() {
@@ -18,7 +18,7 @@ function Account() {
                             <Sidebar/>
                         </div>
                         <div className="col s9">
-                            
+                        <Address_list/>
                         </div>
                     </div>
                 </div>

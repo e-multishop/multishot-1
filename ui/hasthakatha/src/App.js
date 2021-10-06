@@ -21,6 +21,7 @@ import Account from "./Components/Pages/User_dashboard/account/Account";
 import Forgotpassword from "./Components/Pages/login/Forgotpassword";
 import Order from "./Components/Pages/User_dashboard/order/Order";
 import Orderdetails from "./Components/Pages/User_dashboard/order/Orderdetails"
+import Add_address from "./Components/Pages/User_dashboard/address/Add_address"
 class App extends Component{
   render(){
     return(
@@ -41,6 +42,7 @@ class App extends Component{
               <Route exact component={Reset} path="/reset_password/:id"/>
               <Route component={Order} path="/order"/>
               <Route component={Orderdetails} path="/orderdetails"/>
+              <Route component={Add_address} path="/addaddress"/>
               <Route component={PageNotFound}/>
         </Switch>
     </HashRouter> 
