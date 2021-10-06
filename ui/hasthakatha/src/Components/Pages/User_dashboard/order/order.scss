@@ -1,0 +1,105 @@
+.orderlist-flex {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    border-bottom: 1px solid #D5D9D9;
+    // border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0px;
+    &:hover {
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    }
+    .order-image {
+        width: 10%;
+        img {
+            width: 100%;
+        }
+    }
+    .order-content {
+        width: 50%;
+        padding: 0 10px;
+        .title {
+            margin: 0;
+            font-size: 20px;
+            color: #000;
+        }
+        p {
+            margin: 5px 0;
+            color: #a09e9e;
+            font-size: 14px;
+        }
+    }
+
+    .item-price {
+        width: 10%;
+        p {
+            margin: 0;
+            color: #000;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    }
+    .order-delivery {
+        width: 30%;
+        .title {
+            margin: 0;
+            font-size: 20px;
+            padding: 0;
+            color: #000;
+        }
+        p {
+            margin: 5px 0;
+            color: #5e5c5c;
+            font-size: 14px;
+        }
+    }
+}
+//orderdetails page
+.order-details-container {
+    padding: 15px;
+    .order-details-title {
+        font-size: 32px;
+        font-weight: 500;
+        margin: 0;
+    }
+    p {
+        padding: 0;
+        margin: 0 0 15px 0;
+    }
+    .details-section {
+        display: flex;
+        justify-content: space-between;
+        border: 1px solid #D5D9D9;
+        border-radius: 10px;
+        padding: 10px;
+        .address-section{
+            width: 30%;
+        }
+        .payment-method{
+            width: 30%;
+        }
+        .price-section{
+            width: 35%;
+            div{
+                display: flex;
+                justify-content: space-between;
+                margin-left:10px;
+                p{
+                    margin: 2px;
+                }
+                .grand-total{
+                        font-weight: 600 !important;
+                }
+            }
+        }
+        .details-section-heading {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        p{
+            margin: 10px;
+            font-size: 14px;
+        }
+        
+    }
+}

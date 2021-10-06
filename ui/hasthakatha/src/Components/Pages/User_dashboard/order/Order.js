@@ -2,30 +2,33 @@ import React from 'react'
 import Sidebar from '../sidebar/Sidebar'
 import Header from '../../../Header/Header';
 import Footer from '../../../Footer/Footer';
-import OrderList from '../order/OrderList';
+import OrderList from './OrderList';
 import { NavLink } from 'react-router-dom';
 
-function Account() {
+function Order() {
     // const cartData = useSelector((state) => state.cartItems);
     // console.log("cart data check =", cartData);
     return (
         <>
-        <Header/>
-        <div className="hk-container">
-            <div>
+            <Header />
+            <div className="hk-container">
+                <div>
                     <div className="row">
                         <div className="col s3">
-                            <Sidebar/>
+                            <Sidebar />
                         </div>
                         <div className="col s9">
-                            
+                            <NavLink to="/orderdetails"><OrderList /></NavLink>
+                            <NavLink to="/orderdetails"><OrderList /></NavLink>
+                            <NavLink to="/orderdetails"><OrderList /></NavLink>
+                            <NavLink to="/orderdetails"><OrderList /></NavLink>
                         </div>
                     </div>
                 </div>
-        </div>
-        <Footer/>
+            </div>
+            <Footer />
         </>
     );
 }
 
-export default Account;
+export default Order;

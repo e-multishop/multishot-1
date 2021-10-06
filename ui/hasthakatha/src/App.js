@@ -19,7 +19,8 @@ import Checkout from './Components/Pages/product_checkout/Checkout'
 import PageNotFound from "./Components/Pages/PageNotFound/PageNotFound";
 import Account from "./Components/Pages/User_dashboard/account/Account";
 import Forgotpassword from "./Components/Pages/login/Forgotpassword";
-
+import Order from "./Components/Pages/User_dashboard/order/Order";
+import Orderdetails from "./Components/Pages/User_dashboard/order/Orderdetails"
 class App extends Component{
   render(){
     return(
@@ -38,6 +39,8 @@ class App extends Component{
               <Route component={Signup} path="/signup"/>
               <Route component={Forgotpassword} path="/forgotpassword"/>
               <Route exact component={Reset} path="/reset_password/:id"/>
+              <Route component={Order} path="/order"/>
+              <Route component={Orderdetails} path="/orderdetails"/>
               <Route component={PageNotFound}/>
         </Switch>
     </HashRouter> 
