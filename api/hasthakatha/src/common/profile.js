@@ -79,7 +79,22 @@ var profile_app = function (app, con) {
     app.get('/rest/address_list/:userid/:id', (req, res) => {
         var userid = req.params.userid;
         var id = req.params.id;
-        var sql = "select * from shipping_address where userid='" + userid + "' AND id='" + id + "';";
+        var sql = "select * from shipping_address where uid='" + userid + "' AND id='" + id + "';";
+        con.query(sql, (err, result) => {
+            if (err) {
+                res.status(500);
+                res.send({ type: "error", message: "Temporary Error.Address doesn't shown" });
+            }
+            else {
+                res.send({ type: "success", message: "Shown the all list of data", "result": result });
+            }
+        });
+    });
+
+    app.get('/rest/address_list/:userid', (req, res) => {
+        var userid = req.params.userid;
+        var id = req.params.id;
+        var sql = "select * from shipping_address where uid='" + userid + "';";
         con.query(sql, (err, result) => {
             if (err) {
                 res.status(500);

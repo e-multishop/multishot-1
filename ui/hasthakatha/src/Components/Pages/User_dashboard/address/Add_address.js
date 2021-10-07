@@ -34,6 +34,7 @@ function Add_address() {
     const addAddress = () => {
         axios.post('/rest/address', countryDetail).then(res => {
             toast.success('Address added successfully');
+            document.location.href='#/addresslist';
         });
     };
 
@@ -66,8 +67,8 @@ function Add_address() {
                                         <label>Country/Region</label>
                                     </div>
                                     <div className="input-field col s12 ">
-                                        <input id="full_name" type="text" className="validate" onChange={setDetail}/>
-                                        <label for="full_name">Full Name (First and Last Name)</label>
+                                        <input id="fullname" name="name" type="text" className="validate" onChange={setDetail}/>
+                                        <label for="fullname">Full Name (First and Last Name)</label>
                                     </div>
                                     <div className="input-field col s12 ">
                                         <textarea id="Address" className="materialize-textarea" name="address" onChange={setDetail}></textarea>

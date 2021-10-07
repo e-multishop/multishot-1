@@ -1,10 +1,17 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './address.scss';
 import { NavLink } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import axios from 'axios';
 
 function Address_list() {
+    const [addressList, setAddressList] = useState([]);
+    useEffect(() => {
+        axios.get('/rest/address_list/'+localStorage.getItem('userId')).then(res => {
+            setAddressList(res.data.result);
+        });
+    }, [])
     return (
         <div>
             <h2 className="address-list-page-title">Manage Address</h2>
@@ -13,28 +20,23 @@ function Address_list() {
                 <FontAwesomeIcon icon={faPlus} size='large' className="icon"/>   ADD A NEW ADDRESS
                 </div>
             </NavLink>
-            <div className="address-list">
-                <div className="address-bar">
-                    <p className="name">Shiv Prasad</p>
-                    <p className="address">47, Mo- jagdish patti post- kachahari, Jaunpur, Uttar Pradesh - 222002</p>
-                    <p className="phone-number">Phone number- 8545824846</p>
-                </div>
-                <div className="edit-delete-icon">
-                        <p>Edit</p>
-                        <p>Delete</p>
-                </div>
-            </div>
-            <div className="address-list">
-                <div className="address-bar">
-                    <p className="name">Shiv Prasad</p>
-                    <p className="address">47, Mo- jagdish patti post- kachahari, Jaunpur, Uttar Pradesh - 222002</p>
-                    <p className="phone-number">Phone number- 8545824846</p>
-                </div>
-                <div className="edit-delete-icon">
-                        <p>Edit</p>
-                        <p>Delete</p>
-                </div>
-            </div>
+            {
+                addressList.map((a,i)=> {
+                    return (
+                        <div className="address-list" key={i}>
+                            <div className="address-bar">
+                                <p className="name">{a.name}</p>
+                                <p className="address">{a.address}</p>
+                                <p className="phone-number">Phone number- {a.phone}</p>
+                            </div>
+                            <div className="edit-delete-icon">
+                                    <p>Edit</p>
+                                    <p>Delete</p>
+                            </div>
+                        </div>
+                    )
+                })
+            }
         </div>
     )
 }
