@@ -6,6 +6,7 @@
 }
 .add-new-address-title{
     font-size: 20px;
+    font-weight: 500;
     padding: 10px;
     border: 1px solid #D5D9D9;
     border-radius: 10px;
@@ -24,4 +25,39 @@
             font-weight: 500;
         }
     }
+}
+
+//address list section
+.address-list{
+    border-bottom:1px solid #D5D9D9;
+    margin-top:20px;
+    // border-radius: 10px;
+    padding: 10px;
+    .address-bar{
+        p{
+            margin:0px;
+        }
+        .name{
+            font-size: 16px;
+            font-weight: 600;
+        }
+    }
+    .edit-delete-icon{
+        display: flex;
+        p{
+            padding:5px 10px;
+            font-size: 14px;
+            font-weight: 600;
+            margin:0;
+            color:#4F2725;
+
+            &:hover{
+                background-color: #D5D9D9;
+                cursor: pointer;
+            }
+        }
+    }
+    // &:hover{
+    //     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    // }
 }

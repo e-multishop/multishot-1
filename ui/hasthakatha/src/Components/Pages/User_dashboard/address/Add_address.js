@@ -9,7 +9,7 @@ function Add_address() {
         const elems = country.querySelectorAll('select');
         const options = {};
         var instances = M.FormSelect.init(elems, options);
-    });
+    },[]);
 
     return (
         <>
