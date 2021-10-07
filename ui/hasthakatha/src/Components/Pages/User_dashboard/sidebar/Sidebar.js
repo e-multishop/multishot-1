@@ -27,8 +27,8 @@ function Sidebar() {
                                 <FontAwesomeIcon icon={faUser} size='1x' className="icon" /> ACCOUNT SETTINGS
                             </span>
                             <div className="profile-content">
-                                <p >Profile Information</p>
-                                <p>Manage Addresess</p>
+                                <p>Profile Information</p>
+                                <NavLink to="/addresslist"><p>Manage Addresess</p></NavLink>
                             </div>
                         </div>
                     </div>
