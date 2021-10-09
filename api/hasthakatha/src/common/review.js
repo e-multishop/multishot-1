@@ -37,7 +37,7 @@ var review_app = function (app, con) {
                     }
                     else {
 
-                        var rid = result[0]["rid"];
+                        var rid = result1[0]["rid"];
 
                         // var sql2 = "";
                         var temp = "";
