@@ -22,7 +22,7 @@ var review_app = function (app, con) {
         var created_date = (new Date()).getTime();
         var updated_date = (new Date()).getTime();
         var image_data = req.body.image_data;
-        var sql = "INSERT INTO `reviews`( `rid`,`uid`,`rating`,`description`,`created_date`,`updated_date`) VALUES (NULL,'" + userid + "','" + rating + "','" + description + "','" + created_date + "','" + updated_date + "');";
+        var sql = "INSERT INTO `reviews`( `rid`,`uid`,`pid`,`rating`,`description`,`created_date`,`updated_date`) VALUES (NULL,'" + userid + "','"+pid+"','" + rating + "','" + description + "','" + created_date + "','" + updated_date + "');";
         con.query(sql, (err, result) => {
             if (err) {
                 res.status(500);
