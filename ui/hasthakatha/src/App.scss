@@ -45,3 +45,22 @@ ul{
     color: red;
   }
 }
+
+.btn-default {
+  background-color: #fff;
+  color: #ccc;
+}
+
+.h-ml-16 {
+  margin-left: 16px;
+}
+
+.hs-action-wrapper {
+  display: flex;
+  padding: 16px;
+  justify-content: flex-end;
+}
+
+.hs-action-icon {
+  cursor: pointer;
+}

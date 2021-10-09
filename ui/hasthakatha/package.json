@@ -46,7 +46,7 @@
     "react-redux": "^7.2.4",
     "react-responsive-carousel": "^3.2.18",
     "react-router-dom": "^5.2.0",
-    "react-toastify": "^7.0.4",
+    "react-toastify": "^8.0.2",
     "redux": "^4.1.1",
     "roboto-fontface": "^0.10.0",
     "sass": "^1.32.13",
