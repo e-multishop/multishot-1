@@ -29,36 +29,43 @@ var review_app = function (app, con) {
                 res.send({ type: "error", message: "Temporary error, We can't featch reviews",details:err });
             }
             else {
-                var sql1 = "select rid from reviews where uid='" + userid + "' AND pid='" + pid + "';";
-                con.query(sql1, (err, result1) => {
-                    if (err) {
-                        res.status(500);
-                        res.send({ type: "error", message: "Temporary error, We can't featch reviews",details:err });
-                    }
-                    else {
-
-                        var rid = result1[0]["rid"];
-
-                        // var sql2 = "";
-                        var temp = "";
-                        var t2 = "INSERT INTO `review_images`(`img_id`,`rid`,`image_data`) VALUES (null,'" + rid + "','$image_data','$quantity');";
-                        for (let i = 0; i < data.length; i++) {
-                            var t2 = t2.replace("$image_data", data[i].image_data);
-                            temp = temp + t2;
-
+                if(image_data)
+                {
+                    var sql1 = "select rid from reviews where uid='" + userid + "' AND pid='" + pid + "';";
+                    con.query(sql1, (err, result1) => {
+                        if (err) {
+                            res.status(500);
+                            res.send({ type: "error", message: "Temporary error, We can't featch reviews",details:err });
                         }
-                        con.query(temp, (err, result3) => {
-                            if (err) {
-                                res.status(500);
-                                res.send({ type: "error", message: "Temporary error, We can't featch reviews",details:err });
+                        else {
+    
+                            var rid = result1[0]["rid"];
+    
+                            // var sql2 = "";
+                            var temp = "";
+                            var t2 = "INSERT INTO `review_images`(`img_id`,`rid`,`image_data`) VALUES (null,'" + rid + "','$image_data','$quantity');";
+                            for (let i = 0; i < data.length; i++) {
+                                var t2 = t2.replace("$image_data", data[i].image_data);
+                                temp = temp + t2;
+    
                             }
-                            else {
-                                res.send({ type: "success", message: "Data inserted successfully" });
-                            }
-                        })
-                    }
-
-                })
+                            con.query(temp, (err, result3) => {
+                                if (err) {
+                                    res.status(500);
+                                    res.send({ type: "error", message: "Temporary error, We can't featch reviews",details:err });
+                                }
+                                else {
+                                    res.send({ type: "success", message: "Data inserted successfully" });
+                                }
+                            })
+                        }
+    
+                    })
+                }
+                else{
+                    res.send({type:"success",message:"Reviews inserted"});
+                }
+               
                
             }
         })
