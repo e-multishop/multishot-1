@@ -8,7 +8,7 @@ var review_app = function (app, con) {
                 res.send({ type: "error", message: "Temporary error, We can't featch reviews" });
             }
             else {
-                
+                res.send({"result":result});
             }
         })
     });
@@ -26,14 +26,14 @@ var review_app = function (app, con) {
         con.query(sql, (err, result) => {
             if (err) {
                 res.status(500);
-                res.send({ type: "error", message: "Temporary error, We can't featch reviews" });
+                res.send({ type: "error", message: "Temporary error, We can't featch reviews",details:err });
             }
             else {
                 var sql1 = "select rid from reviews where uid='" + userid + "' AND pid='" + pid + "';";
                 con.query(sql1, (err, result1) => {
                     if (err) {
                         res.status(500);
-                        res.send({ type: "error", message: "Temporary error, We can't featch reviews" });
+                        res.send({ type: "error", message: "Temporary error, We can't featch reviews",details:err });
                     }
                     else {
 
@@ -50,7 +50,7 @@ var review_app = function (app, con) {
                         con.query(temp, (err, result3) => {
                             if (err) {
                                 res.status(500);
-                                res.send({ type: "error", message: "Temporary error, We can't featch reviews" });
+                                res.send({ type: "error", message: "Temporary error, We can't featch reviews",details:err });
                             }
                             else {
                                 res.send({ type: "success", message: "Data inserted successfully" });
