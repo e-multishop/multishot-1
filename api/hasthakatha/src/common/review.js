@@ -1,11 +1,11 @@
 var review_app = function (app, con) {
     app.get('/rest/reviews/:pid', (req, res) => {
         var pid = req.params.pid;
-        var sql = "select * from reviews  LEFT JOIN review_images ON reviews.rid = review_images.rid where pid='" + pid + "'; "
+        var sql = "select reviews.rid, reviews.rating, reviews.description, reviews.pid, reviews.uid, reviews.created_date, reviews.updated_date from reviews  LEFT JOIN review_images ON reviews.rid = review_images.rid where pid='" + pid + "'; "
         con.query(sql, (err, result) => {
             if (err) {
                 res.status(500);
-                res.send({ type: "error", message: "Temporary error, We can't featch reviews" });
+                res.send({ type: "error", message: "Temporary error, We can't featch reviews",details: err });
             }
             else {
                 res.send({"result":result});

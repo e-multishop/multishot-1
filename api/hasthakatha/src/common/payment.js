@@ -5,7 +5,7 @@ var SHA256 = require("crypto-js/hmac-sha256");
 var payment_app = function (app, con,settings) {
 
     app.post('/rest/creating_order', (req, res) => {
-
+        // get amount from ui and validate the amount
         var total_amount = '500';
         var tranction_id = nanoId(16);
         var created_date = (new Date()).getTime();
