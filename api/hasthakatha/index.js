@@ -25,6 +25,7 @@ const payment_app = require('./src/common/payment');
 const product_app = require('./src/admin/product');
 const profile_app = require('./src/common/profile');
 const order_app = require('./src/common/order');
+const review_app= require('./src/common/review');
 
 const hasthakatha_data=hasthakatha_app(settings);
 
@@ -37,4 +38,5 @@ common_app(hasthakatha_data,con);
 payment_app(hasthakatha_data,con,settings);
 profile_app(hasthakatha_data,con);
 order_app(hasthakatha_data,con);
+review_app(hasthakatha_data,con);
 hasthakatha_data.listen(port);
