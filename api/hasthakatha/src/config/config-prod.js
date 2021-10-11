@@ -9,5 +9,6 @@ module.exports = {
     db_password: "Welcome@123",
     db_database: "hasthakatha",
     session_secret: "thisismy",
+    razorpay_key: "rzp_test_cprfpdDbrBfN3x",
     razorpay_secret:"UdhvSLqrzcMK9h3PLFv7lDFT"
 }

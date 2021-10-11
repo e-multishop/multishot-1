@@ -1,70 +1,36 @@
 const Razorpay = require('razorpay');
 var nanoId = require('nano-id');
 var SHA256 = require("crypto-js/hmac-sha256");
+const AddtocartSql = require('./sql/AddtocartSql');
+const TransactionSql = require('./sql/TransactionSql');
+var getTotalPrice = async function() {
 
+}
 var payment_app = function (app, con,settings) {
 
-    app.post('/rest/creating_order', (req, res) => {
+    app.post('/rest/creating_order', async (req, res) => {
         // get amount from ui and validate the amount
-        var total_amount = '500';
-        var tranction_id = nanoId(16);
-        var created_date = (new Date()).getTime();
-        var updated_date = (new Date()).getTime();
-        var data = req.body.data;
+        const totalUiAmount = req.body.amount;
         var uid = req.body.uid;
-        var quantity;
-        var pid;
-        var t_status = 1;
-        var temp = '';
-        var t2 = "INSERT INTO `transaction_detail`(`id`,`tid`, `pid`,`quantity`) VALUES (null,'" + tranction_id + "','$pid','$quantity');";
-        var t1 = "INSERT INTO `transaction`(`tid`, `uid`, `created_date`, `t_status`,`updated_date`) VALUES ('" + tranction_id + "','" + uid + "','" + created_date + "','" + t_status + "','" + updated_date + "');";
-        for (let i = 0; i < data.length; i++) {
-            var t3 = t2.replace("$pid", data[i].pid);
-            t3 = t3.replace("$quantity", data[i].quantity);
-            temp = temp + t3;
-
+        const totalAPIAmount = await AddtocartSql.Validate(con, uid);
+        // validate total amount
+        if (totalUiAmount === totalAPIAmount) {
+            var data = req.body.data;
+            const transaction = new TransactionSql(con, settings, uid);
+            try { 
+                const {order, transaction_id} = await transaction.startPayment(totalAPIAmount);
+                //store orderid from database
+                const key_id = await transaction.recordPayment(transaction_id, order.id, totalAPIAmount, data);
+                res.send({type: 'success', "key_id": key_id, "amount": totalAPIAmount, "currency": order.currency, "name": "hasthakatha", "description": "test_transation", "order_id": order.id });
+            } catch(e) {
+                res.status(500);
+                res.send({type:"error",message:"Temporary Issue. Please Contact Support", details: e});
+            }
+        } else {
+            res.status(500);
+            res.send({type: 'error', message: 'Internal server error. Please contact support.'})
         }
-        //        console.log(temp);
-        // con.query(sql3,(err,result2)=>{
-        //     if (err) throw err;
-        //     for(let i=0; i<result2.length; i++)
-        //     {
-        //         console.log(result2[i]["price"]);
-        //     }
-        //     res.send(total_amount);
-        // });
-        con.query(t1, (err, result1) => {
-            if (err) throw err;
-            con.query(temp, (err, result) => {
-                if (err) throw err;
-                //    res.send('inserted');
-                var key_id = 'rzp_test_cprfpdDbrBfN3x';
-                var currency = "INR";
-
-                var instance = new Razorpay({ key_id: key_id, key_secret: settings.razorpay_secret })
-
-                var options = {
-                    amount: total_amount * 100,  // amount in the smallest currency unit
-                    currency: currency,
-                    receipt: tranction_id
-                };
-                instance.orders.create(options, function (err, order) {
-                    console.log(order);
-                    sql = "UPDATE `transaction` set `order_id`='" + order.id + "' where tid='"+tranction_id+"';";
-                    //store orderid from database
-                    con.query(sql,(err,result3)=>{
-                        if(err){
-                            res.status(500);
-                            res.send({type:"error",message:"Temporary Issue. Please Contact Support", details: err});
-                        }
-                        else{
-                            res.send({ "key_id": key_id, "amount": total_amount, "currency": currency, "name": "hasthakatha", "description": "test_transation", "order_id": order.id });
-                        }
-                    });
-
-                });
-            });
-        })
+        
 
     });
 
@@ -135,4 +101,6 @@ var payment_app = function (app, con,settings) {
 
 
 }
+
+
 module.exports = payment_app;
