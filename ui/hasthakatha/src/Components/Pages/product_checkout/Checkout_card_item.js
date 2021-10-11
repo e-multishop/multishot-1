@@ -1,3 +1,4 @@
+import axios from 'axios';
 import Axios from 'axios';
 import React, { useEffect } from 'react'
 import "./checkout.scss";
@@ -17,8 +18,15 @@ function Checkout_card_item(props) {
             props.getCart(userId);
         })
     }
-    const onChange=() => {
-        props.getCart(userId);
+    const onChange=(e) => {
+        const quantity = e.target.value;
+        axios.put('/rest/add_to_cart',{
+            pid : props.pid,
+            uid : userId,
+            quantity : quantity,
+        }).then(res=>{
+            props.getCart(userId);
+        })
     }
     return (
         <div className="card-item-flex " >
@@ -36,7 +44,7 @@ function Checkout_card_item(props) {
             </div>
             <div className="item-quantity">
                 <div id="select-quantity" className="col s12 ">
-                    <select class="browser-default z-depth-1" onChange={onChange}>
+                    <select class="browser-default z-depth-1" onChange={onChange} value={props.quantity}>
                         {/* <option value="" disabled selected>1</option> */}
                         <option value="1">1</option>
                         <option value="2">2</option>

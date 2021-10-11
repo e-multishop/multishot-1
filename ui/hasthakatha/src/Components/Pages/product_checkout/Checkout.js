@@ -148,7 +148,9 @@ function Checkout() {
                                                 productprice={data.price}
                                                 productimg={data.img_url}
                                                 id={data.id}
+                                                pid={data.pid}
                                                 getCart={getCart}
+                                                quantity={data.quantity}
                                                 imgdata={data.image_data}
                                             />
                                         )
