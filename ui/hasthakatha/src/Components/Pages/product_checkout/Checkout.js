@@ -81,9 +81,6 @@ function Checkout() {
             "image": logo,
             "order_id": checkoutPaymentDetails.order_id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
             "handler": function (response){
-                console.log(response.razorpay_payment_id);
-                console.log(response.razorpay_order_id);
-                console.log(response.razorpay_signature)
                 Axios.post('/rest/payment_status',{
                     userid:userId,
                     order_id:checkoutPaymentDetails.order_id,
@@ -106,6 +103,11 @@ function Checkout() {
             },
             "theme": {
                 "color": "#3399cc"
+            },
+            "modal": {
+                "ondismiss": function(){
+                    console.log('Checkout form closed');
+                }
             }
         };
         var rzp1 = new Razorpay(options);
@@ -146,7 +148,9 @@ function Checkout() {
                                                 productprice={data.price}
                                                 productimg={data.img_url}
                                                 id={data.id}
+                                                pid={data.pid}
                                                 getCart={getCart}
+                                                quantity={data.quantity}
                                                 imgdata={data.image_data}
                                             />
                                         )

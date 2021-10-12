@@ -23,6 +23,8 @@ import Order from "./Components/Pages/User_dashboard/order/Order";
 import Orderdetails from "./Components/Pages/User_dashboard/order/Orderdetails"
 import Address_list from "./Components/Pages/User_dashboard/address/Address_list"
 import Add_address from "./Components/Pages/User_dashboard/address/Add_address"
+import UserProfile from "./Components/Pages/User_dashboard/profile/UserProfile"
+
 class App extends Component{
   render(){
     return(
@@ -45,6 +47,7 @@ class App extends Component{
               <Route component={Orderdetails} path="/orderdetails/:order_id"/>
               <Route component={Address_list} path="/addresslist"/>
               <Route component={Add_address} path="/addaddress"/>
+              <Route component={UserProfile} path="/userprofile/:id"/>
               <Route component={PageNotFound}/>
         </Switch>
     </HashRouter> 
