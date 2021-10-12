@@ -25,7 +25,9 @@ class Productdetails extends Component{
             productdetail: {},
             sizes: [],
             mainImage: '',
-            loading: true
+            loading: true,
+            reviewList: [],
+            reviewsLoading: true
         }
     }
 
@@ -35,6 +37,9 @@ class Productdetails extends Component{
         Axios.get('rest/productdetails/'+pid).then(response => {
             this.setState({productdetail: response.data.output, mainImage: response.data.output.image_data, loading: false});
         })
+        Axios.get('/rest/reviews/'+pid).then(response => {
+            setState({reviewList: response.data.result, reviewsLoading: false});
+        });
         this.loadProductSize(pid);
     }
    
@@ -184,14 +189,14 @@ class Productdetails extends Component{
                     </div>
                     <div>
                         {
-                            ReviewData.map((value)=>{
+                            this.state.reviewList.map((value)=>{
                             return(
                                 <>
                                     <ProductReview
                                         CustmerImg={value.CustmerImg}
                                         CustmerName={value.CustmerName}
-                                        ReviewDate={value.ReviewDate}
-                                        ReviewContent={value.ReviewContent}
+                                        ReviewDate={value.created_date}
+                                        ReviewContent={value.description}
                                         ProductImg={value.ProductImg}
                                         PurchaseImg={value.PurchaseImg}
                                         PurchaseName={value.PurchaseName}

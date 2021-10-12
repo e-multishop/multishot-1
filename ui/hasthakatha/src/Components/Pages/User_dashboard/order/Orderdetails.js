@@ -74,6 +74,12 @@ function Orderdetails(props) {
             </div>
         )
     }
+    const getAmount = (data) => {
+        if (data === undefined || data === null) {
+            return '0.00';
+        }
+        return data;
+    }
     return (
         <>
             <Header />
@@ -102,6 +108,10 @@ function Orderdetails(props) {
                         <p className="details-section-heading">Order Summary{showOrderStatus(orderDetails.t_status)}</p>
                         <div>
                             <p>Item(s) Subtotal:</p>
+                            <p>₹{getAmount(orderDetails.total_amount)}</p>
+                        </div>
+                        <div>
+                            <p>GST:</p>
                             <p>₹0.00</p>
                         </div>
                         <div>
@@ -110,11 +120,11 @@ function Orderdetails(props) {
                         </div>
                         <div>
                             <p>Total:</p>
-                            <p>₹0.00</p>
+                            <p>₹{getAmount(orderDetails.total_amount)}</p>
                         </div>
                         <div >
                             <p className="grand-total">Grand Total:</p>
-                            <p className="grand-total">₹0.00</p>
+                            <p className="grand-total">₹{getAmount(orderDetails.total_amount)}</p>
                         </div>
                     </div>
                 </div>
