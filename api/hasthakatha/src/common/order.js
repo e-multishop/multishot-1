@@ -22,7 +22,7 @@ var order_app=function(app,con,settings)
     });
 
     app.get('/rest/order/list/:uid', (req, res) => {
-        const sql = `SELECT * from transaction where uid=${req.params.uid} ORDER BY created_date`;
+        const sql = `SELECT * from transaction where uid=${req.params.uid} ORDER BY created_date DESC`;
         con.query(sql, (err, result) => {
             if (err) {
                 res.status(500);

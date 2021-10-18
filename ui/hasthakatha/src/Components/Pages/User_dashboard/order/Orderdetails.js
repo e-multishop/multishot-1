@@ -144,7 +144,8 @@ function Orderdetails(props) {
 
                         </div>
                         <div className="item-price text-center">
-                            <p>₹ 500</p>
+                            <p><span>Amount:</span> ₹ {orderDetails.amount}</p>
+                            <p><span>Quantity:</span> {orderDetails.quantity}</p>
                         </div>
                     </div>
                 </div>
