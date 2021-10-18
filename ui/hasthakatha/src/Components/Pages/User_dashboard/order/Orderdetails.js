@@ -59,7 +59,7 @@ function Orderdetails(props) {
     const showReviewBox = () => {
         return (
             <div>
-                <div className="hs-product-rating">
+                <div className="hs-product-rating hs-mt-16">
                     <span class="material-icons hs-action-icon" onClick={() => setReviewRating(1)}>{rating > 0 ? 'star' : 'star_outline'}</span>
                     <span class="material-icons hs-action-icon" onClick={() => setReviewRating(2)}>{rating > 1 ? 'star' : 'star_outline'}</span>
                     <span class="material-icons hs-action-icon" onClick={() => setReviewRating(3)}>{rating > 2 ? 'star' : 'star_outline'}</span>
@@ -94,11 +94,6 @@ function Orderdetails(props) {
                         JAGDISH PATTI NEAR JAGDISHPUR RAILWAY CROSSING
                         JAUNPUR, UTTAR PRADESH 222002
                         India</p>
-                        {
-                            showReview
-                                ? showReviewBox()
-                                : <button className="waves-effect waves-light btn btn-color" onClick={showReviewInput}>Add a review</button>
-                        }
                     </div>
                     <div className="payment-method">
                         <p className="details-section-heading">Payment Method</p>
@@ -136,11 +131,16 @@ function Orderdetails(props) {
                         </div>
                         <div className="order-content">
                             <span></span>
-                            <p className="title">black dress </p>
+                            <p className="title">{orderDetails.title} </p>
                             <p>Primary color : white</p>
                             <button className="waves-effect waves-light btn btn-color" >
-                                <FontAwesomeIcon icon={faRetweet} size='1x' className="repeat-icon"/> Buy it again
-                            </button>
+                                <FontAwesomeIcon icon={faRetweet} size='1x' className="repeat-icon" /> 
+                                Buy it again</button>
+                            {
+                                showReview
+                                    ? showReviewBox()
+                                    : <button className="waves-effect waves-light btn btn-color h-ml-16" onClick={showReviewInput}>Add a review</button>
+                            }
 
                         </div>
                         <div className="item-price text-center">

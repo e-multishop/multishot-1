@@ -19,7 +19,7 @@ function Sidebar() {
                     <div class="card">
                         <div class="card-content order">
                             <span class="card-title">
-                                <NavLink to="/order"><FontAwesomeIcon icon={faBox} size='1x' className="icon" /><span className="icon-title">MY ORDERS</span></NavLink>
+                                <NavLink to="/account/order"><FontAwesomeIcon icon={faBox} size='1x' className="icon" /><span className="icon-title">MY ORDERS</span></NavLink>
                             </span>
                         </div>
                         <div class="card-content profile">
@@ -27,8 +27,8 @@ function Sidebar() {
                                 <FontAwesomeIcon icon={faUser} size='1x' className="icon" /> <span className="icon-title">ACCOUNT SETTINGS</span>
                             </span>
                             <div className="profile-content">
-                            <NavLink to={"/userprofile/"+localStorage.getItem('userId')}><p  className="icon-title">Profile Information</p></NavLink>
-                                <NavLink to="/addresslist"><p  className="icon-title">Manage Addresess</p></NavLink>
+                                <NavLink to="/account/userprofile"><p  className="icon-title">Profile Information</p></NavLink>
+                                <NavLink to="/account/addresslist"><p  className="icon-title">Manage Addresess</p></NavLink>
                             </div>
                         </div>
                     </div>

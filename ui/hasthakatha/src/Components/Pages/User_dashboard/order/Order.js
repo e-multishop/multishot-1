@@ -16,14 +16,10 @@ function Order() {
     }, []);
     return ( 
         <>
-            <Header />
             <div className="hk-container">
                 <div>
                     <div className="row">
-                        <div className="col s3">
-                            <Sidebar />
-                        </div>
-                        <div className="col s9">
+                        <div className="col s12">
                             {
                                 orderList.map (o => {
                                     return (
@@ -35,7 +31,6 @@ function Order() {
                     </div>
                 </div>
             </div>
-            <Footer />
         </>
     );
 }
