@@ -4,9 +4,11 @@ import Footer from '../../../Footer/Footer';
 import axios from 'axios';
 import { useParams } from 'react-router';
 import { toast } from 'react-toastify';
-
+import demoimg from '../../../../Images/megha.jpg'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faRetweet } from '@fortawesome/free-solid-svg-icons'
 function Orderdetails(props) {
-    const {order_id} = useParams();
+    const { order_id } = useParams();
     const [orderDetails, setOrderDtails] = useState({});
     const [showReview, setShowReview] = useState(false);
     const [review, setReview] = useState('');
@@ -14,7 +16,7 @@ function Orderdetails(props) {
     const [rating, setRating] = useState(0);
     useEffect(() => {
         const uid = localStorage.getItem('userId');
-        axios.get('/rest/order_details/'+uid+'/'+order_id).then(res => {
+        axios.get('/rest/order_details/' + uid + '/' + order_id).then(res => {
             setOrderDtails(res.data.result[0]);
         });
     }, [])
@@ -26,7 +28,7 @@ function Orderdetails(props) {
                 return (<span className="hk-order-status success">SUCCESS</span>);
             case 0:
                 return (<span className="hk-order-status error">FAILED</span>);
-            default: 
+            default:
                 return (<span>Error</span>)
         }
     }
@@ -44,7 +46,7 @@ function Orderdetails(props) {
     const addReview = () => {
         axios.post('/rest/reviews', {
             userid: localStorage.getItem('userId'),
-            pid: orderDetails.pid, 
+            pid: orderDetails.pid,
             rating: rating,
             description: review
         }).then(res => {
@@ -93,7 +95,7 @@ function Orderdetails(props) {
                         JAUNPUR, UTTAR PRADESH 222002
                         India</p>
                         {
-                            showReview 
+                            showReview
                                 ? showReviewBox()
                                 : <button className="waves-effect waves-light btn btn-color" onClick={showReviewInput}>Add a review</button>
                         }
@@ -123,6 +125,27 @@ function Orderdetails(props) {
                         <div >
                             <p className="grand-total">Grand Total:</p>
                             <p className="grand-total">₹{getAmount(orderDetails.total_amount)}</p>
+                        </div>
+                    </div>
+                </div>
+                <div className="product-details">
+                    <h2>Delivered 06-May-2021</h2>
+                    <div className="order-flex">
+                        <div className="order-image">
+                            <img src={demoimg} />
+                        </div>
+                        <div className="order-content">
+                            <span></span>
+                            <p className="title">black dress </p>
+                            <p>Primary color : white</p>
+                            <button className="waves-effect waves-light btn btn-color" >
+                                <FontAwesomeIcon icon={faRetweet} size='1x' className="repeat-icon"/> Buy it again
+                            </button>
+
+                        </div>
+                        <div className="item-price text-center">
+                            <p><span>Amount:</span> ₹ {orderDetails.amount}</p>
+                            <p><span>Quantity:</span> {orderDetails.quantity}</p>
                         </div>
                     </div>
                 </div>

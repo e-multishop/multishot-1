@@ -8,6 +8,14 @@ function OrderList(props) {
         // return (new Date(datetime)).toLocaleDateString();
         return datetime;
     };
+    const showCreatedDate = (datetime) => {
+        const actualDateTime = parseInt(datetime);
+        try { 
+            return (new Date(actualDateTime)).toLocaleDateString();
+        } catch(e) { 
+            return datetime;
+        }
+    };
     return (
         <>
            <div className="orderlist-flex">
@@ -18,9 +26,10 @@ function OrderList(props) {
                     <span>{props.order_id}</span>
                     <p className="title">black dress </p>
                     <p>Primary color : white</p>
+                    <p>Created On: {showCreatedDate(props.created_date)}</p>
                 </div>
                 <div className="item-price text-center">
-                    <p>₹ 500</p>
+                    <p>{props.total_amount ? '₹' + props.total_amount : 'Error'}</p>
                 </div>
                 <div className="order-delivery">
                     <p className="title">Delivry by {showDate(props.created_date)}</p>

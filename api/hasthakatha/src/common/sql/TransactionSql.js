@@ -52,4 +52,27 @@ module.exports = class OrderSql {
         });
         return Promise.resolve(p);
     }
+
+    async updatePayment(transaction_id) {
+        const p = new Promise((resolve, reject) => {
+            const checkTxSql = `SELECT t_status from transaction where tid=${transaction_id}`;
+            this.con.query(checkTxSql, (err, result) => {
+                if (err) {reject(err);}
+                else if (result.length === 0) {reject('Transaction not found.')}
+                else {
+                    const actualResult = result[0];
+                    const transactionStatus = actualResult.t_status;
+                    // update transactions with INPROGRESS status to FAILURE
+                    if (transactionStatus === '1') {
+                        const updateTxSql = `UPDATE transaction SET t_status = 0 where tid=${transaction_id}`;
+                        this.con.query(updateTxSql, (err, result2) => {
+                            if (err) {reject(err);}
+                            else resolve(result2);
+                        });
+                    }
+                }
+            });
+        });
+        return Promise.resolve(p);
+    }
 }

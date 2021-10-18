@@ -22,6 +22,12 @@ var payment_app = function (app, con,settings) {
                 //store orderid from database
                 const key_id = await transaction.recordPayment(transaction_id, order.id, totalAPIAmount, data);
                 res.send({type: 'success', "key_id": key_id, "amount": totalAPIAmount, "currency": order.currency, "name": "hasthakatha", "description": "test_transation", "order_id": order.id });
+                const razorpayTimeout = settings.razorpay_payment_timeout;  // in seconds
+                const razorPayTimeout_ms = razorpayTimeout*1000; // in milliseconds
+                // update payment status after a timeout
+                setTimeout(() => {
+                    transaction.updatePayment(transaction_id);
+                }, razorPayTimeout_ms);
             } catch(e) {
                 res.status(500);
                 res.send({type:"error",message:"Temporary Issue. Please Contact Support", details: e});
@@ -30,8 +36,6 @@ var payment_app = function (app, con,settings) {
             res.status(500);
             res.send({type: 'error', message: 'Internal server error. Please contact support.'})
         }
-        
-
     });
 
     app.post('/rest/payment_status', (req, res) => {

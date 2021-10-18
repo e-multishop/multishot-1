@@ -7,7 +7,7 @@ function UserProfile() {
     const [userData,setUserData]=useState([])
     useEffect(()=>{
         axios.get('/rest/user_profile/'+localStorage.getItem('userId')).then(res=>{
-            setUserData(res.data);
+            setUserData(res.data.result);
         })
     },[])
     return (
