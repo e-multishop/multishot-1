@@ -103,7 +103,6 @@ function Add_address() {
                     </div>
                 </div>
             </div>
-            <Footer />
         </>
     )
 }
