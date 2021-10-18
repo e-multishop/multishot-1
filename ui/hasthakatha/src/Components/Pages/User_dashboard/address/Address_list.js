@@ -15,7 +15,7 @@ function Address_list() {
     return (
         <div>
             <h2 className="address-list-page-title">Manage Address</h2>
-            <NavLink to="/addaddress">
+            <NavLink to="/account/addaddress">
                 <div className="add-new-address-title">
                 <FontAwesomeIcon icon={faPlus} size='large' className="icon"/>   ADD A NEW ADDRESS
                 </div>
