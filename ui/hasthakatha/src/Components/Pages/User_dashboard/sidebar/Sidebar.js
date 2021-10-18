@@ -27,7 +27,7 @@ function Sidebar() {
                                 <FontAwesomeIcon icon={faUser} size='1x' className="icon" /> <span className="icon-title">ACCOUNT SETTINGS</span>
                             </span>
                             <div className="profile-content">
-                            <NavLink to="/userprofile"><p  className="icon-title">Profile Information</p></NavLink>
+                            <NavLink to={"/userprofile/"+localStorage.getItem('userId')}><p  className="icon-title">Profile Information</p></NavLink>
                                 <NavLink to="/addresslist"><p  className="icon-title">Manage Addresess</p></NavLink>
                             </div>
                         </div>

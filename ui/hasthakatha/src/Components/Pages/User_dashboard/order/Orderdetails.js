@@ -139,8 +139,8 @@ function Orderdetails(props) {
                             <p className="title">black dress </p>
                             <p>Primary color : white</p>
                             <button className="waves-effect waves-light btn btn-color" >
-                                <FontAwesomeIcon icon={faRetweet} size='1x' className="icon" /> 
-                                Buy it again</button>
+                                <FontAwesomeIcon icon={faRetweet} size='1x' className="repeat-icon"/> Buy it again
+                            </button>
 
                         </div>
                         <div className="item-price text-center">

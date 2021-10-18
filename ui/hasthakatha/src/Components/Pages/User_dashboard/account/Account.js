@@ -1,4 +1,5 @@
 import React from 'react'
+import './account.scss'
 import Sidebar from '../sidebar/Sidebar'
 import Header from '../../../Header/Header';
 import Footer from '../../../Footer/Footer';
@@ -15,11 +16,13 @@ function Account() {
             <div className="hk-container">
                 <div>
                     <div className="row">
-                        <div className="col s3">
-                            <Sidebar />
+                        <div className="col s3 ">
+                            <div className="sidebar-main">
+                                <Sidebar />
+                            </div>
                         </div>
                         <div className="col s9">
-                            <UserProfile/>
+                            <UserProfile />
                         </div>
                     </div>
                 </div>
