@@ -111,7 +111,7 @@ var profile_app = function (app, con) {
     app.get('/rest/user_profile/:userid', (req, res) => {
     //    var userid = req.params.userid;
      
-        var sql = `select U.uid,U.type,U.profile_picture,U.shipping_address,U.phone,U.age,U.created_date,L.id,L.name,L.email from user as U LEFT JOIN loginusers as L on U.uid = L.id where U.uid='${req.params.userid}'`;
+        var sql = `select U.uid,U.type,U.profile_picture,U.shipping_address,U.phone,U.age,U.created_date,L.id,U.name,L.email from user as U LEFT JOIN loginusers as L on U.uid = L.id where U.uid='${req.params.userid}'`;
      
         con.query(sql, (err, result) => {
             if (err) {
