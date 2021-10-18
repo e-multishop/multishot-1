@@ -45,7 +45,6 @@ function Add_address() {
 
     return (
         <>
-            <Header />
             <div className="add-address-section">
                 <div className="add-address-form">
                     <h2>Add a new address</h2>

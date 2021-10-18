@@ -2,7 +2,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    border-bottom: 1px solid #D5D9D9;
+    border-bottom: 1px solid #d5d9d9;
     // border-radius: 10px;
     padding: 10px;
     margin: 10px 0px;
@@ -69,26 +69,26 @@
     .details-section {
         display: flex;
         justify-content: space-between;
-        border: 1px solid #D5D9D9;
+        border: 1px solid #d5d9d9;
         border-radius: 10px;
         padding: 10px;
-        .address-section{
+        .address-section {
             width: 30%;
         }
-        .payment-method{
+        .payment-method {
             width: 30%;
         }
-        .price-section{
+        .price-section {
             width: 35%;
-            div{
+            div {
                 display: flex;
                 justify-content: space-between;
-                margin-left:10px;
-                p{
+                margin-left: 10px;
+                p {
                     margin: 2px;
                 }
-                .grand-total{
-                        font-weight: 600 !important;
+                .grand-total {
+                    font-weight: 600 !important;
                 }
             }
         }
@@ -96,10 +96,59 @@
             font-size: 18px;
             font-weight: 600;
         }
-        p{
+        p {
             margin: 10px;
             font-size: 14px;
         }
-        
+    }
+}
+//product details page
+.product-details {
+    border: 1px solid #d5d9d9;
+    border-radius: 10px;
+    padding:0px 10px;
+    margin-top:30px;
+    h2{
+        font-size: 22px;
+        font-weight: 500;
+        margin:20px 0;
+    }
+    .order-flex {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        margin: 10px 0px;
+        .order-image {
+            width: 10%;
+            img {
+                width: 100%;
+            }
+        }
+        .order-content {
+            width: 50%;
+            padding: 0 10px;
+            .title {
+                margin: 0;
+                font-size: 20px;
+                color: #000;
+            }
+            p {
+                margin: 5px 0;
+                color: #a09e9e;
+                font-size: 14px;
+            }
+            .repeat-icon{
+                color:#fff;
+            }
+        }
+        .item-price {
+            width: 10%;
+            p {
+                margin: 0;
+                color: #000;
+                font-size: 20px;
+                font-weight: bold;
+            }
+        }
     }
 }
