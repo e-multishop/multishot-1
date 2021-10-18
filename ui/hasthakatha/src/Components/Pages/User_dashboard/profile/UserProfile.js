@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import './profile.scss'
 
 function UserProfile() {
-    const [userData,setUserData]=useState([])
+    const [userData,setUserData]=useState({})
     useEffect(()=>{
         axios.get('/rest/user_profile/'+localStorage.getItem('userId')).then(res=>{
             setUserData(res.data.result);
@@ -42,8 +42,8 @@ function UserProfile() {
                                     </div>
 
                                     <div className="input-field col s10 ">
-                                        <input id="email" type="email" className="validate" name="email" value={userData.name} />
-                                        <label for="email">Email Address</label>
+                                        <input id="email" type="email" className="validate" name="email" value={userData.email} required/>
+                                        <label for="email" className="active">Email Address</label>
                                     </div>
                                     <div className="input-field col s10">
                                         <input id="mobile_number" type="number" name="phone" className="validate" value={userData.phone}/>
@@ -51,7 +51,7 @@ function UserProfile() {
                                     </div>
                                 </div>
                                 <div className="button">
-                                    <a class="waves-effect waves-light btn btn-color" >Edit</a>
+                                    <a class="waves-effect waves-light btn btn-color" >Update</a>
                                 </div>
                             </div>
                         </form>
