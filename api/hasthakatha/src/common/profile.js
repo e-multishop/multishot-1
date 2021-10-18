@@ -109,15 +109,15 @@ var profile_app = function (app, con) {
     //user profile Api's for getting information
 
     app.get('/rest/user_profile/:userid', (req, res) => {
-        var userid = req.params.userid;
-        var sql = "select * from user where uid='" + userid + "';";
+    //    var userid = req.params.userid;
+        var sql = `select * from user as U LEFT JOIN loginusers as L on U.uid = L.id where U.uid='${req.params.userid}'`;
         con.query(sql, (err, result) => {
             if (err) {
                 res.status(500);
                 res.send({ type: "error", message: "Temporary Error.User doesn't shown" });
             }
             else {
-                res.send({ type: "success", message: "profile info shown successfully", "result": result});
+                res.send({ type: "success", message: "profile info shown successfully", "result": result[0]});
 
             }
         })
