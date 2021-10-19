@@ -34,7 +34,7 @@ function Add_address() {
     const addAddress = () => {
         axios.post('/rest/address', countryDetail).then(res => {
             toast.success('Address added successfully');
-            document.location.href='#/addresslist';
+            document.location.href='#/account/addresslist';
         });
     };
 
