@@ -61,6 +61,20 @@ var profile_app = function (app, con) {
         })
     });
 
+    app.get('/rest/address/:userid/:id', (req, res) => {
+        const userid = req.params.userid;
+        const id = req.params.id;
+        con.query(`SELECT * from shipping_address where uid = ${userid} and id = ${id}`, (err, result) => {
+            if (err) {
+                res.status(500);
+                res.send({ type: "error", message: "Temporary Error. Error fetching address", details: err });
+            }
+            else {
+                res.send({ type: "success", message: "Address deleted", result: result && result.length > 0 ? result[0] : {}});
+            }
+        });
+    });
+
     app.delete('/rest/address/:userid/:id', (req, res) => {
         var userid = req.params.userid;
         var id = req.params.id;

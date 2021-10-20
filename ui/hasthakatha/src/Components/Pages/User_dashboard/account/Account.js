@@ -28,7 +28,8 @@ function Account() {
                             <HashRouter>
                                 <Switch>
                                     <Route exact path="/account/addresslist" component={Address_list}/>
-                                    <Route exact path="/account/addaddress" component={Add_address} />
+                                    <Route exact path="/account/addaddress" component={Add_address} mode="add" />
+                                    <Route exact path={"/account/editaddress/:id"} component={Add_address} state="edit" />
                                     <Route exact path="/account/order" component={Order} />
                                     <Route component={UserProfile} />
                                 </Switch>
