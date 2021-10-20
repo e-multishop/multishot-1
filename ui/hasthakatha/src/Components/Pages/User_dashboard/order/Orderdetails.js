@@ -69,7 +69,7 @@ function Orderdetails(props) {
                 <textarea className="materialize-textarea" placeholder="Write your review" onChange={updateReview} value={review}></textarea>
                 <div className="hs-action-wrapper">
                     <button className="waves-effect waves-light btn btn-default" onClick={cancelReview}>Cancel</button>
-                    <button className="waves-effect waves-light btn btn-color h-ml-16" onClick={addReview}>Add</button>
+                    <button className="waves-effect waves-light btn btn-color hs-ml-16" onClick={addReview}>Add</button>
                 </div>
             </div>
         )
@@ -139,7 +139,7 @@ function Orderdetails(props) {
                             {
                                 showReview
                                     ? showReviewBox()
-                                    : <button className="waves-effect waves-light btn btn-color h-ml-16" onClick={showReviewInput}>Add a review</button>
+                                    : <button className="waves-effect waves-light btn btn-color hs-ml-16" onClick={showReviewInput}>Add a review</button>
                             }
 
                         </div>
