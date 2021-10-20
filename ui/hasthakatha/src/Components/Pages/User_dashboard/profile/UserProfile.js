@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import {toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import './profile.scss'
 
 function UserProfile() {
@@ -8,21 +8,27 @@ function UserProfile() {
     const [updateData, setUpdateData] = useState({
         name: userData.name,
         phone: userData.phone,
-        age: userData.age
+        age:userData.age
     })
     useEffect(() => {
         axios.get('/rest/user_profile/' + localStorage.getItem('userId')).then(res => {
             setUserData(res.data.result);
         })
     }, [])
+    const handleChange = (e) => {
+       setUpdateData({ ...updateData,[e.target.name]: e.target.value });
+    }
     const updateProfile = () => {
-        axios.post('',{
-
-        }).then(res=>{
+        axios.put('/rest/user_profile',{
+            userid:localStorage.getItem('userId'),
+            name:updateData.name,
+            phone:updateData.phone,
+            age:updateData.age,
+            profile_picture:''
+        }).then(res => {
             toast.success("Product updated successfully");
-
-        }).catch(res=>{
-
+        }).catch(err => {
+            toast.error("Error updating profile. Please try again later.")
         })
     }
     return (
@@ -35,7 +41,7 @@ function UserProfile() {
                             <div className="hk-formcontent">
                                 <div className="row">
                                     <div className="input-field col s10 ">
-                                        <input id="fullname" name="name" type="text" className="validate" value={userData.name} onChange={(e) => handleChange(e)}/>
+                                        <input id="fullname" name="name" type="text" className="validate" value={userData.name} onChange={(e) => handleChange(e)} />
                                         <label for="fullname" className="active">Full Name (First and Last Name)</label>
                                     </div>
                                     <div className="input-field col s10 ">
@@ -60,16 +66,16 @@ function UserProfile() {
                                         <label for="email" class="active">Email Address</label>
                                     </div>
                                     <div className="input-field col s5">
-                                        <input id="mobile_number" type="number" name="phone" className="validate" value={userData.phone} onChange={(e) => handleChange(e)}/>
-                                        <label for="mobile_number"  class="active" >Mobile Number</label>
+                                        <input id="mobile_number" type="number" name="phone" className="validate" value={userData.phone} onChange={(e) => handleChange(e)} />
+                                        <label for="mobile_number" class="active" >Mobile Number</label>
                                     </div>
                                     <div className="input-field col s5">
                                         <input active id="age" type="number" name="age" className="validate" value={userData.age} onChange={(e) => handleChange(e)} />
-                                        <label for="age"  class="active" >Age</label>
+                                        <label for="age" class="active" >Age</label>
                                     </div>
                                 </div>
                                 <div className="button">
-                                    <a class="waves-effect waves-light btn btn-color" onClick={{ updateProfile }}>Update</a>
+                                    <a class="waves-effect waves-light btn btn-color" onClick={()=>{ updateProfile() }}>Update</a>
                                 </div>
                             </div>
                         </form>

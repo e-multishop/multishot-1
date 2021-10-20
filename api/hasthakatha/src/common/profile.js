@@ -125,18 +125,19 @@ var profile_app = function (app, con) {
         })
     });
 
-    app.put('rest/user_profile', (req, res) => {
+    app.put('/rest/user_profile', (req, res) => {
         var userid = req.body.userid;
         var name = req.body.name;
         var phone = req.body.phone;
         var age = req.body.age;
         //   var address=req.body.address;
-        var profile_pitures = req.body.profile_piture;
-        var sql = "UPDATE user SET name = '" + name + "',phone = '" + phone + "',age = '" + age + "',profile_piture='" + profile_piture + "';";
+        var profile_picture = req.body.profile_picture;
+        var sql = "UPDATE user SET name = '" + name + "',phone = '" + phone + "',age = '" + age + "',profile_picture='" + profile_picture + "';";
         con.query(sql, (err, result) => {
             if (err) {
                 res.status(500);
-                res.send({ type: "error", message: "Temporary Error.User profile  doesn't update" });
+                res.send({ type: "error", message: "Temporary Error.User profile  doesn't update", details:err});
+
             }
             else {
                 res.send({ type: "success", message: "Profile page modified successfully" });
