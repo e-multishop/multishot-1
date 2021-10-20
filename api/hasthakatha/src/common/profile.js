@@ -64,11 +64,11 @@ var profile_app = function (app, con) {
     app.delete('/rest/address/:userid/:id', (req, res) => {
         var userid = req.params.userid;
         var id = req.params.id;
-        var sql = "DELETE FROM shipping_address where userid='" + userid + "' AND id='" + id + "';";
+        var sql = "DELETE FROM shipping_address where uid='" + userid + "' AND id='" + id + "';";
         con.query(sql, (err, result) => {
             if (err) {
                 res.status(500);
-                res.send({ type: "error", message: "Temporary Error. Address is not deleted" });
+                res.send({ type: "error", message: "Temporary Error. Address is not deleted", details: err });
             }
             else {
                 res.send({ type: "success", message: "Address deleted" });
