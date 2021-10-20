@@ -1,15 +1,30 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { toast } from 'react-toastify';
+import {toast } from 'react-toastify';
 import './profile.scss'
 
 function UserProfile() {
-    const [userData,setUserData]=useState({})
-    useEffect(()=>{
-        axios.get('/rest/user_profile/'+localStorage.getItem('userId')).then(res=>{
+    const [userData, setUserData] = useState({})
+    const [updateData, setUpdateData] = useState({
+        name: userData.name,
+        phone: userData.phone,
+        age: userData.age
+    })
+    useEffect(() => {
+        axios.get('/rest/user_profile/' + localStorage.getItem('userId')).then(res => {
             setUserData(res.data.result);
         })
-    },[])
+    }, [])
+    const updateProfile = () => {
+        axios.post('',{
+
+        }).then(res=>{
+            toast.success("Product updated successfully");
+
+        }).catch(res=>{
+
+        })
+    }
     return (
         <>
             <div className="profile-section">
@@ -20,38 +35,41 @@ function UserProfile() {
                             <div className="hk-formcontent">
                                 <div className="row">
                                     <div className="input-field col s10 ">
-                                        <input id="fullname" name="name" type="text" className="validate" value=""/>
-                                        <label for="fullname">Full Name (First and Last Name)</label>
+                                        <input id="fullname" name="name" type="text" className="validate" value={userData.name} onChange={(e) => handleChange(e)}/>
+                                        <label for="fullname" className="active">Full Name (First and Last Name)</label>
                                     </div>
                                     <div className="input-field col s10 ">
                                         <p className="gender-title">Your Gender</p>
                                         <div className="gender-section">
                                             <p>
                                                 <label>
-                                                    <input type="checkbox" class="filled-in" checked="checked" />
+                                                    <input type="checkbox" class="filled-in" name="gender" checked="checked" />
                                                     <span>Male</span>
                                                 </label>
                                             </p>
                                             <p>
                                                 <label>
-                                                    <input type="checkbox" class="filled-in" checked="checked" />
+                                                    <input type="checkbox" class="filled-in" name="gender" checked="checked" />
                                                     <span>Female</span>
                                                 </label>
                                             </p>
                                         </div>
                                     </div>
-
                                     <div className="input-field col s10 ">
-                                        <input id="email" type="email" className="validate" name="email" value={userData.email} required/>
-                                        <label for="email" className="active">Email Address</label>
+                                        <input active id="email" type="text" className="validate" name="email" value={userData.email} />
+                                        <label for="email" class="active">Email Address</label>
                                     </div>
-                                    <div className="input-field col s10">
-                                        <input id="mobile_number" type="number" name="phone" className="validate" value={userData.phone}/>
-                                        <label for="mobile_number">Mobile Number</label>
+                                    <div className="input-field col s5">
+                                        <input id="mobile_number" type="number" name="phone" className="validate" value={userData.phone} onChange={(e) => handleChange(e)}/>
+                                        <label for="mobile_number"  class="active" >Mobile Number</label>
+                                    </div>
+                                    <div className="input-field col s5">
+                                        <input active id="age" type="number" name="age" className="validate" value={userData.age} onChange={(e) => handleChange(e)} />
+                                        <label for="age"  class="active" >Age</label>
                                     </div>
                                 </div>
                                 <div className="button">
-                                    <a class="waves-effect waves-light btn btn-color" >Update</a>
+                                    <a class="waves-effect waves-light btn btn-color" onClick={{ updateProfile }}>Update</a>
                                 </div>
                             </div>
                         </form>

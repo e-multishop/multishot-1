@@ -49,7 +49,7 @@ function Add_address() {
                 <div className="add-address-form">
                     <h2>Add a new address</h2>
                     <div >
-                        <form className="col s12" id="country">
+                        <form className="col s10" id="country">
                             <div className="hk-formcontent">
                                 <div className="row">
                                     <div class="input-field col s12">
