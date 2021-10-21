@@ -6,7 +6,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-function Address_list() {
+function Address_list(props) {
     const [addressList, setAddressList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [deleteAddressID, setDeleteAddressID] = useState('');
@@ -32,6 +32,14 @@ function Address_list() {
 
         });
     };
+    const editAddress = (address) => {
+        props.history.push(
+            '/account/editaddress/' + address.id,
+            {
+                mode: 'edit'
+            }
+        );
+    }
     const deleteAddress = () => {
         const userId = localStorage.getItem('userId');
         const addressID = deleteAddressID;
@@ -53,7 +61,7 @@ function Address_list() {
                 <div className="add-new-address-title">
                 <FontAwesomeIcon icon={faPlus} size='large' className="icon"/>   ADD A NEW ADDRESS
                 </div>
-            </NavLink>
+            </NavLink>  
             {
                 addressList.map((a,i)=> {
                     return (
@@ -64,9 +72,9 @@ function Address_list() {
                                 <p className="phone-number">Phone number- {a.phone}</p>
                             </div>
                             <div className="edit-delete-icon">
-                                    <p onClick={updateAddress}>Edit</p>
+                                    <button className="btn modal-trigger white black-text" onClick={() => editAddress(a)}>Edit</button>
                                     {/* <p onClick={() => deleteAddress(a.id)}>Delete</p> */}
-                                    <button onClick={() => setDeleteAddressID(a.id)} data-target="delete_modal" className="btn modal-trigger">Delete</button>
+                                    <button onClick={() => setDeleteAddressID(a.id)} data-target="delete_modal" className="btn modal-trigger white black-text hs-ml-16">Delete</button>
                             </div>
                         </div>
                     )
@@ -78,8 +86,8 @@ function Address_list() {
                 <p>Are you sure?</p>
                 </div>
                 <div className="modal-footer">
-                    <a href="#!" className="modal-close waves-effect waves-green btn-flat" onClick={cancelModal}>Cancel</a>
-                    <a className="modal-close waves-effect waves-green btn-flat" onClick={deleteAddress}>Ok</a>
+                    <a href="#!" className="modal-close waves-effect btn-flat" onClick={cancelModal}>Cancel</a>
+                    <a className="modal-close waves-effect btn-flat" onClick={deleteAddress}>Ok</a>
                 </div>
             </div>
         </div>
