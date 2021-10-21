@@ -38,7 +38,7 @@ var profile_app = function (app, con) {
         })
     });
     app.put('/rest/address', (req, res) => {
-        var userid = req.body.userid;
+        var userid = req.body.uid;
         var id = req.body.id;
         var name = req.body.name;
         var address = req.body.address;
