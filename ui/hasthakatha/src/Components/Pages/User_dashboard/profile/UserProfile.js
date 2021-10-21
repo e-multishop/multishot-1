@@ -44,25 +44,25 @@ function UserProfile() {
                                         <input id="fullname" name="name" type="text" className="validate" value={userData.name} onChange={(e) => handleChange(e)} />
                                         <label for="fullname" className="active">Full Name (First and Last Name)</label>
                                     </div>
-                                    <div className="input-field col s10 ">
+                                    {/* <div className="input-field col s10 ">
                                         <p className="gender-title">Your Gender</p>
                                         <div className="gender-section">
                                             <p>
                                                 <label>
-                                                    <input type="checkbox" class="filled-in" name="gender" checked="checked" />
+                                                    <input type="radio" class="filled-in" name="gender" checked />
                                                     <span>Male</span>
                                                 </label>
                                             </p>
                                             <p>
                                                 <label>
-                                                    <input type="checkbox" class="filled-in" name="gender" checked="checked" />
+                                                    <input type="radio" class="filled-in" name="gender" />
                                                     <span>Female</span>
                                                 </label>
                                             </p>
                                         </div>
-                                    </div>
+                                    </div> */}
                                     <div className="input-field col s10 ">
-                                        <input active id="email" type="text" className="validate" name="email" value={userData.email} />
+                                        <input id="email" type="text" className="validate" name="email" value={userData.email} />
                                         <label for="email" class="active">Email Address</label>
                                     </div>
                                     <div className="input-field col s5">
@@ -70,7 +70,7 @@ function UserProfile() {
                                         <label for="mobile_number" class="active" >Mobile Number</label>
                                     </div>
                                     <div className="input-field col s5">
-                                        <input active id="age" type="number" name="age" className="validate" value={userData.age} onChange={(e) => handleChange(e)} />
+                                        <input id="age" type="number" name="age" className="validate" value={userData.age} onChange={(e) => handleChange(e)} />
                                         <label for="age" class="active" >Age</label>
                                     </div>
                                 </div>
