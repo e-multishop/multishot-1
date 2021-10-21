@@ -4,33 +4,39 @@ import { toast } from 'react-toastify';
 import './profile.scss'
 
 function UserProfile() {
-    const [userData, setUserData] = useState({})
-    const [updateData, setUpdateData] = useState({
-        name: userData.name,
-        phone: userData.phone,
-        age:userData.age
-    })
-    useEffect(() => {
+    const [userData,setUserData] = useState({});
+    const fatchData = () => {
         axios.get('/rest/user_profile/' + localStorage.getItem('userId')).then(res => {
             setUserData(res.data.result);
         })
-    }, [])
-    const handleChange = (e) => {
-       setUpdateData({ ...updateData,[e.target.name]: e.target.value });
     }
+    // const [updateData, setUpdateData] = useState({
+    //     name: userData.name,
+    //     phone: userData.phone,
+    //     age: userData.age
+    // });
+    useEffect(() => {
+        fatchData();
+    },[])
+
+    const handleChange = (e) => {
+        setUserData({ ...userData, [e.target.name]: e.target.value });
+    }
+
     const updateProfile = () => {
-        axios.put('/rest/user_profile',{
-            userid:localStorage.getItem('userId'),
-            name:updateData.name,
-            phone:updateData.phone,
-            age:updateData.age,
-            profile_picture:''
+        axios.put('/rest/user_profile', {
+            userid: localStorage.getItem('userId'),
+            name: userData.name,
+            phone: userData.phone,
+            age: userData.age,
+            profile_picture: ''
         }).then(res => {
             toast.success("Product updated successfully");
         }).catch(err => {
             toast.error("Error updating profile. Please try again later.")
         })
     }
+
     return (
         <>
             <div className="profile-section">
@@ -70,12 +76,12 @@ function UserProfile() {
                                         <label for="mobile_number" class="active" >Mobile Number</label>
                                     </div>
                                     <div className="input-field col s5">
-                                        <input id="age" type="number" name="age" className="validate" value={userData.age} onChange={(e) => handleChange(e)} />
+                                        <input id="age" min="5" max="100" type="number" name="age" className="validate" value={userData.age} onChange={(e) => handleChange(e)} />
                                         <label for="age" class="active" >Age</label>
                                     </div>
                                 </div>
                                 <div className="button">
-                                    <a class="waves-effect waves-light btn btn-color" onClick={()=>{ updateProfile() }}>Update</a>
+                                    <a class="waves-effect waves-light btn btn-color" onClick={() => { updateProfile() }}>Update</a>
                                 </div>
                             </div>
                         </form>
