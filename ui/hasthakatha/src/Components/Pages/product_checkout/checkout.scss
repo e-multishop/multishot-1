@@ -1,5 +1,5 @@
-.loader{
-    &.checkout{
+.loader {
+    &.checkout {
         height: 400px !important;
     }
 }
@@ -9,7 +9,7 @@
     flex-wrap: wrap;
     justify-content: space-between;
     margin: 2% 1% 1% 1%;
-   
+
     h2 {
         font-size: 24px;
         font-weight: 500;
@@ -57,7 +57,7 @@
     border-radius: 0 20px;
     padding: 6px;
     margin: 5px;
-    text-align: center; 
+    text-align: center;
     cursor: pointer;
     letter-spacing: 2px;
     p {
@@ -150,4 +150,23 @@
             font-weight: bold;
         }
     }
+}
+//Adress section
+.checkout-address-list {
+    border-bottom: 1px solid #d5d9d9;
+    // // border-radius: 10px;
+    // margin-top:0;
+    padding-bottom: 10px;
+    .address-bar {
+        p {
+            margin: 0px;
+        }
+        .name {
+            font-size: 16px;
+            font-weight: 600;
+        }
+    }
+    // &:hover{
+    //     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    // }
 }
