@@ -32,5 +32,19 @@ var order_app=function(app,con,settings)
             }
         });
     });
+
+    app.get('/rest/order/list/:pageNumber/:totalPages', (req, res) => {
+        const pageNumber = req.params.pageNumber;
+        const totalPages = req.params.totalPages;
+        const sql = `SELECT * from transaction where 1 ORDER BY created_date DESC LIMIT ${totalPages}`;
+        con.query(sql, (err, result) => {
+            if (err) {
+                res.status(500);
+                res.send({type: 'error', message: 'Temporary issue. Please contact support.', details: err})
+            } else {
+                res.send({type: 'success', message: '', results: result});
+            }
+        });
+    });
 }
 module.exports=order_app;

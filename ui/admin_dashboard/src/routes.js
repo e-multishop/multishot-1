@@ -27,6 +27,7 @@ import Typography from "views/Typography/Typography.js";
 import UploadFile from "views/UploadFile/UploadFile"
 import Check from "./practice/Check"
 import ProductListWrapper from "views/Product/ProductListWrapper";
+import OrderList from "views/Order/OrderList";
 // core components/views for RTL layout
 
 const dashboardRoutes = [
@@ -43,6 +44,13 @@ const dashboardRoutes = [
     name: "Products",
     icon: "content_paste",
     component: ProductListWrapper,
+    layout: "/admin",
+  },
+  {
+    path: "/orders",
+    name: "Orders",
+    icon: "shopping_basket",
+    component: OrderList,
     layout: "/admin",
   },
   {
