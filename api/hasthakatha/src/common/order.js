@@ -33,16 +33,18 @@ var order_app=function(app,con,settings)
         });
     });
 
-    app.get('/rest/order/list/:pageNumber/:totalPages', (req, res) => {
-        const pageNumber = req.params.pageNumber;
-        const totalPages = req.params.totalPages;
-        const sql = `SELECT * from transaction where 1 ORDER BY created_date DESC LIMIT ${totalPages}`;
-        con.query(sql, (err, result) => {
+    app.get('/rest/order/list/:pageNumber/:pageSize', (req, res) => {
+        const pageSize = parseInt(req.params.pageSize);
+        const pageNumber = parseInt(req.params.pageNumber);
+        const offset = (pageSize * (pageNumber - 1));
+        const sql = `SELECT * from transaction where 1 ORDER BY created_date DESC LIMIT ${offset}, ${pageSize};`;
+        const countSql = `SELECT count(*) from transaction`;
+        con.query(sql+countSql, (err, result) => {
             if (err) {
                 res.status(500);
                 res.send({type: 'error', message: 'Temporary issue. Please contact support.', details: err})
             } else {
-                res.send({type: 'success', message: '', results: result});
+                res.send({type: 'success', message: '', results: {list: result[0], totalRecords: result[1][0]['count(*)']}});
             }
         });
     });
