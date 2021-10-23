@@ -170,3 +170,26 @@
     //     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     // }
 }
+
+
+//Delivery section start
+
+.main-section-delivery{
+    display: flex;
+    flex: wrap;
+    justify-content: space-evenly;
+    .free-delivery{
+        text-align: center;
+        width: 30%;
+        border: 1px solid black;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .express-delivery{
+        text-align: center;
+        width: 30%;
+        border: 1px solid black;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+}

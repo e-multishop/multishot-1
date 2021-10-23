@@ -14,7 +14,8 @@ import logo from '../../../Images/logo.png'
 import Header from '../../Header/Header';
 import Footer from '../../Footer/Footer';
 import { toast } from 'react-toastify';
-import Address from './Address'
+import Address from './Address';
+import Delivery from './Delivery';
 function Checkout() {
     // const cartData = useSelector((state) => state.cartItems);
     // console.log("cart data check =", cartData);
@@ -148,7 +149,7 @@ function Checkout() {
                             <div className="row" id="collaps">
                                 <div className="col s8" >
                                     <ul class="collapsible">
-                                        <li>
+                                        <li className="active">
                                             <div class="collapsible-header">Items</div>
                                             <div class="collapsible-body">
                                                 {
@@ -168,17 +169,20 @@ function Checkout() {
                                                         )
                                                     })
                                                 }
+                                                <button className="waves-effect waves-light btn btn-color">Continue</button>
                                             </div>
                                         </li>
                                         <li>
                                             <div class="collapsible-header">Address</div>
                                             <div class="collapsible-body">
-                                                <Address/>
+                                                <Address />
                                             </div>
                                         </li>
                                         <li>
                                             <div class="collapsible-header">Delivery</div>
-                                            <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+                                            <div class="collapsible-body">
+                                                <Delivery />
+                                            </div>
                                         </li>
                                     </ul>
 
