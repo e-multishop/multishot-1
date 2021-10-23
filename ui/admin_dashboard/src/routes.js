@@ -28,6 +28,7 @@ import UploadFile from "views/UploadFile/UploadFile"
 import Check from "./practice/Check"
 import ProductListWrapper from "views/Product/ProductListWrapper";
 import OrderList from "views/Order/OrderList";
+import OrderListWrapper from "views/Order/OrderListWrapper";
 // core components/views for RTL layout
 
 const dashboardRoutes = [
@@ -50,7 +51,7 @@ const dashboardRoutes = [
     path: "/orders",
     name: "Orders",
     icon: "shopping_basket",
-    component: OrderList,
+    component: OrderListWrapper,
     layout: "/admin",
   },
   {

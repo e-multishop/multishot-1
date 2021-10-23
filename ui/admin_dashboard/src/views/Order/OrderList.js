@@ -11,7 +11,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Loader from 'shared/Loader';
 import { Button } from "@material-ui/core";
-
+import { makeStyles } from '@material-ui/core/styles';
 const columns = [
     {
       id: 'order_id', 
@@ -19,8 +19,8 @@ const columns = [
       minWidth: 50
     },
     {
-      id: 'title',
-      label: 'Product Title',
+      id: 'summary',
+      label: 'Product Summary',
       minWidth: 100
     },
     {
@@ -32,10 +32,35 @@ const columns = [
       id: 'created_date',
       label: 'Created Date',
       minWidth: 40,
-      align: 'right',
+    },
+    {
+      id: 'uid',
+      label: 'User',
+      minWidth: 40
+    },
+    {
+      id: 'status',
+      label: 'Order status',
+      minWidth: 40,
+    },
+    {
+      id: 'action',
+      label: 'Action',
+      minWidth: 40,
+      align: 'right'
     }
   ];
 
+  const useStyles = makeStyles({
+    root: {
+      width: '100%',
+    },
+    container: {
+      minHeight: 400,
+      maxHeight: 440,
+    },
+  });
+  
 export default function OrderList(props) {
 
     const [loader, setLoader] = useState(true);
@@ -43,11 +68,17 @@ export default function OrderList(props) {
     const [totalRecords, setTotalRecords] = useState(-1);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [page, setPage] = useState(1);
+    const classes = useStyles();
+
+    const fetchOrder = (page, rowsPerPage) => {
+      axios.get('/rest/order/list/'+page+'/'+rowsPerPage).then(res => {
+        setOrderList(res.data.results.list);
+        setTotalRecords(res.data.results.totalRecords);
+        setLoader(false);
+    });
+    }
     useEffect(() => {
-        axios.get('/rest/order/list/'+page+'/'+rowsPerPage).then(res => {
-            setOrderList(res.data.results);
-            setLoader(false);
-        });
+      fetchOrder(page, rowsPerPage);
     }, []);
 
     const launchEditProductDialog = (a) => {
@@ -55,24 +86,71 @@ export default function OrderList(props) {
     };
 
     const ShowData = (column, value,row, cindex) => {
-        return (
+      switch (column.id) {
+        case 'total_amount':
+          return (
             <TableCell key={cindex} align={column.align}>
-              <div>{value}</div>
+              <div>&#8377; {value}</div>
             </TableCell>
-        )
+          );
+          case 'created_date':
+            const createdDate = new Date(parseInt(value));
+            return (
+              <TableCell key={cindex} align={column.align}>
+                <div>{createdDate.toLocaleDateString()}</div>
+              </TableCell>
+            )
+          case 'status':
+            return (
+              <TableCell key={cindex}>
+                Placed
+              </TableCell>
+            )
+          case 'action':
+            return (
+              <TableCell key={cindex} align="right">
+                <Button color="primary">Update</Button>
+              </TableCell>
+            )
+          case 'user':
+            return (
+              <TableCell>
+                  {value}
+              </TableCell>
+            )
+          default:
+            return (<TableCell key={cindex} align={column.align}>
+              <div>{value}</div>
+            </TableCell>)
+      }
     };
 
-    const handleChangePage = () => {
-
+    const showEmptyData = () => {
+      return (
+        <tr>
+          <td colspan="7">
+            <div className="hs-no-products">
+              <p>No products found. Please add a product.</p>
+            </div>
+          </td>
+        </tr>
+      )
     };
 
-    const handleChangeRowsPerPage = () => {
+    const handleChangePage = (e, page) => {
+      setPage(page);
+      fetchOrder(page, rowsPerPage);
+    };
 
+    const handleChangeRowsPerPage = (e) => {
+      const rowsPerPage = e.target.value;
+      setRowsPerPage(rowsPerPage);
+      fetchOrder(page, rowsPerPage);
     }
 
     return (
-        <Paper className="hs-order-wrapper">
-          <TableContainer className="hs-order container">
+        <Paper className={classes.root}>
+          <TableContainer className={classes.container}>
             { loader ? <Loader height="400px" /> : 
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
