@@ -16,7 +16,7 @@ function OrderList(props) {
             return datetime;
         }
     };
-    const showOrderStatus = (deliveryStatus) => {
+    const showOrderStatus = (deliveryStatus, item) => {
         if (deliveryStatus !== undefined) {
             switch (deliveryStatus) {
                 case 1:
@@ -25,10 +25,20 @@ function OrderList(props) {
                         <p className="info">Your order has been placed.</p>
                     </div>)
                 case 2:
+                    let deliveryDate = item.delivery_date;
+                    if (deliveryDate) {
+                        deliveryDate = parseInt(deliveryDate);
+                        deliveryDate = (new Date(deliveryDate)).toLocaleDateString();
+                    }
                     return (<div className="hs-order-status">
-                    <p className="title">Delivery</p>
-                    <p className="info">Delivered on ...</p>
-                </div>)
+                        <p className="title">Delivery</p>
+                        <p className="info">Delivery on {deliveryDate}</p>
+                    </div>)
+                case 3:
+                    return (<div className="hs-order-status">
+                        <p className="title">Delivery</p>
+                        <p className="info">Delivered on ...</p>
+                    </div>)
                 default: 
                     return (<></>)
             }
@@ -50,7 +60,7 @@ function OrderList(props) {
                     <p>{props.total_amount ? '₹' + props.total_amount : 'Error'}</p>
                 </div>
                 <div className="order-delivery">
-                    { showOrderStatus(props.delivery_status) }
+                    { showOrderStatus(props.delivery_status, props) }
                 </div>
             </div>
         </>

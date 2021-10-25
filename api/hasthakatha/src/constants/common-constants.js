@@ -1,8 +1,9 @@
 const HS_CONSTANTS = {
     DELIVERY_STATUS: {
         OPEN: '1',
-        COMPLETED: '2',
-        CANCELLED: '3'
+        INPROGRESS: '2',
+        COMPLETED: '3',
+        CANCELLED: '4'
     }
 }
 

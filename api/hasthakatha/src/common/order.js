@@ -17,6 +17,21 @@ var order_app=function(app,con,settings)
         });
     });
 
+    app.post('/rest/delivery/:orderID', (req, res) => {
+        const orderID = req.params.orderID;
+        const deliveryDate = req.body.deliveryDate;
+        const trackingNumber = req.body.trackingNumber;
+        const deliveryQuery = `UPDATE tracking_order set tracking_number='${trackingNumber}', delivery_date='${deliveryDate}', delivery_status = 2 where order_id = '${orderID}'`;
+        con.query(deliveryQuery, (err, result) => {
+            if (err) {
+                res.status(500);
+                res.send({type:"error",messsage:"Please contact support", detail: err});
+            } else {
+                res.send({type: 'success',message: 'Delivery updated successfully'});
+            }
+        });
+    });
+
     app.post('/rest/order_generate',(req,res)=>{
         
     });

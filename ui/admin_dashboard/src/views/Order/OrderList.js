@@ -40,7 +40,7 @@ const columns = [
       minWidth: 40
     },
     {
-      id: 'status',
+      id: 'delivery_status',
       label: 'Order status',
       minWidth: 40,
     },
@@ -116,16 +116,32 @@ export default function OrderList(props) {
                 <div>{createdDate.toLocaleDateString()}</div>
               </TableCell>
             )
-          case 'status':
-            return (
-              <TableCell key={cindex}>
-                Open
-              </TableCell>
-            )
+          case 'delivery_status':
+            switch (value) {
+              case 1:
+                return (
+                  <TableCell key={cindex}>
+                    Open
+                  </TableCell>
+                )
+              case 2:
+                return (
+                  <TableCell key={cindex}>
+                    In Progress
+                  </TableCell>
+                )
+              default: 
+                return (
+                  <TableCell>
+
+                  </TableCell>
+                )
+            }
+            
           case 'action':
             return (
               <TableCell key={cindex} align="right">
-                <Button color="primary" onClick={() => props.showEditDialog()}>Update</Button>
+                <Button color="primary" onClick={() => props.showEditDialog(row)}>Update</Button>
               </TableCell>
             )
           case 'user':

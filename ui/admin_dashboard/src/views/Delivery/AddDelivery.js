@@ -54,17 +54,28 @@ const DialogActions = withStyles((theme) => ({
 
 export function AddDelivery(props) {
     const [open, setOpen] = useState(true);
+    const [deliveryDate, setDeliveryDate] = useState('');
+    const [trackingNumber, setTrackingNumber] = useState('');
     const handleClose = () => { 
         setOpen(false);
         ReactDOM.unmountComponentAtNode(document.getElementById('order-dialog'));
     }
     const onSubmit = () => {
-        axios.post('/rest/delivery/'+props.order_id).then(res => {
+        axios.post('/rest/delivery/'+props.order_id, {
+            deliveryDate,
+            trackingNumber
+        }).then(res => {
             toast.success('Delivery information added');
-            this.handleClose();
+            handleClose();
         }).catch(err => {
             toast.error('Error updating delivery info, try again later');
         })
+    }
+    const updateTrackingNumber = (e) => {
+        setTrackingNumber(e.target.value);
+    }
+    const updateDispatchedDate = (e) => {
+        setDeliveryDate(e.target.valueAsNumber);
     }
     return (
         <div>
@@ -79,11 +90,11 @@ export function AddDelivery(props) {
                     <Typography gutterBottom>
                         <div>
                             <div className="input-field">
-                                <input type="text" name="tracking_number" id="tracking_number" />
+                                <input type="text" name="tracking_number" id="tracking_number" onChange={(e) => updateTrackingNumber(e)}/>
                                 <label className="" htmlFor="tracking_number">Tracking Number</label>
                             </div>
                             <div className="input-field">
-                                <input type="date" name="dispatched_date" id="dispatched_date" />
+                                <input type="date" name="dispatched_date" id="dispatched_date" onChange={(e) => updateDispatchedDate(e)}/>
                                 <label className="" htmlFor="dispatched_date">Dispatch Date</label>
                             </div>
                             <div>
