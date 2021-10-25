@@ -17,12 +17,27 @@ var order_app=function(app,con,settings)
         });
     });
 
+    app.post('/rest/delivery/:orderID', (req, res) => {
+        const orderID = req.params.orderID;
+        const deliveryDate = req.body.deliveryDate;
+        const trackingNumber = req.body.trackingNumber;
+        const deliveryQuery = `UPDATE tracking_order set tracking_number='${trackingNumber}', delivery_date='${deliveryDate}', delivery_status = 2 where order_id = '${orderID}'`;
+        con.query(deliveryQuery, (err, result) => {
+            if (err) {
+                res.status(500);
+                res.send({type:"error",messsage:"Please contact support", detail: err});
+            } else {
+                res.send({type: 'success',message: 'Delivery updated successfully'});
+            }
+        });
+    });
+
     app.post('/rest/order_generate',(req,res)=>{
         
     });
 
     app.get('/rest/order/list/:uid', (req, res) => {
-        const sql = `SELECT * from transaction where uid=${req.params.uid} ORDER BY created_date DESC`;
+        const sql = `SELECT * from transaction as T left join tracking_order as O on T.order_id = O.order_id where uid=${req.params.uid} ORDER BY created_date DESC`;
         con.query(sql, (err, result) => {
             if (err) {
                 res.status(500);
@@ -37,7 +52,7 @@ var order_app=function(app,con,settings)
         const pageSize = parseInt(req.params.pageSize);
         const pageNumber = parseInt(req.params.pageNumber);
         const offset = (pageSize * (pageNumber - 1));
-        const sql = `SELECT * from transaction where 1 ORDER BY created_date DESC LIMIT ${offset}, ${pageSize};`;
+        const sql = `SELECT * from transaction as T left join tracking_order as O on T.order_id = O.order_id where 1 ORDER BY created_date DESC LIMIT ${offset}, ${pageSize};`;
         const countSql = `SELECT count(*) from transaction`;
         con.query(sql+countSql, (err, result) => {
             if (err) {

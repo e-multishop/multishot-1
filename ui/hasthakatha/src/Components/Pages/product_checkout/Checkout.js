@@ -14,14 +14,17 @@ import logo from '../../../Images/logo.png'
 import Header from '../../Header/Header';
 import Footer from '../../Footer/Footer';
 import { toast } from 'react-toastify';
-import Address from './Address'
+import Address from './Address';
+import Delivery from './Delivery';
 function Checkout() {
     // const cartData = useSelector((state) => state.cartItems);
     // console.log("cart data check =", cartData);
     const [data, setData] = useState({
         discount: "0",
         tax: "0",
-        totalAmount: "0"
+        totalAmount: "0",
+        deliveryAddress: '',
+        deliveryType: ''
     })
 
     const [cartData, setCartData] = useState([]);
@@ -63,12 +66,15 @@ function Checkout() {
     const handleSubmit = () => {
         Axios.post('/rest/creating_order', {
             amount: data.totalAmount,
+            deliveryAddress: data.deliveryAddress,
+            deliveryType: 0,
             data: cartData.map(cart => {
                 return {
                     price: cart.price,
                     pid: cart.pid,
                     quantity: cart.quantity,
-                    id: cart.id
+                    id: cart.id,
+                    title: cart.title
                 }
             }),
             uid: userId
@@ -77,7 +83,16 @@ function Checkout() {
             setCheckoutPaymentDetails(res.data);
             launchRazorPay(res.data);
         });
-    }
+    };
+
+    const setDeliveryAddress = (deliveryAddress) => {
+        setData({...data, deliveryAddress});
+    };
+
+    const setDeliveryType = (deliveryType) => {
+        setData({...data, deliveryType});
+    };
+
     const launchRazorPay = (checkoutPaymentDetails) => {
         var options = {
             "key": checkoutPaymentDetails.key_id, // Enter the Key ID generated from the Dashboard
@@ -148,7 +163,7 @@ function Checkout() {
                             <div className="row" id="collaps">
                                 <div className="col s8" >
                                     <ul class="collapsible">
-                                        <li>
+                                        <li className="active">
                                             <div class="collapsible-header">Items</div>
                                             <div class="collapsible-body">
                                                 {
@@ -168,23 +183,26 @@ function Checkout() {
                                                         )
                                                     })
                                                 }
+                                                <button className="waves-effect waves-light btn btn-color">Continue</button>
                                             </div>
                                         </li>
                                         <li>
                                             <div class="collapsible-header">Address</div>
                                             <div class="collapsible-body">
-                                                <Address/>
+                                                <Address setDeliveryAddress={setDeliveryAddress} />
                                             </div>
                                         </li>
                                         <li>
                                             <div class="collapsible-header">Delivery</div>
-                                            <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+                                            <div class="collapsible-body">
+                                                <Delivery checkout={handleSubmit} setDeliveryType={setDeliveryType}/>
+                                            </div>
                                         </li>
                                     </ul>
 
                                 </div>
                                 <div className="col s4">
-                                    <Checkout_card data={data} handleSubmit={handleSubmit} />
+                                    <Checkout_card data={data}  />
                                 </div>
                             </div>
                         </div> : <Empty_checkout />}

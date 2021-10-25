@@ -12,6 +12,8 @@ var payment_app = function (app, con,settings) {
         // get amount from ui and validate the amount
         const totalUiAmount = req.body.amount;
         var uid = req.body.uid;
+        const deliveryType = req.body.deliveryType;
+        const shippingAddress = req.body.deliveryAddress;
         const totalAPIAmount = await AddtocartSql.Validate(con, uid);
         // validate total amount
         if (totalUiAmount === totalAPIAmount) {
@@ -20,7 +22,7 @@ var payment_app = function (app, con,settings) {
             try { 
                 const {order, transaction_id} = await transaction.startPayment(totalAPIAmount);
                 //store orderid from database
-                const key_id = await transaction.recordPayment(transaction_id, order.id, totalAPIAmount, data);
+                const key_id = await transaction.recordPayment(transaction_id, order.id, totalAPIAmount, data, {deliveryType, shippingAddress});
                 res.send({type: 'success', "key_id": key_id, "amount": totalAPIAmount, "currency": order.currency, "name": "hasthakatha", "description": "test_transation", "order_id": order.id });
                 const razorpayTimeout = settings.razorpay_payment_timeout;  // in seconds
                 const razorPayTimeout_ms = razorpayTimeout*1000; // in milliseconds
@@ -62,7 +64,7 @@ var payment_app = function (app, con,settings) {
                                 if (err) {
                                     res.send({type: 'error', message: 'Temporary error. Please contact support', details: err});
                                 } else {
-                                    res.send({type:"success",message:"Order is successful."});  
+                                    res.send({type:"success", message:"Order is successful."});  
                                 }
                             })
                         } 
@@ -75,9 +77,6 @@ var payment_app = function (app, con,settings) {
                         signature: signature
                     }})
                 }
-
-            
-        
     });
 
     app.post('/rest/payment_failure',(req,res)=>{
@@ -95,8 +94,8 @@ var payment_app = function (app, con,settings) {
                 res.status(500);
                 res.send({type:"error",message:"Temporary Error. Please Contact Support."})
             }
-            else{
-                    res.send({type:"success",message:"inserted"});
+            else {
+                res.send({type:"success",message:"inserted"});
             }
         })
     });

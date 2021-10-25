@@ -22,24 +22,20 @@ import LibraryBooks from "@material-ui/icons/LibraryBooks";
 // core components/views for Admin layout
 // import DashboardPage from "views/Dashboard/Dashboard.js";
 import UserProfile from "views/UserProfile/UserProfile.js";
-import ProductList from "views/Product/ProductList";
-import Typography from "views/Typography/Typography.js";
 import UploadFile from "views/UploadFile/UploadFile"
-import Check from "./practice/Check"
 import ProductListWrapper from "views/Product/ProductListWrapper";
-import OrderList from "views/Order/OrderList";
 import OrderListWrapper from "views/Order/OrderListWrapper";
+import DashboardPage from "views/Dashboard/DashboardPage";
 // core components/views for RTL layout
 
 const dashboardRoutes = [
-  // {
-  //   path: "/dashboard",
-  //   name: "Dashboard",
-  //   icon: Dashboard,
-  //   component: DashboardPage,
-  //   layout: "/admin",
-  // },
-
+  {
+    path: "/dashboard",
+    name: "Dashboard",
+    icon: "",
+    component: DashboardPage,
+    layout: "/admin",
+  },
   {
     path: "/table",
     name: "Products",

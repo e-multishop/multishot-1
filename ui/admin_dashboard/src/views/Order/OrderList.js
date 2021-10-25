@@ -12,6 +12,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Loader from 'shared/Loader';
 import { Button } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
+import './OrderList.scss';
 const columns = [
     {
       id: 'order_id', 
@@ -19,7 +20,7 @@ const columns = [
       minWidth: 50
     },
     {
-      id: 'summary',
+      id: 'product_summary',
       label: 'Product Summary',
       minWidth: 100
     },
@@ -39,7 +40,7 @@ const columns = [
       minWidth: 40
     },
     {
-      id: 'status',
+      id: 'delivery_status',
       label: 'Order status',
       minWidth: 40,
     },
@@ -87,6 +88,21 @@ export default function OrderList(props) {
 
     const ShowData = (column, value,row, cindex) => {
       switch (column.id) {
+        case 'product_summary':
+          if (value) {
+            const productSummaryDecoded = atob(value);
+            const productSummaryList = JSON.parse(productSummaryDecoded);
+            return (
+              <TableCell key={cindex} align={column.align}>
+              {
+                productSummaryList.map(l => {
+                  return (<div className="hs-product-summary-title">{l.title}</div>)
+                })
+              }
+              </TableCell>
+            )
+          };
+          
         case 'total_amount':
           return (
             <TableCell key={cindex} align={column.align}>
@@ -100,16 +116,32 @@ export default function OrderList(props) {
                 <div>{createdDate.toLocaleDateString()}</div>
               </TableCell>
             )
-          case 'status':
-            return (
-              <TableCell key={cindex}>
-                Placed
-              </TableCell>
-            )
+          case 'delivery_status':
+            switch (value) {
+              case 1:
+                return (
+                  <TableCell key={cindex}>
+                    Open
+                  </TableCell>
+                )
+              case 2:
+                return (
+                  <TableCell key={cindex}>
+                    In Progress
+                  </TableCell>
+                )
+              default: 
+                return (
+                  <TableCell>
+
+                  </TableCell>
+                )
+            }
+            
           case 'action':
             return (
               <TableCell key={cindex} align="right">
-                <Button color="primary">Update</Button>
+                <Button color="primary" onClick={() => props.showEditDialog(row)}>Update</Button>
               </TableCell>
             )
           case 'user':

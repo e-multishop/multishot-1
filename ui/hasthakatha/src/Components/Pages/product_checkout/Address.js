@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 
-function Address() {
+function Address(props) {
     const [addressList, setAddressList] = useState([]);
     const getData = () => {
         axios.get('/rest/address_list/' + localStorage.getItem('userId')).then(res => {
@@ -22,7 +22,7 @@ function Address() {
                                 <p className="name">{a.name}</p>
                                 <p className="address">{a.address}</p>
                                 <p className="phone-number">Phone number- {a.phone}</p>
-                                <button className="waves-effect waves-light btn btn-color">Delivery Here</button>
+                                <button onClick={() => props.setDeliveryAddress(a)} className="waves-effect waves-light btn btn-color">Delivery Here</button>
                             </div>
                         </div>
                     )

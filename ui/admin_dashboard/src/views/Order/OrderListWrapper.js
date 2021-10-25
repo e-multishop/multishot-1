@@ -10,6 +10,7 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 // import ProductEdit from "./Edit/ProductEdit";
 import ReactDOM from 'react-dom';
+import { AddDelivery } from "views/Delivery/AddDelivery";
 
 const styles = {
   cardCategoryWhite: {
@@ -51,8 +52,8 @@ export default function OrderListWrapper() {
   //   ReactDOM.render(<InsertProductDialog setUpdateTable={setUpdateTable}/>, document.getElementById('product-dialog'));
   // };
 
-  const showEditDialog = (dialogData) => {
-    // ReactDOM.render(<ProductEdit {...dialogData} />, document.getElementById('order-dialog'));
+  const showEditDialog = (orderData) => {
+    ReactDOM.render(<AddDelivery {...orderData} />, document.getElementById('order-dialog'));
   }
 
   return (
@@ -63,7 +64,8 @@ export default function OrderListWrapper() {
             <h4 className={classes.cardTitleWhite}>Order List</h4>
           </CardHeader>
           <CardBody>
-            <OrderList />
+            <OrderList showEditDialog={showEditDialog}/>
+            <div id="order-dialog"></div>
           </CardBody>
         </Card>
       </GridItem>
