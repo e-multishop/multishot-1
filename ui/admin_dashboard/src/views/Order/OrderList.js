@@ -12,6 +12,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Loader from 'shared/Loader';
 import { Button } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
+import './OrderList.scss';
 const columns = [
     {
       id: 'order_id', 
@@ -19,7 +20,7 @@ const columns = [
       minWidth: 50
     },
     {
-      id: 'summary',
+      id: 'product_summary',
       label: 'Product Summary',
       minWidth: 100
     },
@@ -87,6 +88,21 @@ export default function OrderList(props) {
 
     const ShowData = (column, value,row, cindex) => {
       switch (column.id) {
+        case 'product_summary':
+          if (value) {
+            const productSummaryDecoded = atob(value);
+            const productSummaryList = JSON.parse(productSummaryDecoded);
+            return (
+              <TableCell key={cindex} align={column.align}>
+              {
+                productSummaryList.map(l => {
+                  return (<div className="hs-product-summary-title">{l.title}</div>)
+                })
+              }
+              </TableCell>
+            )
+          };
+          
         case 'total_amount':
           return (
             <TableCell key={cindex} align={column.align}>
