@@ -21,7 +21,7 @@ var order_app=function(app,con,settings)
     });
 
     app.get('/rest/order/list/:uid', (req, res) => {
-        const sql = `SELECT * from transaction where uid=${req.params.uid} ORDER BY created_date DESC`;
+        const sql = `SELECT * from transaction as T left join tracking_order as O on T.order_id = O.order_id where uid=${req.params.uid} ORDER BY created_date DESC`;
         con.query(sql, (err, result) => {
             if (err) {
                 res.status(500);
@@ -36,7 +36,7 @@ var order_app=function(app,con,settings)
         const pageSize = parseInt(req.params.pageSize);
         const pageNumber = parseInt(req.params.pageNumber);
         const offset = (pageSize * (pageNumber - 1));
-        const sql = `SELECT * from transaction where 1 ORDER BY created_date DESC LIMIT ${offset}, ${pageSize};`;
+        const sql = `SELECT * from transaction as T left join tracking_order as O on T.order_id = O.order_id where 1 ORDER BY created_date DESC LIMIT ${offset}, ${pageSize};`;
         const countSql = `SELECT count(*) from transaction`;
         con.query(sql+countSql, (err, result) => {
             if (err) {

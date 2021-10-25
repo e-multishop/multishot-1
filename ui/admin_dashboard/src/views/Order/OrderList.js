@@ -103,13 +103,13 @@ export default function OrderList(props) {
           case 'status':
             return (
               <TableCell key={cindex}>
-                Placed
+                Open
               </TableCell>
             )
           case 'action':
             return (
               <TableCell key={cindex} align="right">
-                <Button color="primary">Update</Button>
+                <Button color="primary" onClick={() => props.showEditDialog()}>Update</Button>
               </TableCell>
             )
           case 'user':
