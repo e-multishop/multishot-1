@@ -1,11 +1,11 @@
 import React from 'react'
 
-function Delivery() {
+function Delivery(props) {
     return (
         <>
             <div class="row">
                 <div class="col s12 m6">
-                    <div class="card darken-1">
+                    <div class="card darken-1" onClick={() => props.setDeliveryType(1)}>
                         <div class="card-content text-green">
                             <span class="card-title text-green">Free Delivery</span>
                         </div>
@@ -15,7 +15,7 @@ function Delivery() {
                     </div>
                 </div>
                 <div class="col s12 m6">
-                    <div class="card ">
+                    <div class="card " onClick={() => props.setDeliveryType(2)}>
                         <div class="card-content ">
                             <span class="card-title">Express Delivery</span>
                             <p>$15 Charge</p>
@@ -25,6 +25,9 @@ function Delivery() {
                         </div>
                     </div>
                 </div>
+            </div>
+            <div>
+                <button onClick={props.checkout} className="waves-effect waves-light btn btn-color">Place Order</button>
             </div>
             {/* <div className="main-section-delivery">
             <div className="free-delivery">

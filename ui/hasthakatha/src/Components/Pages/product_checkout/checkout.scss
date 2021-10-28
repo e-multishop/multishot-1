@@ -181,6 +181,13 @@
         cursor: pointer;
     }
 }
+.modal-container{
+    display: flex;
+    justify-content: center;
+    .model-container-width{
+        width: 90%;
+    }
+}
 
 
 //Delivery section start

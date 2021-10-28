@@ -30,9 +30,9 @@ function Checkout_card(props) {
                                 <p>Total Amount</p>
                                 <p>₹{props.data.totalAmount}</p>
                             </div>
-                            <div className="hk-checkout-button" >
+                            {/* <div className="hk-checkout-button" >
                                 <p onClick={()=>{props.handleSubmit()}}>Checkout</p>
-                            </div>
+                            </div> */}
                             <p className="center-align">
                                 Local taxes included (where applicable)<br />
                         * Additional duties and taxes may apply</p>

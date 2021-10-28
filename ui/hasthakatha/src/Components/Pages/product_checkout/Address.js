@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import Add_address from '../User_dashboard/address/Add_address'
 
-function Address() {
+function Address(props) {
     const [addressList, setAddressList] = useState([]);
     const getData = () => {
         axios.get('/rest/address_list/' + localStorage.getItem('userId')).then(res => {
@@ -22,7 +22,7 @@ function Address() {
 
     const onOpenModal = () => setOpen(true);
     const onCloseModal = () => setOpen(false);
-  
+
     return (
         <div >
             {
@@ -33,7 +33,7 @@ function Address() {
                                 <p className="name">{a.name}</p>
                                 <p className="address">{a.address}</p>
                                 <p className="phone-number">Phone number- {a.phone}</p>
-                                <button className="waves-effect waves-light btn btn-color">Delivery Here</button>
+                                <button onClick={() => props.setDeliveryAddress(a)} className="waves-effect waves-light btn btn-color">Delivery Here</button>
                             </div>
                         </div>
 
@@ -41,10 +41,14 @@ function Address() {
                 })
             }
             <div className="add-address-checkout" onClick={onOpenModal}>
-                <FontAwesomeIcon icon={faPlus} size='large' className="icon"/>   ADD A NEW ADDRESS
+                <FontAwesomeIcon icon={faPlus} size='large' className="icon" />   ADD A NEW ADDRESS
             </div>
-            <Modal open={open} onClose={onCloseModal} center>
-                <Add_address checkout_address={'yes'}/>
+            <Modal open={open} onClose={onCloseModal} closeOnOverlayClick={false} center>
+                <div className="modal-container">
+                    <div className="model-container-width">
+                        <Add_address checkout_address={'yes'} setOpen={setOpen} getData={getData}/>
+                    </div>
+                </div>
             </Modal>
         </div>
     )

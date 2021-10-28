@@ -41,8 +41,9 @@ function Add_address(props) {
 
     const addAddress = () => {
         axios.post('/rest/address', countryDetail).then(res => {
-            toast.success('Address added successfully');
             if(props.checkout_address==='yes'){
+                props.setOpen(false);
+                props.getData();
                 document.location.href='#/viewcart';
             }
             else{

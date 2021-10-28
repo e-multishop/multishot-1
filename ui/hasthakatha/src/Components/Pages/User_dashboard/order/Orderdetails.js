@@ -135,6 +135,9 @@ function Orderdetails(props) {
                             <p className="grand-total">₹{getAmount(orderDetails.total_amount)}</p>
                         </div>
                     </div>
+                    <div className="order_status">
+                        
+                    </div>
                 </div>
                 <div className="product-details">
                     <h2>Delivered 06-May-2021</h2>

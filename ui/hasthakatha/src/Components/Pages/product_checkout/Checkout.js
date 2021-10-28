@@ -22,8 +22,11 @@ function Checkout() {
     const [data, setData] = useState({
         discount: "0",
         tax: "0",
-        totalAmount: "0"
-    })
+        totalAmount: "0",
+        deliveryAddress: '',
+        deliveryType: ''
+    });
+    let accordianInstance;
 
     const [cartData, setCartData] = useState([]);
     const [Loading, setLoading] = useState(false);
@@ -55,7 +58,7 @@ function Checkout() {
         var elems = collaps1.querySelectorAll('.collapsible');
         var options = '';
         var instances = M.Collapsible.init(elems, options);
-
+        accordianInstance = instances && instances.length > 0 ? instances[0] : '';
     }
     useEffect(() => {
         getCart(userId)
@@ -64,12 +67,15 @@ function Checkout() {
     const handleSubmit = () => {
         Axios.post('/rest/creating_order', {
             amount: data.totalAmount,
+            deliveryAddress: data.deliveryAddress,
+            deliveryType: 0,
             data: cartData.map(cart => {
                 return {
                     price: cart.price,
                     pid: cart.pid,
                     quantity: cart.quantity,
-                    id: cart.id
+                    id: cart.id,
+                    title: cart.title
                 }
             }),
             uid: userId
@@ -78,7 +84,16 @@ function Checkout() {
             setCheckoutPaymentDetails(res.data);
             launchRazorPay(res.data);
         });
-    }
+    };
+
+    const setDeliveryAddress = (deliveryAddress) => {
+        setData({...data, deliveryAddress});
+    };
+
+    const setDeliveryType = (deliveryType) => {
+        setData({...data, deliveryType});
+    };
+
     const launchRazorPay = (checkoutPaymentDetails) => {
         var options = {
             "key": checkoutPaymentDetails.key_id, // Enter the Key ID generated from the Dashboard
@@ -132,6 +147,11 @@ function Checkout() {
         // e.preventDefault();
     }
 
+    const gotoAddressSection = () => {
+        if (accordianInstance) {
+            accordianInstance.open(2);
+        }
+    }
     return (
         <>
             <Header />
@@ -169,26 +189,26 @@ function Checkout() {
                                                         )
                                                     })
                                                 }
-                                                <button className="waves-effect waves-light btn btn-color">Continue</button>
+                                                <button className="waves-effect waves-light btn btn-color" onClick={gotoAddressSection}>Continue</button>
                                             </div>
                                         </li>
                                         <li>
                                             <div class="collapsible-header">Address</div>
                                             <div class="collapsible-body">
-                                                <Address/>
+                                                <Address setDeliveryAddress={setDeliveryAddress} />
                                             </div>
                                         </li>
                                         <li>
                                             <div class="collapsible-header">Delivery</div>
                                             <div class="collapsible-body">
-                                                <Delivery />
+                                                <Delivery checkout={handleSubmit} setDeliveryType={setDeliveryType}/>
                                             </div>
                                         </li>
                                     </ul>
 
                                 </div>
                                 <div className="col s4">
-                                    <Checkout_card data={data} handleSubmit={handleSubmit} />
+                                    <Checkout_card data={data}  />
                                 </div>
                             </div>
                         </div> : <Empty_checkout />}
