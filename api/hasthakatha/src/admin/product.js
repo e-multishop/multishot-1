@@ -17,7 +17,7 @@ var product_app = function (app, con, hasthaBean) {
         var countSql = `SELECT COUNT(*) FROM product`;
         var sql = `SELECT P.pid, P.category, P.title, P.price, P.price_without_embroidary, P.description, P.note, P.material, P.total_available, P.total_quantity, P.available, P.sku, P.status, P.createdDate, P.updatedDate, I.image_data FROM product as P LEFT JOIN product_images as I on P.pid = I.pid LIMIT ${offset}, ${pageSize}` ;
         con.query(countSql, function(err, result1){
-            const totalRecords = result1[0]["COUNT(*)"];
+            const totalRecords = result1 && result1.length > 0 ? result1[0]["COUNT(*)"] : 0;
             con.query(sql, function (err, result) {
                 if (err) throw err;
                 res.header("Content-Type", "application/json");
