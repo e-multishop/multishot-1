@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import BorderColorOutlinedIcon from '@material-ui/icons/BorderColorOutlined';
@@ -62,10 +62,26 @@ export function AddDelivery(props) {
     }
     const [deliveryDate, setDeliveryDate] = useState(propsDeliveryDate);
     const [trackingNumber, setTrackingNumber] = useState(props.tracking_number);
+    const [deliveryType, setDeliveryType] = useState(props.delivery_type);
+    const [deliveredDate, setDeliveredDate] = useState(props.delivered_date);
+    const [deliveredNote, setDeliveredNote] = useState(props.delivered_note);
+
     const handleClose = () => { 
         setOpen(false);
         ReactDOM.unmountComponentAtNode(document.getElementById('order-dialog'));
     }
+
+    function updateFormElements() {
+        const insertproduct = document.getElementById("hs-delivery-form");
+        const elems = insertproduct ? insertproduct.querySelectorAll('select') : '';
+        const options = {};
+        var instances = M.FormSelect.init(elems, options);
+    }
+    useEffect(() => {
+        setTimeout(() => {
+            updateFormElements();
+        }, 1000);
+    });
     const onSubmit = () => {
         axios.post('/rest/delivery/'+props.order_id, {
             deliveryDate,
@@ -83,6 +99,12 @@ export function AddDelivery(props) {
     const updateDispatchedDate = (e) => {
         setDeliveryDate(e.target.valueAsNumber);
     }
+    const updateDeliveryType = (e) => {
+        setDeliveryType(e.target.value);
+    }
+    const updateDeliveredDate = (e) => {
+        setDeliveredDate(e.target.value);
+    }
     return (
         <div>
             <Dialog fullScreen onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}
@@ -94,25 +116,45 @@ export function AddDelivery(props) {
                 </DialogTitle>
                 <DialogContent dividers>
                     <Typography gutterBottom>
-                        <div>
-                            <div className="input-field">
-                                <input type="text" name="tracking_number" id="tracking_number" 
-                                    value={trackingNumber}
-                                    onChange={(e) => updateTrackingNumber(e)}/>
-                                <label className="" htmlFor="tracking_number">Tracking Number</label>
-                            </div>
-                            <div className="input-field">
-                                <input type="date" name="dispatched_date" id="dispatched_date" 
-                                    value={deliveryDate}
-                                    onChange={(e) => updateDispatchedDate(e)}/>
-                                <label className="" htmlFor="dispatched_date">Dispatch Date</label>
-                            </div>
-                            <div>
-                                <select className="input-field">
-                                    <option>Free</option>
-                                    <option>Express</option>
-                                </select>
-                            </div>
+                        <div id="hs-delivery-form">
+                            <fieldset disabled={props.delivery_status === 3 ? true : null}>
+                                <legend>Tracking Information</legend>
+                                <div className="input-field">
+                                    <select value={deliveryType} onChange={updateDeliveryType}>
+                                        <option value="0">Free</option>
+                                        <option value="1">Express</option>
+                                    </select>
+                                    <label>Delivery Type<span className="star_color">*</span></label>
+                                </div>
+                                <div className="input-field">
+                                    <input type="text" name="tracking_number" id="tracking_number" 
+                                        value={trackingNumber}
+                                        onChange={(e) => updateTrackingNumber(e)}/>
+                                    <label className="" htmlFor="tracking_number">Tracking Number</label>
+                                </div>
+                                <div className="input-field">
+                                    <input type="date" name="dispatched_date" id="dispatched_date" 
+                                        value={deliveryDate}
+                                        onChange={(e) => updateDispatchedDate(e)}/>
+                                    <label className="" htmlFor="dispatched_date">Dispatch Date</label>
+                                </div>
+                            </fieldset>
+                            <fieldset disabled={props.delivery_status === 3 ? true : null}>
+                                <legend>Delivery Information</legend>
+                                <div className="input-field">
+                                    <input type="date" name="delivered_date" id="delivered_date" 
+                                        value={deliveredDate}
+                                        onChange={(e) => updateDeliveredDate(e)}/>
+                                    <label className="" htmlFor="delivered_date">Delivered Date</label>
+                                </div>
+                                <div className="input-field">
+                                    <input type="text" name="delivered_note" id="delivered_note" 
+                                        value={deliveredNote}
+                                        onChange={(e) => setDeliveredNote(e.target.value)}
+                                        />
+                                    <label htmlFor="delivered_note">Delivered Note (Optional)</label>
+                                </div>
+                            </fieldset>
                         </div>
                     </Typography>
                 </DialogContent>
