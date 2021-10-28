@@ -5,6 +5,7 @@ import Forgotpassword from './Forgotpassword'
 // import {useHistory} from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes} from '@fortawesome/free-solid-svg-icons'
+import Add_address_checkout from '../product_checkout/Add_address_checkout'
 import './modal.scss';
 
 function Modal(props) {

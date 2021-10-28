@@ -7,6 +7,8 @@ import { toast } from 'react-toastify';
 import demoimg from '../../../../Images/megha.jpg'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRetweet } from '@fortawesome/free-solid-svg-icons'
+
+
 function Orderdetails(props) {
     const { order_id } = useParams();
     const [orderDetails, setOrderDtails] = useState({});
@@ -67,6 +69,17 @@ function Orderdetails(props) {
                     <span class="material-icons hs-action-icon" onClick={() => setReviewRating(5)}>{rating > 4 ? 'star' : 'star_outline'}</span>
                 </div>
                 <textarea className="materialize-textarea" placeholder="Write your review" onChange={updateReview} value={review}></textarea>
+                <form action="#">
+                    <div class="file-field input-field">
+                        <div class="btn btn-color">
+                            <span>Upload Image</span>
+                            <input type="file" multiple />
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text" placeholder="Upload one or more files" />
+                        </div>
+                    </div>
+                </form>
                 <div className="hs-action-wrapper">
                     <button className="waves-effect waves-light btn btn-default" onClick={cancelReview}>Cancel</button>
                     <button className="waves-effect waves-light btn btn-color hs-ml-16" onClick={addReview}>Add</button>
@@ -134,7 +147,7 @@ function Orderdetails(props) {
                             <p className="title">{orderDetails.title} </p>
                             <p>Primary color : white</p>
                             <button className="waves-effect waves-light btn btn-color" >
-                                <FontAwesomeIcon icon={faRetweet} size='1x' className="repeat-icon" /> 
+                                <FontAwesomeIcon icon={faRetweet} size='1x' className="repeat-icon" />
                                 Buy it again</button>
                             {
                                 showReview

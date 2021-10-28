@@ -170,6 +170,17 @@
     //     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     // }
 }
+.add-address-checkout{
+    font-size: 20px;
+    font-weight: 500;
+    padding: 10px;
+    border: 1px solid #D5D9D9;
+    border-radius: 10px;
+    color:#4F2725;
+    &:hover{
+        cursor: pointer;
+    }
+}
 
 
 //Delivery section start

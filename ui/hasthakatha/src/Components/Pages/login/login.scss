@@ -68,7 +68,7 @@
         background-color: none;
     }
     .logout-op {
-        width: 200px !important;
+        width: 180px !important;
         position:absolute;
         top:64px !important;
         li {
@@ -79,6 +79,7 @@
         }
         .email {
             font-size: 12px;
+            border-bottom:1px solid #d5d9d9;
         }
     }
 }

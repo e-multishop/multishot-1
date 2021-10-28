@@ -42,7 +42,12 @@ function Add_address(props) {
     const addAddress = () => {
         axios.post('/rest/address', countryDetail).then(res => {
             toast.success('Address added successfully');
-            document.location.href='#/account/addresslist';
+            if(props.checkout_address==='yes'){
+                document.location.href='#/viewcart';
+            }
+            else{
+                document.location.href='#/account/addresslist';
+            }
         });
     };
 

@@ -175,7 +175,7 @@ function Checkout() {
                                         <li>
                                             <div class="collapsible-header">Address</div>
                                             <div class="collapsible-body">
-                                                <Address />
+                                                <Address/>
                                             </div>
                                         </li>
                                         <li>
