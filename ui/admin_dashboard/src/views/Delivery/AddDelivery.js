@@ -12,6 +12,7 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import './AddDelivery.scss';
 
 const styles = (theme) => ({
     root: {
@@ -66,6 +67,9 @@ export function AddDelivery(props) {
     const [deliveredDate, setDeliveredDate] = useState(props.delivered_date);
     const [deliveredNote, setDeliveredNote] = useState(props.delivered_note);
 
+    const disableTrackingForm = props.delivery_status === 3 ? true : null;
+    const disbleDeliveryForm = props.delivery_status === 2 ? null : true;
+
     const handleClose = () => { 
         setOpen(false);
         ReactDOM.unmountComponentAtNode(document.getElementById('order-dialog'));
@@ -82,17 +86,39 @@ export function AddDelivery(props) {
             updateFormElements();
         }, 1000);
     });
-    const onSubmit = () => {
-        axios.post('/rest/delivery/'+props.order_id, {
+    const onSubmitTracking = () => {
+        axios.post('/rest/tracking/'+props.order_id, {
             deliveryDate,
             trackingNumber
+        }).then(res => {
+            toast.success('Tracking information added');
+            handleClose();
+        }).catch(err => {
+            toast.error('Error updating delivery info, try again later');
+        })
+    };
+    const onSubmitDelivery = () => {
+        axios.post('/rest/delivery/'+props.order_id, {
+            deliveredDate,
+            deliveredNote
         }).then(res => {
             toast.success('Delivery information added');
             handleClose();
         }).catch(err => {
             toast.error('Error updating delivery info, try again later');
         })
-    }
+    };
+    const onSubmit = () => {
+        if (props.delivery_status === 1) {
+            onSubmitTracking();
+        } else {
+            if (deliveredDate) {
+                onSubmitDelivery();
+            } else {
+                onSubmitTracking();
+            }
+        }
+    };
     const updateTrackingNumber = (e) => {
         setTrackingNumber(e.target.value);
     }
@@ -117,7 +143,7 @@ export function AddDelivery(props) {
                 <DialogContent dividers>
                     <Typography gutterBottom>
                         <div id="hs-delivery-form">
-                            <fieldset disabled={props.delivery_status === 3 ? true : null}>
+                            <fieldset disabled={disableTrackingForm}>
                                 <legend>Tracking Information</legend>
                                 <div className="input-field">
                                     <select value={deliveryType} onChange={updateDeliveryType}>
@@ -139,7 +165,7 @@ export function AddDelivery(props) {
                                     <label className="" htmlFor="dispatched_date">Dispatch Date</label>
                                 </div>
                             </fieldset>
-                            <fieldset disabled={props.delivery_status === 3 ? true : null}>
+                            <fieldset disabled={disbleDeliveryForm}>
                                 <legend>Delivery Information</legend>
                                 <div className="input-field">
                                     <input type="date" name="delivered_date" id="delivered_date" 
@@ -159,7 +185,7 @@ export function AddDelivery(props) {
                     </Typography>
                 </DialogContent>
                 <DialogActions>
-                    <Button autoFocus onClick={() => { onSubmit(props.pid) }} color="primary">
+                    <Button disabled={props.delivery_status === 3 ? true : null} autoFocus onClick={() => { onSubmit(props.pid) }} color="primary">
                         Update
                      </Button>
                 </DialogActions>
