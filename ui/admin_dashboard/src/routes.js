@@ -32,7 +32,7 @@ const dashboardRoutes = [
   {
     path: "/dashboard",
     name: "Dashboard",
-    icon: "",
+    icon: "dashboard",
     component: DashboardPage,
     layout: "/admin",
   },
@@ -53,7 +53,7 @@ const dashboardRoutes = [
   {
     path: "/uploadfile",
     name: "Upload Bulk Products",
-    icon: LibraryBooks,
+    icon: "upload_file",
     component: UploadFile,
     layout: "/admin",
   },
@@ -65,10 +65,10 @@ const dashboardRoutes = [
     layout: "/admin",
   },
   // {
-  //   path: "/check",
-  //   name: "Check",
-  //   icon: Person,
-  //   component: Check,
+  //   path: "/users",
+  //   name: "Users",
+  //   icon: "people",
+  //   component: UserProfile,
   //   layout: "/admin",
   // },
 ];

@@ -54,8 +54,14 @@ const DialogActions = withStyles((theme) => ({
 
 export function AddDelivery(props) {
     const [open, setOpen] = useState(true);
-    const [deliveryDate, setDeliveryDate] = useState('');
-    const [trackingNumber, setTrackingNumber] = useState('');
+    let propsDeliveryDate = props.delivery_date;
+    if (propsDeliveryDate) {
+        const parsedDate = parseInt(props.delivery_date);
+        const parsedActualDate = new Date(parsedDate);
+        propsDeliveryDate = parsedActualDate.toISOString().substr(0,10);
+    }
+    const [deliveryDate, setDeliveryDate] = useState(propsDeliveryDate);
+    const [trackingNumber, setTrackingNumber] = useState(props.tracking_number);
     const handleClose = () => { 
         setOpen(false);
         ReactDOM.unmountComponentAtNode(document.getElementById('order-dialog'));
@@ -90,11 +96,15 @@ export function AddDelivery(props) {
                     <Typography gutterBottom>
                         <div>
                             <div className="input-field">
-                                <input type="text" name="tracking_number" id="tracking_number" onChange={(e) => updateTrackingNumber(e)}/>
+                                <input type="text" name="tracking_number" id="tracking_number" 
+                                    value={trackingNumber}
+                                    onChange={(e) => updateTrackingNumber(e)}/>
                                 <label className="" htmlFor="tracking_number">Tracking Number</label>
                             </div>
                             <div className="input-field">
-                                <input type="date" name="dispatched_date" id="dispatched_date" onChange={(e) => updateDispatchedDate(e)}/>
+                                <input type="date" name="dispatched_date" id="dispatched_date" 
+                                    value={deliveryDate}
+                                    onChange={(e) => updateDispatchedDate(e)}/>
                                 <label className="" htmlFor="dispatched_date">Dispatch Date</label>
                             </div>
                             <div>

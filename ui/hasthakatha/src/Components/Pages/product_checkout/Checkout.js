@@ -25,7 +25,8 @@ function Checkout() {
         totalAmount: "0",
         deliveryAddress: '',
         deliveryType: ''
-    })
+    });
+    let accordianInstance;
 
     const [cartData, setCartData] = useState([]);
     const [Loading, setLoading] = useState(false);
@@ -57,7 +58,7 @@ function Checkout() {
         var elems = collaps1.querySelectorAll('.collapsible');
         var options = '';
         var instances = M.Collapsible.init(elems, options);
-
+        accordianInstance = instances && instances.length > 0 ? instances[0] : '';
     }
     useEffect(() => {
         getCart(userId)
@@ -146,6 +147,11 @@ function Checkout() {
         // e.preventDefault();
     }
 
+    const gotoAddressSection = () => {
+        if (accordianInstance) {
+            accordianInstance.open(2);
+        }
+    }
     return (
         <>
             <Header />
@@ -183,7 +189,7 @@ function Checkout() {
                                                         )
                                                     })
                                                 }
-                                                <button className="waves-effect waves-light btn btn-color">Continue</button>
+                                                <button className="waves-effect waves-light btn btn-color" onClick={gotoAddressSection}>Continue</button>
                                             </div>
                                         </li>
                                         <li>

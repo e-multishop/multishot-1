@@ -41,7 +41,7 @@ const columns = [
     },
     {
       id: 'delivery_status',
-      label: 'Order status',
+      label: 'Order|Delivery status',
       minWidth: 40,
     },
     {
@@ -86,6 +86,10 @@ export default function OrderList(props) {
 
     };
 
+    const getDeliveryStatus = (value) => {
+
+    }
+
     const ShowData = (column, value,row, cindex) => {
       switch (column.id) {
         case 'product_summary':
@@ -121,21 +125,33 @@ export default function OrderList(props) {
               case 1:
                 return (
                   <TableCell key={cindex}>
-                    Open
+                    Pending
                   </TableCell>
                 )
               case 2:
                 return (
                   <TableCell key={cindex}>
-                    In Progress
+                    Completed | In Progress
+                  </TableCell>
+                )
+              case 3:
+                return (
+                  <TableCell>
+                    Completed
+                  </TableCell>
+                )
+              case -1:
+                return (
+                  <TableCell>
+                    Cancelled
                   </TableCell>
                 )
               default: 
-                return (
-                  <TableCell>
-
+                  return (
+                    <TableCell>
+                    
                   </TableCell>
-                )
+                  )
             }
             
           case 'action':
