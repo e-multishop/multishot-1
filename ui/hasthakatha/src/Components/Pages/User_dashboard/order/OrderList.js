@@ -11,7 +11,8 @@ function OrderList(props) {
     const showCreatedDate = (datetime) => {
         const actualDateTime = parseInt(datetime);
         try { 
-            return (new Date(actualDateTime)).toLocaleDateString();
+            const date = new Date(actualDateTime);
+            return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
         } catch(e) { 
             return datetime;
         }
@@ -36,14 +37,30 @@ function OrderList(props) {
                     </div>)
                 case 3:
                     return (<div className="hs-order-status">
-                        <p className="title">Delivery</p>
-                        <p className="info">Delivered on ...</p>
+                        <p className="title">Delivered</p>
+                        <p className="info">Delivered on {item.delivered_date}</p>
                     </div>)
                 default: 
                     return (<></>)
             }
         }
     }
+    const showProductSummary = (summary) => {
+        if (summary) {
+            const convertedSummary = atob(summary);
+            const convertedSummaryJSON = JSON.parse(convertedSummary);
+            
+            return (
+                convertedSummaryJSON.map(s => {
+                    return <p>{s.title}</p>;
+                })
+            )
+        } else {
+            return (
+                <p>No product summary</p>
+            )
+        }
+    };
     return (
         <>
            <div className="orderlist-flex">
@@ -52,9 +69,9 @@ function OrderList(props) {
                 </div>
                 <div className="order-content">
                     <span>{props.order_id}</span>
-                    <p className="title">black dress </p>
+                    <p className="title">{showProductSummary(props.product_summary)} </p>
                     <p>Primary color : white</p>
-                    <p>Created On: {showCreatedDate(props.created_date)}</p>
+                    <p>Ordered On: {showCreatedDate(props.created_date)}</p>
                 </div>
                 <div className="item-price text-center">
                     <p>{props.total_amount ? '₹' + props.total_amount : 'Error'}</p>

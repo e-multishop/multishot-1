@@ -125,19 +125,20 @@ export default function OrderList(props) {
               case 1:
                 return (
                   <TableCell key={cindex}>
-                    Pending
+                    <span class="new badge light-blue" data-badge-caption="">Pending</span>
                   </TableCell>
                 )
               case 2:
                 return (
                   <TableCell key={cindex}>
-                    Completed | In Progress
+                    <span class="new badge green" data-badge-caption="">Completed</span>
+                    <span class="new badge light-blue" data-badge-caption="">In Progress</span>
                   </TableCell>
                 )
               case 3:
                 return (
                   <TableCell>
-                    Completed
+                    <span class="new badge green" data-badge-caption="">Completed</span>
                   </TableCell>
                 )
               case -1:
