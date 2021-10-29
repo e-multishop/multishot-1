@@ -26,7 +26,7 @@ function Checkout() {
         deliveryAddress: '',
         deliveryType: ''
     });
-    let accordianInstance;
+    const [accordianInstance, setAccordianInstance] = useState('');
 
     const [cartData, setCartData] = useState([]);
     const [Loading, setLoading] = useState(false);
@@ -58,7 +58,8 @@ function Checkout() {
         var elems = collaps1.querySelectorAll('.collapsible');
         var options = '';
         var instances = M.Collapsible.init(elems, options);
-        accordianInstance = instances && instances.length > 0 ? instances[0] : '';
+        var accordianInstance = instances && instances.length > 0 ? instances[0] : '';
+        setAccordianInstance(accordianInstance);
     }
     useEffect(() => {
         getCart(userId)
@@ -68,7 +69,7 @@ function Checkout() {
         Axios.post('/rest/creating_order', {
             amount: data.totalAmount,
             deliveryAddress: data.deliveryAddress,
-            deliveryType: 0,
+            deliveryType: 1,
             data: cartData.map(cart => {
                 return {
                     price: cart.price,
@@ -88,10 +89,14 @@ function Checkout() {
 
     const setDeliveryAddress = (deliveryAddress) => {
         setData({...data, deliveryAddress});
+        if (accordianInstance) {
+            accordianInstance.open(2);
+        }
     };
 
     const setDeliveryType = (deliveryType) => {
         setData({...data, deliveryType});
+        handleSubmit();
     };
 
     const launchRazorPay = (checkoutPaymentDetails) => {
@@ -149,7 +154,7 @@ function Checkout() {
 
     const gotoAddressSection = () => {
         if (accordianInstance) {
-            accordianInstance.open(2);
+            accordianInstance.open(1);
         }
     }
     return (
