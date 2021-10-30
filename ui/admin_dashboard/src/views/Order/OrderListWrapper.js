@@ -11,6 +11,10 @@ import CardBody from "components/Card/CardBody.js";
 // import ProductEdit from "./Edit/ProductEdit";
 import ReactDOM from 'react-dom';
 import { AddDelivery } from "views/Delivery/AddDelivery";
+import ProductEdit from "views/Product/Edit/ProductEdit";
+import axios from "axios";
+import { toast } from "react-toastify";
+import Loader from "shared/Loader";
 
 const styles = {
   cardCategoryWhite: {
@@ -46,6 +50,7 @@ const useStyles = makeStyles(styles);
 
 export default function OrderListWrapper() {
   const [updateTable,setUpdateTable]=useState(false);
+  const [loader, showLoader] = useState(false);
   const classes = useStyles();
 
   // const showInsertDialog = () => {
@@ -56,19 +61,36 @@ export default function OrderListWrapper() {
     ReactDOM.render(<AddDelivery {...orderData} />, document.getElementById('order-dialog'));
   }
 
+  const showProductDialog = (pid) => {
+    if (pid) {
+      showLoader(true);
+      axios.get('/rest/productdetails/'+pid).then(response => {
+        showLoader(false);
+        ReactDOM.render(<ProductEdit {...response.data.output} readonly/>, document.getElementById('product-dialog'));
+      }).catch(error => {
+        showLoader(false);
+        toast.error('Error getting product. Please try again later')
+      });
+    }
+  }
+
   return (
-    <GridContainer>
-      <GridItem xs={12} sm={12} md={12}>
-        <Card>
-          <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>Order List</h4>
-          </CardHeader>
-          <CardBody>
-            <OrderList showEditDialog={showEditDialog}/>
-            <div id="order-dialog"></div>
-          </CardBody>
-        </Card>
-      </GridItem>
-    </GridContainer>
+    <>
+      <GridContainer>
+        <GridItem xs={12} sm={12} md={12}>
+          <Card>
+            <CardHeader color="primary">
+              <h4 className={classes.cardTitleWhite}>Order List</h4>
+            </CardHeader>
+            <CardBody>
+              <OrderList showEditDialog={showEditDialog} showProductDialog={showProductDialog}/>
+              <div id="order-dialog"></div>
+              <div id="product-dialog"></div>
+              { loader ? <Loader height="400px" /> : ''}
+            </CardBody>
+          </Card>
+        </GridItem>
+      </GridContainer>
+    </>
   );
 }
