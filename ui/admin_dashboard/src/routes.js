@@ -25,7 +25,7 @@ import UserProfile from "views/UserProfile/UserProfile.js";
 import UploadFile from "views/UploadFile/UploadFile"
 import ProductListWrapper from "views/Product/ProductListWrapper";
 import OrderListWrapper from "views/Order/OrderListWrapper";
-import DashboardPage from "views/Dashboard/DashboardPage";
+import Dashboard from "views/Dashboard/Dashboard";
 // core components/views for RTL layout
 
 const dashboardRoutes = [
@@ -33,14 +33,7 @@ const dashboardRoutes = [
     path: "/dashboard",
     name: "Dashboard",
     icon: "dashboard",
-    component: DashboardPage,
-    layout: "/admin",
-  },
-  {
-    path: "/table",
-    name: "Products",
-    icon: "content_paste",
-    component: ProductListWrapper,
+    component: Dashboard,
     layout: "/admin",
   },
   {
@@ -48,6 +41,13 @@ const dashboardRoutes = [
     name: "Orders",
     icon: "shopping_basket",
     component: OrderListWrapper,
+    layout: "/admin",
+  },
+  {
+    path: "/table",
+    name: "Products",
+    icon: "content_paste",
+    component: ProductListWrapper,
     layout: "/admin",
   },
   {

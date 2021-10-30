@@ -11,8 +11,12 @@ function Address(props) {
     const [addressList, setAddressList] = useState([]);
     const getData = () => {
         axios.get('/rest/address_list/' + localStorage.getItem('userId')).then(res => {
-            setAddressList(res.data.result);
-            // setLoading(false);
+            const addressList = res.data.result;
+            setAddressList(addressList);
+            // set default address
+            if (addressList && addressList.length > 0) {
+                props.setDeliveryAddress(addressList[0]);
+            }
         });
     }
     useEffect(() => {
