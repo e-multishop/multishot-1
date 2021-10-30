@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import React from 'react';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
+import Icon from "@material-ui/core/Icon";
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -68,11 +69,11 @@ export default function OrderList(props) {
     const [orderList, setOrderList] = useState([]);
     const [totalRecords, setTotalRecords] = useState(-1);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
     const classes = useStyles();
 
     const fetchOrder = (page, rowsPerPage) => {
-      axios.get('/rest/order/list/'+page+'/'+rowsPerPage).then(res => {
+      axios.get('/rest/order/list/'+(page+1)+'/'+rowsPerPage).then(res => {
         setOrderList(res.data.results.list);
         setTotalRecords(res.data.results.totalRecords);
         setLoader(false);
@@ -99,8 +100,12 @@ export default function OrderList(props) {
             return (
               <TableCell key={cindex} align={column.align}>
               {
-                productSummaryList.map(l => {
-                  return (<div className="hs-product-summary-title">{l.title}</div>)
+                productSummaryList.map((l,i) => {
+                  return (<div className="hs-product-summary-title">
+                      <span className="material-icons hs-product-item">
+                        sell
+                      </span>
+                      <span className="hs-clickable" onClick={() => props.showProductDialog(l.pid)}> {l.title}</span></div>)
                 })
               }
               </TableCell>
@@ -125,19 +130,20 @@ export default function OrderList(props) {
               case 1:
                 return (
                   <TableCell key={cindex}>
-                    Pending
+                    <span class="new badge light-blue" data-badge-caption="">Pending</span>
                   </TableCell>
                 )
               case 2:
                 return (
                   <TableCell key={cindex}>
-                    Completed | In Progress
+                    <span class="new badge green" data-badge-caption="">Completed</span>
+                    <span class="new badge light-blue" data-badge-caption="">In Progress</span>
                   </TableCell>
                 )
               case 3:
                 return (
                   <TableCell>
-                    Completed
+                    <span class="new badge green" data-badge-caption="">Completed</span>
                   </TableCell>
                 )
               case -1:
@@ -149,7 +155,7 @@ export default function OrderList(props) {
               default: 
                   return (
                     <TableCell>
-                    
+                      <span class="new badge red" data-badge-caption="">Error</span>
                   </TableCell>
                   )
             }

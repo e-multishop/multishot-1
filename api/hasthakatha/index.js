@@ -23,6 +23,7 @@ const login_app = require('./src/common/login');
 const common_app = require('./src/common/common');
 const payment_app = require('./src/common/payment');
 const product_app = require('./src/admin/product');
+const dashboard_app = require('./src/admin/dashboard');
 const profile_app = require('./src/common/profile');
 const order_app = require('./src/common/order');
 const review_app= require('./src/common/review');
@@ -34,6 +35,7 @@ hasthaBean.initialize();
 
 login_app(hasthakatha_data,con);
 product_app(hasthakatha_data,con,hasthaBean);
+dashboard_app(hasthakatha_data,con,hasthaBean);
 common_app(hasthakatha_data,con);
 payment_app(hasthakatha_data,con,settings);
 profile_app(hasthakatha_data,con);
