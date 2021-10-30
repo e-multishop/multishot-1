@@ -141,7 +141,7 @@ export default function ProductEdit(props) {
                 maxWidth="sm"
             >
                 <DialogTitle id="customized-dialog-title" classes={{root: 'hs-edit-product title'}} onClose={handleClose}>
-                    <BorderColorOutlinedIcon fontSize="large" classes={{root: 'hs-edit-product icon'}}/> Edit Product
+                    <BorderColorOutlinedIcon fontSize="large" classes={{root: 'hs-edit-product icon'}}/> {props.readonly ? 'View' : 'Edit' } Product
                 </DialogTitle>
                 <DialogContent dividers>
                     <Typography gutterBottom>
@@ -154,7 +154,7 @@ export default function ProductEdit(props) {
                     </Typography>
                 </DialogContent>
                 <DialogActions>
-                    <Button autoFocus onClick={() => { onSubmit(props.pid) }} color="primary">
+                    <Button disabled={props.readonly ? true : null} autoFocus onClick={() => { onSubmit(props.pid) }} color="primary">
                         Submit
           </Button>
                 </DialogActions>
