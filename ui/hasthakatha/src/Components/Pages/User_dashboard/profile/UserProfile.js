@@ -8,6 +8,7 @@ function UserProfile() {
     const fatchData = () => {
         axios.get('/rest/user_profile/' + localStorage.getItem('userId')).then(res => {
             setUserData(res.data.result);
+            localStorage.setItem('userName',res.data.result.name);
         })
     }
     // const [updateData, setUpdateData] = useState({

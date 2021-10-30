@@ -95,9 +95,9 @@ const ProductList = (props) => {
                 <div>
                     <div className="hk-filter">
                         <div className=" heading">Items</div>
-                        <div className=" button-filter">
+                        {/* <div className=" button-filter">
                             Short : most recent
-                        </div>
+                        </div> */}
                     </div>
                     {/* <!--product main_list--> */}
 

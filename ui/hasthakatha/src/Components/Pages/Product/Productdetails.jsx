@@ -184,7 +184,7 @@ class Productdetails extends Component{
                 {/* // <!--review and comment section--> */}
                 <div className="hs_review comment">
                     <div className="hk-review-head">   
-                        <h2 className="hk-review-heading">234 Shop reviews</h2>
+                        <h2 className="hk-review-heading">Reviews</h2>
                         <p className="hk-review-filter"></p>
                     </div>
                     <div>
@@ -193,13 +193,13 @@ class Productdetails extends Component{
                             return(
                                 <>
                                     <ProductReview
-                                        CustmerImg={value.CustmerImg}
-                                        CustmerName={value.CustmerName}
+                                        // CustmerImg={value.CustmerImg}
+                                        // CustmerName={value.CustmerName}
                                         ReviewDate={value.created_date}
                                         ReviewContent={value.description}
-                                        ProductImg={value.ProductImg}
-                                        PurchaseImg={value.PurchaseImg}
-                                        PurchaseName={value.PurchaseName}
+                                        // ProductImg={value.ProductImg}
+                                        // PurchaseImg={value.PurchaseImg}
+                                        // PurchaseName={value.PurchaseName}
                                     />
                                 </>
                             );  
