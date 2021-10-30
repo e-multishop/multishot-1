@@ -92,7 +92,9 @@ const grayColor = [
 ];
 const blackColor = "#000";
 const whiteColor = "#FFF";
+const hkBg = ["#4f2624", "#4f2624", "#4f2624", "#4f2624"];
 
+// const hkBg=["#4f2624"];
 const boxShadow = {
   boxShadow:
     "0 10px 30px -12px rgba(" +
@@ -181,6 +183,11 @@ const primaryCardHeader = {
 const roseCardHeader = {
   background:
     "linear-gradient(60deg, " + roseColor[1] + ", " + roseColor[2] + ")",
+  ...roseBoxShadow,
+};
+const hkBgCardHeader = {
+  background:
+  "linear-gradient(60deg, " + hkBg[1] + ", " + hkBg[2] + ")",
   ...roseBoxShadow,
 };
 
@@ -299,4 +306,6 @@ export {
   cardTitle,
   cardSubtitle,
   cardLink,
+  hkBgCardHeader,
+  hkBg,
 };

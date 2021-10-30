@@ -29,7 +29,6 @@ class App extends Component{
     return(
       <HashRouter>
         {/* <div id="LoginDropdown"></div> */}
-
           <Switch>
               <Route exact component={Home} path="/"/>
               <Route component={About} path="/about"/>
