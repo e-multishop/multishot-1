@@ -6,6 +6,8 @@ import {
   primaryCardHeader,
   roseCardHeader,
   whiteColor,
+  hkBgCardHeader,
+  hkBg,
 } from "assets/jss/material-dashboard-react.js";
 
 const cardHeaderStyle = {
@@ -93,6 +95,12 @@ const cardHeaderStyle = {
     color: whiteColor,
     "&:not($cardHeaderIcon)": {
       ...successCardHeader,
+    },
+  },
+  hkBgCardHeader: {
+    color: hkBg,
+    "&:not($cardHeaderIcon)": {
+      ...hkBgCardHeader,
     },
   },
   dangerCardHeader: {

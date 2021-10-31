@@ -38,7 +38,7 @@ class Productdetails extends Component{
             this.setState({productdetail: response.data.output, mainImage: response.data.output.image_data, loading: false});
         })
         Axios.get('/rest/reviews/'+pid).then(response => {
-            setState({reviewList: response.data.result, reviewsLoading: false});
+            this.setState({reviewList: response.data.result, reviewsLoading: false});
         });
         this.loadProductSize(pid);
     }
@@ -184,24 +184,24 @@ class Productdetails extends Component{
                 {/* // <!--review and comment section--> */}
                 <div className="hs_review comment">
                     <div className="hk-review-head">   
-                        <h2 className="hk-review-heading">234 Shop reviews</h2>
+                        <h2 className="hk-review-heading">{this.state.reviewList.length} Shop reviews</h2>
                         <p className="hk-review-filter"></p>
                     </div>
                     <div>
                         {
                             this.state.reviewList.map((value)=>{
                             return(
-                                <>
-                                    <ProductReview
-                                        CustmerImg={value.CustmerImg}
-                                        CustmerName={value.CustmerName}
-                                        ReviewDate={value.created_date}
-                                        ReviewContent={value.description}
-                                        ProductImg={value.ProductImg}
-                                        PurchaseImg={value.PurchaseImg}
-                                        PurchaseName={value.PurchaseName}
-                                    />
-                                </>
+                                <ProductReview
+                                    CustmerImg={value.CustmerImg}
+                                    CustmerName={value.CustmerName}
+                                    ReviewDate={value.created_date}
+                                    ReviewContent={value.description}
+                                    ProductImg={value.ProductImg}
+                                    PurchaseImg={value.PurchaseImg}
+                                    PurchaseName={value.PurchaseName}
+                                    Rating={value.rating}
+                                    UserID={value.uid}
+                                />
                             );  
                             })   
                         }

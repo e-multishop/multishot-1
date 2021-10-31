@@ -4,7 +4,7 @@ import './Loader.css';
 const Loader = (props) => {
     const height = props.height ? props.height : '100px';
     return (
-      <div className="hs-loader" style={{'height': props.height}}>
+      <div className="hs-loader" style={{'height': height, position: props.inline ? 'static' : 'relative'}}>
         <div class="preloader-wrapper small active">
           <div class="spinner-layer spinner-green-only">
             <div class="circle-clipper left">

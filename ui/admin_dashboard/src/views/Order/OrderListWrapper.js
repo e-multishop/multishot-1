@@ -79,7 +79,7 @@ export default function OrderListWrapper() {
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <Card>
-            <CardHeader color="primary">
+            <CardHeader color="hkBg">
               <h4 className={classes.cardTitleWhite}>Order List</h4>
             </CardHeader>
             <CardBody>

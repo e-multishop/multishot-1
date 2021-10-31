@@ -78,7 +78,7 @@ ReactDOM.render(
         {/* <Route path="/addproduct" component={InsertProduct} /> */}
         <GuardedRoute path="/admin" component={Admin} meta={{ auth: true }} />
         {/* <Route path="/rtl" component={RTL} /> */}
-        <Redirect from="/" to="/admin/table" />
+        <Redirect from="/" to="/admin/dashboard" />
       </Switch>
     </GuardProvider>
   </BrowserRouter>,

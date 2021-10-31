@@ -156,7 +156,7 @@ export function AddDelivery(props) {
                                     <input type="text" name="tracking_number" id="tracking_number" 
                                         value={trackingNumber}
                                         onChange={(e) => updateTrackingNumber(e)}/>
-                                    <label className="" htmlFor="tracking_number">Tracking Number</label>
+                                    <label className="active" htmlFor="tracking_number">Tracking Number</label>
                                 </div>
                                 <div className="input-field">
                                     <input type="date" name="dispatched_date" id="dispatched_date" 

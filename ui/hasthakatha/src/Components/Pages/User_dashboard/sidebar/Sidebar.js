@@ -3,8 +3,10 @@ import { NavLink } from 'react-router-dom';
 import './sidebar.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCircle, faUser ,faBox} from '@fortawesome/free-solid-svg-icons'
+import axios from 'axios';
 
 function Sidebar() {
+
     return (
         <>
             <div class="row">
@@ -12,7 +14,7 @@ function Sidebar() {
                     <div class="card">
                         <div class="card-content">
                             <span class="card-title">
-                                <FontAwesomeIcon icon={faUserCircle} size='2x' className="icon" />  Shiv Prasad
+                                <FontAwesomeIcon icon={faUserCircle} size='2x' className="icon" />  {localStorage.getItem('userName')?localStorage.getItem('userName'):localStorage.getItem('userEmail')}
                             </span>
                         </div>
                     </div>

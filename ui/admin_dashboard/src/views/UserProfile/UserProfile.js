@@ -42,7 +42,7 @@ export default function UserProfile() {
       <GridContainer>
         <GridItem xs={12} sm={12} md={8}>
           <Card>
-            <CardHeader color="primary">
+            <CardHeader color="hkBg">
               <h4 className={classes.cardTitleWhite}>Edit Profile</h4>
               <p className={classes.cardCategoryWhite}>Complete your profile</p>
             </CardHeader>
@@ -110,7 +110,7 @@ export default function UserProfile() {
               </GridContainer>
             </CardBody>
             <CardFooter>
-              <Button color="primary" disabled>Update Profile</Button>
+              <Button color="hkBg" disabled>Update Profile</Button>
             </CardFooter>
           </Card>
         </GridItem>

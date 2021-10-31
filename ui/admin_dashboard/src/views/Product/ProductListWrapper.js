@@ -66,8 +66,8 @@ export default function ProductListWrapper() {
         <div id="product-dialog"></div>
       </div>
         <Card>
-          <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>Product List</h4>
+          <CardHeader color="hkBg">
+            <h4 className={classes.cardTitleWhite} >Product List</h4>
           </CardHeader>
           <CardBody>
             <ProductList updateTable={updateTable} showEditDialog={showEditDialog} />

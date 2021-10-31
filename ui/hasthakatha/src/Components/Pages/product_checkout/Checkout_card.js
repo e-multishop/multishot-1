@@ -1,15 +1,17 @@
 import React,{useEffect,useState} from 'react'
 import "./checkout.scss"
 import Axios from 'axios';
+import { faShoppingBag } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function Checkout_card(props) {
     return (
         <>
             <div class="row">
                 <div class="col s12">
-                    <div class="card">
-                        <div class="card-content">
-                            <span class="card-title">PRICE DETAILS</span>
+                    <div class="card hs-min-height-300 hs-no-shadow">
+                        <div class="card-content hs-checkout-section">
+                            <span class="card-title"><FontAwesomeIcon icon={faShoppingBag} size="large" className="icon slide-out" /> Your Order Summary</span>
                             <div className="hk-card-action card-price-section">
                                 <p>Price</p>
                                 <p>₹{props.data.totalAmount}</p>
