@@ -155,7 +155,7 @@ const ProductList = (props) => {
                                                         </Link>
                                                         <div className="hk-addcard" onClick={() => {addToCartData(value, index)}}>
                                                             { itemLoader.loading && itemLoader.index === index 
-                                                                ? <Loader inline="true" />
+                                                                ? <Loader inline="true" height="unset" />
                                                                 : <a>ADD TO CART</a>
                                                             }
                                                         </div>
