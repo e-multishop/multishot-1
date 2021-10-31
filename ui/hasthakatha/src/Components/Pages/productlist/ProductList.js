@@ -2,6 +2,9 @@ import React, { Component, useEffect, useState } from 'react';
 import "./ProductList.scss";
 import { Link, NavLink } from 'react-router-dom';
 import {cartItems} from '../../../Redux/actions/index';
+import { ToastContainer, toast } from 'react-toastify';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { useDispatch } from 'react-redux';
 import Pagination from './Pagination';
 import Loader from "../../Common/Loader";
@@ -70,6 +73,7 @@ const ProductList = (props) => {
             uid : localStorage.getItem('userId'),
             quantity : "1",
         }).then(res=>{
+            toast.success(<span ><FontAwesomeIcon icon={faCheck} size='lg' color="white" className="icon toast-icon" />Added</span>)
             const userId=localStorage.getItem('userId')
             Axios.get('/rest/add_to_cart/number_of_items/'+userId).then(res=>{
                 const numberOfItems=res.data.number_of_items;                

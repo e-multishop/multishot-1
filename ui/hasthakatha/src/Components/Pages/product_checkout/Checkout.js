@@ -8,7 +8,7 @@ import Checkout_card_item from "./Checkout_card_item"
 import { useSelector, useDispatch } from 'react-redux'
 import Empty_checkout from './Empty_checkout'
 import Axios from 'axios';
-import Loader from '../../Shared/loader/Loader';
+import Loader from '../../Common/Loader';
 import { cartItems } from '../../../Redux/actions/index';
 import logo from '../../../Images/logo.png'
 import Header from '../../Header/Header';
