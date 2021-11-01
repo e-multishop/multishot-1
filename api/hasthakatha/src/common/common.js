@@ -13,7 +13,7 @@ var common_app=function(app,con)
         con.query(sql, function (err, result) {
             if (err) throw err;
             console.error(JSON.stringify(result));
-            //res.send(JSON.stringify(result));
+            res.send(JSON.stringify(result));
         });
     });
     
