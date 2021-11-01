@@ -23,13 +23,20 @@ const EditProductForm = (props) => {
     function handleImage(e){
         let upload_image= e.target.files;
         if (upload_image && upload_image.length > 0) {
-            let reader = new FileReader();
-            reader.readAsDataURL(upload_image[0]);
-            reader.onload=(e)=>{
-                props.setEditUploadImage(e.target.result);
-                props.setEditUploadImageChanged(true);
+            const imageSize = e.target.files[0].size;
+            const imageSizeInMb = imageSize/1024;
+            if (imageSizeInMb <= 1024) {
+                let reader = new FileReader();
+                reader.readAsDataURL(upload_image[0]);
+                reader.onload=(e)=>{
+                    props.setEditUploadImage(e.target.result);
+                    props.setEditUploadImageChanged(true);
+                }
+                setShowImage(false);
+            } else {
+                toast.warn('Image size should be lesser than 1 MB.');
+                e.target.value = '';
             }
-            setShowImage(false);
         } else {
             setShowImage(true);
             props.setEditUploadImageChanged(true);
