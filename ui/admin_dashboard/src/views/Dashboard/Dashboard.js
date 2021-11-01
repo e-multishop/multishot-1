@@ -211,22 +211,22 @@ export default function Dashboard() {
         </GridItem>
       </GridContainer> */}
       <GridContainer>
-        <GridItem xs={12} sm={12} md={6}>
+        {/*<GridItem xs={12} sm={12} md={6}>
           <CustomTabs
             title="Messages:"
-            headerColor="warning"
-            tabs={[
-              {
-                tabName: "NEW",
-                tabIcon: '',
-                tabContent: (
-                  <Tasks
-                    checkedIndexes={[0, 3]}
-                    tasksIndexes={[]}
-                    tasks={''}
-                  />
-                ),
-              },
+            headerColor="warning" 
+            // tabs={[
+            //   {
+            //     tabName: "NEW",
+            //     tabIcon: '',
+            //     tabContent: (
+            //       <Tasks
+            //         checkedIndexes={[0, 3]}
+            //         tasksIndexes={[]}
+            //         tasks={''}
+            //       />
+            //     ),
+            //   },
               // {
               //   tabName: "Website",
               //   tabIcon: Code,
@@ -249,9 +249,9 @@ export default function Dashboard() {
               //     />
               //   ),
               // },
-            ]}
-          />
-        </GridItem>
+            // ]}
+          // />
+          </GridItem>*/}
         <GridItem xs={12} sm={12} md={6}>
           <Card>
             <CardHeader color="primary">

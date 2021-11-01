@@ -13,6 +13,18 @@ var profile_app = function (app, con) {
             }
         })
     });
+    app.get('/rest/state_detail/:coutry_id',(req,res)=>{
+        var sql = "select * from state where country_id='"+req.params.country_id+"';";
+        con.query(sql, (err, result) => {
+            if (err) {
+                res.status(500);
+                res.send({ type: "error", messsage: "Temporary Issue. Sorry we can't find state details" });
+            }
+            else {
+                res.send({ type: "success", messsage: "Now you show list of all state", "result": result });
+            }
+        });
+    })
     app.post('/rest/address', (req, res) => {
         var address = req.body.address;
         var id = req.body.id;

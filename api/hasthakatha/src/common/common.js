@@ -12,6 +12,7 @@ var common_app=function(app,con)
         var sql = "SELECT name, cid FROM `category`";
         con.query(sql, function (err, result) {
             if (err) throw err;
+            console.log(JSON.stringify(result));
             res.send(JSON.stringify(result));
         });
     });
