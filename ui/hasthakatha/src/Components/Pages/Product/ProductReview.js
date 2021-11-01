@@ -48,7 +48,7 @@ const ProductReview =(props)=>{
                     {props.PurchaseName}
                     </div>
                 </a>
-                <a href="#" ><p className="helpfull"><FontAwesomeIcon icon={faThumbsUp}/> Helpfull ?</p></a>
+                {/* <a href="#" ><p className="helpfull"><FontAwesomeIcon icon={faThumbsUp}/> Helpfull ?</p></a> */}
             </div>
         </div>  
     );
