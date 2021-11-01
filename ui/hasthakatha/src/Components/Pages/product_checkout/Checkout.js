@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faShoppingBag } from '@fortawesome/free-solid-svg-icons'
 import "./checkout.scss";
 import Checkout_card from "./Checkout_card"
 import Checkout_card_item from "./Checkout_card_item"
@@ -31,6 +31,10 @@ function Checkout() {
     const [cartData, setCartData] = useState([]);
     const [Loading, setLoading] = useState(false);
     const [checkoutPaymentDetails, setCheckoutPaymentDetails] = useState([]);
+    const [disabledSections, setDisabledSections] = useState({
+        address: true,
+        delivery: true
+    });
 
     const dispatch = useDispatch();
     const userId = localStorage.getItem('userId');
@@ -154,6 +158,7 @@ function Checkout() {
 
     const gotoAddressSection = () => {
         if (accordianInstance) {
+            setDisabledSections({address: true, delivery: true});
             accordianInstance.open(1);
         }
     }
@@ -167,7 +172,7 @@ function Checkout() {
                             <div className="header-checkout">
                                 <h2>{numberOfItems} items in your basket</h2>
                                 <NavLink to="/shop" className="keep-shopping">
-                                    Keep Shopping
+                                    <span><i className="material-icons hs-vt-align-bottom">double_arrow</i> Keep Shopping</span>
                                 </NavLink>
                             </div>
 
@@ -175,7 +180,7 @@ function Checkout() {
                                 <div className="col s8" >
                                     <ul class="collapsible">
                                         <li className="active">
-                                            <div class="collapsible-header">Items</div>
+                                            <div class="collapsible-header hs-bg-primary-color white-text"><b>1. ITEMS</b></div>
                                             <div class="collapsible-body">
                                                 {
                                                     cartData.map((data) => {
@@ -194,18 +199,20 @@ function Checkout() {
                                                         )
                                                     })
                                                 }
-                                                <button className="waves-effect waves-light btn btn-color" onClick={gotoAddressSection}>Continue</button>
+                                                <div className="hs-text-align-rt">
+                                                    <button className="waves-effect waves-light btn btn-color" onClick={gotoAddressSection}>Next</button>
+                                                </div>
                                             </div>
                                         </li>
                                         <li>
-                                            <div class="collapsible-header">Address</div>
-                                            <div class="collapsible-body">
+                                            <div className={"collapsible-header hs-bg-primary-color white-text " + (disabledSections.address ? 'disabled' : null)}><b>2. ADDRESS</b></div>
+                                            <div className="collapsible-body">
                                                 <Address setDeliveryAddress={setDeliveryAddress} />
                                             </div>
                                         </li>
                                         <li>
-                                            <div class="collapsible-header">Delivery</div>
-                                            <div class="collapsible-body">
+                                            <div className={"collapsible-header hs-bg-primary-color white-text " + (disabledSections.delivery ? 'disabled' : null)}><b>3. DELIVERY OPTIONS</b></div>
+                                            <div className="collapsible-body">
                                                 <Delivery checkout={handleSubmit} setDeliveryType={setDeliveryType}/>
                                             </div>
                                         </li>

@@ -73,9 +73,12 @@
         top:64px !important;
         li {
             text-align: center !important;
+            text-overflow: ellipsis;
+            overflow-wrap: break-word;
         }
         .icon-block {
           padding-top:5px ;
+          cursor: none;
         }
         .email {
             font-size: 12px;
