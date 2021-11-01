@@ -27,7 +27,6 @@ const dashboard_app = require('./src/admin/dashboard');
 const profile_app = require('./src/common/profile');
 const order_app = require('./src/common/order');
 const review_app= require('./src/common/review');
-
 const hasthakatha_data=hasthakatha_app(settings);
 
 const hasthaBean = new HasthaBean(con);

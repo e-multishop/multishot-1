@@ -1,4 +1,3 @@
-
 var order_app=function(app,con,settings)
 {
     app.get('/rest/order_details/:userid/:order_id',(req,res)=>{

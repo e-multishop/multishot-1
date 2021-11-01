@@ -467,5 +467,29 @@ var product_app = function (app, con, hasthaBean) {
             });
         })
     });
+    // app.get('/rest/best_selling',(req,res)=>{
+    //     var sql= "SELECT * FROM transaction_detail ORDER BY pid ASC;";
+    //     con.query(sql,(err,result)=>{
+    //         let temp=result[0]["pid"];
+    //         let sum=0;
+    //         const products = new Map();
+    //         for(let i=0; i<result.length; i++)
+    //         {
+    //             if((result[i]["pid"])==temp)
+    //             {
+    //                 sum=sum+result[i]["quantity"];
+    //             }
+    //             else{
+    //                 products.set(temp,sum);
+    //                 temp=result[i]["pid"];
+    //                 sum=0;
+    //             }
+    //         }
+    //         products.set(temp,sum);
+    //         console.log([...products.entries()]);
+    //         //shorting
+    //         //get result 
+    //     })
+    // });
 }
 module.exports = product_app;
