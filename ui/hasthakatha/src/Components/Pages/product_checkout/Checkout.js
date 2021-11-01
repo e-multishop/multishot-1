@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faShoppingBag } from '@fortawesome/free-solid-svg-icons'
 import "./checkout.scss";
 import Checkout_card from "./Checkout_card"
 import Checkout_card_item from "./Checkout_card_item"
 import { useSelector, useDispatch } from 'react-redux'
 import Empty_checkout from './Empty_checkout'
 import Axios from 'axios';
-import Loader from '../../Shared/loader/Loader';
+import Loader from '../../Common/Loader';
 import { cartItems } from '../../../Redux/actions/index';
 import logo from '../../../Images/logo.png'
 import Header from '../../Header/Header';
@@ -25,11 +25,16 @@ function Checkout() {
         totalAmount: "0",
         deliveryAddress: '',
         deliveryType: ''
-    })
+    });
+    const [accordianInstance, setAccordianInstance] = useState('');
 
     const [cartData, setCartData] = useState([]);
     const [Loading, setLoading] = useState(false);
     const [checkoutPaymentDetails, setCheckoutPaymentDetails] = useState([]);
+    const [disabledSections, setDisabledSections] = useState({
+        address: true,
+        delivery: true
+    });
 
     const dispatch = useDispatch();
     const userId = localStorage.getItem('userId');
@@ -57,7 +62,8 @@ function Checkout() {
         var elems = collaps1.querySelectorAll('.collapsible');
         var options = '';
         var instances = M.Collapsible.init(elems, options);
-
+        var accordianInstance = instances && instances.length > 0 ? instances[0] : '';
+        setAccordianInstance(accordianInstance);
     }
     useEffect(() => {
         getCart(userId)
@@ -67,7 +73,7 @@ function Checkout() {
         Axios.post('/rest/creating_order', {
             amount: data.totalAmount,
             deliveryAddress: data.deliveryAddress,
-            deliveryType: 0,
+            deliveryType: 1,
             data: cartData.map(cart => {
                 return {
                     price: cart.price,
@@ -87,10 +93,14 @@ function Checkout() {
 
     const setDeliveryAddress = (deliveryAddress) => {
         setData({...data, deliveryAddress});
+        if (accordianInstance) {
+            accordianInstance.open(2);
+        }
     };
 
     const setDeliveryType = (deliveryType) => {
         setData({...data, deliveryType});
+        handleSubmit();
     };
 
     const launchRazorPay = (checkoutPaymentDetails) => {
@@ -146,6 +156,12 @@ function Checkout() {
         // e.preventDefault();
     }
 
+    const gotoAddressSection = () => {
+        if (accordianInstance) {
+            setDisabledSections({address: true, delivery: true});
+            accordianInstance.open(1);
+        }
+    }
     return (
         <>
             <Header />
@@ -156,7 +172,7 @@ function Checkout() {
                             <div className="header-checkout">
                                 <h2>{numberOfItems} items in your basket</h2>
                                 <NavLink to="/shop" className="keep-shopping">
-                                    Keep Shopping
+                                    <span><i className="material-icons hs-vt-align-bottom">double_arrow</i> Keep Shopping</span>
                                 </NavLink>
                             </div>
 
@@ -164,7 +180,7 @@ function Checkout() {
                                 <div className="col s8" >
                                     <ul class="collapsible">
                                         <li className="active">
-                                            <div class="collapsible-header">Items</div>
+                                            <div class="collapsible-header hs-bg-primary-color white-text"><b>1. ITEMS</b></div>
                                             <div class="collapsible-body">
                                                 {
                                                     cartData.map((data) => {
@@ -183,18 +199,20 @@ function Checkout() {
                                                         )
                                                     })
                                                 }
-                                                <button className="waves-effect waves-light btn btn-color">Continue</button>
+                                                <div className="hs-text-align-rt">
+                                                    <button className="waves-effect waves-light btn btn-color" onClick={gotoAddressSection}>Next</button>
+                                                </div>
                                             </div>
                                         </li>
                                         <li>
-                                            <div class="collapsible-header">Address</div>
-                                            <div class="collapsible-body">
+                                            <div className={"collapsible-header hs-bg-primary-color white-text " + (disabledSections.address ? 'disabled' : null)}><b>2. ADDRESS</b></div>
+                                            <div className="collapsible-body">
                                                 <Address setDeliveryAddress={setDeliveryAddress} />
                                             </div>
                                         </li>
                                         <li>
-                                            <div class="collapsible-header">Delivery</div>
-                                            <div class="collapsible-body">
+                                            <div className={"collapsible-header hs-bg-primary-color white-text " + (disabledSections.delivery ? 'disabled' : null)}><b>3. DELIVERY OPTIONS</b></div>
+                                            <div className="collapsible-body">
                                                 <Delivery checkout={handleSubmit} setDeliveryType={setDeliveryType}/>
                                             </div>
                                         </li>

@@ -22,13 +22,13 @@ import Forgotpassword from "./Components/Pages/login/Forgotpassword";
 import Order from "./Components/Pages/User_dashboard/order/Order";
 import Orderdetails from "./Components/Pages/User_dashboard/order/Orderdetails"
 import UserProfile from "./Components/Pages/User_dashboard/profile/UserProfile"
+import Add_address from './Components/Pages/User_dashboard/address/Add_address'
 
 class App extends Component{
   render(){
     return(
       <HashRouter>
         {/* <div id="LoginDropdown"></div> */}
-
           <Switch>
               <Route exact component={Home} path="/"/>
               <Route component={About} path="/about"/>
@@ -43,6 +43,7 @@ class App extends Component{
               <Route exact component={Reset} path="/reset_password/:id"/>
               <Route component={Orderdetails} path="/orderdetails/:order_id"/>
               <Route component={UserProfile} path="/userprofile/:id"/>
+              <Route component={Add_address} path="/addaddress"/>
               <Route component={PageNotFound}/>
         </Switch>
     </HashRouter> 

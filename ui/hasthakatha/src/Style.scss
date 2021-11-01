@@ -59,3 +59,24 @@ $roboto-font-path: '~roboto-fontface/fonts';
     right: 0;
     top: 8px;
 }
+
+.hs-text-align-rt {
+    text-align: right;
+}
+
+.hs-bg-primary-color {
+    background-color: var(--primary_color);
+}
+
+.hs-min-height-300 {
+    min-height: 300px;
+}
+
+.hs-no-shadow {
+    border: 0;
+    box-shadow: none;
+}
+
+.hs-vt-align-bottom {
+    vertical-align: bottom;
+}

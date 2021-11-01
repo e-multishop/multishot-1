@@ -17,7 +17,7 @@ var product_app = function (app, con, hasthaBean) {
         var countSql = `SELECT COUNT(*) FROM product`;
         var sql = `SELECT P.pid, P.category, P.title, P.price, P.price_without_embroidary, P.description, P.note, P.material, P.total_available, P.total_quantity, P.available, P.sku, P.status, P.createdDate, P.updatedDate, I.image_data FROM product as P LEFT JOIN product_images as I on P.pid = I.pid LIMIT ${offset}, ${pageSize}` ;
         con.query(countSql, function(err, result1){
-            const totalRecords = result1[0]["COUNT(*)"];
+            const totalRecords = result1 && result1.length > 0 ? result1[0]["COUNT(*)"] : 0;
             con.query(sql, function (err, result) {
                 if (err) throw err;
                 res.header("Content-Type", "application/json");
@@ -360,11 +360,35 @@ var product_app = function (app, con, hasthaBean) {
         var quantity = req.body.quantity;
         var createdDate = (new Date()).getTime();
         var updatedDate = createdDate;
-        var sql = "INSERT INTO `add_to_cart`(`id`, `uid`, `pid`, `quantity`, `createdDate`, `updatedDate`) VALUES (NULL,'" + uid + "','" + pid + "','" + quantity + "','"+createdDate+"','"+updatedDate+"');";
-        con.query(sql, (err, result) => {
-            if (err) throw err;
-            res.send('successfully add into the cart');
+        var existingMatchesSql = `SELECT id, quantity from add_to_cart where uid=${uid} and pid=${pid}`;
+        con.query(existingMatchesSql, (err, result) => {
+            if (err) {
+                console.error(err);
+                res.status(500);
+                res.send({type: 'error', message: 'Temporary Error. Please contact support.'});
+            } else {
+                if (result && result.length > 0) {
+                    const existingQuanitity = parseInt(result[0]['quantity']);
+                    const updateSql = `UPDATE add_to_cart set quantity=${existingQuanitity+1} where pid=${pid} and uid=${uid}`;
+                    con.query(updateSql, (err, result) => {
+                        if (err) {
+                            console.error(err);
+                            res.status(500);
+                            res.send({type: 'error', message: 'Temporary error. Please contact support.'});
+                        } else {
+                            res.send({type: 'success', message: 'Cart updated successfully'});
+                        }
+                    });
+                } else {
+                    const insertSql = "INSERT INTO `add_to_cart`(`id`, `uid`, `pid`, `quantity`, `createdDate`, `updatedDate`) VALUES (NULL,'" + uid + "','" + pid + "','" + quantity + "','"+createdDate+"','"+updatedDate+"');";
+                    con.query(insertSql, (err, result) => {
+                        if (err) throw err;
+                        res.send({type: 'success', message: 'Successfully add into the cart'});
+                    });
+                }
+            }
         });
+        
     });
 
     app.put("/rest/add_to_cart", (req, res) => {

@@ -11,12 +11,13 @@ function OrderList(props) {
     const showCreatedDate = (datetime) => {
         const actualDateTime = parseInt(datetime);
         try { 
-            return (new Date(actualDateTime)).toLocaleDateString();
+            const date = new Date(actualDateTime);
+            return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
         } catch(e) { 
             return datetime;
         }
     };
-    const showOrderStatus = (deliveryStatus) => {
+    const showOrderStatus = (deliveryStatus, item) => {
         if (deliveryStatus !== undefined) {
             switch (deliveryStatus) {
                 case 1:
@@ -25,15 +26,41 @@ function OrderList(props) {
                         <p className="info">Your order has been placed.</p>
                     </div>)
                 case 2:
+                    let deliveryDate = item.delivery_date;
+                    if (deliveryDate) {
+                        deliveryDate = parseInt(deliveryDate);
+                        deliveryDate = (new Date(deliveryDate)).toLocaleDateString();
+                    }
                     return (<div className="hs-order-status">
-                    <p className="title">Delivery</p>
-                    <p className="info">Delivered on ...</p>
-                </div>)
+                        <p className="title">Delivery</p>
+                        <p className="info">Delivery on {deliveryDate}</p>
+                    </div>)
+                case 3:
+                    return (<div className="hs-order-status">
+                        <p className="title">Delivered</p>
+                        <p className="info">Delivered on {item.delivered_date}</p>
+                    </div>)
                 default: 
                     return (<></>)
             }
         }
     }
+    const showProductSummary = (summary) => {
+        if (summary) {
+            const convertedSummary = atob(summary);
+            const convertedSummaryJSON = JSON.parse(convertedSummary);
+            
+            return (
+                convertedSummaryJSON.map(s => {
+                    return <p>{s.title}</p>;
+                })
+            )
+        } else {
+            return (
+                <p>No product summary</p>
+            )
+        }
+    };
     return (
         <>
            <div className="orderlist-flex">
@@ -42,15 +69,15 @@ function OrderList(props) {
                 </div>
                 <div className="order-content">
                     <span>{props.order_id}</span>
-                    <p className="title">black dress </p>
+                    <p className="title">{showProductSummary(props.product_summary)} </p>
                     <p>Primary color : white</p>
-                    <p>Created On: {showCreatedDate(props.created_date)}</p>
+                    <p>Ordered On: {showCreatedDate(props.created_date)}</p>
                 </div>
                 <div className="item-price text-center">
                     <p>{props.total_amount ? '₹' + props.total_amount : 'Error'}</p>
                 </div>
                 <div className="order-delivery">
-                    { showOrderStatus(props.delivery_status) }
+                    { showOrderStatus(props.delivery_status, props) }
                 </div>
             </div>
         </>

@@ -72,8 +72,9 @@ export default function AdminNavbarLinks(props) {
           <Search />
         </Button>
       </div> */}
+      <Link to='/'>
       <Button
-        color={window.innerWidth > 959 ? "transparent" : "white"}
+        color={window.innerWidth > 959 ? "transparent" : "hkBg"}
         justIcon={window.innerWidth > 959}
         simple={!(window.innerWidth > 959)}
         aria-label="Dashboard"
@@ -84,6 +85,7 @@ export default function AdminNavbarLinks(props) {
           <p className={classes.linkText}>Dashboard</p>
         </Hidden>
       </Button>
+      </Link>
       <div className={classes.manager}>
         <Button
           color={window.innerWidth > 959 ? "transparent" : "white"}

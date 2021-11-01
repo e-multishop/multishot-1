@@ -2,10 +2,13 @@ import React, { Component, useEffect, useState } from 'react';
 import "./ProductList.scss";
 import { Link, NavLink } from 'react-router-dom';
 import {cartItems} from '../../../Redux/actions/index';
+import { ToastContainer, toast } from 'react-toastify';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { useDispatch } from 'react-redux';
-import Pagination from './Pagination'
-import Loader from "../../Shared/loader/Loader"
-import Axios from 'axios'
+import Pagination from './Pagination';
+import Loader from "../../Common/Loader";
+import Axios from 'axios';
 import Header from '../../Header/Header';
 import Footer from '../../Footer/Footer';
 
@@ -16,7 +19,10 @@ const ProductList = (props) => {
     const [pageSize, setPageSize] = useState(10);
     const [Loading, setLoading] = useState(true);
     const [pageNumber, setPageNumber] = useState(1);
-    
+    const [itemLoader, setItemLoader] = useState({
+        index: -1,
+        loading: false
+    });
     const getProduct=(pageNumber)=>{
         setLoading(true);
         fetch('/rest/product_list/'+pageSize+'/'+pageNumber).then((result) => {
@@ -52,7 +58,7 @@ const ProductList = (props) => {
             </div>
         )
     }
-    const addToCartData=(value)=>{
+    const addToCartData=(value, index)=>{
         const isLoggedIn = localStorage.getItem('token');
         if (!isLoggedIn) {
             props.history.push({ 
@@ -61,16 +67,22 @@ const ProductList = (props) => {
             })
             return;
         }
+        setItemLoader({index, loading: true});
         Axios.post('/rest/add_to_cart',{
             pid : value.pid,
             uid : localStorage.getItem('userId'),
             quantity : "1",
         }).then(res=>{
+            toast.success(<span ><FontAwesomeIcon icon={faCheck} size='lg' color="white" className="icon toast-icon" />Item added to cart</span>)
             const userId=localStorage.getItem('userId')
             Axios.get('/rest/add_to_cart/number_of_items/'+userId).then(res=>{
                 const numberOfItems=res.data.number_of_items;                
-                dispatch(cartItems(numberOfItems))
+                dispatch(cartItems(numberOfItems));
+                setItemLoader({index: -1, loading: false});
             })
+        }).catch(err => {
+            toast.error('Error adding to cart. Please try again');
+            setItemLoader({index: -1, loading: false});
         })
     }
     const getProductByCategory = (category) => {
@@ -95,9 +107,9 @@ const ProductList = (props) => {
                 <div>
                     <div className="hk-filter">
                         <div className=" heading">Items</div>
-                        <div className=" button-filter">
+                        {/* <div className=" button-filter">
                             Short : most recent
-                        </div>
+                        </div> */}
                     </div>
                     {/* <!--product main_list--> */}
 
@@ -144,8 +156,11 @@ const ProductList = (props) => {
                                                                 &#8377; {value.price}
                                                             </div>
                                                         </Link>
-                                                        <div className="hk-addcard" onClick={() => {addToCartData(value)}}>
-                                                            <a>ADD TO CART</a>
+                                                        <div className="hk-addcard" onClick={() => {addToCartData(value, index)}}>
+                                                            { itemLoader.loading && itemLoader.index === index 
+                                                                ? <Loader inline="true" height="unset" />
+                                                                : <a>ADD TO CART</a>
+                                                            }
                                                         </div>
                                                     </div>
         

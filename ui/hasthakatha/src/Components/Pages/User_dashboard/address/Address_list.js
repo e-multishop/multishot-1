@@ -33,12 +33,7 @@ function Address_list(props) {
         });
     };
     const editAddress = (address) => {
-        props.history.push(
-            '/account/editaddress/' + address.id,
-            {
-                mode: 'edit'
-            }
-        );
+        props.history.push('/account/editaddress/' + address.id,{mode: 'edit'});
     }
     const deleteAddress = () => {
         const userId = localStorage.getItem('userId');

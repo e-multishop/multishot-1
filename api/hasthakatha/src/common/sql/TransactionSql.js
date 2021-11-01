@@ -45,7 +45,7 @@ module.exports = class OrderSql {
                 t3 = t3.replace("$quantity", data[i].quantity);
                 t3 = t3.replace("$amount", data[i].price);
                 temp = temp + t3;
-                productSummary.push({title: data[i].title})
+                productSummary.push({title: data[i].title, pid: data[i].pid});
             }
             const shippingAddress = btoa(JSON.stringify(metaInfo.shippingAddress));
             productSummary = btoa(JSON.stringify(productSummary));

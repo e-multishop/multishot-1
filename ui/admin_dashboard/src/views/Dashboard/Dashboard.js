@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 // react plugin for creating charts
 import ChartistGraph from "react-chartist";
 // @material-ui/core
@@ -19,7 +19,6 @@ import Cloud from "@material-ui/icons/Cloud";
 // core components
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
-import Table from "components/Table/Table.js";
 import Tasks from "components/Tasks/Tasks.js";
 import CustomTabs from "components/CustomTabs/CustomTabs.js";
 import Danger from "components/Typography/Danger.js";
@@ -38,23 +37,39 @@ import {
 } from "variables/charts.js";
 
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const useStyles = makeStyles(styles);
 
 export default function Dashboard() {
   const classes = useStyles();
+  const [totalRevenue, setTotalRevenue] = useState(0);
+  const [allProductsCount, setAllProductsCount] = useState(0);
+  const [ordersPending, setOrdersPending] = useState(0);
+  const [ordersCompleted, setordersCompleted] = useState(0);
+  useEffect(() => {
+    axios.get('/rest/stats').then(res => {
+      setordersCompleted(res.data.result.ordersCompleted);
+      setOrdersPending(res.data.result.ordersPending);
+      setTotalRevenue(res.data.result.totalRevenue);
+      setAllProductsCount(res.data.result.allProducts);
+    }).catch(err => {
+      toast.error(err.data.message);
+    })
+  })
   return (
     <div>
       <GridContainer>
         <GridItem xs={12} sm={6} md={3}>
           <Card>
-            <CardHeader color="warning" stats icon>
-              <CardIcon color="warning">
-                <Icon>content_copy</Icon>
+            <CardHeader color="danger" stats icon>
+              <CardIcon color="danger">
+                <Icon>info_outline</Icon>
               </CardIcon>
-              <p className={classes.cardCategory}>Used Space</p>
+              <p className={classes.cardCategory}>Orders Pending</p>
               <h3 className={classes.cardTitle}>
-                49/50 <small>GB</small>
+                {ordersPending}
               </h3>
             </CardHeader>
             <CardFooter stats>
@@ -63,7 +78,7 @@ export default function Dashboard() {
                   <Warning />
                 </Danger>
                 <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                  Get more space
+                  Complete Pending action
                 </a>
               </div>
             </CardFooter>
@@ -73,32 +88,32 @@ export default function Dashboard() {
           <Card>
             <CardHeader color="success" stats icon>
               <CardIcon color="success">
-                <Store />
+                <Icon>check</Icon>
               </CardIcon>
-              <p className={classes.cardCategory}>Revenue</p>
-              <h3 className={classes.cardTitle}>$34,245</h3>
+              <p className={classes.cardCategory}>Orders Completed</p>
+              <h3 className={classes.cardTitle}>{ordersCompleted}</h3>
             </CardHeader>
             <CardFooter stats>
               <div className={classes.stats}>
-                <DateRange />
-                Last 24 Hours
+                <LocalOffer />
+                All completed orders
               </div>
             </CardFooter>
           </Card>
         </GridItem>
         <GridItem xs={12} sm={6} md={3}>
           <Card>
-            <CardHeader color="danger" stats icon>
-              <CardIcon color="danger">
-                <Icon>info_outline</Icon>
+            <CardHeader color="success" stats icon>
+              <CardIcon color="success">
+                <Icon>monetization_on</Icon>
               </CardIcon>
-              <p className={classes.cardCategory}>Fixed Issues</p>
-              <h3 className={classes.cardTitle}>75</h3>
+              <p className={classes.cardCategory}>Revenue</p>
+              <h3 className={classes.cardTitle}>&#8377; {totalRevenue}</h3>
             </CardHeader>
             <CardFooter stats>
               <div className={classes.stats}>
-                <LocalOffer />
-                Tracked from Github
+                <DateRange />
+                Overall
               </div>
             </CardFooter>
           </Card>
@@ -107,10 +122,10 @@ export default function Dashboard() {
           <Card>
             <CardHeader color="info" stats icon>
               <CardIcon color="info">
-                <Accessibility />
+                <Icon>category</Icon>
               </CardIcon>
-              <p className={classes.cardCategory}>Followers</p>
-              <h3 className={classes.cardTitle}>+245</h3>
+              <p className={classes.cardCategory}>Active lising</p>
+              <h3 className={classes.cardTitle}>{allProductsCount}</h3>
             </CardHeader>
             <CardFooter stats>
               <div className={classes.stats}>
@@ -121,7 +136,7 @@ export default function Dashboard() {
           </Card>
         </GridItem>
       </GridContainer>
-      <GridContainer>
+      {/* <GridContainer>
         <GridItem xs={12} sm={12} md={4}>
           <Card chart>
             <CardHeader color="success">
@@ -194,68 +209,58 @@ export default function Dashboard() {
             </CardFooter>
           </Card>
         </GridItem>
-      </GridContainer>
+      </GridContainer> */}
       <GridContainer>
         <GridItem xs={12} sm={12} md={6}>
           <CustomTabs
-            title="Tasks:"
-            headerColor="primary"
+            title="Messages:"
+            headerColor="warning"
             tabs={[
               {
-                tabName: "Bugs",
-                tabIcon: BugReport,
+                tabName: "NEW",
+                tabIcon: '',
                 tabContent: (
                   <Tasks
                     checkedIndexes={[0, 3]}
-                    tasksIndexes={[0, 1, 2, 3]}
-                    tasks={bugs}
+                    tasksIndexes={[]}
+                    tasks={''}
                   />
                 ),
               },
-              {
-                tabName: "Website",
-                tabIcon: Code,
-                tabContent: (
-                  <Tasks
-                    checkedIndexes={[0]}
-                    tasksIndexes={[0, 1]}
-                    tasks={website}
-                  />
-                ),
-              },
-              {
-                tabName: "Server",
-                tabIcon: Cloud,
-                tabContent: (
-                  <Tasks
-                    checkedIndexes={[1]}
-                    tasksIndexes={[0, 1, 2]}
-                    tasks={server}
-                  />
-                ),
-              },
+              // {
+              //   tabName: "Website",
+              //   tabIcon: Code,
+              //   tabContent: (
+              //     <Tasks
+              //       checkedIndexes={[0]}
+              //       tasksIndexes={[0, 1]}
+              //       tasks={website}
+              //     />
+              //   ),
+              // },
+              // {
+              //   tabName: "Server",
+              //   tabIcon: Cloud,
+              //   tabContent: (
+              //     <Tasks
+              //       checkedIndexes={[1]}
+              //       tasksIndexes={[0, 1, 2]}
+              //       tasks={server}
+              //     />
+              //   ),
+              // },
             ]}
           />
         </GridItem>
         <GridItem xs={12} sm={12} md={6}>
           <Card>
-            <CardHeader color="warning">
-              <h4 className={classes.cardTitleWhite}>Employees Stats</h4>
+            <CardHeader color="primary">
+              <h4 className={classes.cardTitleWhite}>Annual Stats</h4>
               <p className={classes.cardCategoryWhite}>
-                New employees on 15th September, 2016
+                Empty
               </p>
             </CardHeader>
             <CardBody>
-              <Table
-                tableHeaderColor="warning"
-                tableHead={["ID", "Name", "Salary", "Country"]}
-                tableData={[
-                  ["1", "Dakota Rice", "$36,738", "Niger"],
-                  ["2", "Minerva Hooper", "$23,789", "Curaçao"],
-                  ["3", "Sage Rodriguez", "$56,142", "Netherlands"],
-                  ["4", "Philip Chaney", "$38,735", "Korea, South"],
-                ]}
-              />
             </CardBody>
           </Card>
         </GridItem>

@@ -68,17 +68,21 @@
         background-color: none;
     }
     .logout-op {
-        width: 200px !important;
+        width: 180px !important;
         position:absolute;
         top:64px !important;
         li {
             text-align: center !important;
+            text-overflow: ellipsis;
+            overflow-wrap: break-word;
         }
         .icon-block {
           padding-top:5px ;
+          cursor: none;
         }
         .email {
             font-size: 12px;
+            border-bottom:1px solid #d5d9d9;
         }
     }
 }

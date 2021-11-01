@@ -25,22 +25,15 @@ import UserProfile from "views/UserProfile/UserProfile.js";
 import UploadFile from "views/UploadFile/UploadFile"
 import ProductListWrapper from "views/Product/ProductListWrapper";
 import OrderListWrapper from "views/Order/OrderListWrapper";
-import DashboardPage from "views/Dashboard/DashboardPage";
+import Dashboard from "views/Dashboard/Dashboard";
 // core components/views for RTL layout
 
 const dashboardRoutes = [
   {
     path: "/dashboard",
     name: "Dashboard",
-    icon: "",
-    component: DashboardPage,
-    layout: "/admin",
-  },
-  {
-    path: "/table",
-    name: "Products",
-    icon: "content_paste",
-    component: ProductListWrapper,
+    icon: "dashboard",
+    component: Dashboard,
     layout: "/admin",
   },
   {
@@ -51,9 +44,16 @@ const dashboardRoutes = [
     layout: "/admin",
   },
   {
+    path: "/table",
+    name: "Products",
+    icon: "content_paste",
+    component: ProductListWrapper,
+    layout: "/admin",
+  },
+  {
     path: "/uploadfile",
     name: "Upload Bulk Products",
-    icon: LibraryBooks,
+    icon: "upload_file",
     component: UploadFile,
     layout: "/admin",
   },
@@ -65,10 +65,10 @@ const dashboardRoutes = [
     layout: "/admin",
   },
   // {
-  //   path: "/check",
-  //   name: "Check",
-  //   icon: Person,
-  //   component: Check,
+  //   path: "/users",
+  //   name: "Users",
+  //   icon: "people",
+  //   component: UserProfile,
   //   layout: "/admin",
   // },
 ];
