@@ -184,7 +184,7 @@ class Productdetails extends Component{
                 {/* // <!--review and comment section--> */}
                 <div className="hs_review comment">
                     <div className="hk-review-head">   
-                        <h2 className="hk-review-heading">{this.state.reviewList.length} Shop reviews</h2>
+                        <h2 className="hk-review-heading">{this.state.reviewList.length} reviews</h2>
                         <p className="hk-review-filter"></p>
                     </div>
                     <div>
