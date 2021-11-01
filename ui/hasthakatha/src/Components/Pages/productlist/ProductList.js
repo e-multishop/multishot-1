@@ -2,7 +2,7 @@ import React, { Component, useEffect, useState } from 'react';
 import "./ProductList.scss";
 import { Link, NavLink } from 'react-router-dom';
 import {cartItems} from '../../../Redux/actions/index';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { useDispatch } from 'react-redux';
