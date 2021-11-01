@@ -34,10 +34,15 @@ function LoginDropdown(props) {
             {/* //   <!-- Dropdown Structure --> */}
             {/* <div className="dropdown-con"> */}
                 <ul id='dropdown1' className='dropdown-content logout-op'>
-                    <li className="icon-block">
-                        <FontAwesomeIcon icon={faUserCircle} size='4x' className="icon" />
+                    {/* <li className="icon-block"> */}
+                        {/* <FontAwesomeIcon icon={faUserCircle} size='4x' className="icon" /> */}
+                    {/* </li> */}
+                    <li>
+                        <NavLink to="/account" className="email">
+                            <FontAwesomeIcon icon={faUserCircle} size='4x' className="icon" />
+                            {userEmail}
+                        </NavLink>
                     </li>
-                    <li><NavLink to="/account" className="email">{userEmail}</NavLink></li>
                     <li><a onClick={HandleChange}>Logout</a></li>
                 </ul>
             {/* </div> */}
