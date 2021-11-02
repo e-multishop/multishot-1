@@ -67,7 +67,7 @@ export function AddDelivery(props) {
     const handleClose = () => { 
         setOpen(false);
         ReactDOM.unmountComponentAtNode(document.getElementById('order-dialog'));
-        props.updateOrderList();
+        props.updateOrderList(new Date().getTime());
     }
 
     function updateFormElements() {

@@ -51,6 +51,7 @@ const useStyles = makeStyles(styles);
 export default function OrderListWrapper() {
   const [updateTable,setUpdateTable]=useState(false);
   const [loader, showLoader] = useState(false);
+  const [updateOrderList, setUpdateOrderList] = useState('');
   const classes = useStyles();
 
   // const showInsertDialog = () => {
@@ -58,7 +59,7 @@ export default function OrderListWrapper() {
   // };
 
   const showEditDialog = (orderData) => {
-    ReactDOM.render(<AddDelivery {...orderData} />, document.getElementById('order-dialog'));
+    ReactDOM.render(<AddDelivery {...orderData} updateOrderList={setUpdateOrderList} />, document.getElementById('order-dialog'));
   }
 
   const showProductDialog = (pid) => {
@@ -83,7 +84,7 @@ export default function OrderListWrapper() {
               <h4 className={classes.cardTitleWhite}>Order List</h4>
             </CardHeader>
             <CardBody>
-              <OrderList showEditDialog={showEditDialog} showProductDialog={showProductDialog}/>
+              <OrderList showEditDialog={showEditDialog} showProductDialog={showProductDialog} updateOrderList={updateOrderList} />
               <div id="order-dialog"></div>
               <div id="product-dialog"></div>
               { loader ? <Loader height="400px" /> : ''}
