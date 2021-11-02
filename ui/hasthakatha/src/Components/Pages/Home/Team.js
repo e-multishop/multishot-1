@@ -38,16 +38,16 @@ const Team = () => {
             instalink: "https://www.instagram.com/hastha_katha/?hl=en"
         },
         {
-            img:tanisha_kumari,
-            name:"Tanisha Kumari",
-            designation:"Social Media Manager",
-            description:"",
-            fblink:"https://www.facebook.com/Hastha-Katha-1102781866557529/",
-            twitterlink:"https://twitter.com/hastha_katha",
-            instalink:"https://www.instagram.com/hastha_katha/?hl=en"
+            img: tanisha_kumari,
+            name: "Tanisha Kumari",
+            designation: "Social Media Manager",
+            description: "",
+            fblink: "https://www.facebook.com/Hastha-Katha-1102781866557529/",
+            twitterlink: "https://twitter.com/hastha_katha",
+            instalink: "https://www.instagram.com/hastha_katha/?hl=en"
         }
     ];
-    
+
     return (
         <>
             <div>
@@ -57,17 +57,17 @@ const Team = () => {
                 {
                     TeamData1.map((value) => {
                         return (
-                                    <div className="col s6 hk-team-col">
-                                    <CardTeam
-                                        images={value.img}
-                                        name={value.name}
-                                        designation={value.designation}
-                                        description={value.description}
-                                        fblink={value.fblink}
-                                        twitterlink={value.twitterlink}
-                                        instalink={value.instalink}
-                                    />
-                                </div>
+                            <div className="col s6 hk-team-col">
+                                <CardTeam
+                                    images={value.img}
+                                    name={value.name}
+                                    designation={value.designation}
+                                    description={value.description}
+                                    fblink={value.fblink}
+                                    twitterlink={value.twitterlink}
+                                    instalink={value.instalink}
+                                />
+                            </div>
                         );
                     })
                 }
@@ -76,17 +76,17 @@ const Team = () => {
                 {
                     TeamData2.map((value) => {
                         return (
-                                    <div className="col s6 hk-team-col">
-                                    <CardTeam
-                                        images={value.img}
-                                        name={value.name}
-                                        designation={value.designation}
-                                        description={value.description}
-                                        fblink={value.fblink}
-                                        twitterlink={value.twitterlink}
-                                        instalink={value.instalink}
-                                    />
-                                </div>
+                            <div className="col s6 hk-team-col">
+                                <CardTeam
+                                    images={value.img}
+                                    name={value.name}
+                                    designation={value.designation}
+                                    description={value.description}
+                                    fblink={value.fblink}
+                                    twitterlink={value.twitterlink}
+                                    instalink={value.instalink}
+                                />
+                            </div>
                         );
                     })
                 }

@@ -58,20 +58,17 @@
 .hk-logo_about img{
     width: 100%;
 }
-.team-section{
+// team section 
+.flex-team{
     display: flex;
     justify-content: center;
-    .team-content{
-        width: 50%;
-        .hk-team-col{
-            width: 100%;
-            margin-bottom: 40px;
-        }
-       
-    }
-    
-
+    .hk-team-col{
+        width: 100%;
+        margin-bottom: 40px;
+    }    
 }
+       
+
 
 
 

@@ -1,27 +1,36 @@
 import React, { useDebugValue } from 'react';
 import Card from '../../Card/Card';
-import pant from '../../../Images/pant.jpg';
-import skirts from '../../../Images/skirts.jpg';
-import dresses from '../../../Images/dresses.jpg';
-import top from '../../../Images/top.jpg';
+import black_mulmul from '../../../Images/black_mulmul.jpg';
+import jumpsuit from '../../../Images/jumpsuit.jpg';
+import red_kantha from '../../../Images/red_kantha.jpg';
+import cushion from '../../../Images/cushion.jpg';
 
-const BestSelling =()=>{
-    const temp=[1,2,3,4];
-    const img=[pant,skirts,dresses,top];
-    const title=["Pant","Skirts","Dresses","Top"];
-    return(
+const BestSelling = () => {
+    const temp = [1, 2, 3, 4];
+    const img = [black_mulmul, jumpsuit, red_kantha, cushion];
+    const title = ["Black mulmul mirror work maxi dress ", "Beige Linen Jumpsuit ", "Red Kantha Wrap Dress", "Cushion Price"];
+    return (
         <>
             <div>
                 <h2 className="hk-feature">Bestselling Products</h2>
             </div>
             <div className="row">
-                    {img.map((value)=> {
-                       return(
-                        <div className="col s3">
-                            <Card images={value} banner={true} title="Black Maxi Dress" action={true} description="₹ 9967"/>
-                       </div>
-                       );   
-                    })}
+                {/* {img.map((value) => { */}
+                    {/* return ( */}
+                <div className="col s3">
+                    <Card images={black_mulmul} banner={true} title="Black mulmul mirror work maxi dress" action={true} description="₹ 3500" />
+                </div>
+                <div className="col s3">
+                    <Card images={jumpsuit} banner={true} title="Beige Linen Jumpsuit" action={true} description="₹  3500" />
+                </div>
+                <div className="col s3">
+                    <Card images={red_kantha} banner={true} title="Red Kantha Wrap Dress " action={true} description="₹  5900" />
+                </div>
+                <div className="col s3">
+                    <Card images={cushion} banner={true} title="Cushion" action={true} description="₹ 2500" />
+                </div>
+                    {/* );
+                })} */}
             </div>
         </>
     );
