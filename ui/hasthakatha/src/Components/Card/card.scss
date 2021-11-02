@@ -24,7 +24,12 @@
                 text-overflow: ellipsis;
                 white-space: nowrap;
                 overflow: hidden;
+                color:#27272f;
+                ;
             };
+            h6{
+                color:#27272f;
+            }
     }
     .hk-addcard{
         background-color: var(--primary_color);
@@ -34,8 +39,7 @@
         padding: 9px 12px;
         text-align:center;
         cursor: pointer;
-        a{
-            
+        a{           
             color: #ffffff;
             
         }
@@ -47,9 +51,6 @@
             }
 
         }
-      
-       
-
     }
 }
 

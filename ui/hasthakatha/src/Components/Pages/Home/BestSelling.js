@@ -1,5 +1,6 @@
 import React, { useDebugValue } from 'react';
 import Card from '../../Card/Card';
+import { Link, NavLink } from 'react-router-dom';
 import black_mulmul from '../../../Images/black_mulmul.jpg';
 import jumpsuit from '../../../Images/jumpsuit.jpg';
 import red_kantha from '../../../Images/red_kantha.jpg';
@@ -16,20 +17,20 @@ const BestSelling = () => {
             </div>
             <div className="row">
                 {/* {img.map((value) => { */}
-                    {/* return ( */}
+                {/* return ( */}
                 <div className="col s3">
-                    <Card images={black_mulmul} banner={true} title="Black mulmul mirror work maxi dress" action={true} description="₹ 3500" />
+                    <Link to={"/productdetails/"+'81'}><Card images={black_mulmul} banner={true} title="Black mulmul mirror work maxi dress" action={true} description="₹ 3500" /></Link>
                 </div>
                 <div className="col s3">
-                    <Card images={jumpsuit} banner={true} title="Beige Linen Jumpsuit" action={true} description="₹  3500" />
+                    <Link><Card images={jumpsuit} banner={true} title="Beige Linen Jumpsuit" action={true} description="₹  3500" /></Link>
                 </div>
                 <div className="col s3">
-                    <Card images={red_kantha} banner={true} title="Red Kantha Wrap Dress " action={true} description="₹  5900" />
+                    <Link><Card images={red_kantha} banner={true} title="Red Kantha Wrap Dress " action={true} description="₹  5900" /></Link>
                 </div>
                 <div className="col s3">
-                    <Card images={cushion} banner={true} title="Cushion" action={true} description="₹ 2500" />
+                    <Link><Card images={cushion} banner={true} title="Cushion" action={true} description="₹ 2500" /></Link>
                 </div>
-                    {/* );
+                {/* );
                 })} */}
             </div>
         </>

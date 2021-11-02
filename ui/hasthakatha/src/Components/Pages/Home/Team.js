@@ -57,16 +57,18 @@ const Team = () => {
                 {
                     TeamData1.map((value) => {
                         return (
-                            <div className="col s6 hk-team-col">
-                                <CardTeam
-                                    images={value.img}
-                                    name={value.name}
-                                    designation={value.designation}
-                                    description={value.description}
-                                    fblink={value.fblink}
-                                    twitterlink={value.twitterlink}
-                                    instalink={value.instalink}
-                                />
+                            <div className="col s6 hk-team-col ">
+                                <div>
+                                    <CardTeam
+                                        images={value.img}
+                                        name={value.name}
+                                        designation={value.designation}
+                                        description={value.description}
+                                        fblink={value.fblink}
+                                        twitterlink={value.twitterlink}
+                                        instalink={value.instalink}
+                                    />
+                                </div>
                             </div>
                         );
                     })
