@@ -65,7 +65,7 @@ const columns = [
   
 export default function OrderList(props) {
 
-    const [loader, setLoader] = useState(true);
+    const [loader, setLoader] = useState(false);
     const [orderList, setOrderList] = useState([]);
     const [totalRecords, setTotalRecords] = useState(-1);
     const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -73,15 +73,16 @@ export default function OrderList(props) {
     const classes = useStyles();
 
     const fetchOrder = (page, rowsPerPage) => {
+      setLoader(true);
       axios.get('/rest/order/list/'+(page+1)+'/'+rowsPerPage).then(res => {
         setOrderList(res.data.results.list);
         setTotalRecords(res.data.results.totalRecords);
         setLoader(false);
-    });
+      });
     }
     useEffect(() => {
       fetchOrder(page, rowsPerPage);
-    }, []);
+    }, [props.updateOrderList]);
 
     const launchEditProductDialog = (a) => {
 

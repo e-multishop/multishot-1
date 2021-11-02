@@ -149,6 +149,10 @@ export default function ProductList(props) {
     props.showEditDialog(productValue);
   }
 
+  const launchAddProductImageDialog = (productValue) => {
+    props.showAddProductImageDialog(productValue);
+  }
+
   const getProducts = () => {
     getProductList(page, rowsPerPage);
   }
@@ -162,6 +166,7 @@ export default function ProductList(props) {
               <Button color="primary" onClick={() => { launchEditProductDialog(row) }} >
                 Edit
               </Button>
+              <Button color="primary" onClick={() => launchAddProductImageDialog(row)}>Upload images</Button>
             </div>
           </TableCell>
         );
