@@ -6,7 +6,7 @@ const Loader = (props) => {
     return (
       <div className="hs-loader" style={{'height': height, position: props.inline ? 'static' : 'relative'}}>
         <div class="preloader-wrapper small active">
-          <div class="spinner-layer spinner-green-only">
+          <div class="spinner-layer loader-color">
             <div class="circle-clipper left">
               <div class="circle"></div>
             </div><div class="gap-patch">

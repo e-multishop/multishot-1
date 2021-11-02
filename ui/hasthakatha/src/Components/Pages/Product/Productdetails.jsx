@@ -126,7 +126,7 @@ class Productdetails extends Component{
                     </div>
                     <div className="hs_product_side">
                         <div className="hs_product_head">
-                            <NavLink to="/"><p>HasthaKatha</p></NavLink>
+                            {/* <NavLink to="/"><p>HasthaKatha</p></NavLink> */}
                             <div className="hk-rating">
                                 {/* <div>
                                     <p><FontAwesomeIcon icon={faMapMarkerAlt}/> Seller</p>
@@ -134,13 +134,13 @@ class Productdetails extends Component{
                                 {/* <div className="sales">
                                     927 sales
                                 </div> */}
-                                <div > 
+                                {/* <div > 
                                     <FontAwesomeIcon icon={faStar}/>
                                     <FontAwesomeIcon icon={faStar}/>
                                     <FontAwesomeIcon icon={faStar}/>
                                     <FontAwesomeIcon icon={faStar}/>
                                     <FontAwesomeIcon icon={faStar}/>
-                                </div>
+                                </div> */}
                             </div>
                             <h1>
                                 { this.state.productdetail.title }
@@ -184,7 +184,7 @@ class Productdetails extends Component{
                 {/* // <!--review and comment section--> */}
                 <div className="hs_review comment">
                     <div className="hk-review-head">   
-                        <h2 className="hk-review-heading">{this.state.reviewList.length} Shop reviews</h2>
+                        <h2 className="hk-review-heading">{this.state.reviewList.length} reviews</h2>
                         <p className="hk-review-filter"></p>
                     </div>
                     <div>

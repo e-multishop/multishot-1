@@ -38,18 +38,7 @@ const ProductReview =(props)=>{
                     <img src={props.ProductImg} alt=" "/>
                 </div>
             </div>
-            <div className="review-footer">
-                <p>Purchased item:</p>
-                <a href="#" className="purchase-item"> 
-                    <div className="purchase-img">
-                        <img src={props.PurchaseImg} alt=""/>
-                    </div>
-                    <div className="purchase-name">
-                    {props.PurchaseName}
-                    </div>
-                </a>
-                <a href="#" ><p className="helpfull"><FontAwesomeIcon icon={faThumbsUp}/> Helpfull ?</p></a>
-            </div>
+           
         </div>  
     );
 }

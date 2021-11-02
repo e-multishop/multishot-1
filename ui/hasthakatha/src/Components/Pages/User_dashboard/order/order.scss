@@ -2,10 +2,10 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    border-bottom: 1px solid #d5d9d9;
+    border: 1px solid #d5d9d9;
     // border-radius: 10px;
     padding: 10px;
-    margin: 10px 0px;
+    margin: 10px 0 20px 0;
     &:hover {
         box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     }
@@ -22,11 +22,34 @@
             margin: 0;
             font-size: 20px;
             color: #000;
+            font-weight: 500;
+            // border-bottom: 1px solid black;
+
         }
         p {
-            margin: 5px 0;
+            margin: 0 0 5px 0;
             color: #000000;
-            font-size: 14px;
+            font-size: 15px;
+            .procuct-title{
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+            }
+            .procuct-title-icon{
+                font-size: 8px;
+                color:#5e5c5c;
+            }
+        }
+        .color{
+            color: #5e5c5c;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+        .order-on{
+            color: #5e5c5c;
+            font-size: 12px;
+            margin-left: 10px;
+
         }
         span{
             font-size: 20px;
@@ -34,21 +57,31 @@
     }
 
     .item-price {
-        width: 10%;
+        width: 15%;
         p {
             margin: 0;
             color: #000;
             font-size: 20px;
             font-weight: bold;
+            text-align: center;
         }
     }
     .order-delivery {
-        width: 30%;
+        width: 25%;
         .title {
             margin: 0;
             font-size: 20px;
             padding: 0;
             color: #000;
+        }
+        .order-color{
+            color:rgb(0, 110, 255);
+        }
+        .delivery-color{
+            color: orange;
+        }
+        .delivered-color{
+            color:green;
         }
         p {
             margin: 5px 0;
@@ -155,6 +188,7 @@
                 font-size: 20px;
                 font-weight: bold;
             }
+           
         }
     }
 }
