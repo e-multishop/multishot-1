@@ -11,7 +11,7 @@
         img{
             &:hover{
                 transform: scale(1.02);
-                transition: transform 300ms ease-in ;
+                transition: transform 300ms ease-in-out ;
                 overflow: hidden;
                 
             }
@@ -21,6 +21,9 @@
          h2{
                 font-size: 1.64rem;
                 margin: 0;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
             };
     }
     .hk-addcard{
