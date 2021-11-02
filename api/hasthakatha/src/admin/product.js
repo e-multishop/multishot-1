@@ -182,6 +182,45 @@ var product_app = function (app, con, hasthaBean) {
 
     });
 
+    app.post("/rest/addproductimage/:pid", (req, res) => {
+        const pid = res.params.pid;
+        var image1 = req.body.image1 ? Buffer.from(image1, 'binary') : '';
+        var image2 = req.body.image2 ? Buffer.from(image2, 'binary') : '';
+        var image3 = req.body.image3 ? Buffer.from(image3, 'binary') : '';
+        var image4 = req.body.image4 ? Buffer.from(image4, 'binary') : '';
+        var image5 = req.body.image5 ? Buffer.from(image5, 'binary') : '';
+        let addImageSql = '';
+        if (image1) {
+            addImageSql += "INSERT INTO `product_images`(`imageid`, `pid`, `type`, `image_data`) VALUES (NULL,'" + pid + "','side','" + image1 + "');";
+        }
+        if (image2) {
+            addImageSql += "INSERT INTO `product_images`(`imageid`, `pid`, `type`, `image_data`) VALUES (NULL,'" + pid + "','side','" + image2 + "');";
+        }
+        if (image3) {
+            addImageSql += "INSERT INTO `product_images`(`imageid`, `pid`, `type`, `image_data`) VALUES (NULL,'" + pid + "','side','" + image3 + "');";
+        }
+        if (image4) {
+            addImageSql += "INSERT INTO `product_images`(`imageid`, `pid`, `type`, `image_data`) VALUES (NULL,'" + pid + "','side','" + image4 + "');";
+        }
+        if (image5) {
+            addImageSql += "INSERT INTO `product_images`(`imageid`, `pid`, `type`, `image_data`) VALUES (NULL,'" + pid + "','side','" + image5 + "');";
+        }
+        if (addimageSql) {
+            con.query(addImageSql, (err, result) => {
+                if (err) {
+                    res.status(500);
+                    res.send({type: 'error', message: 'Error adding images'});
+                } else {
+                    res.send({type: 'success', message:'Images added successfully'});
+                }
+            });
+        }
+        else {
+            res.status(400);
+            res.send({type: 'error'});
+        }
+    });
+
     app.post("/rest/addproductbulk", (req, res) => {
         // read excel file from body
         const excelFileBody = req.body.data;
