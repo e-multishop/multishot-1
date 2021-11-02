@@ -8,6 +8,14 @@
         height: 372px;
         width: 100%;
         overflow: hidden;
+        img{
+            &:hover{
+                transform: scale(1.02);
+                transition: transform 300ms ease-in ;
+                overflow: hidden;
+                
+            }
+        }
     }
     .card-content{
          h2{

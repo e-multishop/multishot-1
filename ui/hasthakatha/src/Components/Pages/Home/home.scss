@@ -15,7 +15,7 @@
 }
 
 .hk-review{
-    background-color: var(--bg_color_secondary);
+    background-color: var(--primary_color);
     border: 1px solid transparent;
 
 }
@@ -27,7 +27,7 @@
 .hk-about{
     color: #561931;
     font-size: 40px;
-    font-weight: 200;
+    font-weight: 400;
     text-transform: uppercase;
     line-height: 1.3em;
     letter-spacing: 2.6px;
@@ -53,14 +53,27 @@
 .hk-logo_about
 {
     width: 20%;
+    padding-top:25px ;
 }
 .hk-logo_about img{
     width: 100%;
 }
+.team-section{
+    display: flex;
+    justify-content: center;
+    .team-content{
+        width: 50%;
+        .hk-team-col{
+            width: 100%;
+            margin-bottom: 40px;
+        }
+       
+    }
+    
 
-.hk-team-col{
-    margin-bottom: 40px;
 }
+
+
 
 // banner style
 .carousel-slider{
