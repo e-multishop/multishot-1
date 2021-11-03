@@ -39,7 +39,7 @@ function OrderList(props) {
                     </div>)
                 case 3:
                     return (<div className="hs-order-status">
-                        <p className="title delivered-color"> <FontAwesomeIcon icon={faCheck} size="1x" color="green"/>Delivered</p>
+                        <p className="title delivered-color"> <FontAwesomeIcon icon={faCheck} size="1x" color="green"/>  Delivered</p>
                         <p className="info">Delivered on {item.delivered_date}</p>
                     </div>)
                 default: 

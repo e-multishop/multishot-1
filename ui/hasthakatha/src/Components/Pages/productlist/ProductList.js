@@ -155,13 +155,16 @@ const ProductList = (props) => {
                                                             <div className="price">
                                                                 &#8377; {value.price}
                                                             </div>
-                                                        </Link>
-                                                        <div className="hk-addcard" onClick={() => {addToCartData(value, index)}}>
+                                                            <div className="hk-addcard" 
+                                                            // onClick={() => {addToCartData(value, index)}}
+                                                            >
                                                             { itemLoader.loading && itemLoader.index === index 
                                                                 ? <Loader inline="true" height="unset" />
                                                                 : <a>ADD TO CART</a>
                                                             }
                                                         </div>
+                                                        </Link>
+                                                        
                                                     </div>
         
                                                 </>

@@ -1,7 +1,7 @@
 import React from 'react';
 import './ProductReview.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faThumbsUp, user} from '@fortawesome/free-solid-svg-icons';
+import {faThumbsUp, faUserCircle} from '@fortawesome/free-solid-svg-icons';
 import {faStar} from '@fortawesome/free-solid-svg-icons';
 
 const ProductReview =(props)=>{
@@ -12,8 +12,8 @@ const ProductReview =(props)=>{
         <div className="hk-product-review">
             <div className="review-header">
                     <div className="custmer-image">
-                        <img src={props.CustmerImg} alt=""/>
-                        <FontAwesomeIcon icon={user}/>
+                        {props.CustmerImg?<img src={props.CustmerImg} alt=""/>:
+                        <FontAwesomeIcon icon={faUserCircle} size='3x' className="user-icon"/>}
                     </div>
                     <div className="custmer-name">
                         <a href="#">{props.CustmerName ? props.CustmerName : 'User'}</a>
