@@ -1,4 +1,5 @@
-var order_app=function(app,con,settings)
+//const logger = require('./logger');
+var order_app=function(app,con,settings,logger)
 {
     app.get('/rest/order_details/:userid/:order_id',(req,res)=>{
         var userid=req.params.userid;
@@ -8,6 +9,7 @@ var order_app=function(app,con,settings)
             if(err)
             {
                 res.status(500);
+                logger.error(err);
                 res.send({type:"error",messsage:"Temporary Issue. Sorry we can't find order details"});
             }
             else{
@@ -23,6 +25,7 @@ var order_app=function(app,con,settings)
         const trackingQuery = `UPDATE tracking_order set tracking_number='${trackingNumber}', delivery_date='${deliveryDate}', delivery_status = 2 where order_id = '${orderID}'`;
         con.query(trackingQuery, (err, result) => {
             if (err) {
+                logger.error(err);
                 res.status(500);
                 res.send({type:"error",messsage:"Please contact support", detail: err});
             } else {
@@ -38,6 +41,7 @@ var order_app=function(app,con,settings)
         const deliveryQuery = `UPDATE tracking_order set delivered_date='${deliveredDate}', delivered_note='${deliveredNote}', delivery_status = 3 where order_id = '${orderID}'`;
         con.query(deliveryQuery, (err, result) => {
             if (err) {
+                logger.error(err);
                 res.status(500);
                 res.send({type:"error",messsage:"Please contact support", detail: err});
             } else {
@@ -54,6 +58,7 @@ var order_app=function(app,con,settings)
         const sql = `SELECT * from transaction as T left join tracking_order as O on T.order_id = O.order_id where uid=${req.params.uid} ORDER BY created_date DESC`;
         con.query(sql, (err, result) => {
             if (err) {
+                logger.error(err);
                 res.status(500);
                 res.send({type: 'error', message: 'Temporary issue. Please contact support.'})
             } else {
@@ -70,6 +75,7 @@ var order_app=function(app,con,settings)
         const countSql = `SELECT count(*) from transaction`;
         con.query(sql+countSql, (err, result) => {
             if (err) {
+                logger.error(err);
                 res.status(500);
                 res.send({type: 'error', message: 'Temporary issue. Please contact support.', details: err})
             } else {
