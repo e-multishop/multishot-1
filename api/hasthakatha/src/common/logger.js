@@ -1,19 +1,10 @@
-const winston = require('winston');
+const buildDevLogger = require('./dev-logger');
+const buildProdLogger = require('./prod-logger');
+let logger = null;
+if (process.env.NODE_ENV === 'development') {
+  logger = buildDevLogger();
+} else {
+  logger = buildProdLogger();
+}
 
-module.exports.logger =  winston.createLogger({
-  transports: [
-    new winston.transports.File({
-      level: 'info',
-      filename: 'filelog-info.log',
-      json: true,
-      format: winston.format.combine(winston.format.timestamp(), winston.format.json())
-    }),
-    new winston.transports.File({
-      level: 'error',
-      filename: 'filelog-error.log',
-      json: true,
-      format: winston.format.combine(winston.format.timestamp(), winston.format.json())
-    })
-  ]
-});
-
+module.exports = logger;
