@@ -17,22 +17,22 @@ const TeamCard =(props)=>{
           <div className="card-stacked">
             <div className="card-content">
               <h2>{props.name}</h2>
-              <p>{props.designation}</p>
+              <p className="dasignation">{props.designation}</p>
               <p className="card-desc">
               {props.description}
               </p>
             </div>
-            <div className="card-action">
+            {/* <div className="card-action">
                       <a href={props.fblink} target="_blank">
-                        <FontAwesomeIcon icon={faFacebook} size="1x" className="hk-facebook-icon"/>
+                        <FontAwesomeIcon icon={faFacebook} size="sm" className="hk-facebook-icon"/>
                       </a>
                       <a href={props.twitterlink} target="_blank">
-                        <FontAwesomeIcon icon={faTwitter} size="1x" className="hk-twitter-icon"/>
+                        <FontAwesomeIcon icon={faTwitter} size="sm" className="hk-twitter-icon"/>
                       </a>
                       <a href={props.instalink} target="_blank">
-                        <FontAwesomeIcon icon={faInstagram} size="1x" className="hk-instagram-icon" />
+                        <FontAwesomeIcon icon={faInstagram} size="sm" className="hk-instagram-icon" />
                       </a>
-            </div>
+            </div> */}
           </div>
         </div>
     );

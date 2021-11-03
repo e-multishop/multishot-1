@@ -20,6 +20,7 @@ class Slider extends Component {
                     )
                 }) 
             }
+            
             </div>
             
             

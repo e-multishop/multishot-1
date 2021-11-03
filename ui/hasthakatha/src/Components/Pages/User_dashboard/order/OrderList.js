@@ -3,6 +3,8 @@ import './order.scss';
 import demoimg from '../../../../Images/megha.jpg'
 import { NavLink } from 'react-router-dom';
 import Axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCircle, faCheck ,faDolly,faTruck} from '@fortawesome/free-solid-svg-icons'
 function OrderList(props) {
     const showDate = (datetime) => {
         // return (new Date(datetime)).toLocaleDateString();
@@ -22,7 +24,7 @@ function OrderList(props) {
             switch (deliveryStatus) {
                 case 1:
                     return (<div className="hs-order-status">
-                        <p className="title">Ordered</p>
+                        <p className="title order-color"><FontAwesomeIcon icon={faDolly} size="1x" />  Ordered</p>
                         <p className="info">Your order has been placed.</p>
                     </div>)
                 case 2:
@@ -32,12 +34,12 @@ function OrderList(props) {
                         deliveryDate = (new Date(deliveryDate)).toLocaleDateString();
                     }
                     return (<div className="hs-order-status">
-                        <p className="title">Delivery</p>
+                        <p className="title delivery-color"><FontAwesomeIcon icon={faTruck} size="1x" />  Delivery</p>
                         <p className="info">Delivery on {deliveryDate}</p>
                     </div>)
                 case 3:
                     return (<div className="hs-order-status">
-                        <p className="title">Delivered</p>
+                        <p className="title delivered-color"> <FontAwesomeIcon icon={faCheck} size="1x" color="green"/>  Delivered</p>
                         <p className="info">Delivered on {item.delivered_date}</p>
                     </div>)
                 default: 
@@ -52,12 +54,12 @@ function OrderList(props) {
             
             return (
                 convertedSummaryJSON.map(s => {
-                    return <p>{s.title}</p>;
+                    return <p className="procuct-title"><FontAwesomeIcon icon={faCircle} className="procuct-title-icon" />  {s.title}</p>;
                 })
             )
         } else {
             return (
-                <p>No product summary</p>
+                <p> <FontAwesomeIcon icon={faCircle} className="procuct-title-icon" color="red"/> No product summary</p>
             )
         }
     };
@@ -68,10 +70,10 @@ function OrderList(props) {
                     <img src={demoimg} />
                 </div>
                 <div className="order-content">
-                    <span>{props.order_id}</span>
-                    <p className="title">{showProductSummary(props.product_summary)} </p>
-                    <p>Primary color : white</p>
-                    <p>Ordered On: {showCreatedDate(props.created_date)}</p>
+                    {/* <span>{props.order_id}</span> */}
+                    <p className="title"> {showProductSummary(props.product_summary)} </p>
+                    <p className="color">Primary color : white</p>
+                    <p className="order-on">Ordered On: {showCreatedDate(props.created_date)}</p>
                 </div>
                 <div className="item-price text-center">
                     <p>{props.total_amount ? '₹' + props.total_amount : 'Error'}</p>

@@ -18,7 +18,6 @@ function Banner() {
                 </div>
                 <div>
                     <img src={banner} />
-
                 </div>
                 <div>
                     <img src={banner2} />

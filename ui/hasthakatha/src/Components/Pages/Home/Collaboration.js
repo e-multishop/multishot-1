@@ -2,7 +2,7 @@ import React from 'react';
 import Card from '../../Card/Card';
 import megha from '../../../Images/megha.jpg';
 import shilpi from '../../../Images/shilpisingh09_c.jpg';
-import dpx_girl from '../../../Images/dpx_girl.jpg';
+import riya from '../../../Images/dpx_girl.jpg';
 import dibyasha_c from '../../../Images/dibyasha_c.jpg';
 
 
@@ -18,14 +18,14 @@ const Collabaration = () => {
                     name: "Shilpi Singh"
                 },
                 {
-                    img:dpx_girl,
-                    name:"Model Name"
+                    img:riya,
+                    name:"Riya"
                 }
     ]
     return (
         <>
             <div>
-                <h2 className="hk-feature">Collabaration</h2>
+                <h2 className="hk-feature">Our Style Divas</h2>
             </div>
             <div className="row">
                 {data.map((value) => {

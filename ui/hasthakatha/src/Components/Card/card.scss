@@ -8,12 +8,28 @@
         height: 372px;
         width: 100%;
         overflow: hidden;
+        img{
+            &:hover{
+                transform: scale(1.02);
+                transition: transform 300ms ease-in-out ;
+                overflow: hidden;
+                
+            }
+        }
     }
     .card-content{
          h2{
                 font-size: 1.64rem;
                 margin: 0;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+                color:#27272f;
+                ;
             };
+            h6{
+                color:#27272f;
+            }
     }
     .hk-addcard{
         background-color: var(--primary_color);
@@ -23,8 +39,7 @@
         padding: 9px 12px;
         text-align:center;
         cursor: pointer;
-        a{
-            
+        a{           
             color: #ffffff;
             
         }
@@ -36,9 +51,6 @@
             }
 
         }
-      
-       
-
     }
 }
 

@@ -55,13 +55,7 @@ const DialogActions = withStyles((theme) => ({
 
 export function AddDelivery(props) {
     const [open, setOpen] = useState(true);
-    let propsDeliveryDate = props.delivery_date;
-    if (propsDeliveryDate) {
-        const parsedDate = parseInt(props.delivery_date);
-        const parsedActualDate = new Date(parsedDate);
-        propsDeliveryDate = parsedActualDate.toISOString().substr(0,10);
-    }
-    const [deliveryDate, setDeliveryDate] = useState(propsDeliveryDate);
+    const [deliveryDate, setDeliveryDate] = useState(props.delivery_date);
     const [trackingNumber, setTrackingNumber] = useState(props.tracking_number);
     const [deliveryType, setDeliveryType] = useState(props.delivery_type);
     const [deliveredDate, setDeliveredDate] = useState(props.delivered_date);
@@ -73,6 +67,7 @@ export function AddDelivery(props) {
     const handleClose = () => { 
         setOpen(false);
         ReactDOM.unmountComponentAtNode(document.getElementById('order-dialog'));
+        props.updateOrderList(new Date().getTime());
     }
 
     function updateFormElements() {
@@ -123,7 +118,7 @@ export function AddDelivery(props) {
         setTrackingNumber(e.target.value);
     }
     const updateDispatchedDate = (e) => {
-        setDeliveryDate(e.target.valueAsNumber);
+        setDeliveryDate(e.target.value);
     }
     const updateDeliveryType = (e) => {
         setDeliveryType(e.target.value);

@@ -13,10 +13,14 @@
         color:#fff;
     }
 }
-
+//review section
 .hk-review{
-    background-color: var(--bg_color_secondary);
+    background-color: var(--primary_color);
     border: 1px solid transparent;
+    h1{
+        margin-bottom: 0;
+        // padding: 0;
+    }
 
 }
 .hk-review-content{
@@ -27,7 +31,7 @@
 .hk-about{
     color: #561931;
     font-size: 40px;
-    font-weight: 200;
+    font-weight: 400;
     text-transform: uppercase;
     line-height: 1.3em;
     letter-spacing: 2.6px;
@@ -53,14 +57,23 @@
 .hk-logo_about
 {
     width: 20%;
+    padding-top:25px ;
 }
 .hk-logo_about img{
     width: 100%;
 }
-
-.hk-team-col{
-    margin-bottom: 40px;
+// team section 
+.flex-team{
+    display: flex;
+    justify-content: center;
+    .hk-team-col{
+        margin-bottom: 40px;
+    }    
 }
+       
+
+
+
 
 // banner style
 .carousel-slider{
