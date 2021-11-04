@@ -1,6 +1,7 @@
 var atob = require('atob');
 //const logger = require('./logger');
 var cors = require('cors');
+var ProductUtil = require('../utils/ProductUtil');
 var common_app=function(app,con,logger)
 {
     app.get('/rest/search', (req, res) => {
@@ -49,6 +50,20 @@ var common_app=function(app,con,logger)
             }
             res.send({output: outputData});
         })
+    });
+
+    app.get('/rest/productdetails/images/:pid', (req, res) => {
+        const pid = req.params.pid;
+        const productImagesSql = `SELECT image_data FROM product_images where pid=${pid} and type='side'`;
+        con.query(productImagesSql, (err, result) => {
+            if (err) {
+                logger.error(err);
+                res.status(500);
+                res.send({type: 'error', message: 'Error fetching images', details: err});
+            } else {
+                res.send({type: 'success', result: ProductUtil.readImages(result)});
+            }
+        });
     });
 
     app.get('/rest/productsize/:pid', (req, res) => {

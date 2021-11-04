@@ -10,12 +10,14 @@ import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import "./insertproduct.scss"
 import Axios from 'axios';
-import Insertproduct from "./Insertproduct.js";
 import { toast } from 'react-toastify';
 import PostAddTwoToneIcon from '@material-ui/icons/PostAddTwoTone';
 import ReactDOM from 'react-dom';
 import { EventBus } from '../../common/event-bus';
 import { EventType } from '../../common/events';
+import { Fab } from '@material-ui/core';
+import './InsertProductImagesDialog.scss';
+import ProductUtil from 'common/util/ProductUtil';
 const styles = (theme) => ({
   root: {
     margin: 0,
@@ -56,8 +58,9 @@ const DialogActions = withStyles((theme) => ({
   },
 }))(MuiDialogActions);
 
-export default function InsertProductDialog(props) {
+export default function InsertProductImagesDialog(props) {
   const [open, setOpen] = React.useState(true);
+  const [valid, setValid] = useState(false);
 
   const handleClose = () => {
     setOpen(false);
@@ -65,83 +68,60 @@ export default function InsertProductDialog(props) {
     ReactDOM.unmountComponentAtNode(document.getElementById('product-dialog'));
   };
 
-  const [formdata, setFormdata] = useState({
-    category: "",
-    title: " ",
-    sku:" ",
-    price: " ",
-    price_without_embroidary: " ",
-    description: " ",
-    note: " ",
-    material: " ",
-    size: " ",
-    total_available: " ",
-    total_quantity: " ",
-    dimension: " ",
-    color: " ",
-    valid: false
-  });
-  const [uploadImage,setUploadImage]=useState("");
-  const [formPid,setFormPid]=useState(" ");
-
-  useEffect(()=>{
-      Axios.get("/rest/get_pid").then(res=>{
-        setFormPid(res.data.pid);  
-      })
-  },[]);
+  const [image1, setImage1] = useState('');
+  const [image2, setImage2] = useState('');
+  const [image3, setImage3] = useState('');
+  const [image4, setImage4] = useState('');
+  const [image5, setImage5] = useState('');
 
   function onSubmit() {
-    Axios.post("/rest/addproduct", {
-      pid: formPid,
-      category: formdata.category,
-      title: formdata.title,
-      price: formdata.price,
-      price_without_embroidary: formdata.price,
-      description: formdata.description,
-      note: formdata.note,
-      size: formdata.size ? formdata.size : [],
-      material: formdata.material,
-      total_available: formdata.total_quantity,
-      total_quantity: formdata.total_quantity,
-      available:'1',
-      sku:formdata.sku,
-      status:'1',
-      url:uploadImage
-    }
-    ).then(res => {
+    Axios.post("/rest/addproductimage/"+props.pid, {
+      image1,
+      image2,
+      image3,
+      image4,
+      image5
+    }).then(res => {
       EventBus.dispatch(EventType.UPDATE_PRODUCT_TABLE);
-      toast.success("New product added successfully.");
+      toast.success("Product images uploaded successfully.");
       handleClose();
     }).catch(err => {
       console.log(err)
-      toast.error("Error adding product. Please try again later.")
+      toast.error("Error uploading product images. Try again later.")
     });
   }
 
   function reset(){
-    setFormdata({
-      category: "",
-      title: " ",
-      sku:" ",
-      price: " ",
-      price_without_embroidary: " ",
-      description: " ",
-      note: " ",
-      material: " ",
-      size:[],
-      total_available: " ",
-      total_quantity: " ",
-      dimension: " ",
-      color: " ",
-    });
-    setUploadImage(" ");
-    Axios.get("/rest/get_pid").then(res=>{
-      setFormPid(res.data.pid);  
-    })
+  
   }
 
-  const setFormValidity = (isValid) => {
-    formdata.valid = isValid;
+  const handleImageUpload = (ev, imageCount) => {
+    switch (imageCount) {
+      case 1:
+        ProductUtil.uploadImage(ev, setImage1);
+        break;
+      case 2:
+        ProductUtil.uploadImage(ev, setImage2);
+        break;
+      case 3:
+        ProductUtil.uploadImage(ev, setImage3);
+        break;
+      case 4:
+        ProductUtil.uploadImage(ev, setImage4);
+        break;
+      case 5:
+        ProductUtil.uploadImage(ev, setImage5);
+        break;
+    }
+    setTimeout(() => {updateFormValidity()},500);
+  }
+
+  const updateFormValidity = () => {
+    if (image1 || image2 || image3 || image4 || image5) {
+      setValid(true);
+    } else {
+      setValid(false);
+    }
   }
 
   return (
@@ -151,20 +131,101 @@ export default function InsertProductDialog(props) {
         maxWidth="sm"
       >
         <DialogTitle id="customized-dialog-title" onClose={handleClose} classes={{root: 'hs-add-product title'}}>
-          <PostAddTwoToneIcon fontSize="large" classes={{root: 'hs-add-product icon'}}/> Add New Product
+          <PostAddTwoToneIcon fontSize="large" classes={{root: 'hs-add-product icon'}}/> Add product images
         </DialogTitle>
         <DialogContent dividers>
           <Typography gutterBottom>
-            <Insertproduct 
-              formData={formdata}
-              setFormData={setFormdata}
-              setUploadImage={setUploadImage}
-              setFormValidity={setFormValidity}
-              />
+            <div className="hs-image-upload-wrapper">
+              <div>
+                <label htmlFor="product-images-upload-1">
+                    <Fab component="span" className="hs-button">
+                    <span class="material-icons">
+                      insert_photo
+                    </span>
+                    </Fab>
+                  </label>
+                <label htmlFor="product-images-upload-1"> Select image 1 </label>
+                <input
+                  accept="image/*"
+                  className="hs-product-image-uploader"
+                  id="product-images-upload-1"
+                  type="file"
+                  onChange={(e) => handleImageUpload(e,1)}
+                />
+              </div>
+              <div>
+                <label htmlFor="product-image-upload-2">
+                  <Fab component="span" className="hs-button">
+                  <span class="material-icons">
+                    insert_photo
+                  </span>
+                  </Fab>
+                </label>
+                <label htmlFor="product-images-upload-2"> Select image 2 </label>
+                <input
+                  accept="image/*"
+                  className="hs-product-image-uploader"
+                  id="product-images-upload-2"
+                  type="file"
+                  onChange={(e) => handleImageUpload(e, 2)}
+                />
+              </div>
+              <div> 
+                <label htmlFor="product-images-upload-3">
+                  <Fab component="span" className="hs-button">
+                  <span class="material-icons">
+                    insert_photo
+                  </span>
+                  </Fab>
+                </label>
+                <label htmlFor="product-images-upload-3"> Select image 3 </label>
+                <input
+                  accept="image/*"
+                  className="hs-product-image-uploader"
+                  id="product-images-upload-3"
+                  type="file"
+                  onChange={e => handleImageUpload(e, 3)}
+                />
+              </div>
+              <div>
+                <label htmlFor="product-image-upload-4">
+                  <Fab component="span" className="hs-button">
+                  <span class="material-icons">
+                    insert_photo
+                  </span>
+                  </Fab>
+                </label>
+                <label htmlFor="product-images-upload-4"> Select image 4 </label>
+                <input
+                  accept="image/*"
+                  className="hs-product-image-uploader"
+                  id="product-images-upload-4"
+                  type="file"
+                  onChange={e => handleImageUpload(e, 4)}
+                />
+              </div>
+              <div>
+                <label htmlFor="product-images-upload-5">
+                  <Fab component="span" className="hs-button">
+                  <span class="material-icons">
+                    insert_photo
+                  </span>
+                  </Fab>
+                </label>
+                <label htmlFor="product-images-upload-5"> Select image 5 </label>
+                <input
+                  accept="image/*"
+                  className="hs-product-image-uploader"
+                  id="product-images-upload-5"
+                  type="file"
+                  onChange={e => handleImageUpload(e, 5)}
+                />
+              </div>
+            </div>
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button disabled={formdata.valid ? null : true} autoFocus onClick={() => {onSubmit()}} color="primary">
+          <Button disabled={valid ? null : true} autoFocus onClick={() => {onSubmit()}} color="primary">
             Submit
           </Button>
         </DialogActions>

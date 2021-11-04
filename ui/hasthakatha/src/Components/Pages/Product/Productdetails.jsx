@@ -1,9 +1,5 @@
 import React,{Component} from 'react';
 import "./Productdetails.scss";
-import imgproduct from '../../../Images/pant.jpg';
-import imgproduct2 from '../../../Images/skirts.jpg';
-import imgproduct3 from '../../../Images/top.jpg';
-import imgproduct4 from '../../../Images/dresses.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faMapMarkerAlt} from '@fortawesome/free-solid-svg-icons'
 import {faCheck} from '@fortawesome/free-solid-svg-icons'
@@ -25,6 +21,11 @@ class Productdetails extends Component{
             productdetail: {},
             sizes: [],
             mainImage: '',
+            imgproduct1: '',
+            imgproduct2: '',
+            imgproduct3: '',
+            imgproduct4: '',
+            imgproduct5: '',
             loading: true,
             reviewList: [],
             reviewsLoading: true
@@ -36,11 +37,23 @@ class Productdetails extends Component{
         this.setState({pid: pid});
         Axios.get('rest/productdetails/'+pid).then(response => {
             this.setState({productdetail: response.data.output, mainImage: response.data.output.image_data, loading: false});
-        })
-        Axios.get('/rest/reviews/'+pid).then(response => {
-            this.setState({reviewList: response.data.result, reviewsLoading: false});
+            Axios.get('/rest/reviews/'+pid).then(response => {
+                this.setState({reviewList: response.data.result, reviewsLoading: false});
+            });
+            this.loadProductSize(pid);
         });
-        this.loadProductSize(pid);
+        Axios.get('/rest/productdetails/images/'+pid).then(response => {
+            const result = response.data.result;
+            if (result && result.length > 0) {
+                this.setState({
+                    imgproduct1: result[0] && result[0]['image_data'] ? result[0]['image_data'] : '',
+                    imgproduct2: result[1] && result[1]['image_data'] ? result[1]['image_data'] : '',
+                    imgproduct3: result[2] && result[2]['image_data'] ? result[2]['image_data'] : '',
+                    imgproduct4: result[3] && result[3]['image_data'] ? result[3]['image_data'] : '',
+                    imgproduct5: result[4] && result[4]['image_data'] ? result[4]['image_data'] : ''
+                })
+            }
+        });
     }
    
     componentDidUpdate() {
@@ -102,19 +115,19 @@ class Productdetails extends Component{
                     <div className="hs_product_details">
                         
                         <div className="img1 item1">
-                            <img src={imgproduct} alt="product image" onClick={() => this.setMainImage(imgproduct)}/>
+                            <img src={this.state.imgproduct1} alt="product image" onClick={() => this.setMainImage(this.state.imgproduct1)}/>
                         </div>
                         <div className="img1 item2">
-                            <img src={imgproduct2} alt="product image" onClick={() => this.setMainImage(imgproduct2)}/>      
+                            <img src={this.state.imgproduct2} alt="product image" onClick={() => this.setMainImage(this.state.imgproduct2)}/>      
                         </div>
                         <div className="img1 item3">
-                        <img src={imgproduct3} alt="product image" onClick={() => this.setMainImage(imgproduct3)}/>
+                        <img src={this.state.imgproduct3} alt="product image" onClick={() => this.setMainImage(this.state.imgproduct3)}/>
                         </div>
                         <div className="img1 item4">
-                            <img src={imgproduct4} alt="product image" onClick={() => this.setMainImage(imgproduct4)}/>
+                            <img src={this.state.imgproduct4} alt="product image" onClick={() => this.setMainImage(this.state.imgproduct4)}/>
                         </div>
                         <div className="img1 item5">
-                            <img src={imgproduct} alt="product image" onClick={() => this.setMainImage(imgproduct)}/>
+                            <img src={this.state.imgproduct5} alt="product image" onClick={() => this.setMainImage(this.state.imgproduct5)}/>
                         </div>
                         <div className="img-main item6">
                             {

@@ -183,12 +183,12 @@ var product_app = function (app, con, hasthaBean,logger) {
     });
 
     app.post("/rest/addproductimage/:pid", (req, res) => {
-        const pid = res.params.pid;
-        var image1 = req.body.image1 ? Buffer.from(image1, 'binary') : '';
-        var image2 = req.body.image2 ? Buffer.from(image2, 'binary') : '';
-        var image3 = req.body.image3 ? Buffer.from(image3, 'binary') : '';
-        var image4 = req.body.image4 ? Buffer.from(image4, 'binary') : '';
-        var image5 = req.body.image5 ? Buffer.from(image5, 'binary') : '';
+        const pid = req.params.pid;
+        var image1 = req.body.image1 ? Buffer.from(req.body.image1, 'binary') : '';
+        var image2 = req.body.image2 ? Buffer.from(req.body.image2, 'binary') : '';
+        var image3 = req.body.image3 ? Buffer.from(req.body.image3, 'binary') : '';
+        var image4 = req.body.image4 ? Buffer.from(req.body.image4, 'binary') : '';
+        var image5 = req.body.image5 ? Buffer.from(req.body.image5, 'binary') : '';
         let addImageSql = '';
         if (image1) {
             addImageSql += "INSERT INTO `product_images`(`imageid`, `pid`, `type`, `image_data`) VALUES (NULL,'" + pid + "','side','" + image1 + "');";
@@ -205,9 +205,10 @@ var product_app = function (app, con, hasthaBean,logger) {
         if (image5) {
             addImageSql += "INSERT INTO `product_images`(`imageid`, `pid`, `type`, `image_data`) VALUES (NULL,'" + pid + "','side','" + image5 + "');";
         }
-        if (addimageSql) {
+        if (addImageSql) {
             con.query(addImageSql, (err, result) => {
                 if (err) {
+                    logger.error(err);
                     res.status(500);
                     res.send({type: 'error', message: 'Error adding images'});
                 } else {
