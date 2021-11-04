@@ -31,7 +31,7 @@ var payment_app = function (app, con,settings,logger) {
                     transaction.updatePayment(transaction_id);
                 }, razorPayTimeout_ms);
             } catch(e) {
-                logger.error(err);
+                logger.error(e);
                 res.status(500);
                 res.send({type:"error",message:"Temporary Issue. Please Contact Support", details: e});
             }
