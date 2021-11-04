@@ -56,6 +56,10 @@ export default function ProductListWrapper() {
     ReactDOM.render(<ProductEdit {...dialogData} />, document.getElementById('product-dialog'));
   }
 
+  const showAddProductImageDialog = (data) => {
+    // ReactDOM.render(<InsertProductImagesDialog {...dialogData} />, document.getElementById('product-dialog'));
+  }
+
   return (
     <GridContainer>
       <GridItem xs={12} sm={12} md={12}>
@@ -70,7 +74,7 @@ export default function ProductListWrapper() {
             <h4 className={classes.cardTitleWhite} >Product List</h4>
           </CardHeader>
           <CardBody>
-            <ProductList updateTable={updateTable} showEditDialog={showEditDialog} />
+            <ProductList updateTable={updateTable} showEditDialog={showEditDialog} showAddProductImageDialog={showAddProductImageDialog} />
           </CardBody>
         </Card>
       </GridItem>

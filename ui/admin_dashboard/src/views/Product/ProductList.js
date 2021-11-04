@@ -16,7 +16,10 @@ import Loader from 'shared/Loader';
 import ProductUtil from '../../common/util/ProductUtil';
 import { EventBus } from '../../common/event-bus';
 import { EventType } from '../../common/events';
-import { Button } from '@material-ui/core';
+import { Button, Popover } from '@material-ui/core';
+import { toast } from 'react-toastify';
+import ProductAction from './ProductAction';
+import axios from 'axios';
 
 const columns = [
   {
@@ -153,6 +156,16 @@ export default function ProductList(props) {
     props.showAddProductImageDialog(productValue);
   }
 
+  const deleteImage = (pid) => {
+    if (confirm('Are you sure you want to delete')) {
+      axios.delete('/rest/product/'+pid).then(res => {
+        toast.success(res.data.message);
+      }).catch(err => {
+        toast.error('Error deleting image, please try again later');
+      })
+    };
+  }
+
   const getProducts = () => {
     getProductList(page, rowsPerPage);
   }
@@ -160,14 +173,14 @@ export default function ProductList(props) {
   const ShowData = (column, value,row, cindex) => {
     switch (column.id) {
       case "action":
+        let isPopOverOpen = false;
         return (
           <TableCell key={cindex} align={column.align}>
-            <div className="editproduct-button">
-              <Button color="primary" onClick={() => { launchEditProductDialog(row) }} >
-                Edit
-              </Button>
-              <Button color="primary" onClick={() => launchAddProductImageDialog(row)}>Upload images</Button>
-            </div>
+            <ProductAction row={row} cindex={cindex} 
+              launchEditProductDialog={launchEditProductDialog} 
+              launchAddProductImageDialog={launchAddProductImageDialog}
+              deleteImage={deleteImage}
+            />
           </TableCell>
         );
       case "image_data":
