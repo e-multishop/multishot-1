@@ -32,17 +32,17 @@ const ProductAction = (props) => {
                 }}>
                   <ul>
                     <li >
-                    <ListItem button onClick={() => { props.launchEditProductDialog(props.row)}}>
+                    <ListItem button onClick={() => { handleClose();props.launchEditProductDialog(props.row)}}>
                         <ListItemText primary="Edit" />
                     </ListItem>
                     </li>
                     <li>
-                        <ListItem button onClick={() => { props.launchAddProductImageDialog(props.row)}}>
+                        <ListItem button onClick={() => { handleClose();props.launchAddProductImageDialog(props.row)}}>
                           <ListItemText primary="Upload images" />
                       </ListItem>
                     </li>
                     <li>
-                        <ListItem button onClick={() => { props.deleteImage(props.row.pid)}}>
+                        <ListItem button onClick={() => { handleClose();props.deleteImage(props.row.pid)}}>
                           <ListItemText primary="Delete" />
                       </ListItem>
                     </li>

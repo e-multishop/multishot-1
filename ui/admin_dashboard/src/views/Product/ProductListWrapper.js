@@ -12,6 +12,7 @@ import InsertProductDialog from "views/Product/InsertProductDialog.js";
 import ProductEdit from "./Edit/ProductEdit";
 import { Button } from "@material-ui/core";
 import ReactDOM from 'react-dom';
+import InsertProductImagesDialog from "./InsertProductImagesDialog";
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
@@ -57,7 +58,7 @@ export default function ProductListWrapper() {
   }
 
   const showAddProductImageDialog = (data) => {
-    // ReactDOM.render(<InsertProductImagesDialog {...dialogData} />, document.getElementById('product-dialog'));
+    ReactDOM.render(<InsertProductImagesDialog {...data} />, document.getElementById('product-dialog'));
   }
 
   return (
