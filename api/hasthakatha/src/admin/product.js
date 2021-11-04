@@ -9,7 +9,7 @@ const BeanUtil = require('./../utils/BeanUtil');
 const ProductUtil = require('./../utils/ProductUtil');
 const ProductSql = require('../common/sql/ProductSql');
 
-var product_app = function (app, con, hasthaBean) {
+var product_app = function (app, con, hasthaBean,logger) {
     app.get('/rest/product_list/:page_size/:page_number', (req, res) => {
         var pageSize = parseInt(req.params.page_size);
         var pageNumber = parseInt(req.params.page_number);
@@ -19,7 +19,7 @@ var product_app = function (app, con, hasthaBean) {
         con.query(countSql, function(err, result1){
             const totalRecords = result1 && result1.length > 0 ? result1[0]["COUNT(*)"] : 0;
             con.query(sql, function (err, result) {
-                if (err) throw err;
+                if (err) logger.error(err);
                 res.header("Content-Type", "application/json");
                 result.forEach(r => {
                     if (r.image_data && r.image_data.buffer) {
@@ -43,7 +43,7 @@ var product_app = function (app, con, hasthaBean) {
             var total_record = result3[0]["COUNT(*)"];
             var sql = `SELECT * FROM product where category='${category}' LIMIT ${offset},${page_size};`;
             con.query(sql, function (err, result) {
-                if (err) throw err;
+                if (err) logger.error(err);
                 res.header("Content-Type", "application/json");
 
                 let asyncoperations = [];
@@ -174,7 +174,7 @@ var product_app = function (app, con, hasthaBean) {
         var sql = start + t1 + t2 + (sizeQuery ? t3 : '') + end;
         console.log(sql);
         con.query(sql, (err, result) => {
-            if (err) throw err;
+            if (err) logger.error(err);
             res.send('inserted');
             //    res.end();
         });
@@ -237,11 +237,13 @@ var product_app = function (app, con, hasthaBean) {
                 // const workbook = xlsx.readFile(__dirname + "/../../hastha_2.xlsx");
             } catch(e) {
                 console.log('error' + e);
+                logger.error(e);
                 res.status(500);
                 res.send({type: 'error', message: e});
                 return;
             }
         } else {
+            logger.error(err);
             res.status(500);
             res.send({type: 'error', message: 'Error reading file'});
         }
@@ -277,13 +279,15 @@ var product_app = function (app, con, hasthaBean) {
         if (query) {
             const queryWithTransaction = "START TRANSACTION;" + query + "COMMIT;"
             con.query(queryWithTransaction, (err, result) => {
-                if (err) throw err;
+                if (err) logger.error(err);
                 res.send('success');
             });
         } else {
+            logger.error(err);
             res.status(500);
             res.send('Empty file/Error reading file');
         }
+    
     });
 
     app.delete("/rest/delete", (req, res) => {

@@ -1,10 +1,11 @@
 
-var profile_app = function (app, con) {
+var profile_app = function (app, con,logger) {
 
     app.get('/rest/county_detail', (req, res) => {
         var sql = "select * from country;";
         con.query(sql, (err, result) => {
             if (err) {
+                logger.error(err);
                 res.status(500);
                 res.send({ type: "error", messsage: "Temporary Issue. Sorry we can't find country details" });
             }
@@ -17,6 +18,7 @@ var profile_app = function (app, con) {
         var sql = "select * from state where country_id='"+req.params.country_id+"';";
         con.query(sql, (err, result) => {
             if (err) {
+                logger.error(err);
                 res.status(500);
                 res.send({ type: "error", messsage: "Temporary Issue. Sorry we can't find state details" });
             }
@@ -41,6 +43,7 @@ var profile_app = function (app, con) {
         var sql = "INSERT INTO `shipping_address`( `id`,`uid`,`country`,`name`,`address`,`address1`,`city`,`state`,`pincode`,`phone`, `created_date`,`updated_date`) VALUES (NULL," + uid +",'" + country + "','" + name + "','" + address + "','" + address1 + "','" + city + "','" + state + "','" + pincode + "','" + phone + "','" + created_date + "','" + updated_date + "');";
         con.query(sql, (err, result) => {
             if (err) {
+                logger.error(err);
                 res.status(500);
                 res.send({ type: "error", messsage: "Address does not inserted. Please re-enter" });
             }
@@ -64,6 +67,7 @@ var profile_app = function (app, con) {
         var sql = "UPDATE `shipping_address` SET `country`='" + country + "',`name`='" + name + "',`address`='" + address + "' ,`address1`='" + address1 + "',`city`='" + city + "',`state`='" + state + "',`pincode`='" + pincode + "',`phone`='" + phone + "',`updated_date`='" + updated_date + "' where uid='" + userid + "' AND id='" + id + "';";
         con.query(sql, (err, result) => {
             if (err) {
+                logger.error(err);
                 res.status(500);
                 res.send({ type: "error", message: "Temporary Error.Shipping address not updated" });
             }
@@ -78,6 +82,7 @@ var profile_app = function (app, con) {
         const id = req.params.id;
         con.query(`SELECT * from shipping_address where uid = ${userid} and id = ${id}`, (err, result) => {
             if (err) {
+                logger.error(err);
                 res.status(500);
                 res.send({ type: "error", message: "Temporary Error. Error fetching address", details: err });
             }
@@ -93,6 +98,7 @@ var profile_app = function (app, con) {
         var sql = "DELETE FROM shipping_address where uid='" + userid + "' AND id='" + id + "';";
         con.query(sql, (err, result) => {
             if (err) {
+                logger.error(err);
                 res.status(500);
                 res.send({ type: "error", message: "Temporary Error. Address is not deleted", details: err });
             }
@@ -108,6 +114,7 @@ var profile_app = function (app, con) {
         var sql = "select * from shipping_address where uid='" + userid + "' AND id='" + id + "';";
         con.query(sql, (err, result) => {
             if (err) {
+                logger.error(err);
                 res.status(500);
                 res.send({ type: "error", message: "Temporary Error.Address doesn't shown" });
             }
@@ -123,6 +130,7 @@ var profile_app = function (app, con) {
         var sql = "select * from shipping_address where uid='" + userid + "';";
         con.query(sql, (err, result) => {
             if (err) {
+                logger.error(err);
                 res.status(500);
                 res.send({ type: "error", message: "Temporary Error.Address doesn't shown" });
             }
@@ -141,6 +149,7 @@ var profile_app = function (app, con) {
      
         con.query(sql, (err, result) => {
             if (err) {
+                logger.error(err);
                 res.status(500);
                 res.send({ type: "error", message: "Temporary Error.User doesn't shown" });
             }
@@ -161,6 +170,7 @@ var profile_app = function (app, con) {
         var sql = "UPDATE user SET name = '" + name + "',phone = '" + phone + "',age = '" + age + "',profile_picture='" + profile_picture + "';";
         con.query(sql, (err, result) => {
             if (err) {
+                logger.error(err);
                 res.status(500);
                 res.send({ type: "error", message: "Temporary Error.User profile  doesn't update", details:err});
 

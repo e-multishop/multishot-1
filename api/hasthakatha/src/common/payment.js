@@ -6,7 +6,7 @@ const TransactionSql = require('./sql/TransactionSql');
 var getTotalPrice = async function() {
 
 }
-var payment_app = function (app, con,settings) {
+var payment_app = function (app, con,settings,logger) {
 
     app.post('/rest/creating_order', async (req, res) => {
         // get amount from ui and validate the amount
@@ -31,10 +31,12 @@ var payment_app = function (app, con,settings) {
                     transaction.updatePayment(transaction_id);
                 }, razorPayTimeout_ms);
             } catch(e) {
+                logger.error(err);
                 res.status(500);
                 res.send({type:"error",message:"Temporary Issue. Please Contact Support", details: e});
             }
         } else {
+            logger.error(err);
             res.status(500);
             res.send({type: 'error', message: 'Internal server error. Please contact support.'})
         }
@@ -55,6 +57,7 @@ var payment_app = function (app, con,settings) {
                     con.query(sql,(err,result)=>{
                         if(err)
                         {
+                            logger.error(err);
                             res.status(500);
                             res.send({type:"error",message:"Temporary Error. Please Contact Support. "});
                         }
@@ -62,6 +65,7 @@ var payment_app = function (app, con,settings) {
                             const deleteQuery = `DELETE FROM add_to_cart where uid='${userid}';`;
                             con.query(deleteQuery,(err, result) => {
                                 if (err) {
+                                    logger.error(err);
                                     res.send({type: 'error', message: 'Temporary error. Please contact support', details: err});
                                 } else {
                                     res.send({type:"success", message:"Order is successful."});  
@@ -72,6 +76,7 @@ var payment_app = function (app, con,settings) {
                 }
                 else{
                     res.status(500);
+                    logger.error(err);
                     res.send({type:"error",message:"Temporary Error. Please Contact Support.", details: {
                         generatedSig: generated_signature,
                         signature: signature
@@ -91,7 +96,9 @@ var payment_app = function (app, con,settings) {
         con.query(sql,(err,result)=>{
             if(err)
             {
+                logger.error(err)
                 res.status(500);
+
                 res.send({type:"error",message:"Temporary Error. Please Contact Support."})
             }
             else {

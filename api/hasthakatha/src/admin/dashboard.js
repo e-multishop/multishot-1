@@ -1,5 +1,5 @@
 
-var dashboard_app = function (app, con, hasthaBean) {
+var dashboard_app = function (app, con, hasthaBean,logger) {
     
     app.get('/rest/stats', (req, res) => {
         const orderCompletedQuery = 'Select count(*) from tracking_order where delivery_status =3;';
@@ -26,6 +26,7 @@ var dashboard_app = function (app, con, hasthaBean) {
     app.delete('/rest/messages/:mid', (req, res) => {
         con.query(`delete from messages where id = ${mid}`, (err, result) => {
             if (err) {
+                logger.error(err);
                 res.status(500);
                 res.send({type: 'error', message: 'Internal server error. Please try later.', details: err});
             }

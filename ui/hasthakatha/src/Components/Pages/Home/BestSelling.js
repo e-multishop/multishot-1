@@ -28,7 +28,7 @@ const BestSelling = () => {
                     <Link><Card images={red_kantha} banner={true} title="Red Kantha Wrap Dress " action={true} description="₹  5900" /></Link>
                 </div>
                 <div className="col s3">
-                    <Link><Card images={cushion} banner={true} title="Cushion" action={true} description="₹ 2500" /></Link>
+                    <Link><Card images={cushion} banner={true} title="Hand Painted and Embroidered Linen Cushion Cover" action={true} description="₹ 2500" /></Link>
                 </div>
                 {/* );
                 })} */}

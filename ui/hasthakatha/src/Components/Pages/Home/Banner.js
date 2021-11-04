@@ -1,7 +1,7 @@
 import React from 'react'
-import banner from '../../../Images/banner.jpg';
-import banner2 from '../../../Images/banner2.jpg';
-import banner1 from '../../../Images/banner1.jpg';
+import banner1 from '../../../Images/banner1.png';
+import banner2 from '../../../Images/banner2.png';
+import banner3 from '../../../Images/banner3.png';
 import { Carousel } from 'react-responsive-carousel';
 
 function Banner() {
@@ -17,10 +17,10 @@ function Banner() {
                     <img src={banner1} />
                 </div>
                 <div>
-                    <img src={banner} />
+                    <img src={banner2} />
                 </div>
                 <div>
-                    <img src={banner2} />
+                    <img src={banner3} />
                 </div>
       </Carousel>
     );
