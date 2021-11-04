@@ -159,6 +159,7 @@ export default function ProductList(props) {
   const deleteImage = (pid) => {
     if (confirm('Are you sure you want to delete')) {
       axios.delete('/rest/product/'+pid).then(res => {
+        getProducts();
         toast.success(res.data.message);
       }).catch(err => {
         toast.error('Error deleting image, please try again later');

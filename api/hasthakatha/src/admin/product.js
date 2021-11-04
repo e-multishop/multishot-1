@@ -290,15 +290,20 @@ var product_app = function (app, con, hasthaBean,logger) {
     
     });
 
-    app.delete("/rest/delete", (req, res) => {
-
-        var pid = req.body.pid;
+    app.delete("/rest/product/:pid", (req, res) => {
+        const pid = req.params.pid;
         var t1 = "DELETE FROM product WHERE pid='" + pid + "';";
         var t2 = "DELETE FROM product_images WHERE pid='" + pid + "';"
         var sql = t1 + t2;
         con.query(sql, (err, result) => {
-            if (err) throw err;
-            res.send('deleted');
+            if (err) {
+                logger.error(err);
+                res.status(500);
+                res.send({type: 'error', message: 'Error deleting product, please contact support.'})
+            }
+            else {
+                res.send({type: 'success', message: 'Deleted successfully'});
+            }
         });
     });
     app.get("/rest/get_pid", (req, res) => {
@@ -376,7 +381,7 @@ var product_app = function (app, con, hasthaBean,logger) {
         var available = req.body.available;
         var sql = "UPDATE product SET available='" + available + "' Where pid='" + pid + "';";
         con.query(sql, (err, result) => {
-            if (err) throw err;
+            if (err) logger.error(err);
             res.send('updated');
         });
     });
