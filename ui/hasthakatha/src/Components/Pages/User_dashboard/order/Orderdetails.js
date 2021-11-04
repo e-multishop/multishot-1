@@ -62,11 +62,11 @@ function Orderdetails(props) {
         return (
             <div>
                 <div className="hs-product-rating hs-mt-16">
-                    <span class="material-icons hs-action-icon" onClick={() => setReviewRating(1)}>{rating > 0 ? 'star' : 'star_outline'}</span>
-                    <span class="material-icons hs-action-icon" onClick={() => setReviewRating(2)}>{rating > 1 ? 'star' : 'star_outline'}</span>
-                    <span class="material-icons hs-action-icon" onClick={() => setReviewRating(3)}>{rating > 2 ? 'star' : 'star_outline'}</span>
-                    <span class="material-icons hs-action-icon" onClick={() => setReviewRating(4)}>{rating > 3 ? 'star' : 'star_outline'}</span>
-                    <span class="material-icons hs-action-icon" onClick={() => setReviewRating(5)}>{rating > 4 ? 'star' : 'star_outline'}</span>
+                    <span className="material-icons hs-action-icon" onClick={() => setReviewRating(1)}>{rating > 0 ? 'star' : 'star_outline'}</span>
+                    <span className="material-icons hs-action-icon" onClick={() => setReviewRating(2)}>{rating > 1 ? 'star' : 'star_outline'}</span>
+                    <span className="material-icons hs-action-icon" onClick={() => setReviewRating(3)}>{rating > 2 ? 'star' : 'star_outline'}</span>
+                    <span className="material-icons hs-action-icon" onClick={() => setReviewRating(4)}>{rating > 3 ? 'star' : 'star_outline'}</span>
+                    <span className="material-icons hs-action-icon" onClick={() => setReviewRating(5)}>{rating > 4 ? 'star' : 'star_outline'}</span>
                 </div>
                 <textarea className="materialize-textarea" placeholder="Write your review" onChange={updateReview} value={review}></textarea>
                 <form action="#">

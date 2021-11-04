@@ -9,10 +9,11 @@ const creds = require('../config/config');
 var jwt_key = " secret";
 var login_data = [];
 const nodemailer = require('nodemailer');
-var login_app=function(app,con)
+var login_app=function(app,con,logger)
 {
     app.post('/rest/signup', (req, res) => {
         if (req.body.email === '' || req.body.password === '') {
+            logger.error(err);
             res.status(500);
             res.send({type: 'error', message: 'Please enter mandatory fields'});
             return;
@@ -30,17 +31,18 @@ var login_app=function(app,con)
                     const tEnd = 'COMMIT;';
                     const actualSql = tStart + loginSql + userSql + tEnd;
                     con.query(actualSql, function (err, result2) {
-                        if (err) throw err;
+                        if (err) logger.error(err);
                         res.send("sucess");
                     });
     
                 });
             } else {
+                logger.error(err);
                 res.status(500);
                 res.send({type: "error", message: "Email is already registered"});
             }
     
-            if(err) throw err;
+            if(err) logger.error(err);
             // res.send("found");
     
         });
@@ -53,6 +55,7 @@ var login_app=function(app,con)
     
     app.post('/rest/login', (req, res) => {
         if (!req.body.email || !req.body.password) {
+            logger.error(err);
             res.status(500);
             res.send({type: 'error', message: 'Email and password are mandatory'});
             return;
@@ -78,6 +81,7 @@ var login_app=function(app,con)
                         res.send({ "session_id": session_id});
     
                     } else {
+                        logger.error(err);
                         res.status(500);
                         res.send({type: "error", message: "Email and password do not match."});
                     }
@@ -85,6 +89,7 @@ var login_app=function(app,con)
                 });
             }
             else{
+                logger.error(err);
                 res.status(500);
                 res.send({type: "error", message: "Email and password do not match."});
                  
@@ -100,6 +105,7 @@ var login_app=function(app,con)
     
     app.post('/rest/forgot_password', (req, res) => {    
         if (!req.body.email) {
+            logger.error(err);
             res.status(500);
             res.send({type: 'error', message: 'Email is mandatory'})
             return;
@@ -108,6 +114,7 @@ var login_app=function(app,con)
         con.query(sql, function (err, result) {
             console.log("messaage" + result);
             if (result.length === 0) {
+                logger.error(err);
                 res.status(500);
                 res.send("email is not vaild");
             } else {
@@ -139,6 +146,7 @@ var login_app=function(app,con)
                         }
                         transport.sendMail(mailOptions, function (err, result) {
                             if (err) {
+                                logger.error(err);
                                 res.status(500);
                                 res.send({type: 'error', message: 'Internal server error, error sending mail'});
                             } else {
@@ -163,6 +171,7 @@ var login_app=function(app,con)
         var sql = "select * from forgot_password where pass_token= '" + req.params.token + "'";
         con.query(sql, function (err, result) {
             if (result.length === 0) {
+                logger.error(err);
                 res.status(500);
                 res.send("Invaild request");
             } else {
@@ -189,6 +198,7 @@ var login_app=function(app,con)
         var sql = "select * from forgot_password where pass_token= '" + req.params.token + "'";
         con.query(sql, function (err, result) {
             if (result.length === 0) {
+                logger.error(err);
                 res.status(500);
                 res.send("Invaild request");
             } else {
@@ -203,18 +213,19 @@ var login_app=function(app,con)
                         const hash = bcrypt.hash(req.body.password, 10, function (err, hashpassword) {
                             var sql = "update loginusers set password='" + hashpassword + "' where email='" + email + "'";
                             con.query(sql, function (err, result3) {
-                                if (err) throw err;
+                                if (err) logger.error(err);
                                 res.send(" sucess");
     
                                 var sql = "update forgot_password set visited='" + 1 + "' where email='" + email + "' AND pass_token='" + req.query.token + "'";
                                 con.query(sql, function (err, result4) {
-                                    if (err) throw err;
+                                    if (err) logger.error(err);
                                     res.send(" sucess");
                                 });
                             });
                         });
                     }
                     else {
+                        logger.error(err);
                         res.response(500);
                         res.send("link is invalid");
                     }
@@ -235,6 +246,7 @@ var login_app=function(app,con)
         var ar = (login_data.indexOf(session_id))
         if(ar==-1)
         {
+            logger.error(err);
             res.status(500);
             res.send("error"); 
            

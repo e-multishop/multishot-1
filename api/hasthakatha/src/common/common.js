@@ -1,6 +1,7 @@
 var atob = require('atob');
+//const logger = require('./logger');
 var cors = require('cors');
-var common_app=function(app,con)
+var common_app=function(app,con,logger)
 {
     app.get('/rest/search', (req, res) => {
         res.header("Content-Type", 'application/json');
@@ -11,8 +12,10 @@ var common_app=function(app,con)
     app.get('/rest/categories', (req, res) => {
         var sql = "SELECT name, cid FROM `category`";
         con.query(sql, function (err, result) {
-            if (err) throw err;
-            console.log(JSON.stringify(result));
+            if (err) logger.error(err);
+            
+            //logger.error(result);
+        //    console.log(JSON.stringify(result));
             res.send(JSON.stringify(result));
         });
     });
@@ -23,11 +26,12 @@ var common_app=function(app,con)
         var sql = "SELECT name FROM `colour` ";
         if (token === login_data) {
             con.query(sql, function (err, result) {
-                if (err) throw err;
+                if (err) logger.error(err);
                 res.setHeader("content-type", "application/json");
                 res.send(JSON.stringify(result));
             });
         } else {
+            logger.error(err);
             res.status(500);
             res.send("error");
         }
@@ -37,7 +41,7 @@ var common_app=function(app,con)
     app.get('/rest/productdetails/:pid', (req, res) => {
         const productDetailSql = `select * from product as P LEFT JOIN product_images as I on P.pid = I.pid where P.pid='${req.params.pid}'`;
         con.query(productDetailSql, function (err, result) {
-            if (err) throw err;
+            if (err) logger.error(err);
             const outputData = result.length > 0 ? result[0]: {};
             if (outputData.image_data && outputData.image_data.buffer) {
                 const bufferData = Buffer.from(outputData.image_data, 'binary');
@@ -73,7 +77,7 @@ var common_app=function(app,con)
         con.query(countSql, function(err, result1){
             const totalRecords = result1[0]["COUNT(*)"];
             con.query(sql, function (err, result) {
-                if (err) throw err;
+                if (err) logger.error(err);
                 res.header("Content-Type", "application/json");
                 result.forEach(r => {
                     if (r.image_data && r.image_data.buffer) {

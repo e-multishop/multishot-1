@@ -50,13 +50,13 @@ const dashboardRoutes = [
     component: ProductListWrapper,
     layout: "/admin",
   },
-  {
-    path: "/uploadfile",
-    name: "Upload Bulk Products",
-    icon: "upload_file",
-    component: UploadFile,
-    layout: "/admin",
-  },
+  // {
+  //   path: "/uploadfile",
+  //   name: "Upload Bulk Products",
+  //   icon: "upload_file",
+  //   component: UploadFile,
+  //   layout: "/admin",
+  // },
   {
     path: "/user",
     name: "User Profile",
