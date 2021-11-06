@@ -11,6 +11,8 @@ import Demoimg from '../../../Images/megha.jpg';
 import Axios from 'axios';
 import Header from '../../Header/Header';
 import Footer from '../../Footer/Footer';
+import { toast } from 'react-toastify';
+import Loader from '../../Common/Loader';
 
 class Productdetails extends Component{
 
@@ -20,15 +22,19 @@ class Productdetails extends Component{
             pid: '',
             productdetail: {},
             sizes: [],
+            hasColors: false,
             mainImage: '',
             imgproduct1: '',
             imgproduct2: '',
             imgproduct3: '',
             imgproduct4: '',
             imgproduct5: '',
+            selectedSize: '',
+            selectedColor: '',
             loading: true,
             reviewList: [],
-            reviewsLoading: true
+            reviewsLoading: true,
+            itemLoader: false
         }
     }
 
@@ -36,11 +42,12 @@ class Productdetails extends Component{
         const pid = this.props.match.params.pid;
         this.setState({pid: pid});
         Axios.get('rest/productdetails/'+pid).then(response => {
-            this.setState({productdetail: response.data.output, mainImage: response.data.output.image_data, loading: false});
+            const hasColors = response.data.output.color && response.data.output.color.length > 0 ? true : false;
+            this.setState({productdetail: response.data.output, mainImage: response.data.output.image_data, loading: false, hasColors});
             Axios.get('/rest/reviews/'+pid).then(response => {
                 this.setState({reviewList: response.data.result, reviewsLoading: false});
             });
-            this.loadProductSize(pid);
+            // this.loadProductSize(pid);
         });
         Axios.get('/rest/productdetails/images/'+pid).then(response => {
             const result = response.data.result;
@@ -68,48 +75,79 @@ class Productdetails extends Component{
     }
 
     loadProductSize(pid) {
-        Axios.get('/rest/productsize/'+pid).then(res => {
-            this.setState({sizes: res.data.output});
-        });
+        const sizes = this.state.productdetail.size ? this.state.productdetail.size : '';
+        if (sizes && sizes.length > 0) {
+            const actualSizes = sizes.split(',');
+            this.setState({sizes: actualSizes});
+        }
     }
 
     getSizeOptions() {
-        return this.state.sizes.map(s => <option >{s.name}</option>)
+        const sizes = [{
+            name: "XS US women's letter",value:'1'
+        }, {
+            name: "S US women's letter", value: '2'
+        }, {
+            name: "M US women's letter", value: '3'
+        }, {
+            name: "L US women's letter", value: '4'
+        }, {
+            name: "XL US women's letter", value: '5'
+        }, {
+            name: "XXL US women's letter", value: '6'
+        },{
+            name: "OX US women's letter", value: '7'
+        }];
+        return sizes.map(s => <option value={s.value}>{s.name}</option>);
     }
 
     setMainImage(image) {
         this.setState({mainImage: image});
     }
 
+    handleColorChange(e) {
+        this.setState({selectedColor: e.target.value});
+    }
+
+    handleSizeChange(e) {
+        this.setState({selectedSize: e.target.value});
+    }
+
+    addToCart() {
+        this.setState({itemLoader: true});
+        Axios.post('/rest/add_to_cart',{
+            pid : this.state.pid,
+            uid : localStorage.getItem('userId'),
+            quantity : "1",
+            color: this.state.selectedColor,
+            size: this.state.selectedSize
+        }).then(res=>{
+            toast.success(<span ><FontAwesomeIcon icon={faCheck} size='lg' color="white" className="icon toast-icon" />Item added to cart</span>)
+            const cartElements = document.getElementsByClassName('hs-add-to-cart');
+            if (cartElements.length >0) {
+                const cartEvent = new CustomEvent('ADD_TO_CART', {
+                    detail: {
+                        update_cart: true
+                    }
+                });
+                cartElements[0].dispatchEvent(cartEvent);
+            }
+            this.setState({itemLoader: false});
+        }).catch(err => {
+            toast.error('Error adding to cart. Please try again');
+            this.setState({itemLoader: false});
+        });
+    }
+
     render(){
-        const ReviewData=[
-            {
-                CustmerImg:Demoimg,
-                CustmerName:"Teresa Fernadez",
-                ReviewDate:"10 Apr, 2021",
-                ReviewContent:"I wasn’t too sure about what size to order and the seller was able to guide me very well. I got my dress at home and it fits perfectly, the perfect summer dress I’d say. The pockets are absolutely genius! Love it! I’ll definitely order more pieces =)",
-                ProductImg: Demoimg,
-                PurchaseImg: Demoimg,
-                PurchaseName:"Custom made pleated pant for women, Cream linen pant",
-            },
-            {
-                CustmerImg:Demoimg,
-                CustmerName:"Teresa Fernadez",
-                ReviewDate:"10 Apr, 2021",
-                ReviewContent:"I wasn’t too sure about what size to order and the seller was able to guide me very well. I got my dress at home and it fits perfectly, the perfect summer dress I’d say. The pockets are absolutely genius! Love it! I’ll definitely order more pieces =)",
-                ProductImg: Demoimg,
-                PurchaseImg: Demoimg,
-                PurchaseName:"Custom made pleated pant for women, Cream linen pant",
-            },
-            
-        ];
-
-
         return(
           <>
            <Header />
            { 
-            this.state.loading === true ? <div className="hs_product_details wrapper"></div> :  
+            this.state.loading === true 
+                ? <div className="hs_product_details wrapper">
+                    <Loader />
+                </div> :  
             <>
                 <div className="hs_product" id="hs_product_details">
                     <div className="hs_product_details">
@@ -170,7 +208,7 @@ class Productdetails extends Component{
                             
                             <div>
                                 <div class="input-field col s12">
-                                    <select>
+                                    <select onChange={this.handleSizeChange.bind(this)}>
                                         <option value="" disabled selected>Choose size</option>
                                     {this.getSizeOptions()}
                                     </select>
@@ -178,7 +216,7 @@ class Productdetails extends Component{
                             </div>
                             <div>
                             <div class="input-field col s12">
-                                    <select>
+                                    <select disabled={this.state.hasColors ? null : true} onChange={this.handleColorChange.bind(this)}>
                                         <option value="" disabled selected>Choose color</option>
                                         <option>Black</option>
                                         <option>Blue</option>
@@ -189,7 +227,11 @@ class Productdetails extends Component{
                                 <p>Add your personalisation</p> */}
                             </div>
                             <div className="hk-addcard">
-                                    <a href="#">ADD TO CART</a>
+                                {
+                                    this.state.itemLoader
+                                        ? <Loader inline="true" height="unset" />
+                                        : <a onClick={this.addToCart.bind(this)}>ADD TO CART</a>
+                                }
                             </div>
                         </div>
                     </div>

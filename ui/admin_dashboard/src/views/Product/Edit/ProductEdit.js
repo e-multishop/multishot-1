@@ -87,7 +87,6 @@ export default function ProductEdit(props) {
     });
     
     function onSubmit(pid) {
-        console.log("submit pid check=",pid);
         Axios.put("/rest/update", {
             pid: pid,
             category: Editformdata.category,
@@ -102,6 +101,7 @@ export default function ProductEdit(props) {
             available: '1',
             sku: Editformdata.sku,
             status: '1',
+            size: Editformdata.size,
             image_data: editUploadImage,
             image_data_changed: editUploadImageChanged
         }
@@ -156,7 +156,7 @@ export default function ProductEdit(props) {
                 <DialogActions>
                     <Button disabled={props.readonly ? true : null} autoFocus onClick={() => { onSubmit(props.pid) }} color="primary">
                         Submit
-          </Button>
+                    </Button>
                 </DialogActions>
             </Dialog>
         </div>

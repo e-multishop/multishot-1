@@ -340,7 +340,8 @@ var product_app = function (app, con, hasthaBean,logger) {
         var image_data = req.body.image_data;
         var image_data_changed = req.body.image_data_changed;
         var updatedDate = (new Date()).getTime();
-        var sql = "UPDATE product SET category = '" + category + "', title= '" + title + "',price ='" + price + "',price_without_embroidary='" + price_without_embroidary + "',description='" + description + "',note='" + note + "',material='" + material + "',total_available='" + total_available + "',total_quantity='" + total_quantity + "',available='" + available + "',sku='" + sku + "',status='" + status + "',updatedDate='" + updatedDate + "' WHERE pid = '" + pid + "';";
+        var size = req.body.size && req.body.size.length > 0 ? req.body.size.join(','): '';
+        var sql = "UPDATE product SET category = '" + category + "', title= '" + title + "',price ='" + price + "',price_without_embroidary='" + price_without_embroidary + "',description='" + description + "',note='" + note + "',material='" + material + "',total_available='" + total_available + "',total_quantity='" + total_quantity + "',available='" + available + "',sku='" + sku + "',status='" + status + "',updatedDate='" + updatedDate + "',size='" + size + "' WHERE pid = '" + pid + "';";
         con.query(sql, (err, result) => {
             if (err) throw err;
             if (image_data_changed && image_data) {
@@ -389,7 +390,7 @@ var product_app = function (app, con, hasthaBean,logger) {
 
     app.get("/rest/add_to_cart/:uid", (req, res) => {
         var uid = req.params.uid;
-        var sql = "SELECT A.id,A.pid,A.quantity,A.createdDate,P.title,P.price,P.description,I.image_data FROM `add_to_cart` AS A LEFT JOIN product as P ON A.pid=P.pid LEFT JOIN product_images as I ON P.pid=I.pid where A.uid='"+uid+"'; ";
+        var sql = "SELECT A.id,A.pid,A.quantity,A.createdDate,A.color,A.size,P.title,P.price,P.description,I.image_data FROM `add_to_cart` AS A LEFT JOIN product as P ON A.pid=P.pid LEFT JOIN product_images as I ON P.pid=I.pid where A.uid='"+uid+"'; ";
         con.query(sql, (err, result) => {
             if (err) throw err;
              res.header("Content-Type", "application/json");
@@ -406,6 +407,8 @@ var product_app = function (app, con, hasthaBean,logger) {
     app.post("/rest/add_to_cart", (req, res) => {
         var pid = req.body.pid;
         var uid = req.body.uid;
+        var color = req.body.color ? parseInt(req.body.color) : -1;
+        var size = req.body.size ? parseInt(req.body.size) : -1;
         var quantity = req.body.quantity;
         var createdDate = (new Date()).getTime();
         var updatedDate = createdDate;
@@ -418,7 +421,7 @@ var product_app = function (app, con, hasthaBean,logger) {
             } else {
                 if (result && result.length > 0) {
                     const existingQuanitity = parseInt(result[0]['quantity']);
-                    const updateSql = `UPDATE add_to_cart set quantity=${existingQuanitity+1} where pid=${pid} and uid=${uid}`;
+                    const updateSql = `UPDATE add_to_cart set quantity=${existingQuanitity+1}, color=${color}, size=${size} where pid=${pid} and uid=${uid}`;
                     con.query(updateSql, (err, result) => {
                         if (err) {
                             console.error(err);
@@ -429,10 +432,14 @@ var product_app = function (app, con, hasthaBean,logger) {
                         }
                     });
                 } else {
-                    const insertSql = "INSERT INTO `add_to_cart`(`id`, `uid`, `pid`, `quantity`, `createdDate`, `updatedDate`) VALUES (NULL,'" + uid + "','" + pid + "','" + quantity + "','"+createdDate+"','"+updatedDate+"');";
+                    const insertSql = "INSERT INTO `add_to_cart`(`id`, `uid`, `pid`, `quantity`, `color`, `size`,`createdDate`, `updatedDate`) VALUES (NULL,'" + uid + "','" + pid + "','" + quantity + "',"+color+","+size+",'"+createdDate+"','"+updatedDate+"');";
                     con.query(insertSql, (err, result) => {
-                        if (err) throw err;
-                        res.send({type: 'success', message: 'Successfully add into the cart'});
+                        if (err) {
+                            res.status(500);
+                            res.send({type: 'error', message: 'Temporary error. Please try again later.', details: err});
+                        } else {
+                            res.send({type: 'success', message: 'Successfully add into the cart'});
+                        }
                     });
                 }
             }
@@ -444,16 +451,22 @@ var product_app = function (app, con, hasthaBean,logger) {
         var pid = req.body.pid;
         var uid = req.body.uid;
         var quantity = parseInt(req.body.quantity);
-
+        var color = req.body.color ? parseInt(req.body.color): -1;
+        var size = req.body.size ? parseInt(req.body.size) : -1;
         var sql1 = "SELECT pid,total_available from product where pid='" + pid + "';";
         con.query(sql1, (err, result1) => {
             if (err) throw err;
             var count = result1[0]["total_available"];
             if (quantity <= count && quantity <= 10) {
-                var sql = "UPDATE add_to_cart SET quantity='" + quantity + "' WHERE pid='" + pid + "' AND uid ='" + uid + "';";
+                var sql = "UPDATE add_to_cart SET quantity='" + quantity + "', color=" + color + ", size='" + size + "' WHERE pid='" + pid + "' AND uid ='" + uid + "';";
                 con.query(sql, (err, result) => {
-                    if (err) throw err;
-                    res.send('successfully update into the cart');
+                    if (err) { 
+                        res.status(500);
+                        logger.error(err);
+                        res.send({type: 'error', message: "Error updating cart. Please try again later", details: err});
+                    } else {
+                        res.send('successfully update into the cart');
+                    }
                 });
             }
         });

@@ -20,6 +20,17 @@ const EditProductForm = (props) => {
         props.setEditFormData({ ...props.Editformdata, [e.target.name]: e.target.value });
         console.groupEnd();
     }
+    function handleSelectChange(e) {
+        // get selected values
+        const selectedOptions = e.currentTarget.selectedOptions;
+        const selectedValues = [];
+        for(let i = 1; i < selectedOptions.length; i++) {
+            const value = selectedOptions[i].value;
+            selectedValues.push(value);
+        }
+        props.setEditFormData({ ...props.Editformdata, [e.target.name]: selectedValues });
+
+    }
     function handleImage(e){
         let upload_image= e.target.files;
         if (upload_image && upload_image.length > 0) {
@@ -115,7 +126,7 @@ const EditProductForm = (props) => {
                                 </div>
                                 {(props.Editformdata.category) === "16" ? '' :
                                     <div className="input-field col s6">
-                                        <select value={props.Editformdata.size} onChange={(e) => handleChange(e)} name="size" multiple>
+                                        <select  onChange={(e) => handleSelectChange(e)} name="size" multiple>
                                             <option value="" disabled selected>Choose your option</option>
                                             <option value="1">XS</option>
                                             <option value="2">S</option>

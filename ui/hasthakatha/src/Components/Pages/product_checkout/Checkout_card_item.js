@@ -2,6 +2,7 @@ import axios from 'axios';
 import Axios from 'axios';
 import React, { useEffect } from 'react'
 import "./checkout.scss";
+import CommonUtils from "../../Common/Util";
 
 function Checkout_card_item(props) {
     const userId=localStorage.getItem('userId');
@@ -24,6 +25,8 @@ function Checkout_card_item(props) {
             pid : props.pid,
             uid : userId,
             quantity : quantity,
+            color: '',
+            size: ''
         }).then(res=>{
             props.getCart(userId);
         })
@@ -35,8 +38,8 @@ function Checkout_card_item(props) {
             </div>
             <div className="item-content">
                 <p className="title">{props.producttitle}</p>
-                <p>Size: XS US women's letter</p>
-                <p>Primary color : white</p>
+                <p>Size: {CommonUtils.getSize(props.size)}</p>
+                <p>{props.color !== -1? 'Primary color : ' + props.color: ''}</p>
                 <div className="save-remove">
                     {/* <p>Save for later</p> */}
                     <p onClick={()=>{handleRemove()}}> Remove</p>
