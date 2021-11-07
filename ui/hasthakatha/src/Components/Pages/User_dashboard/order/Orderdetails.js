@@ -4,30 +4,41 @@ import Footer from '../../../Footer/Footer';
 import axios from 'axios';
 import { useParams } from 'react-router';
 import { toast } from 'react-toastify';
-import demoimg from '../../../../Images/megha.jpg'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRetweet } from '@fortawesome/free-solid-svg-icons'
-
+import OrderDetailsItem from './OrderdetailsItem';
+import CommonUtils from '../../../Common/Util';
+import AddressOut from '../address/AddressOut';
 
 function Orderdetails(props) {
     const { order_id } = useParams();
-    const [orderDetails, setOrderDtails] = useState({});
+    const [orderSummary, setOrderSummary] = useState({});
+    const [orderDetails, setOrderDtails] = useState([]);
     const [showReview, setShowReview] = useState(false);
-    const [review, setReview] = useState('');
+    const [reviews, setReviews] = useState([]);
     const [reviewExists, setReviewExists] = useState();
     const [rating, setRating] = useState(0);
+    const getReviews = (orderID) => {
+        axios.get('/rest/reviews/order/'+orderID).then(res => {
+            setReviews(res.data.result);
+        });
+    }
     useEffect(() => {
         const uid = localStorage.getItem('userId');
-        axios.get('/rest/order_details/' + uid + '/' + order_id).then(res => {
-            setOrderDtails(res.data.result[0]);
+        axios.get('/rest/order_details/' + order_id).then(res => {
+            setOrderSummary(res.data.result);
         });
+        axios.get('/rest/order_details/' + uid + '/' + order_id).then(res => {
+            setOrderDtails(res.data.result);
+        });
+        getReviews(order_id);
     }, [])
     const showOrderStatus = (status) => {
         switch (status) {
             case 1:
-                return (<span className="hk-order-status active">IN PROGRESS</span>);
+                return (<span className="hk-order-status active">ORDERED</span>);
             case 2:
-                return (<span className="hk-order-status success">SUCCESS</span>);
+                return (<span className="hk-order-status success">DELIVERED</span>);
             case 0:
                 return (<span className="hk-order-status error">FAILED</span>);
             default:
@@ -45,78 +56,47 @@ function Orderdetails(props) {
         setReview('');
         setShowReview(false);
     }
-    const addReview = () => {
-        axios.post('/rest/reviews', {
-            userid: localStorage.getItem('userId'),
-            pid: orderDetails.pid,
-            rating: rating,
-            description: review
-        }).then(res => {
-            toast.success('Review added successfully')
-        });
-    }
-    const setReviewRating = (rating) => {
-        setRating(rating);
-    }
-    const showReviewBox = () => {
-        return (
-            <div>
-                <div className="hs-product-rating hs-mt-16">
-                    <span className="material-icons hs-action-icon" onClick={() => setReviewRating(1)}>{rating > 0 ? 'star' : 'star_outline'}</span>
-                    <span className="material-icons hs-action-icon" onClick={() => setReviewRating(2)}>{rating > 1 ? 'star' : 'star_outline'}</span>
-                    <span className="material-icons hs-action-icon" onClick={() => setReviewRating(3)}>{rating > 2 ? 'star' : 'star_outline'}</span>
-                    <span className="material-icons hs-action-icon" onClick={() => setReviewRating(4)}>{rating > 3 ? 'star' : 'star_outline'}</span>
-                    <span className="material-icons hs-action-icon" onClick={() => setReviewRating(5)}>{rating > 4 ? 'star' : 'star_outline'}</span>
-                </div>
-                <textarea className="materialize-textarea" placeholder="Write your review" onChange={updateReview} value={review}></textarea>
-                <form action="#">
-                    <div class="file-field input-field">
-                        <div class="btn btn-color">
-                            <span>Upload Image</span>
-                            <input type="file" multiple />
-                        </div>
-                        <div class="file-path-wrapper">
-                            <input class="file-path validate" type="text" placeholder="Upload one or more files" />
-                        </div>
-                    </div>
-                </form>
-                <div className="hs-action-wrapper">
-                    <button className="waves-effect waves-light btn btn-default" onClick={cancelReview}>Cancel</button>
-                    <button className="waves-effect waves-light btn btn-color hs-ml-16" onClick={addReview}>Add</button>
-                </div>
-            </div>
-        )
-    }
     const getAmount = (data) => {
         if (data === undefined || data === null) {
             return '0.00';
         }
         return data;
     }
+    const getReview = (pid) => {
+        if (reviews.length > 0) {
+            const match = reviews.filter(r => r.pid === pid);
+            return match && match.length > 0 ? match[0] : {
+                created_date: '',
+                description: '',
+                rating: 0
+            };
+        }
+        return {
+            created_date: '',
+            description: '',
+            rating: 0
+        };
+    }
     return (
         <>
             <Header />
             <div className="order-details-container">
                 <h2 className="order-details-title">Order Details</h2>
-                <p>Ordered on 20 September 2021 | Order# {order_id}</p>
+                <p>Ordered on {CommonUtils.getDate(orderSummary.created_date)} | Order# {order_id}</p>
                 <div className="details-section">
                     <div className="address-section">
                         <p className="details-section-heading">Shipping Address</p>
-                        <p>SHIV PRASAD
-                        UP AGRO
-                        JAGDISH PATTI NEAR JAGDISHPUR RAILWAY CROSSING
-                        JAUNPUR, UTTAR PRADESH 222002
-                        India</p>
+                        <AddressOut address={CommonUtils.getShippingAddress(orderSummary.shipping_address)} />
                     </div>
                     <div className="payment-method">
                         <p className="details-section-heading">Payment Method</p>
                         <p>Amazon payment</p>
                     </div>
                     <div className="price-section">
-                        <p className="details-section-heading">Order Summary{showOrderStatus(orderDetails.t_status)}</p>
+                        <p className="details-section-heading">Order Summary{showOrderStatus(orderSummary.t_status)}</p>
                         <div>
                             <p>Item(s) Subtotal:</p>
-                            <p>₹{getAmount(orderDetails.total_amount)}</p>
+                            <p>₹{getAmount(orderSummary.total_amount)}</p>
                         </div>
                         <div>
                             <p>GST:</p>
@@ -128,18 +108,23 @@ function Orderdetails(props) {
                         </div>
                         <div>
                             <p>Total:</p>
-                            <p>₹{getAmount(orderDetails.total_amount)}</p>
+                            <p>₹{getAmount(orderSummary.total_amount)}</p>
                         </div>
                         <div >
                             <p className="grand-total">Grand Total:</p>
-                            <p className="grand-total">₹{getAmount(orderDetails.total_amount)}</p>
+                            <p className="grand-total">₹{getAmount(orderSummary.total_amount)}</p>
                         </div>
                     </div>
                     <div className="order_status">
                         
                     </div>
                 </div>
-                <div className="product-details">
+                <div>
+                    {
+                        orderDetails.map(o => <OrderDetailsItem {...o} review={getReview(o.pid)}/>)
+                    }
+                </div>
+                {/* <div className="product-details">
                     <h2>Delivered 06-May-2021</h2>
                     <div className="order-flex">
                         <div className="order-image">
@@ -164,7 +149,7 @@ function Orderdetails(props) {
                             <p><span>Quantity:</span> {orderDetails.quantity}</p>
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
             <Footer />
         </>

@@ -4,7 +4,7 @@ var order_app=function(app,con,settings,logger)
     app.get('/rest/order_details/:userid/:order_id',(req,res)=>{
         var userid=req.params.userid;
         var order_id=req.params.order_id;
-        var sql ="SELECT * from (SELECT * FROM transaction_detail natural join product) as T LEFT JOIN transaction as U on T.tid = U.tid WHERE U.uid= '" + userid + "' AND U.order_id='"+order_id+"';";
+        var sql ="SELECT * from (SELECT P1.pid, P1.title, P1.price, P1.description,T1.quantity,T1.size,T1.color,T1.tid FROM product as P1 left join transaction_detail as T1 on P1.pid=T1.pid) as T LEFT JOIN transaction as U on T.tid = U.tid WHERE U.uid= '" + userid + "' AND U.order_id='"+order_id+"';";
         con.query(sql,(err,result)=>{
             if(err)
             {
@@ -14,6 +14,23 @@ var order_app=function(app,con,settings,logger)
             }
             else{
                 res.send({type:"success",messsage:"Order successfully shown","result":result})
+            }
+        });
+    });
+
+    app.get('/rest/order_details/:order_id',(req,res)=>{
+        var order_id=req.params.order_id;
+        var sql =`SELECT * FROM hasthakatha.tracking_order as T natural join transaction where T.order_id='${order_id}'`;
+        con.query(sql,(err,result)=>{
+            if(err)
+            {
+                res.status(500);
+                logger.error(err);
+                res.send({type:"error",messsage:"Temporary Issue. Sorry we can't find order details"});
+            }
+            else{
+                const actualResult = result && result.length > 0 ? result[0] : result;
+                res.send({type:"success",messsage:"Order successfully","result":actualResult})
             }
         });
     });

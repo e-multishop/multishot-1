@@ -24,16 +24,26 @@ const Header = (props) => {
     console.log("check number of items", numberOfItems);
     // localStorage.clear();
     const dispatch=useDispatch();
-    useEffect(() => {
-        if (token != null) {
-            setLoggedIn(true)
-            // setEmail(email)
-        }
+    const updateCartItems = () => {
         const userId = localStorage.getItem('userId')
         Axios.get('/rest/add_to_cart/number_of_items/' + userId).then(res => {
             const numberOfItems = res.data.number_of_items;
             dispatch(cartItems(numberOfItems))
-        })
+        });
+    }
+    useEffect(() => {
+        if (token != null) {
+            setLoggedIn(true)
+            updateCartItems();
+            // adding event listener for add-to-cart event
+            const cartElement = document.getElementsByClassName('hs-add-to-cart');
+            if (cartElement && cartElement.length > 0) {
+                const cartEventListener = cartElement[0].addEventListener('ADD_TO_CART', (e) => {
+                    updateCartItems();
+                });
+            }
+        }
+
     }, []);
 
     const HandleChange = function () {
@@ -73,7 +83,7 @@ const Header = (props) => {
 
                             </li>}
                             <li>
-                                <NavLink to="/viewcart"><div className="cart"><FontAwesomeIcon icon={faShoppingCart} size="large" className="icon " /><span class="badge cart-badge">{numberOfItems}</span></div>
+                                <NavLink to="/viewcart"><div className="cart hs-add-to-cart"><FontAwesomeIcon icon={faShoppingCart} size="large" className="icon " /><span class="badge cart-badge">{numberOfItems}</span></div>
                                 </NavLink>
                             </li>
                         </ul>

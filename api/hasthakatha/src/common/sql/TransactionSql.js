@@ -18,7 +18,7 @@ module.exports = class OrderSql {
             const instance = new Razorpay({ key_id: key_id, key_secret: this.settings.razorpay_secret })
             const transaction_id = nanoId();
             const options = {
-                amount: totalAPIAmount,  // amount in the smallest currency unit
+                amount: totalAPIAmount*100,  // amount in the smallest currency unit
                 currency: currency,
                 receipt: transaction_id
             };
@@ -37,15 +37,20 @@ module.exports = class OrderSql {
             const t_status = 1;
             const created_date = (new Date()).getTime();
             const updated_date = (new Date()).getTime();
-            const t2 = "INSERT INTO `transaction_detail`(`id`,`tid`, `pid`,`quantity`,`amount`) VALUES (null,'" + transaction_id + "','$pid','$quantity','$amount');";
+            const t2 = "INSERT INTO `transaction_detail`(`id`,`tid`, `pid`,`quantity`,`amount`,`color`,`size`) VALUES (null,'" + transaction_id + "','$pid','$quantity','$amount','$color','$size');";
             const t1 = "INSERT INTO `transaction`(`tid`, `order_id`, `uid`, `created_date`, `t_status`,`updated_date`, `total_amount`) VALUES ('" + transaction_id + "','" + order_id + "','" + this.uid + "','" + created_date + "','" + t_status + "','" + updated_date + "',"+totalAPIAmount+");";
             
             for (let i = 0; i < data.length; i++) {
                 var t3 = t2.replace("$pid", data[i].pid);
                 t3 = t3.replace("$quantity", data[i].quantity);
                 t3 = t3.replace("$amount", data[i].price);
+                t3 = t3.replace("$color", data[i].color ? data[i].color : -1);
+                t3 = t3.replace("$size", data[i].size ? data[i].size : -1);
                 temp = temp + t3;
-                productSummary.push({title: data[i].title, pid: data[i].pid});
+                if (i < 3) {
+                    // product summary should contain 3 records at max.
+                    productSummary.push({title: data[i].title, pid: data[i].pid, color: data[i].color, size: data[i].size});
+                }
             }
             const shippingAddress = btoa(JSON.stringify(metaInfo.shippingAddress));
             productSummary = btoa(JSON.stringify(productSummary));

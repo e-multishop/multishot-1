@@ -79,6 +79,8 @@ function Checkout() {
                     price: cart.price,
                     pid: cart.pid,
                     quantity: cart.quantity,
+                    color: cart.color,
+                    size: cart.size,
                     id: cart.id,
                     title: cart.title
                 }
@@ -195,6 +197,8 @@ function Checkout() {
                                                                 getCart={getCart}
                                                                 quantity={data.quantity}
                                                                 imgdata={data.image_data}
+                                                                size={data.size}
+                                                                color={data.color}
                                                             />
                                                         )
                                                     })

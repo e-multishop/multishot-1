@@ -16,6 +16,10 @@
     padding: 10px;
     &.wrapper {
         height: calc(100vh - 64px);
+        display: flex;
+        align-items: center;
+        width: 100%;
+        justify-content: center;
     }
 }
 .item1{

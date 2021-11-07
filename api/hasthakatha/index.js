@@ -39,6 +39,6 @@ dashboard_app(hasthakatha_data,con,hasthaBean,logger);
 common_app(hasthakatha_data,con,logger);
 payment_app(hasthakatha_data,con,settings,logger);
 profile_app(hasthakatha_data,con,logger);
-order_app(hasthakatha_data,con,logger);
+order_app(hasthakatha_data,con,settings,logger);
 review_app(hasthakatha_data,con,logger);
 hasthakatha_data.listen(port);
