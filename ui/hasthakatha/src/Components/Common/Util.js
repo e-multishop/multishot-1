@@ -20,6 +20,19 @@ const CommonUtils = {
             return filteredValue[0].name;
         }
         return value;
+    }, 
+    getDate: (timeinmillis) => {
+        const actualTime = parseInt(timeinmillis);
+        const actualDate = new Date(actualTime);
+        return actualDate.toLocaleString();
+    },
+    getShippingAddress: (encodedAddress) => {
+        if (encodedAddress) {
+            const decodedAddress = atob(encodedAddress);
+            const decodedAddressJson = JSON.parse(decodedAddress);
+            return decodedAddressJson;
+        }
+        return encodedAddress;
     }
 };
 

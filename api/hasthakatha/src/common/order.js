@@ -18,6 +18,23 @@ var order_app=function(app,con,settings,logger)
         });
     });
 
+    app.get('/rest/order_details/:order_id',(req,res)=>{
+        var order_id=req.params.order_id;
+        var sql =`SELECT * FROM hasthakatha.tracking_order as T natural join transaction where T.order_id='${order_id}'`;
+        con.query(sql,(err,result)=>{
+            if(err)
+            {
+                res.status(500);
+                logger.error(err);
+                res.send({type:"error",messsage:"Temporary Issue. Sorry we can't find order details"});
+            }
+            else{
+                const actualResult = result && result.length > 0 ? result[0] : result;
+                res.send({type:"success",messsage:"Order successfully","result":actualResult})
+            }
+        });
+    });
+
     app.post('/rest/tracking/:orderID', (req, res) => {
         const orderID = req.params.orderID;
         const deliveryDate = req.body.deliveryDate;

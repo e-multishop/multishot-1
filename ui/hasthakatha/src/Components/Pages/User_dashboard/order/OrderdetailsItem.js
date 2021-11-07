@@ -85,7 +85,7 @@ const OrderDetailsItem = (props) => {
                         props.color === -1 ? '' : props.color
                     }
                     {
-                        Util.getSize(props.size)
+                        'Size: ' + Util.getSize(props.size)
                     }
                 </p>
             </div>

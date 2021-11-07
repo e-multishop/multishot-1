@@ -4,14 +4,15 @@ import Footer from '../../../Footer/Footer';
 import axios from 'axios';
 import { useParams } from 'react-router';
 import { toast } from 'react-toastify';
-import demoimg from '../../../../Images/megha.jpg'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRetweet } from '@fortawesome/free-solid-svg-icons'
 import OrderDetailsItem from './OrderdetailsItem';
-
+import CommonUtils from '../../../Common/Util';
+import AddressOut from '../address/AddressOut';
 
 function Orderdetails(props) {
     const { order_id } = useParams();
+    const [orderSummary, setOrderSummary] = useState({});
     const [orderDetails, setOrderDtails] = useState([]);
     const [showReview, setShowReview] = useState(false);
     const [reviews, setReviews] = useState([]);
@@ -24,6 +25,9 @@ function Orderdetails(props) {
     }
     useEffect(() => {
         const uid = localStorage.getItem('userId');
+        axios.get('/rest/order_details/' + order_id).then(res => {
+            setOrderSummary(res.data.result);
+        });
         axios.get('/rest/order_details/' + uid + '/' + order_id).then(res => {
             setOrderDtails(res.data.result);
         });
@@ -78,25 +82,21 @@ function Orderdetails(props) {
             <Header />
             <div className="order-details-container">
                 <h2 className="order-details-title">Order Details</h2>
-                <p>Ordered on 20 September 2021 | Order# {order_id}</p>
+                <p>Ordered on {CommonUtils.getDate(orderSummary.created_date)} | Order# {order_id}</p>
                 <div className="details-section">
                     <div className="address-section">
                         <p className="details-section-heading">Shipping Address</p>
-                        <p>SHIV PRASAD
-                        UP AGRO
-                        JAGDISH PATTI NEAR JAGDISHPUR RAILWAY CROSSING
-                        JAUNPUR, UTTAR PRADESH 222002
-                        India</p>
+                        <AddressOut address={CommonUtils.getShippingAddress(orderSummary.shipping_address)} />
                     </div>
                     <div className="payment-method">
                         <p className="details-section-heading">Payment Method</p>
                         <p>Amazon payment</p>
                     </div>
                     <div className="price-section">
-                        <p className="details-section-heading">Order Summary{showOrderStatus(orderDetails.t_status)}</p>
+                        <p className="details-section-heading">Order Summary{showOrderStatus(orderSummary.t_status)}</p>
                         <div>
                             <p>Item(s) Subtotal:</p>
-                            <p>₹{getAmount(orderDetails.total_amount)}</p>
+                            <p>₹{getAmount(orderSummary.total_amount)}</p>
                         </div>
                         <div>
                             <p>GST:</p>
@@ -108,11 +108,11 @@ function Orderdetails(props) {
                         </div>
                         <div>
                             <p>Total:</p>
-                            <p>₹{getAmount(orderDetails.total_amount)}</p>
+                            <p>₹{getAmount(orderSummary.total_amount)}</p>
                         </div>
                         <div >
                             <p className="grand-total">Grand Total:</p>
-                            <p className="grand-total">₹{getAmount(orderDetails.total_amount)}</p>
+                            <p className="grand-total">₹{getAmount(orderSummary.total_amount)}</p>
                         </div>
                     </div>
                     <div className="order_status">
