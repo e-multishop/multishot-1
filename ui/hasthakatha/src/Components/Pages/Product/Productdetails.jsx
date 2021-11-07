@@ -226,11 +226,11 @@ class Productdetails extends Component{
                                 {/* <a class="btn dropdown-trigger hk-btn" href="#!" data-target="dropdown2">Select an option<FontAwesomeIcon icon={faChevronDown}/></a>
                                 <p>Add your personalisation</p> */}
                             </div>
-                            <div className="hk-addcard">
+                            <div className="hk-addcard" onClick={this.addToCart.bind(this)}>
                                 {
                                     this.state.itemLoader
                                         ? <Loader inline="true" height="unset" />
-                                        : <a onClick={this.addToCart.bind(this)}>ADD TO CART</a>
+                                        : <a>ADD TO CART</a>
                                 }
                             </div>
                         </div>

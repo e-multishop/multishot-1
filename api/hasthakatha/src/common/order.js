@@ -4,7 +4,7 @@ var order_app=function(app,con,settings,logger)
     app.get('/rest/order_details/:userid/:order_id',(req,res)=>{
         var userid=req.params.userid;
         var order_id=req.params.order_id;
-        var sql ="SELECT * from (SELECT * FROM transaction_detail natural join product) as T LEFT JOIN transaction as U on T.tid = U.tid WHERE U.uid= '" + userid + "' AND U.order_id='"+order_id+"';";
+        var sql ="SELECT * from (SELECT P1.pid, P1.title, P1.price, P1.description,T1.quantity,T1.size,T1.color,T1.tid FROM product as P1 left join transaction_detail as T1 on P1.pid=T1.pid) as T LEFT JOIN transaction as U on T.tid = U.tid WHERE U.uid= '" + userid + "' AND U.order_id='"+order_id+"';";
         con.query(sql,(err,result)=>{
             if(err)
             {

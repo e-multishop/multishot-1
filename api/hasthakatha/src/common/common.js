@@ -66,6 +66,20 @@ var common_app=function(app,con,logger)
         });
     });
 
+    app.get('/rest/productdetails/images/main/:pid', (req, res) => {
+        const pid = req.params.pid;
+        const productImagesSql = `SELECT image_data FROM product_images where pid=${pid} and type='main'`;
+        con.query(productImagesSql, (err, result) => {
+            if (err) {
+                logger.error(err);
+                res.status(500);
+                res.send({type: 'error', message: 'Error fetching images', details: err});
+            } else {
+                res.send({type: 'success', result: ProductUtil.readImages(result)});
+            }
+        });
+    });
+
     app.get('/rest/productsize/:pid', (req, res) => {
         const productSizeSql = `Select id, size, S.name from product_size as P left join size as S on P.size = S.sid where pid=${req.params.pid}`;
         con.query(productSizeSql, (err, result) => {

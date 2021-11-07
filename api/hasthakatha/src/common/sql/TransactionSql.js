@@ -49,7 +49,7 @@ module.exports = class OrderSql {
                 temp = temp + t3;
                 if (i < 3) {
                     // product summary should contain 3 records at max.
-                    productSummary.push({title: data[i].title, pid: data[i].pid});
+                    productSummary.push({title: data[i].title, pid: data[i].pid, color: data[i].color, size: data[i].size});
                 }
             }
             const shippingAddress = btoa(JSON.stringify(metaInfo.shippingAddress));

@@ -486,7 +486,11 @@ var product_app = function (app, con, hasthaBean,logger) {
         var uid=req.params.uid;
         var sql="select count(*) from add_to_cart where uid='"+uid+"';"
         con.query(sql,(err,result)=>{
-            if(err) throw err;
+            if(err) {
+                logger.error(err);
+                res.status(500);
+                res.send({type: 'error', message: 'Temporary error. Contact support', details: err});
+            }
             var number_of_items = result[0]["count(*)"];
             res.send({"number_of_items":number_of_items});
         })

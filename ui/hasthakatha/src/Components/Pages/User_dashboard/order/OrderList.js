@@ -72,7 +72,7 @@ function OrderList(props) {
                 <div className="order-content">
                     {/* <span>{props.order_id}</span> */}
                     <p className="title"> {showProductSummary(props.product_summary)} </p>
-                    <p className="color">Primary color : white</p>
+                    {/* <p className="color">Primary color : white</p> */}
                     <p className="order-on">Ordered On: {showCreatedDate(props.created_date)}</p>
                 </div>
                 <div className="item-price text-center">
