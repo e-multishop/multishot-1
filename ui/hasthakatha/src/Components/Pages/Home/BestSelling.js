@@ -19,16 +19,16 @@ const BestSelling = () => {
                 {/* {img.map((value) => { */}
                 {/* return ( */}
                 <div className="col s3">
-                    <Link to={"/productdetails/"+'81'}><Card images={black_mulmul} banner={true} title="Black mulmul mirror work maxi dress" action={true} description="₹ 3500" /></Link>
+                    <Link to={"/productdetails/"+'84'}><Card images={black_mulmul} banner={true} title="Black mulmul mirror work maxi dress" action={true} description="₹ 3500" /></Link>
                 </div>
                 <div className="col s3">
-                    <Link><Card images={jumpsuit} banner={true} title="Beige Linen Jumpsuit" action={true} description="₹  3500" /></Link>
+                    <Link to={"/productdetails/"+'85'}><Card images={jumpsuit} banner={true} title="Beige Linen Jumpsuit" action={true} description="₹  3500" /></Link>
                 </div>
                 <div className="col s3">
-                    <Link><Card images={red_kantha} banner={true} title="Red Kantha Wrap Dress " action={true} description="₹  5900" /></Link>
+                    <Link to={"/productdetails/"+'86'}><Card images={red_kantha} banner={true} title="Red Kantha Wrap Dress " action={true} description="₹  5900" /></Link>
                 </div>
                 <div className="col s3">
-                    <Link><Card images={cushion} banner={true} title="Hand Painted and Embroidered Linen Cushion Cover" action={true} description="₹ 2500" /></Link>
+                    <Link to={"/productdetails/"+'87'}><Card images={cushion} banner={true} title="Hand Painted and Embroidered Linen Cushion Cover" action={true} description="₹ 2500" /></Link>
                 </div>
                 {/* );
                 })} */}
