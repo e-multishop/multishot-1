@@ -36,12 +36,13 @@ var review_app = function (app, con, logger) {
         var pid = req.body.pid;
         var userid = req.body.userid;
         var rating = req.body.rating;
+        var order_id = req.body.order_id;
 
         var description = req.body.description;
         var created_date = (new Date()).getTime();
         var updated_date = (new Date()).getTime();
         var image_data = req.body.image_data;
-        var sql = "INSERT INTO `reviews`( `rid`,`uid`,`pid`,`rating`,`description`,`created_date`,`updated_date`) VALUES (NULL,'" + userid + "','"+pid+"','" + rating + "','" + description + "','" + created_date + "','" + updated_date + "');";
+        var sql = "INSERT INTO `reviews`( `rid`,`uid`,`pid`,`rating`,`description`,`created_date`,`updated_date`,`order_id`) VALUES (NULL,'" + userid + "','"+pid+"','" + rating + "','" + description + "','" + created_date + "','" + updated_date + "','" + order_id + "');";
         con.query(sql, (err, result) => {
             if (err) {
                 logger.error(err);

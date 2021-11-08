@@ -15,7 +15,8 @@ const ReviewBox = (props) => {
             userid: localStorage.getItem('userId'),
             pid: props.pid,
             rating: rating,
-            description: review
+            description: review,
+            order_id: props.order_id
         }).then(res => {
             toast.success('Review added successfully');
             props.setShowReview(false);

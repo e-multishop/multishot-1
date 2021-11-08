@@ -60,7 +60,7 @@ function UserProfile() {
                                             profileImage ? <img className="hs-profile-img" src={profileImage} /> : ''
                                         }
                                         <input type="file" id="profile_pic" name="profile_pic" onChange={setProfilePicture}/>
-                                        <label for="profile_pic">Test</label>
+                                        <label for="profile_pic">Profile picture</label>
                                     </div>
                                 </div>
                                 <div className="row">
