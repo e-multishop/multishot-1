@@ -497,9 +497,10 @@ var product_app = function (app, con, hasthaBean,logger) {
                 logger.error(err);
                 res.status(500);
                 res.send({type: 'error', message: 'Temporary error. Contact support', details: err});
+            } else {
+                var number_of_items = result && result.length > 0 ? result[0]["count(*)"] : 0;
+                res.send({"number_of_items":number_of_items});
             }
-            var number_of_items = result && result.length > 0 ? result[0]["count(*)"] : 0;
-            res.send({"number_of_items":number_of_items});
         })
     })
 

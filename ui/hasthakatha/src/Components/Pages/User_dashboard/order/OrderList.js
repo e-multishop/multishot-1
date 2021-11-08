@@ -1,11 +1,31 @@
 import React, { useEffect, useState } from 'react'
 import './order.scss';
-import demoimg from '../../../../Images/megha.jpg'
-import { NavLink } from 'react-router-dom';
-import Axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircle, faCheck ,faDolly,faTruck} from '@fortawesome/free-solid-svg-icons'
+import axios from 'axios';
 function OrderList(props) {
+    const [orderImage, setOrderImage] = useState('');
+    const [orderPID, setOrderPID] = useState('');
+    const [summary, setSummary] = useState('');
+    useEffect(() =>{
+        if (!summary) {
+            const convertedSummary = atob(props.product_summary);
+            const convertedSummaryJSON = JSON.parse(convertedSummary);
+            setSummary(convertedSummaryJSON);
+            if (!orderPID) {
+                if (convertedSummaryJSON && convertedSummaryJSON.length > 0) {
+                    const pid = convertedSummaryJSON[0].pid;
+                    if (pid) {
+                        axios.get('/rest/productdetails/images/main/'+pid).then(res => {
+                            if (res.data.result && res.data.result.length > 0) {
+                                setOrderImage(res.data.result[0].image_data);
+                            }
+                        });
+                    }
+                }
+            }
+        }
+    },[props.product_summary]);
     const showDate = (datetime) => {
         // return (new Date(datetime)).toLocaleDateString();
         return datetime;
@@ -14,7 +34,7 @@ function OrderList(props) {
         const actualDateTime = parseInt(datetime);
         try { 
             const date = new Date(actualDateTime);
-            return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+            return date.toLocaleDateString() + ' ' + date.toDateString();
         } catch(e) { 
             return datetime;
         }
@@ -47,13 +67,10 @@ function OrderList(props) {
             }
         }
     }
-    const showProductSummary = (summary) => {
+    const showProductSummary = (lsummary) => {
         if (summary) {
-            const convertedSummary = atob(summary);
-            const convertedSummaryJSON = JSON.parse(convertedSummary);
-            
             return (
-                convertedSummaryJSON.map(s => {
+                summary.map(s => {
                     return <p className="procuct-title"><FontAwesomeIcon icon={faCircle} className="procuct-title-icon" />  {s.title}</p>;
                 })
             )
@@ -67,7 +84,7 @@ function OrderList(props) {
         <>
            <div className="orderlist-flex">
                 <div className="order-image">
-                    <img src={demoimg} />
+                    {orderImage ? <img src={orderImage} /> : ''}
                 </div>
                 <div className="order-content">
                     {/* <span>{props.order_id}</span> */}
