@@ -35,7 +35,7 @@ const ProductReview =(props)=>{
                     <p>{props.ReviewContent}</p>
                 </div>
                 <div className="product-image">
-                    <img src={props.ProductImg} alt=" "/>
+                    {props.ProductImg ? <img src={props.ProductImg} alt=" "/> : ''}
                 </div>
             </div>
            
