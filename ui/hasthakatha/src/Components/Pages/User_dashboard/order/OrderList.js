@@ -34,7 +34,7 @@ function OrderList(props) {
         const actualDateTime = parseInt(datetime);
         try { 
             const date = new Date(actualDateTime);
-            return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+            return date.toLocaleDateString() + ' ' + date.toDateString();
         } catch(e) { 
             return datetime;
         }
