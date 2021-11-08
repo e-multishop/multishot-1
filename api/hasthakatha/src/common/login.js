@@ -26,13 +26,19 @@ var login_app=function(app,con,logger)
                     console.log(hashpassword);
                     const createdDate = (new Date()).getTime();
                     const tStart = 'START TRANSACTION;';
-                    const loginSql = "insert into loginusers values(null,'','" + req.body.email + "','" + hashpassword + "');";
+                    const loginSql = "insert into loginusers values(null,'" + req.body.email + "','" + hashpassword + "');";
                     const userSql = `insert into user (name, type, uid, created_date) values('${req.body.email}', '0', LAST_INSERT_ID(), ${createdDate});`;
                     const tEnd = 'COMMIT;';
                     const actualSql = tStart + loginSql + userSql + tEnd;
                     con.query(actualSql, function (err, result2) {
-                        if (err) logger.error(err);
-                        res.send("sucess");
+                        if (err) {
+                            logger.error(err);
+                            res.status(500);
+                            res.send({type: 'error', message: 'Signup failed. Please try again later.', details: err});
+                        }
+                        else {
+                            res.send("sucess");
+                        }
                     });
     
                 });

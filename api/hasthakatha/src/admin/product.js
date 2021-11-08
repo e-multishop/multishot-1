@@ -397,7 +397,7 @@ var product_app = function (app, con, hasthaBean,logger) {
 
     app.get("/rest/add_to_cart/:uid", (req, res) => {
         var uid = req.params.uid;
-        var sql = "SELECT A.id,A.pid,A.quantity,A.createdDate,A.color,A.size,P.title,P.price,P.description,I.image_data FROM `add_to_cart` AS A LEFT JOIN product as P ON A.pid=P.pid LEFT JOIN product_images as I ON P.pid=I.pid where A.uid='"+uid+"'; ";
+        var sql = "SELECT A.id,A.pid,A.quantity,A.createdDate,A.color,A.size,P.title,P.price,P.description,I.image_data FROM `add_to_cart` AS A LEFT JOIN product as P ON A.pid=P.pid LEFT JOIN product_images as I ON P.pid=I.pid where I.type='main' and A.uid='"+uid+"'; ";
         con.query(sql, (err, result) => {
             if (err) throw err;
              res.header("Content-Type", "application/json");
