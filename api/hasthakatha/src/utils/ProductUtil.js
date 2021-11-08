@@ -15,13 +15,14 @@ module.exports = class ProductUtil {
         }
         return data ? data : -1;
     }
-    static readImages(result) {
+    static readImages(result, keyName) {
         const resultConverted = [];
         if (result && result.length > 0) {
             result.forEach(r => {
                 const outputData = r;
-                if (outputData.image_data && outputData.image_data.buffer) {
-                    const bufferData = Buffer.from(outputData.image_data, 'binary');
+                const key = keyName ? keyName : 'image_data';
+                if (outputData[key] && outputData[key].buffer) {
+                    const bufferData = Buffer.from(outputData[key], 'binary');
                     const image_data = bufferData.toString();
                     resultConverted.push({image_data});
                 }

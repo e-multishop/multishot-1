@@ -33,6 +33,23 @@ const CommonUtils = {
             return decodedAddressJson;
         }
         return encodedAddress;
+    },
+    readSingleImage: (e, setImage) => {
+        let upload_image= e.target.files;
+        if (upload_image && upload_image.length > 0) {
+            const imageSize = e.target.files[0].size;
+            const imageSizeInMb = imageSize/1024;
+            if (imageSizeInMb <= 500) {
+                let reader = new FileReader();
+                reader.readAsDataURL(upload_image[0]);
+                reader.onload=(e)=>{
+                    setImage(e.target.result);
+                }
+            } else {
+                e.target.value = '';
+                toast.warn('Image size should be lesser than 500KB.');
+            }
+        }
     }
 };
 

@@ -2,12 +2,16 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { toast } from 'react-toastify';
 import './profile.scss'
-
+import CommonUtils from '../../../Common/Util';
 function UserProfile() {
     const [userData,setUserData] = useState({});
+    const [profileImage, setProfileImage] = useState('');
     const fatchData = () => {
         axios.get('/rest/user_profile/' + localStorage.getItem('userId')).then(res => {
             setUserData(res.data.result);
+            if (res.data.result.profile_picture) {
+                setProfileImage(res.data.result.profile_picture);
+            }
             localStorage.setItem('userName',res.data.result.name);
         })
     }
@@ -30,12 +34,16 @@ function UserProfile() {
             name: userData.name,
             phone: userData.phone,
             age: userData.age,
-            profile_picture: ''
+            profile_picture: profileImage ? profileImage : ''
         }).then(res => {
             toast.success("Product updated successfully");
         }).catch(err => {
             toast.error("Error updating profile. Please try again later.")
         })
+    }
+
+    const setProfilePicture = (e) => {
+        CommonUtils.readSingleImage(e, setProfileImage);
     }
 
     return (
@@ -46,6 +54,15 @@ function UserProfile() {
                     <div >
                         <form className="col s10" id="country">
                             <div className="hk-formcontent">
+                                <div className="row">
+                                    <div className="input-field col s10">
+                                        {
+                                            profileImage ? <img className="hs-profile-img" src={profileImage} /> : ''
+                                        }
+                                        <input type="file" id="profile_pic" name="profile_pic" onChange={setProfilePicture}/>
+                                        <label for="profile_pic">Test</label>
+                                    </div>
+                                </div>
                                 <div className="row">
                                     <div className="input-field col s10 ">
                                         <input id="fullname" name="name" type="text" className="validate" value={userData.name} onChange={(e) => handleChange(e)} />
