@@ -50,7 +50,7 @@ const OrderDetailsItem = (props) => {
     }
     const showReviewSubsection = () => {
         if (showReview) {
-            return (<ReviewBox review={props.review} pid={props.pid} setShowReview={setShowReview}/>)
+            return (<ReviewBox order_id={props.order_id} review={props.review} pid={props.pid} setShowReview={setShowReview}/>)
         } else {
             return (<button className="waves-effect waves-light btn btn-color hs-ml-16" onClick={showReviewInput}>Add a review</button>)
         }
