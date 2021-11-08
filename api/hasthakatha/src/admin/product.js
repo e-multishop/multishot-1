@@ -21,13 +21,20 @@ var product_app = function (app, con, hasthaBean,logger) {
             con.query(sql, function (err, result) {
                 if (err) logger.error(err);
                 res.header("Content-Type", "application/json");
+                const resultWithoutDuplicates = [];
                 result.forEach(r => {
+                    const match = resultWithoutDuplicates.find(r2 => r2.pid === r.pid);
+                    if (!match) {
+                        resultWithoutDuplicates.push(r);
+                    }
+                });
+                resultWithoutDuplicates.forEach(r => {
                     if (r.image_data && r.image_data.buffer) {
                         const buff_data = Buffer.from(r.image_data);
                         r.image_data = buff_data ? buff_data.toString() : '';
                     }
                 })
-                res.send({list: result, totalRecords: totalRecords});
+                res.send({list: resultWithoutDuplicates, totalRecords: totalRecords});
             });
         });
     });
@@ -491,7 +498,7 @@ var product_app = function (app, con, hasthaBean,logger) {
                 res.status(500);
                 res.send({type: 'error', message: 'Temporary error. Contact support', details: err});
             }
-            var number_of_items = result[0]["count(*)"];
+            var number_of_items = result && result.length > 0 ? result[0]["count(*)"] : 0;
             res.send({"number_of_items":number_of_items});
         })
     })

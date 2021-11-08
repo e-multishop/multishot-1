@@ -1,4 +1,6 @@
 
+var ProductUtil = require('../utils/ProductUtil');
+
 var profile_app = function (app, con,logger) {
 
     app.get('/rest/county_detail', (req, res) => {
@@ -154,6 +156,10 @@ var profile_app = function (app, con,logger) {
                 res.send({ type: "error", message: "Temporary Error.User doesn't shown" });
             }
             else {
+                if(result && result.length > 0) {
+                    const profileImage= ProductUtil.readImages(result, 'profile_picture');
+                    result[0].profile_picture = profileImage && profileImage.length > 0 ? profileImage[0].image_data: '';
+                }
                 res.send({ type: "success", message: "profile info shown successfully", "result": result[0]});
 
             }
@@ -166,7 +172,7 @@ var profile_app = function (app, con,logger) {
         var phone = req.body.phone;
         var age = req.body.age;
         //   var address=req.body.address;
-        var profile_picture = req.body.profile_picture;
+        var profile_picture = req.body.profile_picture ? Buffer.from(req.body.profile_picture, 'binary') : '';
         var sql = "UPDATE user SET name = '" + name + "',phone = '" + phone + "',age = '" + age + "',profile_picture='" + profile_picture + "';";
         con.query(sql, (err, result) => {
             if (err) {
