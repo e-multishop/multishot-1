@@ -39,7 +39,6 @@ const ProductList = (props) => {
         }).then((categories) => {
             setCategories(categories)
         })
-        getProduct(pageNumber);
     }, []);
 
     useEffect(() => {
