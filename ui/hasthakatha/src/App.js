@@ -30,10 +30,11 @@ class App extends Component{
     return(
       <HashRouter>
         {/* <div id="LoginDropdown"></div> */}
+        <Suspense fallback={Loader}>
           <Switch>
               <Route exact component={Home} path="/"/>
               <Route component={ProductList} path="/shop"/>
-              <Suspense fallback={Loader}>
+             
                 <Route component={AboutUsPage} path="/about"/>
                 <Route component={ContactPage} path="/contact"/>
                 <Route component={ProductdetailsPage} path="/productdetails/:pid"/>
@@ -47,8 +48,8 @@ class App extends Component{
                 <Route component={UserProfilePage} path="/userprofile/:id"/>
                 <Route component={Add_addressPage} path="/addaddress"/>
                 <Route component={PageNotFound}/>
-              </Suspense>
         </Switch>
+      </Suspense>
     </HashRouter> 
     );
   };
