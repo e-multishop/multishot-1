@@ -1,29 +1,30 @@
-import React,{ Component} from "react";
+import React,{ Component, Suspense} from "react";
 import "./Style.scss";
 import "./App.scss";
-import Header from './Components/Header/Header.js';
-import Footer from './Components/Footer/Footer';
 import Home from './Components/Pages/Home/Home';
 import {Route,HashRouter,Switch} from 'react-router-dom';
-import About from './Components/Pages/About/About';
-import Contact from './Components/Pages/Contect_submit/Contact_submit';
+
 import ProductList from './Components/Pages/productlist/ProductList';
-import Productdetails from './Components/Pages/Product/Productdetails';
-import Search from './Components/Header/Search';
-import Login from './Components/Pages/login/Login';
-import Signup from'./Components/Pages/login/Signup';
+
+// import Search from './Components/Header/Search';
+
 import * as materialize  from 'materialize-css/dist/js/materialize';
 import 'react-toastify/dist/ReactToastify.css';
-import Reset from './Components/Pages/login/Reset_password';
-import Checkout from './Components/Pages/product_checkout/Checkout'
 import PageNotFound from "./Components/Pages/PageNotFound/PageNotFound";
-import Account from "./Components/Pages/User_dashboard/account/Account";
-import Forgotpassword from "./Components/Pages/login/Forgotpassword";
-import Order from "./Components/Pages/User_dashboard/order/Order";
-import Orderdetails from "./Components/Pages/User_dashboard/order/Orderdetails"
-import UserProfile from "./Components/Pages/User_dashboard/profile/UserProfile"
-import Add_address from './Components/Pages/User_dashboard/address/Add_address'
-
+import Loader from "./Components/Common/Loader";
+const AboutUsPage = React.lazy(() => import('./Components/Pages/About/About'));
+const OrderPage = React.lazy(() => import("./Components/Pages/User_dashboard/order/Order"));
+const OrderdetailsPage = React.lazy(() => import("./Components/Pages/User_dashboard/order/Orderdetails"));
+const AccountPage = React.lazy(() => import("./Components/Pages/User_dashboard/account/Account"));
+const CheckoutPage = React.lazy(() => import('./Components/Pages/product_checkout/Checkout'));
+const ResetPage = React.lazy(() => import('./Components/Pages/login/Reset_password'));
+const UserProfilePage = React.lazy(() => import("./Components/Pages/User_dashboard/profile/UserProfile"));
+const Add_addressPage = React.lazy(() => import('./Components/Pages/User_dashboard/address/Add_address'));
+const ForgotpasswordPage = React.lazy(() => import("./Components/Pages/login/Forgotpassword"));
+const LoginPage = React.lazy(() => import('./Components/Pages/login/Login'));
+const SignupPage = React.lazy(() => import('./Components/Pages/login/Signup'));
+const ProductdetailsPage = React.lazy(() => import('./Components/Pages/Product/Productdetails'));
+const ContactPage = React.lazy(() => import('./Components/Pages/Contect_submit/Contact_submit'));
 class App extends Component{
   render(){
     return(
@@ -31,20 +32,22 @@ class App extends Component{
         {/* <div id="LoginDropdown"></div> */}
           <Switch>
               <Route exact component={Home} path="/"/>
-              <Route component={About} path="/about"/>
               <Route component={ProductList} path="/shop"/>
-              <Route component={Productdetails} path="/productdetails/:pid"/>
-              <Route component={Contact} path="/contact"/>
-              <Route component={Account} path="/account"/>
-              <Route component={Checkout} path="/viewcart"/>
-              <Route component={Login} path="/login"/>
-              <Route component={Signup} path="/signup"/>
-              <Route component={Forgotpassword} path="/forgotpassword"/>
-              <Route exact component={Reset} path="/reset_password/:id"/>
-              <Route component={Orderdetails} path="/orderdetails/:order_id"/>
-              <Route component={UserProfile} path="/userprofile/:id"/>
-              <Route component={Add_address} path="/addaddress"/>
-              <Route component={PageNotFound}/>
+              <Suspense fallback={Loader}>
+                <Route component={AboutUsPage} path="/about"/>
+                <Route component={ContactPage} path="/contact"/>
+                <Route component={ProductdetailsPage} path="/productdetails/:pid"/>
+                <Route component={OrderdetailsPage} path="/orderdetails/:order_id"/>
+                <Route component={AccountPage} path="/account"/>
+                <Route component={CheckoutPage} path="/viewcart"/>
+                <Route component={LoginPage} path="/login"/>
+                <Route component={SignupPage} path="/signup"/>
+                <Route component={ForgotpasswordPage} path="/forgotpassword"/>
+                <Route exact component={ResetPage} path="/reset_password/:id"/>
+                <Route component={UserProfilePage} path="/userprofile/:id"/>
+                <Route component={Add_addressPage} path="/addaddress"/>
+                <Route component={PageNotFound}/>
+              </Suspense>
         </Switch>
     </HashRouter> 
     );
